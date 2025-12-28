@@ -1,0 +1,103 @@
+# Documentation
+
+## Overview
+
+Welcome to the Workshop Management System documentation. This documentation follows a context-based organization with numbered priority folders, making it easy to find information based on what you need to accomplish.
+
+## Documentation Structure
+
+### [01. Getting Started](01-getting-started/README.md)
+
+Quick start guides, installation, and initial setup.
+
+- Installation guide
+- Quick start (5 minutes)
+- Environment setup
+- First steps with the system
+
+### [02. Architecture](02-architecture/README.md)
+
+System design, patterns, and architectural decisions.
+
+- Technical architecture
+- Database design
+- Frontend architecture (Vue.js + Inertia.js)
+- Backend architecture (Laravel)
+- Security architecture
+
+### [03. Development](03-development/README.md)
+
+Developer guides, workflows, and best practices.
+
+- Developer quick start
+- Coding standards
+- Git workflow
+- Testing guide
+- API development
+
+### [04. Sprints](04-sprints/README.md)
+
+Sprint planning, daily todos, and project management.
+
+- Sprint planning
+- Sprint 0 daily todos
+- User stories
+- Progress tracking
+
+### [05. Deployment](05-deployment/README.md)
+
+Deployment procedures and operational guides.
+
+- Implementation roadmap
+- Production deployment
+- CI/CD pipeline
+- Monitoring and maintenance
+
+## Quick Start
+
+New to the project? Start with [Getting Started Guide](01-getting-started/01-quick-start.md).
+
+Need to set up development environment? See [Development Setup](01-getting-started/02-installation.md).
+
+Working on a feature? Check [Development Guide](03-development/01-developer-guide.md).
+
+## Finding Information
+
+- **Concepts and Design**: Check [Architecture](02-architecture/README.md) section
+- **How-to Guides**: Check [Development](03-development/README.md) section
+- **Project Planning**: Check [Sprints](04-sprints/README.md) section
+- **Deployment**: Check [Deployment](05-deployment/README.md) section
+
+## Documentation Standards
+
+This documentation follows the [claude-docs](https://github.com/nasrulhazim/claude-docs) standards:
+
+- Context-based organization
+- Numbered priority (01-, 02-, 03-)
+- Progressive detail (overview → specifics)
+- Self-documenting (each folder has README.md)
+- Markdown linting with markdownlint
+
+## Contributing to Documentation
+
+When adding or updating documentation:
+
+1. Place files in appropriate context folder
+2. Use numbered prefixes (01-, 02-, 03-)
+3. Follow kebab-case naming (`01-feature-name.md`)
+4. Update context README.md with new entries
+5. Run markdown linter: `markdownlint docs/**/*.md`
+6. Keep documentation synchronized with code changes
+
+## Need Help?
+
+- Check existing documentation first
+- Search GitHub Issues
+- Ask in team discussions
+- Create detailed issue if needed
+
+---
+
+**Last Updated**: 2025-12-28
+**Documentation Version**: 2.0
+**Following**: [claude-docs standards](https://github.com/nasrulhazim/claude-docs)
