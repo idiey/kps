@@ -2,7 +2,7 @@
 
 ## Overview
 
-This section covers the technical architecture of the Workshop Management System, including system design patterns, database structure, and technology stack decisions.
+This section covers the technical architecture of the **Government Workshop Management System (KEW.PA-10)**, including system design patterns, database structure, workflow processes, and technology stack decisions for Malaysian government compliance.
 
 ## Table of Contents
 
@@ -29,6 +29,14 @@ Authentication, authorization, and security best practices.
 ### [6. API Design](06-api-design.md)
 
 RESTful API structure and Laravel Sanctum implementation.
+
+### [7. Workflow Option 1: External KEW.PA-10 Reception](07-workflow-option-1.md)
+
+Complete workflow for processing KEW.PA-10 forms received from government departments.
+
+### [8. Workflow Option 2: Internal Inspection & KEW.PA-10 Generation](08-workflow-option-2.md)
+
+Proactive inspection workflow that generates KEW.PA-10 forms internally.
 
 ## Architecture Principles
 

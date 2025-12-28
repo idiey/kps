@@ -1,6 +1,6 @@
-# Workshop Management System - Documentation Index
+# Government Workshop Management System (KEW.PA-10) - Documentation Index
 
-> **Project**: Workshop Management System
+> **Project**: Government Workshop Management System (KEW.PA-10)
 > **Version**: 1.0.0-dev
 > **Tech Stack**: Laravel 12 + Vue.js 3 + Inertia.js
 > **Last Updated**: 2025-12-28
@@ -9,7 +9,16 @@
 
 ## Project Overview
 
-The Workshop Management System is a modern full-stack web application built with Laravel 12, Vue.js 3, and Inertia.js for managing repair workshops, service centers, and maintenance operations.
+The Government Workshop Management System is a specialized full-stack web application built with Laravel 12, Vue.js 3, and Inertia.js specifically designed for **Malaysian government agencies** to manage asset maintenance, repairs, and inspections using the official **KEW.PA-10** procurement form.
+
+### Key Characteristics
+
+- **Government Compliance**: Full KEW.PA-10 form processing and audit trails
+- **Bilingual**: English and Bahasa Malaysia interface
+- **Five Role System**: Pentadbiran, Penyelia, Pemeriksa, Pelulus, Juruteknik
+- **Two Workflows**: External KEW.PA-10 reception and internal inspection
+- **Digital Signatures**: Government-approved digital signature integration
+- **Photo Documentation**: Comprehensive before/during/after photo management
 
 ## Documentation Organization
 
@@ -35,6 +44,8 @@ System design, patterns, and technical architecture.
 - Frontend Architecture - Vue.js and Inertia.js
 - Security Architecture - Authentication and authorization
 - API Design - RESTful API structure
+- **[Workflow Option 1](02-architecture/07-workflow-option-1.md)** - External KEW.PA-10 reception
+- **[Workflow Option 2](02-architecture/08-workflow-option-2.md)** - Internal inspection workflow
 
 ### [03. Development](03-development/README.md)
 
@@ -68,6 +79,17 @@ Implementation roadmap, CI/CD, and production deployment.
 - Server Setup - Production server configuration
 - Monitoring & Maintenance - Application monitoring
 
+### [06. User Guide](06-user-guide/README.md)
+
+User guides and role-specific documentation.
+
+- **[User Roles and Permissions](06-user-guide/01-user-roles.md)** - Five government roles
+- Admin Officer Guide - Pentadbiran guide
+- Supervisor Guide - Penyelia guide
+- Inspector Guide - Pemeriksa guide
+- Approver Guide - Pelulus guide
+- Technician Guide - Juruteknik guide
+
 ## Quick Navigation
 
 ### For New Developers
@@ -92,8 +114,19 @@ Implementation roadmap, CI/CD, and production deployment.
 **Start here:**
 
 1. [Architecture Overview](02-architecture/README.md) - System design
-2. [Database Design](02-architecture/02-database-design.md) - Complete schema
-3. [Security Architecture](02-architecture/05-security-architecture.md) - Security design
+2. [Workflow Option 1](02-architecture/07-workflow-option-1.md) - External KEW.PA-10 workflow
+3. [Workflow Option 2](02-architecture/08-workflow-option-2.md) - Internal inspection workflow
+4. [Database Design](02-architecture/02-database-design.md) - Complete schema
+5. [Security Architecture](02-architecture/05-security-architecture.md) - Security design
+
+### For Government Users
+
+**Start here:**
+
+1. [User Roles and Permissions](06-user-guide/01-user-roles.md) - Five role system
+2. [Workflow Option 1](02-architecture/07-workflow-option-1.md) - External KEW.PA-10 reception
+3. [Workflow Option 2](02-architecture/08-workflow-option-2.md) - Internal inspection
+4. [User Guide](06-user-guide/README.md) - Role-specific guides
 
 ## Project Status
 

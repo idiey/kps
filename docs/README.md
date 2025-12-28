@@ -2,7 +2,9 @@
 
 ## Overview
 
-Welcome to the Workshop Management System documentation. This documentation follows a context-based organization with numbered priority folders, making it easy to find information based on what you need to accomplish.
+Welcome to the **Government Workshop Management System (KEW.PA-10)** documentation. This documentation follows a context-based organization with numbered priority folders, making it easy to find information based on what you need to accomplish.
+
+This system is specifically designed for Malaysian government agencies to manage asset maintenance, repairs, and inspections using the official KEW.PA-10 procurement form.
 
 ## Documentation Structure
 
@@ -53,6 +55,17 @@ Deployment procedures and operational guides.
 - CI/CD pipeline
 - Monitoring and maintenance
 
+### [06. User Guide](06-user-guide/README.md)
+
+User guides and role-specific documentation.
+
+- User roles and permissions
+- Admin Officer (Pentadbiran) guide
+- Supervisor (Penyelia) guide
+- Inspector (Pemeriksa) guide
+- Approver (Pelulus) guide
+- Technician (Juruteknik) guide
+
 ## Quick Start
 
 New to the project? Start with [Getting Started Guide](01-getting-started/01-quick-start.md).
@@ -64,9 +77,12 @@ Working on a feature? Check [Development Guide](03-development/01-developer-guid
 ## Finding Information
 
 - **Concepts and Design**: Check [Architecture](02-architecture/README.md) section
+- **KEW.PA-10 Workflows**: Check [Workflow Option 1](02-architecture/07-workflow-option-1.md) and [Workflow Option 2](02-architecture/08-workflow-option-2.md)
+- **User Roles**: Check [User Roles and Permissions](06-user-guide/01-user-roles.md)
 - **How-to Guides**: Check [Development](03-development/README.md) section
 - **Project Planning**: Check [Sprints](04-sprints/README.md) section
 - **Deployment**: Check [Deployment](05-deployment/README.md) section
+- **Role-Specific Guides**: Check [User Guide](06-user-guide/README.md) section
 
 ## Documentation Standards
 

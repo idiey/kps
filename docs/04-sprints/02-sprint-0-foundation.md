@@ -1,19 +1,28 @@
 # Sprint 0 Daily Todos - Foundation Sprint
 
 > **Sprint Duration**: 10 Days
-> **Sprint Goal**: Establish project foundation with core module structure, database schema, and basic functionality
+> **Sprint Goal**: Establish Laravel foundation with KEW.PA-10 government workflows and database schema
 > **Sprint Start**: 2025-12-28
 > **Sprint End**: 2026-01-06
+> **Tech Stack**: Laravel 12 + Vue.js 3 + Inertia.js
 
 ## Sprint 0 Overview
 
-Sprint 0 focuses on building the foundational infrastructure for the Workshop Management module. By the end of this sprint, we should have:
+Sprint 0 focuses on building the foundational infrastructure for the **Government Workshop Management System (KEW.PA-10)**. By the end of this sprint, we should have:
 
-- Complete module descriptor and registration
-- Database schema implemented and tested
-- Core business logic classes
-- Basic UI pages for CRUD operations
-- Integration hooks with Dolibarr core
+- Laravel project initialization complete
+- Database schema for KEW.PA-10, inspections, and workflows
+- Core models and controllers (Workshop, Job, KEW.PA-10, Inspection)
+- Five-role authentication system (Pentadbiran, Penyelia, Pemeriksa, Pelulus, Juruteknik)
+- Basic Vue.js components and Inertia pages
+- Two workflow implementations (Option 1 & 2)
+
+**Government Requirements**:
+- KEW.PA-10 form management
+- Digital signature integration
+- Photo documentation system
+- Bilingual support (EN/BM)
+- Audit trail logging
 
 ## Daily Breakdown
 

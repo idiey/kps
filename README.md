@@ -1,8 +1,10 @@
-# Workshop Management System
+# Government Workshop Management System (KEW.PA-10)
 
 ## Overview
 
-A modern Workshop Management System built with Laravel 12, Vue.js 3, and Inertia.js for managing repair workshops, service centers, and maintenance operations.
+A comprehensive Workshop Management System built with Laravel 12, Vue.js 3, and Inertia.js specifically designed for **Malaysian government agencies** to manage asset maintenance, repairs, and inspections using the official **KEW.PA-10** procurement form.
+
+This system digitizes and streamlines government workshop operations with full compliance to Malaysian government procurement procedures, audit trails, and bilingual support (English/Bahasa Malaysia).
 
 ## Project Status
 
@@ -40,18 +42,57 @@ The project has completed comprehensive planning and is now pivoting to a modern
 - **Testing:** PHPUnit, Pest, Vitest
 - **Version Control:** Git
 
-## Purpose
+## System Purpose
 
-The Workshop Management System provides:
+This system manages two primary workflows for government asset maintenance:
 
-- **Job Tracking**: Manage repair jobs, service orders, and maintenance tasks
-- **Time Tracking**: Record time spent by technicians on various jobs
-- **Parts Management**: Track parts and materials used in repairs
-- **Customer Management**: Comprehensive customer database and history
-- **Invoicing**: Generate invoices based on work performed and parts used
-- **Reporting**: Real-time analytics and comprehensive reports
-- **Scheduling**: Advanced scheduling with calendar integration
-- **Real-time Updates**: WebSocket support for live updates
+### **Option 1: External KEW.PA-10 Reception**
+
+Receive and process KEW.PA-10 forms submitted by government departments for asset repairs.
+
+**Workflow Steps:**
+1. **Admin Officer** receives KEW.PA-10 from government department
+2. **Supervisor** assigns job to technician
+3. **Inspector** validates asset condition and KEW.PA-10 details
+4. **Technician** performs repair work with photo documentation
+5. **Supervisor** reviews completed work and updates KEW.PA-10
+
+### **Option 2: Internal Inspection & KEW.PA-10 Generation**
+
+Proactive internal inspections that generate KEW.PA-10 forms for required maintenance.
+
+**Workflow Steps:**
+1. **Inspector** conducts scheduled asset inspection
+2. **Supervisor** reviews inspection findings
+3. **Admin Officer** generates KEW.PA-10 form
+4. **Approver** validates and approves work order
+5. **Technician** performs repair work with photo documentation
+
+## User Roles
+
+The system supports five government workshop roles:
+
+- 🟡 **Pentadbiran (Admin Officer)** - KEW.PA-10 reception, documentation, system administration
+- 🟣 **Penyelia (Supervisor)** - Job assignment, work review, quality control
+- 🔵 **Pemeriksa (Inspector)** - Asset inspections, condition validation, compliance checks
+- 🔴 **Pelulus (Approver)** - Work order approval, budget authorization
+- 🟢 **Juruteknik (Technician)** - Repair execution, photo documentation, work completion
+
+## Key Features
+
+### Government Compliance
+- **KEW.PA-10 Form Management** - Digital forms with validation
+- **Audit Trail** - Complete activity logging for compliance
+- **Digital Signatures** - Secure approval workflow
+- **Photo Documentation** - Before/after photos for all repairs
+- **Bilingual Support** - English and Bahasa Malaysia interface
+
+### Workshop Operations
+- **Job Tracking** - Manage repair jobs with real-time status
+- **Time Tracking** - Record technician work hours
+- **Parts Management** - Track materials and inventory
+- **Inspection Management** - Schedule and conduct asset inspections
+- **Work Order Generation** - Create work orders from inspections or KEW.PA-10
 
 ## Documentation
 
@@ -73,53 +114,57 @@ Comprehensive documentation is available in the `/docs` directory:
 
 ## Key Features
 
-### 1. Workshop Job Management
-- Create and track repair jobs with real-time status updates
-- Assign jobs to technicians with notification system
-- Track job status and progress through customizable workflows
-- Estimate vs actual time/cost tracking with variance analysis
+### 1. KEW.PA-10 Form Processing
+- Digital KEW.PA-10 form reception and validation
+- Auto-generation from inspection findings
+- Multi-level approval workflow with digital signatures
+- Complete audit trail for compliance
+- Bilingual form templates (EN/BM)
 
-### 2. Parts and Inventory Integration
-- Real-time inventory management
-- Barcode/QR code scanning support
-- Automatic stock level updates
-- Low stock alerts and reorder management
-- Parts cost calculation with markup rules
+### 2. Inspection Management
+- Scheduled and ad-hoc asset inspections
+- Mobile-friendly inspection checklists
+- Photo capture before/during/after repairs
+- Inspector findings documentation
+- Inspection history and trending
 
-### 3. Time and Labor Tracking
-- Clock in/out system for technicians
-- Multiple billing rates (regular, overtime, weekend)
-- Time-based invoicing with automatic calculation
-- Labor cost analysis and reporting
+### 3. Workshop Job Management
+- Job assignment based on technician skills
+- Real-time job status tracking
+- Work order generation and management
+- Progress updates with photo evidence
+- Quality control reviews
 
-### 4. Customer Management
-- Comprehensive customer profiles
-- Service history tracking
-- Multiple contact management
-- Customer portal access (planned)
-- Automated communication
+### 4. Parts and Inventory
+- Government parts inventory tracking
+- Parts usage documentation per job
+- Stock level monitoring
+- Procurement request generation
+- Cost tracking for budget compliance
 
-### 5. Document Generation
-- Professional PDF work orders
-- Repair estimates/quotes
-- Service completion certificates
-- Invoice generation
-- Email delivery integration
+### 5. Reporting and Analytics
+- KEW.PA-10 processing reports
+- Workshop performance metrics
+- Technician productivity analysis
+- Asset maintenance history
+- Budget utilization reports
+- Audit-ready compliance reports
 
-### 6. Reporting and Analytics
-- Real-time dashboard with KPIs
-- Workshop activity reports
-- Technician performance metrics
-- Revenue and cost analysis
-- Custom report builder
+### 6. Role-Based Access Control
+- Five-tier government role structure
+- Permission-based feature access
+- Workflow-specific authorizations
+- Activity logging per user
+- Secure authentication (Laravel Sanctum)
 
 ### 7. Advanced Features
-- Role-based access control (RBAC)
-- Multi-language support
-- Mobile-responsive design
-- Real-time notifications
-- Audit logging
-- API for integrations
+- Bilingual interface (English/Bahasa Malaysia)
+- Mobile-responsive design for field work
+- Real-time notifications and updates
+- Digital signature integration
+- Photo attachment management
+- Complete audit trail
+- API for system integrations
 
 ## Technical Requirements
 
