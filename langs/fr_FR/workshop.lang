@@ -1,0 +1,110 @@
+# Workshop Management Module - French Translation
+# Copyright (C) 2025 Workshop Management Development Team
+
+CHARSET= UTF-8
+
+# Module
+Module500000Name = Gestion d'Atelier
+Module500000Desc = Gérer les ateliers, les travaux de réparation, le suivi du temps et l'inventaire des pièces
+
+# Admin
+WorkshopSetup = Configuration de la Gestion d'Atelier
+WorkshopSetupPage = Page de configuration de la gestion d'atelier
+WorkshopAbout = À propos de la Gestion d'Atelier
+
+# Permissions
+Permission500001 = Lire les ateliers et les travaux
+Permission500002 = Créer et modifier les ateliers et les travaux
+Permission500003 = Supprimer les ateliers et les travaux
+Permission500004 = Exporter les données d'atelier
+
+# Menu
+Workshop = Atelier
+Workshops = Ateliers
+NewWorkshop = Nouvel Atelier
+ListWorkshops = Liste des Ateliers
+WorkshopManagement = Gestion d'Atelier
+
+# Workshop Entity
+WorkshopRef = Référence
+WorkshopLabel = Libellé
+WorkshopDescription = Description
+WorkshopStatus = Statut
+WorkshopCreated = Créé
+WorkshopModified = Modifié
+
+# Job Entity
+Job = Travail
+Jobs = Travaux
+NewJob = Nouveau Travail
+JobRef = Référence du Travail
+JobCustomer = Client
+JobProject = Projet
+JobAssignedTo = Assigné à
+JobStartDate = Date de Début
+JobEndDate = Date de Fin
+JobEstimatedHours = Heures Estimées
+JobStatus = Statut
+JobDescription = Description
+JobNotePublic = Note Publique
+JobNotePrivate = Note Privée
+JobTotalCost = Coût Total
+
+# Job Status
+JobStatusDraft = Brouillon
+JobStatusOpen = Ouvert
+JobStatusInProgress = En Cours
+JobStatusCompleted = Terminé
+JobStatusInvoiced = Facturé
+JobStatusCancelled = Annulé
+
+# Items/Parts
+Item = Article
+Items = Articles
+AddItem = Ajouter un Article
+Product = Produit
+Quantity = Quantité
+UnitPrice = Prix Unitaire
+TotalPrice = Prix Total
+
+# Time Tracking
+TimeEntry = Saisie de Temps
+TimeEntries = Saisies de Temps
+AddTimeEntry = Ajouter une Saisie de Temps
+Date = Date
+Duration = Durée
+HourlyRate = Taux Horaire
+LaborCost = Coût de la Main-d'œuvre
+
+# Actions
+CreateWorkshop = Créer un Atelier
+EditWorkshop = Modifier l'Atelier
+DeleteWorkshop = Supprimer l'Atelier
+ConfirmDeleteWorkshop = Êtes-vous sûr de vouloir supprimer cet atelier ?
+WorkshopCreatedSuccessfully = Atelier créé avec succès
+WorkshopUpdatedSuccessfully = Atelier mis à jour avec succès
+WorkshopDeletedSuccessfully = Atelier supprimé avec succès
+
+CreateJob = Créer un Travail
+EditJob = Modifier le Travail
+DeleteJob = Supprimer le Travail
+ConfirmDeleteJob = Êtes-vous sûr de vouloir supprimer ce travail ?
+JobCreatedSuccessfully = Travail créé avec succès
+JobUpdatedSuccessfully = Travail mis à jour avec succès
+JobDeletedSuccessfully = Travail supprimé avec succès
+GenerateInvoice = Générer une Facture
+
+# Errors
+ErrorWorkshopNotFound = Atelier non trouvé
+ErrorJobNotFound = Travail non trouvé
+ErrorFieldRequired = Le champ %s est requis
+ErrorInvalidStatus = Statut invalide
+
+# Miscellaneous
+WorkshopInfo = Informations sur l'Atelier
+JobDetails = Détails du Travail
+PartsAndMaterials = Pièces et Matériaux
+TimeTracking = Suivi du Temps
+TotalLabor = Total Main-d'œuvre
+TotalParts = Total Pièces
+GrandTotal = Total Général
