@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(markdownlint:*)",
+      "Bash(php artisan:*)",
+      "Bash(command -v:*)",
+      "Bash(where:*)",
+      "Bash(/c/Users/zuraidiismail/.config/herd/bin/php.bat artisan:*)",
+      "Bash(/c/Users/zuraidiismail/.config/herd/bin/php.bat vendor/bin/pest --filter=WorkshopJobTest)",
+      "Bash(/c/Users/zuraidiismail/.config/herd/bin/php.bat:*)",
+      "Bash(composer require:*)",
+      "Bash(cat:*)",
+      "Bash(/c/Users/zuraidiismail/.config/herd/bin/composer.bat require spatie/laravel-permission)",
+      "Bash(herd php:*)",
+      "Bash(npm run build:*)",
+      "Bash(find:*)",
+      "Bash(ls -la \"c:\\\\Users\\\\zuraidiismail\\\\RnD\\\\workshop\\\\config\"\" 2>/dev/null || echo \"Config directory might not exist \")",
+      "Bash(grep:*)",
+      "Bash(while read dir)",
+      "Bash(do:*)",
+      "Bash(done)",
+      "Bash(for component in alert badge button card checkbox dialog input label select table textarea)",
+      "Bash(if [ -d \"resources/js/components/ui/$component\" ])",
+      "Bash(then)",
+      "Bash(echo:*)",
+      "Bash(else)",
+      "Bash(fi)",
+      "Bash(npx shadcn-vue@latest add:*)",
+      "Bash(npm install:*)"
+    ]
+  }
+}

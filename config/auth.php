@@ -101,6 +101,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Policy Authorization Audit Logging
+    |--------------------------------------------------------------------------
+    |
+    | Enable audit logging for policy authorization decisions. When enabled,
+    | all policy checks will be logged to the 'policy' log channel including
+    | user information, action, resource, and authorization result.
+    |
+    | This is disabled by default for performance. Enable in production only
+    | if you need to audit authorization decisions for compliance or security.
+    |
+    */
+
+    'audit_policy_checks' => env('AUDIT_POLICY_CHECKS', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Password Confirmation Timeout
     |--------------------------------------------------------------------------
     |

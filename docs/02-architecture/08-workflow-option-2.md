@@ -2,7 +2,8 @@
 
 ## Overview
 
-This workflow handles proactive internal asset inspections that identify maintenance needs and generate KEW.PA-10 forms internally.
+This workflow handles proactive internal asset inspections that identify maintenance needs
+and generate KEW.PA-10 forms internally.
 
 **Primary Users**: Inspector, Supervisor, Admin Officer, Approver, Technician
 
@@ -71,6 +72,7 @@ flowchart TB
 **Role**: Pemeriksa (Inspector)
 
 **Actions**:
+
 - Access inspection schedule or create ad-hoc inspection
 - Select asset(s) for inspection
 - Travel to asset location
@@ -78,12 +80,14 @@ flowchart TB
 - Use mobile app for field data entry
 
 **Inspection Types**:
+
 - 📅 **Scheduled** - Routine preventive maintenance checks
 - 🔍 **Ad-hoc** - Requested inspections or incident response
 - ✅ **Follow-up** - Re-inspection after repairs
 - 📊 **Audit** - Compliance verification
 
 **Mobile Features**:
+
 - Offline data entry
 - GPS location tracking
 - Barcode/QR code scanning for asset ID
@@ -92,6 +96,7 @@ flowchart TB
 ### 2. Inspector: Document Findings
 
 **Actions**:
+
 - Complete digital inspection checklist
 - Rate asset condition (1-5 scale)
 - Document all observed issues
@@ -99,6 +104,7 @@ flowchart TB
 - Identify required repairs or maintenance
 
 **Inspection Checklist Fields**:
+
 ```yaml
 Asset Information:
   - Asset ID: [Scanned/Manual]
@@ -122,6 +128,7 @@ Maintenance Needs:
 ### 3. Inspector: Identify Repair Needs
 
 **Actions**:
+
 - Determine if repairs are required
 - Estimate repair complexity
 - List required parts and materials
@@ -129,11 +136,13 @@ Maintenance Needs:
 - Add detailed repair recommendations
 
 **Repair Classification**:
+
 - 🔴 **Urgent** - Safety hazard or critical function failure
 - 🟡 **Medium** - Reduced functionality or efficiency
 - 🟢 **Low** - Cosmetic or preventive maintenance
 
 **Repair Estimation**:
+
 - Estimated repair time
 - Required technician skills
 - Parts needed (from inspection)
@@ -142,6 +151,7 @@ Maintenance Needs:
 ### 4. Inspector: Upload Inspection Photos
 
 **Actions**:
+
 - Take photos of asset from multiple angles
 - Document specific issues with close-up photos
 - Capture safety hazards
@@ -149,12 +159,14 @@ Maintenance Needs:
 - Add captions/annotations
 
 **Photo Requirements**:
+
 - Minimum 5 photos per inspection
 - Maximum 20MB per photo
 - Formats: JPG, PNG
 - Metadata preserved (timestamp, GPS)
 
 **Photo Categories**:
+
 - Overall asset condition
 - Specific damage or wear
 - Safety hazards
@@ -164,6 +176,7 @@ Maintenance Needs:
 ### 5. Inspector: Submit Inspection Report
 
 **Actions**:
+
 - Review all inspection data
 - Ensure completeness
 - Add final recommendations
@@ -171,6 +184,7 @@ Maintenance Needs:
 - Submit for supervisor review
 
 **Validation Checks**:
+
 - All required fields completed
 - Minimum photos uploaded
 - Condition rating provided
@@ -181,6 +195,7 @@ Maintenance Needs:
 **Role**: Penyelia (Supervisor)
 
 **Actions**:
+
 - Review inspector's findings and photos
 - Verify inspection completeness
 - Assess repair priority
@@ -188,6 +203,7 @@ Maintenance Needs:
 - Determine if KEW.PA-10 generation is needed
 
 **Review Criteria**:
+
 - Inspection data is complete and accurate
 - Photos clearly show issues
 - Repair recommendations are appropriate
@@ -195,6 +211,7 @@ Maintenance Needs:
 - Cost estimates are reasonable
 
 **Decision Options**:
+
 - ✅ **Approve** - Proceed to KEW.PA-10 generation
 - ⚠️ **Request Revision** - Inspector must update
 - ❌ **Reject** - No repair needed or incorrect assessment
@@ -203,6 +220,7 @@ Maintenance Needs:
 ### 7. Supervisor: Validate Repair Requirements
 
 **Actions**:
+
 - Confirm parts availability or procurement timeline
 - Verify technician availability
 - Check workshop capacity
@@ -210,6 +228,7 @@ Maintenance Needs:
 - Determine if budget approval is needed
 
 **Validation Points**:
+
 - Parts in stock or can be procured
 - Qualified technician available
 - Workshop has capacity
@@ -221,6 +240,7 @@ Maintenance Needs:
 **Role**: Pentadbiran (Admin Officer)
 
 **Actions**:
+
 - Create new KEW.PA-10 form in system
 - Auto-populate from inspection data
 - Generate KEW.PA-10 reference number
@@ -229,6 +249,7 @@ Maintenance Needs:
 - Set approval workflow
 
 **KEW.PA-10 Auto-Population**:
+
 ```php
 KEW_PA_10 {
   reference_number: Auto (KEW-YYYY-NNNNN)
@@ -247,6 +268,7 @@ KEW_PA_10 {
 ### 9. Admin Officer: Create Job Record
 
 **Actions**:
+
 - Create linked job record
 - Associate with KEW.PA-10
 - Set initial job status (Pending Approval)
@@ -254,6 +276,7 @@ KEW_PA_10 {
 - Generate job reference number
 
 **Job Data**:
+
 - Job Reference: WS-YYYY-NNNN (auto)
 - KEW.PA-10 Link: Reference number
 - Status: Pending Approval
@@ -265,6 +288,7 @@ KEW_PA_10 {
 **Role**: Pelulus (Approver)
 
 **Actions**:
+
 - Review KEW.PA-10 and linked inspection
 - Examine photos and findings
 - Verify repair necessity
@@ -272,6 +296,7 @@ KEW_PA_10 {
 - Check previous maintenance history
 
 **Review Dashboard Shows**:
+
 - Inspection summary with photos
 - Estimated costs breakdown
 - Budget allocation status
@@ -281,6 +306,7 @@ KEW_PA_10 {
 ### 11. Approver: Check Budget
 
 **Actions**:
+
 - Verify budget code exists
 - Check available budget allocation
 - Confirm cost is within approval limits
@@ -288,6 +314,7 @@ KEW_PA_10 {
 - Document budget impact
 
 **Budget Validation**:
+
 ```yaml
 Budget Check:
   - Code Valid: Yes/No
@@ -298,6 +325,7 @@ Budget Check:
 ```
 
 **Approval Thresholds**:
+
 - < RM 1,000: Supervisor approval only
 - RM 1,000 - RM 5,000: Single approver
 - RM 5,000 - RM 20,000: Two approvers
@@ -306,6 +334,7 @@ Budget Check:
 ### 12. Approver: Approve/Reject with Digital Signature
 
 **Actions**:
+
 - Make approval decision
 - Add approval comments
 - Set conditions (if conditional approval)
@@ -313,12 +342,14 @@ Budget Check:
 - Submit decision
 
 **Approval Options**:
+
 - ✅ **Fully Approved** - Proceed to repair
 - ⚠️ **Conditionally Approved** - With budget/scope limits
 - 🔄 **Request More Info** - Need clarification
 - ❌ **Rejected** - Not justified or budget unavailable
 
 **Digital Signature**:
+
 - Cryptographic signature using MyKad or government cert
 - Timestamp and user details embedded
 - Non-repudiation for audit
@@ -329,6 +360,7 @@ Budget Check:
 **Role**: Juruteknik (Technician)
 
 **Actions**:
+
 - Receive approved work order notification
 - Review KEW.PA-10, inspection report, and photos
 - Plan repair approach
@@ -339,6 +371,7 @@ Budget Check:
 - Take during and after photos
 
 **Work Documentation**:
+
 - Start time logged
 - Parts selected from inventory (auto-deducted)
 - Work notes added throughout
@@ -346,6 +379,7 @@ Budget Check:
 - End time logged
 
 **Photo Requirements**:
+
 - Before repair: 3+ photos
 - During repair: 3+ photos of critical steps
 - After repair: 5+ photos from multiple angles
@@ -354,6 +388,7 @@ Budget Check:
 ### 14. Technician: Mark Complete
 
 **Actions**:
+
 - Complete work summary form
 - Confirm all photos uploaded
 - Record actual vs estimated time
@@ -363,6 +398,7 @@ Budget Check:
 - Submit for supervisor review
 
 **Completion Checklist**:
+
 - [ ] All repair work completed as specified
 - [ ] Quality self-check passed
 - [ ] All photos uploaded and tagged
@@ -374,6 +410,7 @@ Budget Check:
 ### 15. Supervisor: Review and Close
 
 **Actions**:
+
 - Review technician's work completion report
 - Verify photo documentation
 - Validate parts usage
@@ -383,6 +420,7 @@ Budget Check:
 - Generate completion report
 
 **Final Documentation Package**:
+
 - Original inspection report
 - Generated KEW.PA-10 form
 - Approval records with signatures
@@ -395,6 +433,7 @@ Budget Check:
 ## Role Permissions
 
 ### Inspector (Pemeriksa)
+
 - ✅ Schedule inspections
 - ✅ Conduct inspections
 - ✅ Upload photos
@@ -404,6 +443,7 @@ Budget Check:
 - ❌ Approve budgets
 
 ### Supervisor (Penyelia)
+
 - ✅ Review inspections
 - ✅ Validate repair requirements
 - ✅ Approve inspections
@@ -413,6 +453,7 @@ Budget Check:
 - ❌ Final budget approval
 
 ### Admin Officer (Pentadbiran)
+
 - ✅ Generate KEW.PA-10
 - ✅ Create job records
 - ✅ Submit for approval
@@ -422,6 +463,7 @@ Budget Check:
 - ❌ Conduct inspections
 
 ### Approver (Pelulus)
+
 - ✅ Review work orders
 - ✅ Check budgets
 - ✅ Approve/reject repairs
@@ -431,6 +473,7 @@ Budget Check:
 - ❌ Generate KEW.PA-10
 
 ### Technician (Juruteknik)
+
 - ✅ View assigned work
 - ✅ Perform repairs
 - ✅ Upload photos
@@ -454,6 +497,7 @@ Budget Check:
 ## System Features
 
 ### Inspection Module
+
 - Mobile-optimized inspection forms
 - Offline capability with sync
 - GPS and photo metadata
@@ -461,6 +505,7 @@ Budget Check:
 - Inspection history tracking
 
 ### Approval Workflow Engine
+
 - Configurable approval chains
 - Budget threshold routing
 - Email/SMS notifications
@@ -468,6 +513,7 @@ Budget Check:
 - Delegation support
 
 ### Digital Signature Integration
+
 - MyKad integration
 - Government certificate authority
 - Signature verification
@@ -477,10 +523,12 @@ Budget Check:
 ## Bilingual Support
 
 System fully supports:
+
 - **Bahasa Malaysia** - Primary government language
 - **English** - Secondary
 
 **Bilingual Elements**:
+
 - All forms and labels
 - Email notifications
 - Reports and certificates
@@ -490,6 +538,7 @@ System fully supports:
 ## Performance Metrics
 
 Track workflow efficiency:
+
 - Average inspection time
 - Approval cycle time
 - Inspector productivity

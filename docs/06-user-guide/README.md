@@ -6,35 +6,28 @@ User guides and role-specific documentation for the Government Workshop Manageme
 
 ## Table of Contents
 
+### Current Documentation
+
 ### [1. User Roles and Permissions](01-user-roles.md)
 
 Complete guide to the five government workshop roles and their permissions.
 
-### [2. Admin Officer Guide](02-admin-officer-guide.md)
+### Planned User Guides
 
-Guide for Pentadbiran (Admin Officers) - KEW.PA-10 reception and job management.
+The following role-specific guides are planned for upcoming sprints:
 
-### [3. Supervisor Guide](03-supervisor-guide.md)
-
-Guide for Penyelia (Supervisors) - Job assignment and quality control.
-
-### [4. Inspector Guide](04-inspector-guide.md)
-
-Guide for Pemeriksa (Inspectors) - Asset inspections and validation.
-
-### [5. Approver Guide](05-approver-guide.md)
-
-Guide for Pelulus (Approvers) - Work order approval and budget authorization.
-
-### [6. Technician Guide](06-technician-guide.md)
-
-Guide for Juruteknik (Technicians) - Repair execution and documentation.
+- **02-admin-officer-guide.md** - Guide for Pentadbiran (Admin Officers) - KEW.PA-10 reception and job management
+- **03-supervisor-guide.md** - Guide for Penyelia (Supervisors) - Job assignment and quality control
+- **04-inspector-guide.md** - Guide for Pemeriksa (Inspectors) - Asset inspections and validation
+- **05-approver-guide.md** - Guide for Pelulus (Approvers) - Work order approval and budget authorization
+- **06-technician-guide.md** - Guide for Juruteknik (Technicians) - Repair execution and documentation
 
 ## Quick Access by Role
 
 ### 🟡 Pentadbiran (Admin Officer)
 
 **Primary Tasks:**
+
 - Receive and register KEW.PA-10 forms
 - Create job records in system
 - Generate internal KEW.PA-10 forms
@@ -46,6 +39,7 @@ Guide for Juruteknik (Technicians) - Repair execution and documentation.
 ### 🟣 Penyelia (Supervisor)
 
 **Primary Tasks:**
+
 - Review job requests
 - Assign technicians to jobs
 - Review completed work
@@ -57,6 +51,7 @@ Guide for Juruteknik (Technicians) - Repair execution and documentation.
 ### 🔵 Pemeriksa (Inspector)
 
 **Primary Tasks:**
+
 - Conduct asset inspections
 - Validate asset conditions
 - Document findings with photos
@@ -68,6 +63,7 @@ Guide for Juruteknik (Technicians) - Repair execution and documentation.
 ### 🔴 Pelulus (Approver)
 
 **Primary Tasks:**
+
 - Review work orders
 - Check budget allocations
 - Approve/reject repairs
@@ -79,6 +75,7 @@ Guide for Juruteknik (Technicians) - Repair execution and documentation.
 ### 🟢 Juruteknik (Technician)
 
 **Primary Tasks:**
+
 - Receive work orders
 - Perform repair work
 - Document with photos

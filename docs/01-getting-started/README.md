@@ -2,7 +2,8 @@
 
 ## Overview
 
-This section contains everything you need to get started with the Workshop Management System, from initial installation to running your first development server.
+This section contains everything you need to get started with the Workshop Management System,
+from initial installation to running your first development server.
 
 ## Table of Contents
 

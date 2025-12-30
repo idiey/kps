@@ -6,25 +6,15 @@ Developer guides, workflows, coding standards, and best practices for contributi
 
 ## Table of Contents
 
-### [1. Developer Guide](01-developer-guide.md)
+### Planned Documentation
 
-Complete developer onboarding and daily development workflow.
+The following documentation is planned for upcoming sprints:
 
-### [2. Coding Standards](02-coding-standards.md)
-
-PHP, JavaScript, Vue.js coding standards and conventions.
-
-### [3. Testing Guide](03-testing.md)
-
-Writing and running tests with PHPUnit, Pest, and Vitest.
-
-### [4. Git Workflow](04-git-workflow.md)
-
-Branching strategy, commit conventions, and pull request process.
-
-### [5. API Development](05-api-development.md)
-
-Building RESTful APIs with Laravel and Sanctum authentication.
+- **01-developer-guide.md** - Complete developer onboarding and daily development workflow
+- **02-coding-standards.md** - PHP, JavaScript, Vue.js coding standards and conventions
+- **03-testing.md** - Writing and running tests with PHPUnit, Pest, and Vitest
+- **04-git-workflow.md** - Branching strategy, commit conventions, and pull request process
+- **05-api-development.md** - Building RESTful APIs with Laravel and Sanctum authentication
 
 ## Quick Links
 

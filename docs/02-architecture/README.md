@@ -2,33 +2,13 @@
 
 ## Overview
 
-This section covers the technical architecture of the **Government Workshop Management System (KEW.PA-10)**, including system design patterns, database structure, workflow processes, and technology stack decisions for Malaysian government compliance.
+This section covers the technical architecture of the **Government Workshop Management System (KEW.PA-10)**,
+including system design patterns, database structure, workflow processes,
+and technology stack decisions for Malaysian government compliance.
 
 ## Table of Contents
 
-### [1. System Overview](01-system-overview.md)
-
-High-level system architecture, technology stack, and design principles.
-
-### [2. Database Design](02-database-design.md)
-
-Complete database schema, table specifications, and entity relationships.
-
-### [3. Backend Architecture](03-backend-architecture.md)
-
-Laravel application structure, models, controllers, and services.
-
-### [4. Frontend Architecture](04-frontend-architecture.md)
-
-Vue.js components, Inertia.js pages, and state management with Pinia.
-
-### [5. Security Architecture](05-security-architecture.md)
-
-Authentication, authorization, and security best practices.
-
-### [6. API Design](06-api-design.md)
-
-RESTful API structure and Laravel Sanctum implementation.
+### Core Documentation
 
 ### [7. Workflow Option 1: External KEW.PA-10 Reception](07-workflow-option-1.md)
 
@@ -37,6 +17,17 @@ Complete workflow for processing KEW.PA-10 forms received from government depart
 ### [8. Workflow Option 2: Internal Inspection & KEW.PA-10 Generation](08-workflow-option-2.md)
 
 Proactive inspection workflow that generates KEW.PA-10 forms internally.
+
+### Planned Documentation
+
+The following documentation is planned for upcoming sprints:
+
+- **01-system-overview.md** - High-level system architecture, technology stack, and design principles
+- **02-database-design.md** - Complete database schema, table specifications, and entity relationships
+- **03-backend-architecture.md** - Laravel application structure, models, controllers, and services
+- **04-frontend-architecture.md** - Vue.js components, Inertia.js pages, and state management with Pinia
+- **05-security-architecture.md** - Authentication, authorization, and security best practices
+- **06-api-design.md** - RESTful API structure and Laravel Sanctum implementation
 
 ## Architecture Principles
 

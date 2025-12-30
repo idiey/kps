@@ -123,6 +123,15 @@ return [
             'handler' => NullHandler::class,
         ],
 
+        'policy' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/policy.log'),
+            'level' => env('POLICY_LOG_LEVEL', 'info'),
+            'days' => 30,
+            'permission' => 0664,
+            'replace_placeholders' => true,
+        ],
+
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],

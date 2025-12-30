@@ -12,18 +12,68 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import JobController from '@/actions/App/Http/Controllers/JobController';
+import CustomerController from '@/actions/App/Http/Controllers/CustomerController';
+import DashboardController from '@/actions/App/Http/Controllers/DashboardController';
+import { type NavItem, type UserRole } from '@/types';
+import { Link, usePage } from '@inertiajs/vue3';
+import { BookOpen, Folder, LayoutGrid, Briefcase, Users, ListChecks, BarChart3, FileText, ClipboardCheck } from 'lucide-vue-next';
+import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 
-const mainNavItems: NavItem[] = [
+const page = usePage();
+const userRole = computed(() => page.props.auth.user.role as UserRole);
+
+const allNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+        roles: ['pentadbiran', 'penyelia', 'pemeriksa', 'pelulus', 'juruteknik'],
+    },
+    {
+        title: 'KEW.PA-10 Forms',
+        href: '/kew-pa-10',
+        icon: FileText,
+        roles: ['pentadbiran', 'penyelia', 'pemeriksa'],
+    },
+    {
+        title: 'Inspections',
+        href: '/inspections',
+        icon: ClipboardCheck,
+        roles: ['pentadbiran', 'penyelia', 'pemeriksa'],
+    },
+    {
+        title: 'Jobs',
+        href: JobController.index(),
+        icon: Briefcase,
+        roles: ['pentadbiran', 'penyelia', 'pemeriksa', 'pelulus'],
+    },
+    {
+        title: 'Customers',
+        href: CustomerController.index(),
+        icon: Users,
+        roles: ['pentadbiran', 'penyelia'],
+    },
+    {
+        title: 'My Jobs',
+        href: DashboardController.myJobs(),
+        icon: ListChecks,
+        roles: ['juruteknik', 'pentadbiran', 'penyelia'],
+    },
+    {
+        title: 'Workload',
+        href: DashboardController.workload(),
+        icon: BarChart3,
+        roles: ['pentadbiran', 'penyelia'],
     },
 ];
+
+const mainNavItems = computed(() => {
+    return allNavItems.filter(item =>
+        !item.roles || item.roles.includes(userRole.value)
+    );
+});
 
 const footerNavItems: NavItem[] = [
     {

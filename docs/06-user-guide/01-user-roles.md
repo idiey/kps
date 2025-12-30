@@ -43,6 +43,7 @@ graph TD
 | Parts Inventory | ✅ All | ✅ | ✅ | ❌ | ❌ |
 
 **Key Actions**:
+
 - Receive external KEW.PA-10 forms
 - Register forms in system
 - Generate internal KEW.PA-10 forms
@@ -53,10 +54,12 @@ graph TD
 - Configure system settings
 
 **Workflows Involved**:
+
 - Option 1: KEW.PA-10 reception and registration
 - Option 2: KEW.PA-10 generation from inspections
 
 **Typical Daily Tasks**:
+
 1. Check for incoming KEW.PA-10 forms
 2. Register new jobs in system
 3. Follow up on pending approvals
@@ -86,6 +89,7 @@ graph TD
 | Reports | ✅ Team | ✅ | ❌ | ❌ | ❌ |
 
 **Key Actions**:
+
 - Review job requests
 - Assign jobs to technicians
 - Validate repair requirements
@@ -97,10 +101,12 @@ graph TD
 - Monitor team performance
 
 **Workflows Involved**:
+
 - Option 1: Job assignment and completion review
 - Option 2: Inspection approval and work review
 
 **Typical Daily Tasks**:
+
 1. Review new inspection reports
 2. Assign pending jobs to available technicians
 3. Monitor ongoing work progress
@@ -132,6 +138,7 @@ graph TD
 | Reports | ✅ Own | ✅ | ❌ | ❌ | ❌ |
 
 **Key Actions**:
+
 - Schedule asset inspections
 - Conduct physical inspections
 - Document asset conditions
@@ -142,10 +149,12 @@ graph TD
 - Recommend repair priorities
 
 **Workflows Involved**:
+
 - Option 1: Asset and KEW.PA-10 validation
 - Option 2: Inspection initiation and reporting
 
 **Typical Daily Tasks**:
+
 1. Review inspection schedule
 2. Conduct scheduled inspections
 3. Upload inspection photos
@@ -155,6 +164,7 @@ graph TD
 7. Update asset condition records
 
 **Mobile Features**:
+
 - Offline inspection forms
 - Camera integration for photos
 - GPS location capture
@@ -184,6 +194,7 @@ graph TD
 | Reports | ✅ All | ✅ | ❌ | ❌ | ❌ |
 
 **Key Actions**:
+
 - Review work orders
 - Check budget allocations
 - Validate cost estimates
@@ -194,6 +205,7 @@ graph TD
 - Escalate over-budget requests
 
 **Workflows Involved**:
+
 - Option 2: Work order approval (primary role)
 
 **Approval Thresholds**:
@@ -206,6 +218,7 @@ graph TD
 | > 20,000 | Dept Head + Finance |
 
 **Typical Daily Tasks**:
+
 1. Review pending approval queue
 2. Check budget availability
 3. Review inspection findings
@@ -215,6 +228,7 @@ graph TD
 7. Generate approval reports
 
 **Digital Signature**:
+
 - MyKad integration
 - Government certificate authority
 - Cryptographic validation
@@ -244,6 +258,7 @@ graph TD
 | Reports | ✅ Own | ❌ | ❌ | ❌ | ❌ |
 
 **Key Actions**:
+
 - Receive work order assignments
 - Review job details and requirements
 - Take before photos
@@ -256,10 +271,12 @@ graph TD
 - Submit for supervisor review
 
 **Workflows Involved**:
+
 - Option 1: Repair execution
 - Option 2: Repair execution
 
 **Typical Daily Tasks**:
+
 1. Check assigned work orders
 2. Review job requirements
 3. Gather tools and parts
@@ -271,6 +288,7 @@ graph TD
 9. Submit completion reports
 
 **Photo Requirements**:
+
 - Before: 3+ photos
 - During: 3+ photos of critical steps
 - After: 5+ photos from multiple angles
@@ -331,12 +349,14 @@ Some users may have multiple roles:
 **Example**: User can be both Inspector and Technician
 
 **Access Rules**:
+
 - User can switch between roles
 - Permissions combined (most permissive wins)
 - Activities logged per role
 - Reporting shows role context
 
 **Role Switching**:
+
 1. Click role selector in header
 2. Select active role
 3. Interface updates for that role
@@ -347,6 +367,7 @@ Some users may have multiple roles:
 ### Activity Logging
 
 All role-based actions are logged:
+
 - User ID and name
 - Role at time of action
 - Timestamp
@@ -357,6 +378,7 @@ All role-based actions are logged:
 ### Compliance Reports
 
 Available reports by role:
+
 - User activity by role
 - Permission usage tracking
 - Unauthorized access attempts

@@ -6,25 +6,20 @@ Deployment procedures, implementation roadmap, CI/CD pipeline, and operational g
 
 ## Table of Contents
 
+### Current Documentation
+
 ### [1. Implementation Roadmap](01-implementation-roadmap.md)
 
 Complete project timeline, milestones, and release plan.
 
-### [2. Production Deployment](02-production-deployment.md)
+### Planned Documentation
 
-Step-by-step guide for deploying to production environment.
+The following documentation is planned for upcoming sprints:
 
-### [3. CI/CD Pipeline](03-cicd-pipeline.md)
-
-Continuous Integration and Deployment setup with GitHub Actions.
-
-### [4. Server Setup](04-server-setup.md)
-
-Production server configuration, Nginx, PHP-FPM, and database setup.
-
-### [5. Monitoring & Maintenance](05-monitoring.md)
-
-Application monitoring, logging, and maintenance procedures.
+- **02-production-deployment.md** - Step-by-step guide for deploying to production environment
+- **03-cicd-pipeline.md** - Continuous Integration and Deployment setup with GitHub Actions
+- **04-server-setup.md** - Production server configuration, Nginx, PHP-FPM, and database setup
+- **05-monitoring.md** - Application monitoring, logging, and maintenance procedures
 
 ## Quick Deploy
 

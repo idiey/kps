@@ -62,12 +62,14 @@ flowchart TB
 **Role**: Pentadbiran (Admin Officer)
 
 **Actions**:
+
 - Receive physical or digital KEW.PA-10 form from government department
 - Verify form completeness and signatures
 - Scan/upload KEW.PA-10 documents
 - Register KEW.PA-10 number in system
 
 **Required Information**:
+
 - KEW.PA-10 form number
 - Requesting department details
 - Asset information (ID, type, location)
@@ -76,6 +78,7 @@ flowchart TB
 - Budget allocation reference
 
 **System Requirements**:
+
 - KEW.PA-10 document upload
 - OCR for form number recognition (optional)
 - Department database integration
@@ -84,6 +87,7 @@ flowchart TB
 ### 2. Admin Officer: Register in System
 
 **Actions**:
+
 - Create new job record linked to KEW.PA-10
 - Enter asset details
 - Set job priority based on urgency
@@ -91,6 +95,7 @@ flowchart TB
 - Generate job reference number
 
 **Data Entry**:
+
 ```php
 - job_reference: Auto-generated (WS-YYYY-NNNN)
 - kew_pa_10_number: From form
@@ -106,12 +111,14 @@ flowchart TB
 **Role**: Penyelia (Supervisor)
 
 **Actions**:
+
 - Review KEW.PA-10 details and job requirements
 - Assess resource availability (technicians, parts)
 - Determine job complexity
 - Estimate required time and parts
 
 **Decision Points**:
+
 - Is the repair within workshop capabilities?
 - Are required parts available?
 - Which technician has appropriate skills?
@@ -120,18 +127,21 @@ flowchart TB
 ### 4. Supervisor: Assign to Technician
 
 **Actions**:
+
 - Select technician based on skills and availability
 - Set expected completion date
 - Add special instructions if needed
 - Notify technician of assignment
 
 **Assignment Criteria**:
+
 - Technician skill level matches job complexity
 - Current workload capacity
 - Asset type expertise
 - Location/mobility requirements
 
 **Notification**:
+
 - System notification to technician
 - Email alert with job details
 - Mobile app push notification (if available)
@@ -141,6 +151,7 @@ flowchart TB
 **Role**: Pemeriksa (Inspector)
 
 **Actions**:
+
 - Conduct physical inspection of asset
 - Verify asset ID matches KEW.PA-10
 - Document current condition
@@ -148,6 +159,7 @@ flowchart TB
 - Identify all repair requirements
 
 **Inspection Checklist**:
+
 - Asset identification verified
 - Visual damage assessment
 - Functional testing (if applicable)
@@ -157,12 +169,14 @@ flowchart TB
 ### 6. Inspector: Verify KEW.PA-10 Details
 
 **Actions**:
+
 - Compare actual asset condition with KEW.PA-10 description
 - Verify repair request is accurate
 - Identify any discrepancies
 - Check budget allocation sufficiency
 
 **Verification Points**:
+
 - Asset details match physical asset
 - Requested repairs match actual needs
 - No undeclared damage or issues
@@ -171,6 +185,7 @@ flowchart TB
 ### 7. Inspector: Document Findings & Approve
 
 **Actions**:
+
 - Complete digital inspection form
 - Upload all inspection photos
 - Add notes and recommendations
@@ -178,6 +193,7 @@ flowchart TB
 - Digital signature
 
 **Approval Options**:
+
 - ✅ **Approved** - Proceed to repair
 - ⚠️ **Approved with conditions** - Additional parts/work needed
 - ❌ **Rejected** - Asset beyond repair or incorrect KEW.PA-10
@@ -187,6 +203,7 @@ flowchart TB
 **Role**: Juruteknik (Technician)
 
 **Actions**:
+
 - Receive work order notification
 - Review job details and inspector notes
 - Take before photos (if not done by inspector)
@@ -197,12 +214,14 @@ flowchart TB
 - Update work status throughout process
 
 **Photo Documentation**:
+
 - Before repair (multiple angles)
 - During repair (critical steps)
 - After repair (completed work)
 - Minimum 3 photos per phase
 
 **Parts Tracking**:
+
 - Select parts from inventory
 - Record part numbers and quantities
 - Update stock levels automatically
@@ -211,6 +230,7 @@ flowchart TB
 ### 9. Technician: Mark Job Complete
 
 **Actions**:
+
 - Final quality check
 - Complete work completion form
 - Upload all photos
@@ -219,7 +239,8 @@ flowchart TB
 - Notify supervisor
 
 **Completion Form**:
-```
+
+```text
 Work Completed: [X] Yes [ ] No
 Parts Used: [List with quantities]
 Time Spent: [Hours]
@@ -231,6 +252,7 @@ Quality Rating: [Self-assessment]
 ### 10. Supervisor: Review Completed Work
 
 **Actions**:
+
 - Review technician's completion report
 - Verify photo documentation is complete
 - Check parts usage is reasonable
@@ -238,6 +260,7 @@ Quality Rating: [Self-assessment]
 - Validate work meets KEW.PA-10 requirements
 
 **Quality Checks**:
+
 - Work completed as specified
 - Photo evidence is clear and complete
 - Parts usage documented
@@ -247,6 +270,7 @@ Quality Rating: [Self-assessment]
 ### 11. Supervisor: Update KEW.PA-10 & Return
 
 **Actions**:
+
 - Update KEW.PA-10 form with completion details
 - Add repair report
 - Attach all photos
@@ -255,6 +279,7 @@ Quality Rating: [Self-assessment]
 - Return completed KEW.PA-10 to requesting department
 
 **Completion Package**:
+
 - Updated KEW.PA-10 form
 - Repair completion report
 - Before/after photos
@@ -265,6 +290,7 @@ Quality Rating: [Self-assessment]
 ## Role Permissions
 
 ### Admin Officer (Pentadbiran)
+
 - ✅ Receive and register KEW.PA-10
 - ✅ Create job records
 - ✅ View all jobs
@@ -273,6 +299,7 @@ Quality Rating: [Self-assessment]
 - ❌ Approve repairs
 
 ### Supervisor (Penyelia)
+
 - ✅ Review all jobs
 - ✅ Assign technicians
 - ✅ Review completed work
@@ -281,6 +308,7 @@ Quality Rating: [Self-assessment]
 - ❌ Conduct inspections
 
 ### Inspector (Pemeriksa)
+
 - ✅ Conduct inspections
 - ✅ Validate asset conditions
 - ✅ Approve/reject repairs
@@ -289,6 +317,7 @@ Quality Rating: [Self-assessment]
 - ❌ Complete repairs
 
 ### Technician (Juruteknik)
+
 - ✅ View assigned jobs
 - ✅ Perform repairs
 - ✅ Upload photos
@@ -300,7 +329,9 @@ Quality Rating: [Self-assessment]
 ## System Features
 
 ### Audit Trail
+
 Every action is logged:
+
 - User ID and name
 - Timestamp
 - Action performed
@@ -308,12 +339,14 @@ Every action is logged:
 - IP address
 
 ### Notifications
+
 - Email notifications at each workflow stage
 - SMS alerts for urgent jobs
 - Mobile push notifications
 - Dashboard alerts
 
 ### Document Management
+
 - Digital KEW.PA-10 storage
 - Photo attachment (max 10MB per photo)
 - Document versioning
@@ -323,6 +356,7 @@ Every action is logged:
 ## Bilingual Support
 
 All forms, notifications, and reports available in:
+
 - **English** - Default
 - **Bahasa Malaysia** - Government standard
 
