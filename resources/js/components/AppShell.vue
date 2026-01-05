@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import ConfirmDialog from '@/components/ConfirmDialog.vue';
+import Toaster from '@/components/Toaster.vue';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { usePage } from '@inertiajs/vue3';
-import Toaster from '@/components/Toaster.vue';
-import ConfirmDialog from '@/components/ConfirmDialog.vue';
 
 interface Props {
     variant?: 'header' | 'sidebar';

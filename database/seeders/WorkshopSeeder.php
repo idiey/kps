@@ -18,64 +18,76 @@ class WorkshopSeeder extends Seeder
     public function run(): void
     {
         // Create users with different roles
-        $admin = User::create([
-            'name' => 'Ahmad bin Abdullah',
-            'email' => 'admin@workshop.gov.my',
-            'password' => Hash::make('password'),
-            'role' => 'pentadbiran',
-            'phone' => '03-88881234',
-            'department' => 'Pentadbiran',
-        ]);
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@workshop.gov.my'],
+            [
+                'name' => 'Ahmad bin Abdullah',
+                'password' => Hash::make('password'),
+                'role' => 'pentadbiran',
+                'phone' => '03-88881234',
+                'department' => 'Pentadbiran',
+            ]
+        );
         $admin->assignRole('pentadbiran');
 
-        $supervisor = User::create([
-            'name' => 'Siti Nurhaliza',
-            'email' => 'supervisor@workshop.gov.my',
-            'password' => Hash::make('password'),
-            'role' => 'penyelia',
-            'phone' => '03-88881235',
-            'department' => 'Teknikal',
-        ]);
+        $supervisor = User::firstOrCreate(
+            ['email' => 'supervisor@workshop.gov.my'],
+            [
+                'name' => 'Siti Nurhaliza',
+                'password' => Hash::make('password'),
+                'role' => 'penyelia',
+                'phone' => '03-88881235',
+                'department' => 'Teknikal',
+            ]
+        );
         $supervisor->assignRole('penyelia');
 
-        $technician1 = User::create([
-            'name' => 'Mohamed bin Hassan',
-            'email' => 'tech1@workshop.gov.my',
-            'password' => Hash::make('password'),
-            'role' => 'juruteknik',
-            'phone' => '03-88881236',
-            'department' => 'Teknikal',
-        ]);
+        $technician1 = User::firstOrCreate(
+            ['email' => 'tech1@workshop.gov.my'],
+            [
+                'name' => 'Mohamed bin Hassan',
+                'password' => Hash::make('password'),
+                'role' => 'juruteknik',
+                'phone' => '03-88881236',
+                'department' => 'Teknikal',
+            ]
+        );
         $technician1->assignRole('juruteknik');
 
-        $technician2 = User::create([
-            'name' => 'Tan Wei Ming',
-            'email' => 'tech2@workshop.gov.my',
-            'password' => Hash::make('password'),
-            'role' => 'juruteknik',
-            'phone' => '03-88881237',
-            'department' => 'Teknikal',
-        ]);
+        $technician2 = User::firstOrCreate(
+            ['email' => 'tech2@workshop.gov.my'],
+            [
+                'name' => 'Tan Wei Ming',
+                'password' => Hash::make('password'),
+                'role' => 'juruteknik',
+                'phone' => '03-88881237',
+                'department' => 'Teknikal',
+            ]
+        );
         $technician2->assignRole('juruteknik');
 
-        $inspector = User::create([
-            'name' => 'Rajeswari Devi',
-            'email' => 'inspector@workshop.gov.my',
-            'password' => Hash::make('password'),
-            'role' => 'pemeriksa',
-            'phone' => '03-88881238',
-            'department' => 'Pemeriksaan',
-        ]);
+        $inspector = User::firstOrCreate(
+            ['email' => 'inspector@workshop.gov.my'],
+            [
+                'name' => 'Rajeswari Devi',
+                'password' => Hash::make('password'),
+                'role' => 'pemeriksa',
+                'phone' => '03-88881238',
+                'department' => 'Pemeriksaan',
+            ]
+        );
         $inspector->assignRole('pemeriksa');
 
-        $approver = User::create([
-            'name' => 'Dato\' Ibrahim bin Mahmud',
-            'email' => 'approver@workshop.gov.my',
-            'password' => Hash::make('password'),
-            'role' => 'pelulus',
-            'phone' => '03-88881239',
-            'department' => 'Pengurusan',
-        ]);
+        $approver = User::firstOrCreate(
+            ['email' => 'approver@workshop.gov.my'],
+            [
+                'name' => 'Dato\' Ibrahim bin Mahmud',
+                'password' => Hash::make('password'),
+                'role' => 'pelulus',
+                'phone' => '03-88881239',
+                'department' => 'Pengurusan',
+            ]
+        );
         $approver->assignRole('pelulus');
 
         // Create customers
@@ -118,7 +130,10 @@ class WorkshopSeeder extends Seeder
         ];
 
         foreach ($customers as $customerData) {
-            $customer = Customer::create($customerData);
+            $customer = Customer::firstOrCreate(
+                ['email' => $customerData['email'] ?? null, 'name' => $customerData['name']],
+                $customerData
+            );
 
             // Create some jobs for each customer
             $jobsCount = rand(1, 3);

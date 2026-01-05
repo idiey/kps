@@ -31,7 +31,7 @@ class WorkshopJobPolicy
     public function create(User $user): bool
     {
         // Admin and technicians can create jobs
-        return in_array($user->role, ['pentadbiran', 'juruteknik']);
+        return $user->hasAnyRole(['pentadbiran', 'juruteknik']);
     }
 
     /**
@@ -40,12 +40,12 @@ class WorkshopJobPolicy
     public function update(User $user, WorkshopJob $job): bool
     {
         // Admin can update any job
-        if ($user->role === 'pentadbiran') {
+        if ($user->hasRole('pentadbiran')) {
             return true;
         }
 
         // Technician can update jobs assigned to them
-        if ($user->role === 'juruteknik' && $job->assigned_to === $user->id) {
+        if ($user->hasRole('juruteknik') && $job->assigned_to === $user->id) {
             return true;
         }
 
@@ -58,12 +58,12 @@ class WorkshopJobPolicy
     public function updateStatus(User $user, WorkshopJob $job): bool
     {
         // Admin can change any job status
-        if ($user->role === 'pentadbiran') {
+        if ($user->hasRole('pentadbiran')) {
             return true;
         }
 
         // Technician can change status of jobs assigned to them
-        if ($user->role === 'juruteknik' && $job->assigned_to === $user->id) {
+        if ($user->hasRole('juruteknik') && $job->assigned_to === $user->id) {
             return true;
         }
 
@@ -76,7 +76,7 @@ class WorkshopJobPolicy
     public function assign(User $user, WorkshopJob $job): bool
     {
         // Only admin can assign/reassign jobs
-        return $user->role === 'pentadbiran';
+        return $user->hasRole('pentadbiran');
     }
 
     /**
@@ -85,7 +85,7 @@ class WorkshopJobPolicy
     public function createNote(User $user, WorkshopJob $job): bool
     {
         // Admin and technicians can create notes
-        return in_array($user->role, ['pentadbiran', 'juruteknik']);
+        return $user->hasAnyRole(['pentadbiran', 'juruteknik']);
     }
 
     /**
@@ -94,7 +94,7 @@ class WorkshopJobPolicy
     public function delete(User $user, WorkshopJob $job): bool
     {
         // Only admin can delete jobs
-        return $user->role === 'pentadbiran';
+        return $user->hasRole('pentadbiran');
     }
 
     /**
@@ -103,7 +103,7 @@ class WorkshopJobPolicy
     public function restore(User $user, WorkshopJob $job): bool
     {
         // Only admin can restore jobs
-        return $user->role === 'pentadbiran';
+        return $user->hasRole('pentadbiran');
     }
 
     /**
@@ -112,6 +112,6 @@ class WorkshopJobPolicy
     public function forceDelete(User $user, WorkshopJob $job): bool
     {
         // Only admin can force delete jobs
-        return $user->role === 'pentadbiran';
+        return $user->hasRole('pentadbiran');
     }
 }

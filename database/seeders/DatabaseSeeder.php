@@ -16,7 +16,17 @@ class DatabaseSeeder extends Seeder
         // Seed roles and permissions first
         $this->call(RolePermissionSeeder::class);
 
-        // Then seed workshop data (users, customers, jobs)
+        // Seed template field types
+        $this->call(TemplateFieldTypeSeeder::class);
+
+        // Seed workflows (Option 1 & Option 2)
+        $this->call(KewPa10WorkflowSeeder::class);
+        $this->call(InternalInspectionWorkflowSeeder::class);
+
+        // Seed KEW.PA-10 test data
+        $this->call(KewPA10TestDataSeeder::class);
+
+        // Seed workshop data (users, customers, jobs)
         $this->call(WorkshopSeeder::class);
     }
 }

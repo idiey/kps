@@ -1,7 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\RoleManagementController;
+use App\Http\Controllers\Admin\TemplateController;
+use App\Http\Controllers\Admin\TemplateFieldController;
+use App\Http\Controllers\Admin\WorkflowController;
+use App\Http\Controllers\Admin\WorkflowStatusController;
+use App\Http\Controllers\Admin\WorkflowTransitionController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DynamicJobController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\JobAssignmentController;
 use App\Http\Controllers\JobController;
@@ -74,7 +81,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('customers.search');
 
     // KEW.PA-10 Management
-    Route::resource('kew-pa-10', KewPA10Controller::class);
+    Route::resource('kew-pa-10', KewPA10Controller::class)
+        ->parameters(['kew-pa-10' => 'kewPA10']);
 
     // KEW.PA-10 Workflow Actions
     Route::post('kew-pa-10/{kewPA10}/verify', [KewPA10Controller::class, 'verify'])
@@ -151,6 +159,97 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::delete('completion/{report}/parts/{partIndex}', [RepairCompletionController::class, 'removePart'])
         ->name('completion.remove-part');
+
+    // Dynamic Workflow System Routes
+    // Template selection and dynamic job creation
+    Route::get('jobs/templates/select', [DynamicJobController::class, 'create'])
+        ->name('jobs.select-template');
+
+    Route::get('jobs/create/{template}', [DynamicJobController::class, 'create'])
+        ->name('jobs.create-dynamic');
+
+    // Workflow transitions
+    Route::post('jobs/{job}/transitions/{transition}', [DynamicJobController::class, 'executeTransition'])
+        ->name('jobs.execute-transition');
+
+    // API endpoints for dynamic forms
+    Route::get('api/jobs/{job}/available-transitions', [DynamicJobController::class, 'getAvailableTransitions'])
+        ->name('api.jobs.available-transitions');
+
+    Route::get('api/jobs/{job}/field-rules', [DynamicJobController::class, 'getFieldRules'])
+        ->name('api.jobs.field-rules');
+
+    Route::post('api/templates/{template}/validate', [DynamicJobController::class, 'validateFieldData'])
+        ->name('api.templates.validate');
+
+    Route::get('api/templates/{template}/schema', [DynamicJobController::class, 'getFormSchema'])
+        ->name('api.templates.schema');
+
+    Route::get('api/templates/{template}/workflows', [DynamicJobController::class, 'getWorkflows'])
+        ->name('api.templates.workflows');
+
+    // Admin Routes (Pentadbiran only)
+    Route::prefix('admin')->name('admin.')->group(function () {
+        // Workflow Management
+        Route::resource('workflows', WorkflowController::class);
+        Route::get('workflows/{workflow}/builder', [WorkflowController::class, 'builder'])
+            ->name('workflows.builder');
+
+        // Workflow Statuses
+        Route::resource('workflows.statuses', WorkflowStatusController::class);
+        Route::post('workflows/{workflow}/statuses/reorder', [WorkflowStatusController::class, 'reorder'])
+            ->name('workflows.statuses.reorder');
+
+        // Workflow Transitions
+        Route::resource('workflows.transitions', WorkflowTransitionController::class);
+        Route::post('workflows/{workflow}/transitions/reorder', [WorkflowTransitionController::class, 'reorder'])
+            ->name('workflows.transitions.reorder');
+        Route::patch('workflows/{workflow}/transitions/{transition}/conditions', [WorkflowTransitionController::class, 'updateConditions'])
+            ->name('workflows.transitions.update-conditions');
+        Route::patch('workflows/{workflow}/transitions/{transition}/actions', [WorkflowTransitionController::class, 'updateActions'])
+            ->name('workflows.transitions.update-actions');
+
+        // Template Management
+        Route::resource('templates', TemplateController::class);
+        Route::get('templates/{template}/workflows', [TemplateController::class, 'getWorkflows'])
+            ->name('templates.workflows');
+        Route::get('templates/{template}/schema', [TemplateController::class, 'getSchema'])
+            ->name('templates.schema');
+        Route::post('templates/{template}/workflows/{workflow}', [TemplateController::class, 'attachWorkflow'])
+            ->name('templates.attach-workflow');
+        Route::delete('templates/{template}/workflows/{workflow}', [TemplateController::class, 'detachWorkflow'])
+            ->name('templates.detach-workflow');
+
+        // Template Fields
+        Route::resource('templates.fields', TemplateFieldController::class);
+        Route::post('templates/{template}/fields/reorder', [TemplateFieldController::class, 'reorder'])
+            ->name('templates.fields.reorder');
+        Route::post('templates/{template}/fields/{field}/duplicate', [TemplateFieldController::class, 'duplicate'])
+            ->name('templates.fields.duplicate');
+        Route::get('templates/{template}/fields/{field}/preview', [TemplateFieldController::class, 'preview'])
+            ->name('templates.fields.preview');
+        Route::post('templates/{template}/fields/{field}/test-formula', [TemplateFieldController::class, 'testFormula'])
+            ->name('templates.fields.test-formula');
+
+        // Role and Permission Management
+        Route::resource('roles', RoleManagementController::class);
+        Route::get('roles-permissions', [RoleManagementController::class, 'permissions'])
+            ->name('roles.permissions');
+        Route::post('roles-permissions/update', [RoleManagementController::class, 'updatePermissionMatrix'])
+            ->name('roles.permissions.update');
+        Route::patch('roles/{role}/permissions', [RoleManagementController::class, 'updatePermissions'])
+            ->name('roles.update-permissions');
+        Route::post('roles/{role}/deactivate', [RoleManagementController::class, 'deactivate'])
+            ->name('roles.deactivate');
+        Route::post('roles/{role}/activate', [RoleManagementController::class, 'activate'])
+            ->name('roles.activate');
+        Route::get('roles/{role}/users', [RoleManagementController::class, 'getUsers'])
+            ->name('roles.users');
+        Route::post('roles/{role}/users', [RoleManagementController::class, 'assignUsers'])
+            ->name('roles.assign-users');
+        Route::delete('roles/{role}/users', [RoleManagementController::class, 'removeUsers'])
+            ->name('roles.remove-users');
+    });
 });
 
 require __DIR__.'/settings.php';

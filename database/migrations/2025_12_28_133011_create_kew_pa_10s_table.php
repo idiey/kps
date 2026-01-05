@@ -26,6 +26,7 @@ return new class extends Migration
             $table->date('received_date');
             $table->foreignId('received_by')->nullable()->constrained('users');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index('kew_pa_10_number');
             $table->index('government_department_id');

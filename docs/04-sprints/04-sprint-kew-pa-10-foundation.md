@@ -569,6 +569,7 @@ GovernmentDepartment (1) ──── (n) Asset
    - Logging config added to `config/logging.php` and `config/auth.php`
 
 **Testing Command**:
+
 ```bash
 php artisan test --filter=PolicyTest
 ```
@@ -620,6 +621,7 @@ php artisan test --filter=PolicyTest
 **Completion Date**: 2025-12-30
 **Total Story Points**: 20/20
 **Total Files Created**:
+
 - 7 Migrations
 - 6 Models (+ 1 extended)
 - 2 Enums

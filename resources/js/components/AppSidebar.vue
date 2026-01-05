@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import CustomerController from '@/actions/App/Http/Controllers/CustomerController';
+import DashboardController from '@/actions/App/Http/Controllers/DashboardController';
+import JobController from '@/actions/App/Http/Controllers/JobController';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -12,12 +15,19 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import JobController from '@/actions/App/Http/Controllers/JobController';
-import CustomerController from '@/actions/App/Http/Controllers/CustomerController';
-import DashboardController from '@/actions/App/Http/Controllers/DashboardController';
 import { type NavItem, type UserRole } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, Briefcase, Users, ListChecks, BarChart3, FileText, ClipboardCheck } from 'lucide-vue-next';
+import {
+    BarChart3,
+    BookOpen,
+    Briefcase,
+    ClipboardCheck,
+    FileText,
+    Folder,
+    LayoutGrid,
+    ListChecks,
+    Users,
+} from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 
@@ -29,7 +39,13 @@ const allNavItems: NavItem[] = [
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
-        roles: ['pentadbiran', 'penyelia', 'pemeriksa', 'pelulus', 'juruteknik'],
+        roles: [
+            'pentadbiran',
+            'penyelia',
+            'pemeriksa',
+            'pelulus',
+            'juruteknik',
+        ],
     },
     {
         title: 'KEW.PA-10 Forms',
@@ -70,8 +86,8 @@ const allNavItems: NavItem[] = [
 ];
 
 const mainNavItems = computed(() => {
-    return allNavItems.filter(item =>
-        !item.roles || item.roles.includes(userRole.value)
+    return allNavItems.filter(
+        (item) => !item.roles || item.roles.includes(userRole.value),
     );
 });
 

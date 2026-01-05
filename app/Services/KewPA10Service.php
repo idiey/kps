@@ -47,9 +47,18 @@ class KewPA10Service
      */
     public function verifyForm(KewPA10 $kewPA10, array $verificationData): KewPA10
     {
+        $formCompletenessVerified = filter_var(
+            $verificationData['form_completeness_verified'] ?? false,
+            FILTER_VALIDATE_BOOLEAN
+        );
+        $signaturesVerified = filter_var(
+            $verificationData['signatures_verified'] ?? false,
+            FILTER_VALIDATE_BOOLEAN
+        );
+
         $kewPA10->update([
-            'form_completeness_verified' => $verificationData['form_completeness_verified'] ?? false,
-            'signatures_verified' => $verificationData['signatures_verified'] ?? false,
+            'form_completeness_verified' => $formCompletenessVerified,
+            'signatures_verified' => $signaturesVerified,
             'verification_notes' => $verificationData['verification_notes'] ?? null,
         ]);
 
@@ -61,9 +70,8 @@ class KewPA10Service
      */
     public function createJobFromKewPA10(KewPA10 $kewPA10, array $jobData): WorkshopJob
     {
-        // Verify form is complete
-        if (!$kewPA10->isComplete()) {
-            throw new \InvalidArgumentException('KEW.PA-10 form must be verified before creating a job');
+        if (empty($kewPA10->kew_pa_10_number) || empty($kewPA10->description)) {
+            throw new \InvalidArgumentException('KEW.PA-10 form must have a number and description before creating a job');
         }
 
         // Check if job already exists for this KEW.PA-10
@@ -72,6 +80,10 @@ class KewPA10Service
         }
 
         return DB::transaction(function () use ($kewPA10, $jobData) {
+            $inspectionRequired = array_key_exists('inspection_required', $jobData)
+                ? filter_var($jobData['inspection_required'], FILTER_VALIDATE_BOOLEAN)
+                : true;
+
             // Generate job reference number (format: WS-YYYY-NNNN)
             $jobReference = $this->generateJobReference();
 
@@ -84,8 +96,8 @@ class KewPA10Service
                 'customer_id' => $jobData['customer_id'] ?? null,
                 'description' => $kewPA10->description,
                 'priority' => $kewPA10->priority,
-                'status' => $jobData['inspection_required'] ?? true ? JobStatus::PENDING_INSPECTION : JobStatus::IN_PROGRESS,
-                'inspection_required' => $jobData['inspection_required'] ?? true,
+                'status' => $inspectionRequired ? JobStatus::PENDING_INSPECTION : JobStatus::IN_PROGRESS,
+                'inspection_required' => $inspectionRequired,
                 'estimated_hours' => $jobData['estimated_hours'] ?? null,
                 'estimated_cost' => $jobData['estimated_cost'] ?? null,
                 'due_date' => $jobData['due_date'] ?? null,

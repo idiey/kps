@@ -4,48 +4,44 @@ import { Link } from '@inertiajs/vue3';
 import type { Component } from 'vue';
 
 interface Props {
-  title: string;
-  description?: string;
-  icon?: Component;
-  actionText?: string;
-  actionHref?: string;
+    title: string;
+    description?: string;
+    icon?: Component;
+    actionText?: string;
+    actionHref?: string;
 }
 
 defineProps<Props>();
 
 const emit = defineEmits<{
-  action: [];
+    action: [];
 }>();
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center py-12 px-4 text-center">
-    <component
-      v-if="icon"
-      :is="icon"
-      class="h-16 w-16 text-muted-foreground mb-4 opacity-50"
-    />
-
-    <h3 class="text-lg font-semibold mb-2">{{ title }}</h3>
-
-    <p v-if="description" class="text-muted-foreground mb-6 max-w-md">
-      {{ description }}
-    </p>
-
-    <Button
-      v-if="actionText && actionHref"
-      as-child
+    <div
+        class="flex flex-col items-center justify-center px-4 py-12 text-center"
     >
-      <Link :href="actionHref">
-        {{ actionText }}
-      </Link>
-    </Button>
+        <component
+            v-if="icon"
+            :is="icon"
+            class="mb-4 h-16 w-16 text-muted-foreground opacity-50"
+        />
 
-    <Button
-      v-else-if="actionText"
-      @click="emit('action')"
-    >
-      {{ actionText }}
-    </Button>
-  </div>
+        <h3 class="mb-2 text-lg font-semibold">{{ title }}</h3>
+
+        <p v-if="description" class="mb-6 max-w-md text-muted-foreground">
+            {{ description }}
+        </p>
+
+        <Button v-if="actionText && actionHref" as-child>
+            <Link :href="actionHref">
+                {{ actionText }}
+            </Link>
+        </Button>
+
+        <Button v-else-if="actionText" @click="emit('action')">
+            {{ actionText }}
+        </Button>
+    </div>
 </template>

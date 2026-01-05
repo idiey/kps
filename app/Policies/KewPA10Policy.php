@@ -32,8 +32,8 @@ class KewPA10Policy
      */
     public function create(User $user): bool
     {
-        $result = $user->role->canManageKewPA10();
-        
+        $result = $user->hasRole('pentadbiran');
+
         // Example: Audit logging integration (optional - can be enabled per method)
         return $this->authorize(
             action: 'create',
@@ -49,7 +49,7 @@ class KewPA10Policy
     public function update(User $user, KewPA10 $kewPA10): bool
     {
         // Only Admin Officers (Pentadbiran) can update KEW.PA-10 forms
-        return $user->role->canManageKewPA10();
+        return $user->hasRole('pentadbiran');
     }
 
     /**
@@ -57,8 +57,8 @@ class KewPA10Policy
      */
     public function verify(User $user, KewPA10 $kewPA10): bool
     {
-        $result = $user->role->canManageKewPA10();
-        
+        $result = $user->hasRole('pentadbiran');
+
         // Example: Audit logging with model context
         return $this->authorize(
             action: 'verify',
@@ -79,7 +79,7 @@ class KewPA10Policy
     public function returnToDepartment(User $user, KewPA10 $kewPA10): bool
     {
         // Only Admin Officers (Pentadbiran) can process KEW.PA-10 returns
-        return $user->role->canManageKewPA10();
+        return $user->hasRole('pentadbiran');
     }
 
     /**
@@ -88,7 +88,7 @@ class KewPA10Policy
     public function delete(User $user, KewPA10 $kewPA10): bool
     {
         // Only Admin Officers (Pentadbiran) can delete KEW.PA-10 forms
-        return $user->role->canManageKewPA10();
+        return $user->hasRole('pentadbiran');
     }
 
     /**
@@ -97,7 +97,7 @@ class KewPA10Policy
     public function restore(User $user, KewPA10 $kewPA10): bool
     {
         // Only Admin Officers (Pentadbiran) can restore KEW.PA-10 forms
-        return $user->role->canManageKewPA10();
+        return $user->hasRole('pentadbiran');
     }
 
     /**
@@ -106,6 +106,6 @@ class KewPA10Policy
     public function forceDelete(User $user, KewPA10 $kewPA10): bool
     {
         // Only Admin Officers (Pentadbiran) can force delete KEW.PA-10 forms
-        return $user->role->canManageKewPA10();
+        return $user->hasRole('pentadbiran');
     }
 }

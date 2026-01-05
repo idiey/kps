@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { SelectLabelProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
+import { computed } from "vue"
 import { SelectLabel, useForwardProps } from "reka-ui"
 import { cn } from "@/lib/utils"
 

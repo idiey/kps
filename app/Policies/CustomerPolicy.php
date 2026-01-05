@@ -31,7 +31,7 @@ class CustomerPolicy
     public function create(User $user): bool
     {
         // Admin and technicians can create customers
-        return in_array($user->role, ['pentadbiran', 'juruteknik']);
+        return $user->hasAnyRole(['pentadbiran', 'juruteknik']);
     }
 
     /**
@@ -40,12 +40,12 @@ class CustomerPolicy
     public function update(User $user, Customer $customer): bool
     {
         // Admin can update any customer
-        if ($user->role === 'pentadbiran') {
+        if ($user->hasRole('pentadbiran')) {
             return true;
         }
 
         // Technicians can update customers
-        if ($user->role === 'juruteknik') {
+        if ($user->hasRole('juruteknik')) {
             return true;
         }
 
@@ -58,7 +58,7 @@ class CustomerPolicy
     public function delete(User $user, Customer $customer): bool
     {
         // Only admin can delete customers
-        return $user->role === 'pentadbiran';
+        return $user->hasRole('pentadbiran');
     }
 
     /**
@@ -67,7 +67,7 @@ class CustomerPolicy
     public function restore(User $user, Customer $customer): bool
     {
         // Only admin can restore customers
-        return $user->role === 'pentadbiran';
+        return $user->hasRole('pentadbiran');
     }
 
     /**
@@ -76,6 +76,6 @@ class CustomerPolicy
     public function forceDelete(User $user, Customer $customer): bool
     {
         // Only admin can force delete customers
-        return $user->role === 'pentadbiran';
+        return $user->hasRole('pentadbiran');
     }
 }

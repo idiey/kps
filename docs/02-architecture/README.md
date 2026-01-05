@@ -10,6 +10,11 @@ and technology stack decisions for Malaysian government compliance.
 
 ### Core Documentation
 
+### [1. Dynamic Workflow Management System](../../DYNAMIC_WORKFLOW_SYSTEM.md)
+
+Complete documentation for the dynamic workflow system that allows administrators to create and manage
+multiple workflows, templates, and field configurations without code changes.
+
 ### [7. Workflow Option 1: External KEW.PA-10 Reception](07-workflow-option-1.md)
 
 Complete workflow for processing KEW.PA-10 forms received from government departments.

@@ -99,9 +99,20 @@ class User extends Authenticatable
     /**
      * Check if user has a specific role.
      */
-    public function hasRole(string $role): bool
+    public function hasRole(string|array|\App\Enums\UserRole $role): bool
     {
-        return $this->role === $role;
+        if (is_array($role)) {
+            foreach ($role as $r) {
+                if ($this->hasRole($r)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        $current = $this->role instanceof \App\Enums\UserRole ? $this->role->value : $this->role;
+        $target = $role instanceof \App\Enums\UserRole ? $role->value : $role;
+        return $current === $target;
     }
 
     /**
@@ -109,7 +120,8 @@ class User extends Authenticatable
      */
     public function canAssignJobs(): bool
     {
-        return in_array($this->role, ['pentadbiran', 'penyelia']);
+        $value = $this->role instanceof \App\Enums\UserRole ? $this->role->value : $this->role;
+        return in_array($value, ['pentadbiran', 'penyelia'], true);
     }
 
     /**
@@ -117,6 +129,7 @@ class User extends Authenticatable
      */
     public function isTechnician(): bool
     {
-        return $this->role === 'juruteknik';
+        $value = $this->role instanceof \App\Enums\UserRole ? $this->role->value : $this->role;
+        return $value === 'juruteknik';
     }
 }

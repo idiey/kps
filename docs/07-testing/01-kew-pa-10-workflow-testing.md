@@ -116,7 +116,7 @@ $asset = Asset::create([
 ## Phase 1: KEW.PA-10 Form Registration
 
 **Role**: Admin Officer (Pentadbiran)
-**Login**: admin@workshop.gov.my / password
+**Login**: <admin@workshop.gov.my> / password
 
 ### Step 1.1: Navigate to KEW.PA-10 List
 
@@ -125,6 +125,7 @@ $asset = Asset::create([
 3. Verify you see the KEW.PA-10 index page with filters
 
 **Expected Result**:
+
 - ✅ KEW.PA-10 list page loads
 - ✅ Search and filter options visible
 - ✅ "Register New Form" button visible
@@ -138,16 +139,19 @@ $asset = Asset::create([
    - **Government Department**: Select "Ministry of Health"
    - **Asset**: Select "Toyota Hilux 4x4 - MOH-VEH-2025-001"
    - **Description**:
+
      ```
      Vehicle engine overheating during operation. Radiator showing visible leaks.
      Requires immediate repair as vehicle is used for emergency medical transport.
      ```
+
    - **Priority**: Select "High"
    - **Budget Allocation Reference**: `BA-MOH-2025-12345` (optional)
    - **Received Date**: Select today's date
 3. Click "Register Form"
 
 **Expected Result**:
+
 - ✅ Form validates successfully
 - ✅ Redirects to form detail page
 - ✅ Success message displayed
@@ -160,13 +164,16 @@ $asset = Asset::create([
    - ✅ Check "Form completeness verified"
    - ✅ Check "Signatures verified"
    - Add verification notes:
+
      ```
      Form received from MOH on [date]. All required signatures present.
      Budget allocation confirmed. Approved for workshop processing.
      ```
+
 3. Click "Save Verification"
 
 **Expected Result**:
+
 - ✅ Dialog closes
 - ✅ Success message: "KEW.PA-10 form verified successfully"
 - ✅ Alert changes to green "Form Verified"
@@ -180,6 +187,7 @@ $asset = Asset::create([
 3. Click "Create Job"
 
 **Expected Result**:
+
 - ✅ Redirects to job detail page
 - ✅ Job reference generated (e.g., `WS-2025-0001`)
 - ✅ Job status is "NEW"
@@ -193,7 +201,7 @@ $asset = Asset::create([
 ## Phase 2: Inspection Assignment
 
 **Role**: Admin Officer (Pentadbiran)
-**Login**: admin@workshop.gov.my / password
+**Login**: <admin@workshop.gov.my> / password
 
 ### Step 2.1: Assign Inspector
 
@@ -203,13 +211,16 @@ $asset = Asset::create([
 4. Fill in inspection assignment:
    - **Inspector**: Select "Siti Nurhaliza (Pemeriksa)"
    - **Notes**:
+
      ```
      Please inspect vehicle engine and radiator system.
      Verify extent of damage and provide repair recommendations.
      ```
+
 5. Click "Assign Inspection"
 
 **Expected Result**:
+
 - ✅ Inspection report created
 - ✅ Redirects to inspection detail page
 - ✅ Status shows "Pending"
@@ -222,7 +233,7 @@ $asset = Asset::create([
 ## Phase 3: Inspection Process
 
 **Role**: Inspector (Pemeriksa)
-**Login**: inspector@workshop.gov.my / password
+**Login**: <inspector@workshop.gov.my> / password
 
 ### Step 3.1: Access Assigned Inspection
 
@@ -232,6 +243,7 @@ $asset = Asset::create([
 4. Click to view inspection details
 
 **Expected Result**:
+
 - ✅ Inspection loads
 - ✅ Job details visible
 - ✅ Asset information displayed
@@ -250,6 +262,7 @@ $asset = Asset::create([
 4. Click "Upload Photos"
 
 **Expected Result**:
+
 - ✅ Photos upload successfully
 - ✅ Photos appear in "Initial Assessment" section
 - ✅ Green checkmark shows minimum photos met
@@ -264,6 +277,7 @@ $asset = Asset::create([
 5. Click "Upload Photos"
 
 **Expected Result**:
+
 - ✅ Photos uploaded to Diagnostic stage
 - ✅ Both stages now have green checkmarks
 
@@ -274,6 +288,7 @@ $asset = Asset::create([
 3. Fill in all assessment fields:
 
    **Current Asset Condition**:
+
    ```
    Vehicle mileage: 125,000 km
    Overall condition: Fair, regular maintenance evident
@@ -281,6 +296,7 @@ $asset = Asset::create([
    ```
 
    **Visual Damage Assessment**:
+
    ```
    - Radiator core: Multiple fin damage, visible corrosion
    - Coolant hoses: Upper hose shows cracking, requires replacement
@@ -289,6 +305,7 @@ $asset = Asset::create([
    ```
 
    **Functional Testing Results**:
+
    ```
    - Engine starts normally
    - Temperature rises rapidly to 110°C within 5 minutes
@@ -297,6 +314,7 @@ $asset = Asset::create([
    ```
 
    **Safety Hazards Identified**:
+
    ```
    - Risk of engine seizure if operated in current condition
    - Coolant spill creates slip hazard in workshop
@@ -304,6 +322,7 @@ $asset = Asset::create([
    ```
 
    **Additional Issues Discovered**:
+
    ```
    - Thermostat housing shows minor seepage
    - Fan belt showing wear (not urgent)
@@ -311,6 +330,7 @@ $asset = Asset::create([
    ```
 
    **Recommended Repairs**:
+
    ```
    Priority 1 (Urgent):
    - Replace radiator assembly
@@ -329,6 +349,7 @@ $asset = Asset::create([
 4. Click "Update Report"
 
 **Expected Result**:
+
 - ✅ Report saves successfully
 - ✅ All fields populate on inspection detail page
 - ✅ "Approve" and "Reject" buttons visible
@@ -338,14 +359,17 @@ $asset = Asset::create([
 1. Click "Approve" button
 2. In the approval dialog:
    - **Approval Notes**:
+
      ```
      Inspection completed. Repairs approved as recommended.
      All safety concerns noted. Proceed with radiator replacement.
      ```
+
    - **Digital Signature**: Type full name: "Siti Nurhaliza"
 3. Click "Approve Inspection"
 
 **Expected Result**:
+
 - ✅ Alert changes to green "Inspection Approved"
 - ✅ Approval timestamp recorded
 - ✅ Digital signature displayed
@@ -355,12 +379,15 @@ $asset = Asset::create([
 **Alternative Test - Rejection Flow**:
 
 If you want to test rejection (create a second inspection):
+
 1. Click "Reject" instead
 2. Provide reason:
+
    ```
    Insufficient photos of engine block. Please provide additional
    photos showing water pump and engine block condition before approval.
    ```
+
 3. Enter digital signature
 4. Verify status changes to "Rejected"
 5. Verify technician must create new inspection
@@ -372,7 +399,7 @@ If you want to test rejection (create a second inspection):
 ## Phase 4: Repair Assignment
 
 **Role**: Admin Officer or Supervisor
-**Login**: supervisor@workshop.gov.my / password
+**Login**: <supervisor@workshop.gov.my> / password
 
 ### Step 4.1: Assign Technician
 
@@ -383,6 +410,7 @@ If you want to test rejection (create a second inspection):
 5. Save assignment
 
 **Expected Result**:
+
 - ✅ Technician assigned to job
 - ✅ Job status updates
 - ✅ Assignment recorded in history
@@ -394,7 +422,7 @@ If you want to test rejection (create a second inspection):
 ## Phase 5: Repair Execution
 
 **Role**: Technician (Juruteknik)
-**Login**: technician@workshop.gov.my / password
+**Login**: <technician@workshop.gov.my> / password
 
 ### Step 5.1: Access Assigned Job
 
@@ -404,6 +432,7 @@ If you want to test rejection (create a second inspection):
 4. Click to view job details
 
 **Expected Result**:
+
 - ✅ Job details load
 - ✅ Shows assigned to current user
 - ✅ Inspection report accessible
@@ -420,6 +449,7 @@ If you want to test rejection (create a second inspection):
 3. Click "Upload Photos"
 
 **Expected Result**:
+
 - ✅ Photos uploaded successfully
 - ✅ "During Repair" stage has green checkmark
 
@@ -432,6 +462,7 @@ If you want to test rejection (create a second inspection):
 2. Click "Upload Photos"
 
 **Expected Result**:
+
 - ✅ All critical stages now have photos
 - ✅ Photo requirements met
 
@@ -446,6 +477,7 @@ If you want to test rejection (create a second inspection):
    **Time Spent (Hours)**: `16` (2 days × 8 hours)
 
    **Work Description**:
+
    ```
    Radiator Replacement - Complete System Overhaul
 
@@ -469,6 +501,7 @@ If you want to test rejection (create a second inspection):
    ```
 
    **Issues Encountered**:
+
    ```
    - Lower radiator mount bracket was corroded, required replacement
    - One radiator mount bolt was seized, required drilling out
@@ -478,6 +511,7 @@ If you want to test rejection (create a second inspection):
    ```
 
    **Recommendations**:
+
    ```
    1. Schedule coolant system inspection in 6 months
    2. Replace coolant sensor within next 12 months (connector showing wear)
@@ -490,6 +524,7 @@ If you want to test rejection (create a second inspection):
 4. Click "Add Part" to add parts used
 
 **Expected Result**:
+
 - ✅ Form validates
 - ✅ Parts dialog opens
 
@@ -498,66 +533,77 @@ If you want to test rejection (create a second inspection):
 Add each part individually:
 
 **Part 1**:
+
 - Name: `Toyota OEM Radiator (16400-0L140)`
 - Quantity: `1`
 - Unit Cost: `1250.00`
 - Click "Add Part"
 
 **Part 2**:
+
 - Name: `Upper Coolant Hose (Gates #22036)`
 - Quantity: `1`
 - Unit Cost: `85.00`
 - Click "Add Part"
 
 **Part 3**:
+
 - Name: `Lower Coolant Hose (Gates #22037)`
 - Quantity: `1`
 - Unit Cost: `95.00`
 - Click "Add Part"
 
 **Part 4**:
+
 - Name: `Radiator Cap (Stant #10230)`
 - Quantity: `1`
 - Unit Cost: `45.00`
 - Click "Add Part"
 
 **Part 5**:
+
 - Name: `Thermostat Housing Gasket`
 - Quantity: `1`
 - Unit Cost: `25.00`
 - Click "Add Part"
 
 **Part 6**:
+
 - Name: `Coolant Reservoir`
 - Quantity: `1`
 - Unit Cost: `120.00`
 - Click "Add Part"
 
 **Part 7**:
+
 - Name: `Fan Belt (Gates #K040378)`
 - Quantity: `1`
 - Unit Cost: `65.00`
 - Click "Add Part"
 
 **Part 8**:
+
 - Name: `Toyota Long Life Coolant (5L)`
 - Quantity: `2`
 - Unit Cost: `75.00`
 - Click "Add Part"
 
 **Part 9**:
+
 - Name: `Radiator Mount Bracket`
 - Quantity: `1`
 - Unit Cost: `35.00`
 - Click "Add Part"
 
 **Part 10**:
+
 - Name: `Coolant System Flush Chemical`
 - Quantity: `1`
 - Unit Cost: `45.00`
 - Click "Add Part"
 
 **Expected Result**:
+
 - ✅ Parts table populates with all items
 - ✅ Quantities and costs display correctly
 - ✅ Total cost calculates automatically: **RM 1,990.00**
@@ -570,6 +616,7 @@ Add each part individually:
 3. Click "Save Completion Report"
 
 **Expected Result**:
+
 - ✅ Report saves successfully
 - ✅ Redirects to completion report detail page
 - ✅ All work details displayed
@@ -584,6 +631,7 @@ Add each part individually:
 3. Click "Sign Report"
 
 **Expected Result**:
+
 - ✅ Digital signature captured
 - ✅ Signature timestamp recorded
 - ✅ "Submit for Review" button appears
@@ -595,6 +643,7 @@ Add each part individually:
 2. Confirm submission
 
 **Expected Result**:
+
 - ✅ Job status changes to "PENDING_REVIEW"
 - ✅ Redirects to job detail page
 - ✅ Status badge updates
@@ -606,7 +655,7 @@ Add each part individually:
 ## Phase 6: Supervisor Review
 
 **Role**: Supervisor (Penyelia)
-**Login**: supervisor@workshop.gov.my / password
+**Login**: <supervisor@workshop.gov.my> / password
 
 ### Step 6.1: Review Completion Report
 
@@ -620,6 +669,7 @@ Add each part individually:
    - Quality rating
 
 **Expected Result**:
+
 - ✅ All information displayed correctly
 - ✅ Total cost: RM 1,990.00
 - ✅ Time: 16 hours
@@ -630,12 +680,14 @@ Add each part individually:
 1. Navigate back to job detail
 2. Update job status to "COMPLETED"
 3. Add completion notes:
+
    ```
    Work reviewed and approved. Quality meets workshop standards.
    All documentation complete. Ready for KEW.PA-10 return process.
    ```
 
 **Expected Result**:
+
 - ✅ Job status updates to "COMPLETED"
 - ✅ Completion timestamp recorded
 - ✅ Status in timeline updates
@@ -645,7 +697,7 @@ Add each part individually:
 ## Phase 7: KEW.PA-10 Return Process
 
 **Role**: Admin Officer (Pentadbiran)
-**Login**: admin@workshop.gov.my / password
+**Login**: <admin@workshop.gov.my> / password
 
 ### Step 7.1: Prepare Return Package
 
@@ -661,6 +713,7 @@ Add each part individually:
    - Total cost breakdown
 
 **Expected Result**:
+
 - ✅ Return package page loads
 - ✅ All documents summarized
 - ✅ Costs itemized
@@ -670,6 +723,7 @@ Add each part individually:
 
 1. Click "Mark as Returned to Department"
 2. In the dialog, add notes:
+
    ```
    KEW.PA-10 form and supporting documents returned to Ministry of Health
    on [date]. Received by Dr. Faizal Hassan. Vehicle released in good
@@ -682,9 +736,11 @@ Add each part individually:
    - Parts invoice
    - Photo documentation (CD)
    ```
+
 3. Click "Confirm Return"
 
 **Expected Result**:
+
 - ✅ Job status updates to "KEW_PA_10_RETURNED"
 - ✅ Return timestamp recorded
 - ✅ Notes saved
@@ -696,6 +752,7 @@ Add each part individually:
 2. Add invoice reference: `INV-2025-0001`
 
 **Expected Result**:
+
 - ✅ Job marked as fully complete
 - ✅ Invoice reference recorded
 - ✅ Workflow complete
@@ -794,12 +851,14 @@ Verify the complete status progression:
 **Symptom**: Photos fail to upload or error appears
 
 **Check**:
+
 1. Verify storage link exists: `php artisan storage:link`
 2. Check file permissions on `storage/app/public`
 3. Verify file size < 10MB
 4. Verify file type is JPG or PNG
 
 **Fix**:
+
 ```bash
 php artisan storage:link
 chmod -R 775 storage/app/public
@@ -810,11 +869,13 @@ chmod -R 775 storage/app/public
 **Symptom**: "This action is unauthorized" when accessing features
 
 **Check**:
+
 1. Verify user has correct role assigned
 2. Check policies are registered in `AppServiceProvider`
 3. Verify Gate::authorize() calls in controllers
 
 **Fix**:
+
 ```php
 // In tinker, verify user role
 $user = User::find(1);
@@ -826,6 +887,7 @@ echo $user->role; // Should be: pentadbiran, pemeriksa, penyelia, or juruteknik
 **Symptom**: Cannot update job status
 
 **Check**:
+
 1. Verify transition is allowed in JobStatus::allowedTransitions()
 2. Check workflow prerequisites are met (e.g., inspection approved before repair)
 
@@ -836,11 +898,13 @@ echo $user->role; // Should be: pentadbiran, pemeriksa, penyelia, or juruteknik
 **Symptom**: Uploaded photos not visible
 
 **Check**:
+
 1. Verify photos are saved in database: `JobPhoto::count()`
 2. Check file exists in `storage/app/public/job-photos/`
 3. Verify storage link: `ls -la public/storage`
 
 **Fix**:
+
 ```bash
 php artisan storage:link
 ```
@@ -923,6 +987,7 @@ for ($i = 1; $i <= 50; $i++) {
 ```
 
 Verify:
+
 - KEW.PA-10 index page loads quickly (<2s)
 - Pagination works correctly
 - Filters don't slow down queries
@@ -980,6 +1045,7 @@ test('inspector can approve inspection', function () {
 ```
 
 Run tests:
+
 ```bash
 php artisan test --filter KewPA10Workflow
 ```

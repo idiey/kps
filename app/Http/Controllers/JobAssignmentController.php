@@ -57,8 +57,8 @@ class JobAssignmentController extends Controller
             'assignments' => $assignments->map(function ($assignment) {
                 return [
                     'id' => $assignment->id,
-                    'assigned_to' => $assignment->assignedUser->name,
-                    'assigned_by' => $assignment->assignedByUser->name,
+                    'assigned_to' => $assignment->assignedTo?->name,
+                    'assigned_by' => $assignment->assignedBy?->name,
                     'assigned_at' => $assignment->assigned_at,
                     'notes' => $assignment->notes,
                     'is_current' => $assignment->is_current,

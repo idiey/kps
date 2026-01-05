@@ -57,17 +57,17 @@ class RolePermissionSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::firstOrCreate(['name' => $permission]);
         }
 
         // Create roles and assign permissions
 
         // Admin - Full access
-        $admin = Role::create(['name' => 'pentadbiran']);
+        $admin = Role::firstOrCreate(['name' => 'pentadbiran']);
         $admin->givePermissionTo(Permission::all());
 
         // Supervisor - Can manage jobs and assign work
-        $supervisor = Role::create(['name' => 'penyelia']);
+        $supervisor = Role::firstOrCreate(['name' => 'penyelia']);
         $supervisor->givePermissionTo([
             'view-jobs',
             'create-jobs',
@@ -86,7 +86,7 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Technician - Can work on assigned jobs
-        $technician = Role::create(['name' => 'juruteknik']);
+        $technician = Role::firstOrCreate(['name' => 'juruteknik']);
         $technician->givePermissionTo([
             'view-jobs',
             'update-job-status',
@@ -97,7 +97,7 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Inspector - Can inspect and verify work
-        $inspector = Role::create(['name' => 'pemeriksa']);
+        $inspector = Role::firstOrCreate(['name' => 'pemeriksa']);
         $inspector->givePermissionTo([
             'view-jobs',
             'inspect-jobs',
@@ -109,7 +109,7 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Approver - Can approve/reject jobs
-        $approver = Role::create(['name' => 'pelulus']);
+        $approver = Role::firstOrCreate(['name' => 'pelulus']);
         $approver->givePermissionTo([
             'view-jobs',
             'approve-jobs',

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { SelectSeparatorProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
+import { computed } from "vue"
 import { SelectSeparator, useForwardProps } from "reka-ui"
 import { cn } from "@/lib/utils"
 

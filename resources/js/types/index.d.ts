@@ -46,8 +46,18 @@ export type BreadcrumbItemType = BreadcrumbItem;
 
 export type JobStatus = 'new' | 'in_progress' | 'completed' | 'invoiced';
 export type JobPriority = 'low' | 'medium' | 'high' | 'urgent';
-export type UserRole = 'pentadbiran' | 'penyelia' | 'pemeriksa' | 'pelulus' | 'juruteknik';
-export type NoteType = 'general' | 'diagnostic' | 'repair' | 'parts' | 'customer_communication';
+export type UserRole =
+    | 'pentadbiran'
+    | 'penyelia'
+    | 'pemeriksa'
+    | 'pelulus'
+    | 'juruteknik';
+export type NoteType =
+    | 'general'
+    | 'diagnostic'
+    | 'repair'
+    | 'parts'
+    | 'customer_communication';
 
 export interface StatusOption {
     value: JobStatus;

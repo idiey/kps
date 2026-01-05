@@ -4,6 +4,10 @@ namespace App\Models;
 
 use App\Enums\JobPriority;
 use App\Enums\JobStatus;
+use App\Models\Job\JobFieldValue;
+use App\Models\Template\JobTemplate;
+use App\Models\Workflow\Workflow;
+use App\Models\Workflow\WorkflowStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +27,9 @@ class WorkshopJob extends Model
     protected $fillable = [
         'job_number',
         'job_reference',
+        'template_id',
+        'workflow_id',
+        'current_workflow_status_id',
         'customer_id',
         'kew_pa_10_id',
         'government_department_id',
@@ -327,5 +334,97 @@ class WorkshopJob extends Model
     public function scopeInspectionApproved($query)
     {
         return $query->where('inspection_approved', true);
+    }
+
+    /**
+     * Get the template for this job.
+     */
+    public function template(): BelongsTo
+    {
+        return $this->belongsTo(JobTemplate::class);
+    }
+
+    /**
+     * Get the workflow for this job.
+     */
+    public function workflow(): BelongsTo
+    {
+        return $this->belongsTo(Workflow::class);
+    }
+
+    /**
+     * Get the current workflow status.
+     */
+    public function currentWorkflowStatus(): BelongsTo
+    {
+        return $this->belongsTo(WorkflowStatus::class, 'current_workflow_status_id');
+    }
+
+    /**
+     * Get all field values for this job.
+     */
+    public function fieldValues(): HasMany
+    {
+        return $this->hasMany(JobFieldValue::class, 'job_id');
+    }
+
+    /**
+     * Get a specific field value by field code.
+     */
+    public function getFieldValue(string $fieldCode)
+    {
+        $field = $this->template?->fields()->where('code', $fieldCode)->first();
+
+        if (!$field) {
+            return null;
+        }
+
+        $fieldValue = $this->fieldValues()->where('field_id', $field->id)->first();
+
+        return $fieldValue?->getValue();
+    }
+
+    /**
+     * Set a specific field value by field code.
+     */
+    public function setFieldValue(string $fieldCode, $value): void
+    {
+        $field = $this->template?->fields()->where('code', $fieldCode)->first();
+
+        if (!$field) {
+            throw new \InvalidArgumentException("Field with code '{$fieldCode}' not found in template");
+        }
+
+        $fieldValue = $this->fieldValues()->firstOrNew(['field_id' => $field->id]);
+        $fieldValue->setValue($value);
+        $fieldValue->save();
+    }
+
+    /**
+     * Get all field values as associative array.
+     */
+    public function getAllFieldValues(): array
+    {
+        return JobFieldValue::getJobFieldValues($this);
+    }
+
+    /**
+     * Check if this job uses dynamic workflow system.
+     */
+    public function usesDynamicWorkflow(): bool
+    {
+        return $this->workflow_id !== null;
+    }
+
+    /**
+     * Get available workflow transitions from current status.
+     */
+    public function getAvailableTransitions()
+    {
+        if (!$this->usesDynamicWorkflow() || !$this->currentWorkflowStatus) {
+            return collect();
+        }
+
+        return $this->workflow->getAvailableTransitionsFrom($this->currentWorkflowStatus);
     }
 }

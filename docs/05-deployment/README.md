@@ -12,6 +12,10 @@ Deployment procedures, implementation roadmap, CI/CD pipeline, and operational g
 
 Complete project timeline, milestones, and release plan.
 
+### [2. Sprint 1 Deployment Guide](../../SPRINT_1_SUMMARY.md)
+
+Sprint 1 Dynamic Workflow System deployment checklist, migration commands, and rollback procedures.
+
 ### Planned Documentation
 
 The following documentation is planned for upcoming sprints:

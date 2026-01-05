@@ -85,8 +85,8 @@ class JobController extends Controller
             'assignedUser',
             'notes.user',
             'statusHistories.user',
-            'assignments.assignedUser',
-            'assignments.assignedByUser',
+            'assignments.assignedTo',
+            'assignments.assignedBy',
         ]);
 
         return Inertia::render('Jobs/Show', [
@@ -181,8 +181,8 @@ class JobController extends Controller
                 'type' => 'assignment',
                 'timestamp' => $assignment->assigned_at,
                 'data' => [
-                    'assigned_to' => $assignment->assignedUser->name,
-                    'assigned_by' => $assignment->assignedByUser->name,
+                    'assigned_to' => $assignment->assignedTo?->name,
+                    'assigned_by' => $assignment->assignedBy?->name,
                     'notes' => $assignment->notes,
                     'is_current' => $assignment->is_current,
                 ],

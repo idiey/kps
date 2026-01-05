@@ -26,7 +26,12 @@
       "Bash(else)",
       "Bash(fi)",
       "Bash(npx shadcn-vue@latest add:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(./artisan make:migration:*)",
+      "Bash(ls -la \"c:\\\\Users\\\\zuraidiismail\\\\RnD\\\\workshop\\\\resources\\\\js\\\\Pages\"\" 2>/dev/null || echo \"Pages directory not found \")",
+      "Bash(ls:*)",
+      "Bash(php artisan config:clear:*)",
+      "Bash(php artisan view:clear:*)"
     ]
   }
 }

@@ -24,6 +24,11 @@ Core features sprint (Days 11-20): CRUD operations, workflows. **IN PROGRESS - B
 
 KEW.PA-10 Workflow Option 1 foundation (Phase 1-3): Database schema, status system, inspection infrastructure. **COMPLETE**
 
+### [5. Sprint 1 - Dynamic Workflow System](../../SPRINT_1_SUMMARY.md) ✅
+
+Dynamic Workflow Management System implementation: Database migrations, models, services, controllers,
+Vue components, and migration commands. **COMPLETE**
+
 ### Upcoming Sprints
 
 The following sprint documentation will be created as we progress:

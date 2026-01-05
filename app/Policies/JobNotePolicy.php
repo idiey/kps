@@ -22,7 +22,7 @@ class JobNotePolicy
     public function view(User $user, JobNote $note): bool
     {
         // Admin can view all notes
-        if ($user->role === 'pentadbiran') {
+        if ($user->hasRole('pentadbiran')) {
             return true;
         }
 
@@ -37,7 +37,7 @@ class JobNotePolicy
         }
 
         // Technicians assigned to the job can view private notes
-        if ($user->role === 'juruteknik' && $note->job->assigned_to === $user->id) {
+        if ($user->hasRole('juruteknik') && $note->job->assigned_to === $user->id) {
             return true;
         }
 
@@ -50,7 +50,7 @@ class JobNotePolicy
     public function create(User $user): bool
     {
         // Admin and technicians can create notes
-        return in_array($user->role, ['pentadbiran', 'juruteknik']);
+        return $user->hasAnyRole(['pentadbiran', 'juruteknik']);
     }
 
     /**
@@ -59,7 +59,7 @@ class JobNotePolicy
     public function update(User $user, JobNote $note): bool
     {
         // Admin can update any note
-        if ($user->role === 'pentadbiran') {
+        if ($user->hasRole('pentadbiran')) {
             return true;
         }
 
@@ -73,7 +73,7 @@ class JobNotePolicy
     public function delete(User $user, JobNote $note): bool
     {
         // Admin can delete any note
-        if ($user->role === 'pentadbiran') {
+        if ($user->hasRole('pentadbiran')) {
             return true;
         }
 
@@ -87,7 +87,7 @@ class JobNotePolicy
     public function restore(User $user, JobNote $note): bool
     {
         // Admin can restore any note
-        if ($user->role === 'pentadbiran') {
+        if ($user->hasRole('pentadbiran')) {
             return true;
         }
 
@@ -101,6 +101,6 @@ class JobNotePolicy
     public function forceDelete(User $user, JobNote $note): bool
     {
         // Only admin can force delete notes
-        return $user->role === 'pentadbiran';
+        return $user->hasRole('pentadbiran');
     }
 }

@@ -105,10 +105,35 @@ class KewPA10Controller extends Controller
 
         $kewPA10->load(['governmentDepartment', 'asset', 'workshopJob.statusHistories.user']);
 
+        // Explicitly build the data array to ensure all attributes are included
+        $kewPA10Data = [
+            'id' => $kewPA10->id,
+            'kew_pa_10_number' => $kewPA10->kew_pa_10_number,
+            'government_department_id' => $kewPA10->government_department_id,
+            'asset_id' => $kewPA10->asset_id,
+            'description' => $kewPA10->description,
+            'priority' => $kewPA10->priority?->value ?? $kewPA10->priority,
+            'budget_allocation_reference' => $kewPA10->budget_allocation_reference,
+            'kew_pa_10_document_path' => $kewPA10->kew_pa_10_document_path,
+            'form_completeness_verified' => $kewPA10->form_completeness_verified,
+            'signatures_verified' => $kewPA10->signatures_verified,
+            'verification_notes' => $kewPA10->verification_notes,
+            'received_date' => $kewPA10->received_date?->format('Y-m-d'),
+            'received_by' => $kewPA10->received_by,
+            'created_at' => $kewPA10->created_at?->toISOString(),
+            'updated_at' => $kewPA10->updated_at?->toISOString(),
+            'government_department' => $kewPA10->governmentDepartment,
+            'asset' => $kewPA10->asset,
+            'workshop_job' => $kewPA10->workshopJob,
+        ];
+
         return Inertia::render('KewPA10/Show', [
-            'kewPA10' => $kewPA10,
-            'canVerify' => !$kewPA10->isComplete() && auth()->user()->can('update', $kewPA10),
-            'canCreateJob' => $kewPA10->isComplete() && !$kewPA10->workshopJob && auth()->user()->can('create', WorkshopJob::class),
+            'kewPA10' => $kewPA10Data,
+            'canVerify' => !$kewPA10->isVerified() && auth()->user()->can('verify', $kewPA10),
+            'canCreateJob' => !empty($kewPA10->kew_pa_10_number)
+                && !empty($kewPA10->description)
+                && !$kewPA10->workshopJob
+                && auth()->user()->can('create', WorkshopJob::class),
         ]);
     }
 
@@ -164,7 +189,7 @@ class KewPA10Controller extends Controller
      */
     public function verify(Request $request, KewPA10 $kewPA10): RedirectResponse
     {
-        Gate::authorize('update', $kewPA10);
+        Gate::authorize('verify', $kewPA10);
 
         $request->validate([
             'form_completeness_verified' => ['required', 'boolean'],
@@ -172,11 +197,11 @@ class KewPA10Controller extends Controller
             'verification_notes' => ['nullable', 'string'],
         ]);
 
-        $this->kewPA10Service->verifyForm($kewPA10, $request->only([
-            'form_completeness_verified',
-            'signatures_verified',
-            'verification_notes',
-        ]));
+        $this->kewPA10Service->verifyForm($kewPA10, [
+            'form_completeness_verified' => $request->boolean('form_completeness_verified'),
+            'signatures_verified' => $request->boolean('signatures_verified'),
+            'verification_notes' => $request->input('verification_notes'),
+        ]);
 
         return redirect()->back()
             ->with('success', __('KEW.PA-10 form verified successfully'));
