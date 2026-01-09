@@ -209,9 +209,17 @@ class DynamicJobController extends Controller
     public function getAvailableTransitions(WorkshopJob $job)
     {
         $transitions = $this->workflowExecutor->getAvailableTransitions($job);
+        $currentStatus = $job->currentWorkflowStatus;
 
         return response()->json([
             'transitions' => $transitions,
+            'current_status' => $currentStatus ? [
+                'id' => $currentStatus->id,
+                'name' => $currentStatus->name,
+                'code' => $currentStatus->code,
+                'required_template_id' => $currentStatus->required_template_id,
+                'has_required_form' => $currentStatus->hasRequiredForm(),
+            ] : null,
         ]);
     }
 

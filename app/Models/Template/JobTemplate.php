@@ -96,7 +96,7 @@ class JobTemplate extends Model
      */
     public function workflows(): BelongsToMany
     {
-        return $this->belongsToMany(Workflow::class, 'template_workflows')
+        return $this->belongsToMany(Workflow::class, 'template_workflows', 'template_id', 'workflow_id')
             ->withPivot('is_default')
             ->withTimestamps();
     }
@@ -106,7 +106,7 @@ class JobTemplate extends Model
      */
     public function jobs(): HasMany
     {
-        return $this->hasMany(WorkshopJob::class);
+        return $this->hasMany(WorkshopJob::class, 'template_id');
     }
 
     /**

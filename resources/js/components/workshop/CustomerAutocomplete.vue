@@ -13,14 +13,16 @@ interface Props {
     error?: string;
     required?: boolean;
     disabled?: boolean;
+    customers?: Customer[]; // Pre-loaded customers list
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
     modelValue: null,
     label: 'Customer',
-    placeholder: 'Search customer...',
+    placeholder: 'Search or select customer...',
     required: false,
     disabled: false,
+    customers: () => [],
 });
 
 const emit = defineEmits<{
@@ -30,12 +32,35 @@ const emit = defineEmits<{
 const searchQuery = ref('');
 const isSearching = ref(false);
 const showResults = ref(false);
-const customers = ref<Customer[]>([]);
+const fetchedCustomers = ref<Customer[]>([]);
 const selectedCustomer = ref<Customer | null>(null);
 
+// Combine prop customers with fetched ones, filter by search
+const displayCustomers = computed(() => {
+    const allCustomers = props.customers.length > 0 ? props.customers : fetchedCustomers.value;
+    
+    if (!searchQuery.value || searchQuery.value.length < 2) {
+        return allCustomers;
+    }
+    
+    const query = searchQuery.value.toLowerCase();
+    return allCustomers.filter(c => 
+        c.name.toLowerCase().includes(query) ||
+        c.email?.toLowerCase().includes(query) ||
+        c.phone?.toLowerCase().includes(query)
+    );
+});
+
 const searchCustomers = () => {
+    // If we have pre-loaded customers, just filter locally
+    if (props.customers.length > 0) {
+        showResults.value = true;
+        return;
+    }
+    
+    // Otherwise fetch from server
     if (searchQuery.value.length < 2) {
-        customers.value = [];
+        fetchedCustomers.value = [];
         showResults.value = false;
         return;
     }
@@ -43,14 +68,14 @@ const searchCustomers = () => {
     isSearching.value = true;
 
     router.get(
-        index.url(),
+        '/customers/search/autocomplete',
         { search: searchQuery.value },
         {
             preserveState: true,
             preserveScroll: true,
             only: ['customers'],
             onSuccess: (page: any) => {
-                customers.value = page.props.customers?.data || [];
+                fetchedCustomers.value = page.props.customers?.data || page.props.customers || [];
                 showResults.value = true;
                 isSearching.value = false;
             },
@@ -71,9 +96,16 @@ const selectCustomer = (customer: Customer) => {
 const clearSelection = () => {
     selectedCustomer.value = null;
     searchQuery.value = '';
-    customers.value = [];
+    fetchedCustomers.value = [];
     showResults.value = false;
     emit('update:modelValue', null);
+};
+
+const handleFocus = () => {
+    // Show dropdown on focus if we have customers
+    if (props.customers.length > 0 || fetchedCustomers.value.length > 0) {
+        showResults.value = true;
+    }
 };
 
 watch(searchQuery, () => {
@@ -105,7 +137,7 @@ const hasSelection = computed(() => selectedCustomer.value !== null);
                     :placeholder="placeholder"
                     class="pr-8 pl-8"
                     :disabled="disabled"
-                    @focus="showResults = customers.length > 0"
+                    @focus="handleFocus"
                     @blur="setTimeout(() => (showResults = false), 200)"
                 />
                 <button
@@ -120,15 +152,15 @@ const hasSelection = computed(() => selectedCustomer.value !== null);
             </div>
 
             <div
-                v-if="showResults && customers.length > 0"
+                v-if="showResults && displayCustomers.length > 0"
                 class="absolute z-50 mt-1 w-full rounded-md border bg-popover shadow-md"
             >
                 <div class="max-h-60 overflow-y-auto p-1">
                     <button
-                        v-for="customer in customers"
+                        v-for="customer in displayCustomers"
                         :key="customer.id"
                         type="button"
-                        @click="selectCustomer(customer)"
+                        @mousedown.prevent="selectCustomer(customer)"
                         class="w-full rounded-sm px-3 py-2 text-left text-sm transition-colors hover:bg-accent"
                     >
                         <div class="font-medium">{{ customer.name }}</div>
@@ -143,7 +175,7 @@ const hasSelection = computed(() => selectedCustomer.value !== null);
                 v-if="
                     showResults &&
                     !isSearching &&
-                    customers.length === 0 &&
+                    displayCustomers.length === 0 &&
                     searchQuery.length >= 2
                 "
                 class="absolute z-50 mt-1 w-full rounded-md border bg-popover p-4 text-center text-sm text-muted-foreground shadow-md"

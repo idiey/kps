@@ -10,6 +10,7 @@ import JobStatusBadge from '@/components/workshop/JobStatusBadge.vue';
 import JobStatusTransition from '@/components/workshop/JobStatusTransition.vue';
 import TechnicianSelect from '@/components/workshop/TechnicianSelect.vue';
 import TimelineView from '@/components/workshop/TimelineView.vue';
+import DynamicJobForm from '@/components/workshop/DynamicJobForm.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import { useToast } from '@/composables/useToast';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -33,7 +34,7 @@ import {
     Trash2,
     User,
 } from 'lucide-vue-next';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 interface Props {
     job: WorkshopJob;
@@ -43,6 +44,7 @@ interface Props {
     technicians?: UserType[];
     canEdit?: boolean;
     canDelete?: boolean;
+    dynamicData?: any;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -52,6 +54,21 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { confirm } = useConfirmDialog();
 const { success, error } = useToast();
+
+// Dynamic form data
+const formData = ref<Record<string, any>>({});
+
+// Check if there's an active status form
+const hasActiveForm = computed(() => {
+    return props.dynamicData?.active_status_form?.fields_by_section;
+});
+
+// Flatten fields for easier rendering
+const activeFormFields = computed(() => {
+    if (!hasActiveForm.value) return [];
+    const sections = props.dynamicData.active_status_form.fields_by_section;
+    return Object.values(sections).flat();
+});
 
 const deleteJob = async () => {
     const confirmed = await confirm({
@@ -76,8 +93,11 @@ const deleteJob = async () => {
 };
 
 const currentTechnicianId = computed(() => {
-    const activeAssignment = props.assignments.find((a) => !a.unassigned_at);
-    return activeAssignment?.technician?.id;
+    const activeAssignment = props.assignments.find((a) => a.is_current);
+    // Cast to any to handle runtime type mismatch where assigned_to might be an object
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const assigned = (activeAssignment as any)?.assigned_to;
+    return typeof assigned === 'object' ? assigned?.id : assigned;
 });
 </script>
 
@@ -280,12 +300,29 @@ const currentTechnicianId = computed(() => {
                 </div>
 
                 <div class="space-y-6">
+                    <!-- Required Form for Current Status -->
+                    <Card v-if="hasActiveForm">
+                        <CardHeader>
+                            <CardTitle>{{ dynamicData.active_status_form.name }}</CardTitle>
+                            <p class="text-sm text-muted-foreground mt-1">
+                                {{ dynamicData.active_status_form.description || 'Complete this form to proceed with workflow transitions.' }}
+                            </p>
+                        </CardHeader>
+                        <CardContent>
+                            <DynamicJobForm
+                                v-model="formData"
+                                :fields="activeFormFields"
+                                :readonly="!canEdit"
+                            />
+                        </CardContent>
+                    </Card>
+
                     <Card>
                         <CardHeader>
                             <CardTitle>Status</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <JobStatusTransition :job="job" />
+                            <JobStatusTransition :job="job" :form-data="formData" />
                         </CardContent>
                     </Card>
 

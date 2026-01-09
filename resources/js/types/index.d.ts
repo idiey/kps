@@ -44,7 +44,22 @@ export type BreadcrumbItemType = BreadcrumbItem;
 
 // Workshop System Types
 
-export type JobStatus = 'new' | 'in_progress' | 'completed' | 'invoiced';
+export type JobStatus =
+    | 'new'
+    | 'pending_inspection'
+    | 'inspection_in_progress'
+    | 'inspection_approved'
+    | 'inspection_rejected'
+    | 'awaiting_parts'
+    | 'repair_in_progress'
+    | 'pending_review'
+    | 'in_progress'
+    | 'completed'
+    | 'pending_kew_pa_10_return'
+    | 'kew_pa_10_returned'
+    | 'invoiced'
+    | 'cancelled';
+
 export type JobPriority = 'low' | 'medium' | 'high' | 'urgent';
 export type UserRole =
     | 'pentadbiran'
@@ -111,6 +126,7 @@ export interface WorkshopJob {
     notes?: JobNote[];
     status_histories?: JobStatusHistory[];
     assignments?: JobAssignment[];
+    workflow?: Workflow;
 }
 
 export interface JobNote {
@@ -188,6 +204,18 @@ export interface DashboardStatistics {
     completed_jobs: number;
     overdue_jobs: number;
     unassigned_jobs?: number;
+}
+
+export interface Workflow {
+    id: number;
+    name: string;
+    code: string;
+    description?: string;
+    is_active: boolean;
+    is_default: boolean;
+    metadata?: Record<string, any>;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface TechnicianWorkload {

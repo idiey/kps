@@ -28,10 +28,23 @@ const emit = defineEmits<{
 
 const { success, error } = useToast();
 
-const form = useForm({
-    technician_id: props.currentTechnicianId?.toString() || '',
+const form = useForm<{
+    assigned_to: string | undefined;
+    notes: string;
+}>({
+    assigned_to: props.currentTechnicianId?.toString() || undefined,
     notes: '',
 });
+
+// Sync form with prop changes
+import { watch } from 'vue';
+watch(
+    () => props.currentTechnicianId,
+    (newId) => {
+        form.assigned_to = newId?.toString() || undefined;
+    },
+    { immediate: true },
+);
 
 const assignTechnician = () => {
     form.post(assign.url(props.job.id), {
@@ -54,12 +67,11 @@ const assignTechnician = () => {
     <div class="space-y-4">
         <div class="space-y-2">
             <Label for="technician">Assign Technician</Label>
-            <Select v-model="form.technician_id" :disabled="form.processing">
+            <Select v-model="form.assigned_to" :disabled="form.processing">
                 <SelectTrigger id="technician">
                     <SelectValue placeholder="Select technician" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="">Unassigned</SelectItem>
                     <SelectItem
                         v-for="tech in technicians"
                         :key="tech.id"
@@ -70,10 +82,10 @@ const assignTechnician = () => {
                 </SelectContent>
             </Select>
             <p
-                v-if="form.errors.technician_id"
+                v-if="form.errors.assigned_to"
                 class="text-sm text-destructive"
             >
-                {{ form.errors.technician_id }}
+                {{ form.errors.assigned_to }}
             </p>
         </div>
 
@@ -90,7 +102,7 @@ const assignTechnician = () => {
 
         <Button
             @click="assignTechnician"
-            :disabled="!form.technician_id || form.processing"
+            :disabled="!form.assigned_to || form.processing"
             class="w-full"
         >
             Assign Technician

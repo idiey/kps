@@ -21,7 +21,10 @@ class JobStatusHistory extends Model
         'user_id',
         'from_status',
         'to_status',
+        'workflow_status_id',
+        'transition_id',
         'notes',
+        'metadata',
         'changed_at',
     ];
 
@@ -35,6 +38,7 @@ class JobStatusHistory extends Model
         return [
             'from_status' => JobStatus::class,
             'to_status' => JobStatus::class,
+            'metadata' => 'array',
             'changed_at' => 'datetime',
         ];
     }

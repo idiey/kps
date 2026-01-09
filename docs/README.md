@@ -69,6 +69,22 @@ User guides and role-specific documentation.
 - Approver (Pelulus) guide
 - Technician (Juruteknik) guide
 
+### [07. Testing](07-testing/README.md)
+
+Testing documentation and quality assurance.
+
+- KEW.PA-10 workflow testing
+- Test strategies and patterns
+- Running tests
+
+### [08. Business & Sales](08-business-sales/README.md)
+
+Business documentation and sales materials.
+
+- Value evaluation report
+- Demo strategy
+- Client presentations
+
 ## Quick Start
 
 New to the project? Start with [Getting Started Guide](01-getting-started/01-quick-start.md).
@@ -80,12 +96,14 @@ Working on a feature? Check [Development Guide](03-development/01-developer-guid
 ## Finding Information
 
 - **Concepts and Design**: Check [Architecture](02-architecture/README.md) section
-- **KEW.PA-10 Workflows**: Check [Workflow Option 1](02-architecture/07-workflow-option-1.md) and [Workflow Option 2](02-architecture/08-workflow-option-2.md)
+- **Job Workflows**: Check [Workflow Option 1](02-architecture/07-workflow-option-1.md) and [Workflow Option 2](02-architecture/08-workflow-option-2.md)
+- **Database ERD**: Check [Entity Relationship Diagram](02-architecture/erd.md)
 - **User Roles**: Check [User Roles and Permissions](06-user-guide/01-user-roles.md)
 - **How-to Guides**: Check [Development](03-development/README.md) section
 - **Project Planning**: Check [Sprints](04-sprints/README.md) section
 - **Deployment**: Check [Deployment](05-deployment/README.md) section
-- **Role-Specific Guides**: Check [User Guide](06-user-guide/README.md) section
+- **Testing**: Check [Testing](07-testing/README.md) section
+- **Business Docs**: Check [Business & Sales](08-business-sales/README.md) section
 
 ## Documentation Standards
 
@@ -117,6 +135,6 @@ When adding or updating documentation:
 
 ---
 
-**Last Updated**: 2025-12-28
+**Last Updated**: 2026-01-07
 **Documentation Version**: 2.0
 **Following**: [claude-docs standards](https://github.com/nasrulhazim/claude-docs)

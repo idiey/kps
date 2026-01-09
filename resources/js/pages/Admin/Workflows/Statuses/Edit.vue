@@ -32,7 +32,12 @@ const props = defineProps<{
         is_initial: boolean;
         is_final: boolean;
         display_order: number;
+        required_template_id?: number | null;
     };
+    templates: Array<{
+        id: number;
+        name: string;
+    }>;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -55,6 +60,7 @@ const form = useForm({
     is_initial: Boolean(props.status.is_initial),
     is_final: Boolean(props.status.is_final),
     display_order: props.status.display_order,
+    required_template_id: props.status.required_template_id || null,
 });
 
 const submit = () => {
@@ -122,6 +128,26 @@ const submit = () => {
                                 class="text-sm text-red-500"
                             >
                                 {{ form.errors.description }}
+                            </p>
+                        </div>
+
+                         <div class="space-y-2">
+                             <Label for="required_template_id">Required Form Template</Label>
+                             <div class="text-xs text-muted-foreground mb-1">
+                                Users must complete this form before leaving this status.
+                             </div>
+                             <select
+                                id="required_template_id"
+                                v-model="form.required_template_id"
+                                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                                <option :value="null">No Form Required</option>
+                                <option v-for="template in templates" :key="template.id" :value="template.id">
+                                    {{ template.name }}
+                                </option>
+                            </select>
+                             <p v-if="form.errors.required_template_id" class="text-sm text-red-500">
+                                {{ form.errors.required_template_id }}
                             </p>
                         </div>
 

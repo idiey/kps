@@ -2,6 +2,7 @@
 
 namespace App\Models\Workflow;
 
+use App\Models\Template\JobTemplate;
 use App\Models\WorkshopJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,7 @@ class WorkflowStatus extends Model
         'is_initial',
         'is_final',
         'display_order',
+        'required_template_id',
     ];
 
     /**
@@ -49,6 +51,23 @@ class WorkflowStatus extends Model
     public function workflow(): BelongsTo
     {
         return $this->belongsTo(Workflow::class);
+    }
+
+    /**
+     * Get the required form template for this status.
+     * When set, users must fill this form before transitioning.
+     */
+    public function requiredTemplate(): BelongsTo
+    {
+        return $this->belongsTo(JobTemplate::class, 'required_template_id');
+    }
+
+    /**
+     * Check if this status requires a form to be filled.
+     */
+    public function hasRequiredForm(): bool
+    {
+        return $this->required_template_id !== null;
     }
 
     /**

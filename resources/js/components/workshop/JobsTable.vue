@@ -28,11 +28,12 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-    <div class="rounded-md border">
+    <div class="rounded-md border overflow-x-auto">
         <Table>
             <TableHeader>
                 <TableRow>
                     <TableHead>Job Number</TableHead>
+                    <TableHead>Workflow</TableHead>
                     <TableHead>Customer</TableHead>
                     <TableHead>Description</TableHead>
                     <TableHead>Status</TableHead>
@@ -46,7 +47,7 @@ withDefaults(defineProps<Props>(), {
             <TableBody>
                 <TableRow v-if="jobs.length === 0">
                     <TableCell
-                        colspan="9"
+                        colspan="10"
                         class="py-8 text-center text-muted-foreground"
                     >
                         No jobs found
@@ -61,6 +62,11 @@ withDefaults(defineProps<Props>(), {
                         <Link :href="show.url(job.id)" class="hover:underline">
                             {{ job.job_number }}
                         </Link>
+                    </TableCell>
+                    <TableCell>
+                        <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                            {{ job.workflow?.name || 'Standard' }}
+                        </span>
                     </TableCell>
                     <TableCell>{{ job.customer?.name || 'N/A' }}</TableCell>
                     <TableCell class="max-w-xs truncate">{{

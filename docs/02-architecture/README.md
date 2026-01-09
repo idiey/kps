@@ -2,8 +2,8 @@
 
 ## Overview
 
-This section covers the technical architecture of the **Government Workshop Management System (KEW.PA-10)**,
-including system design patterns, database structure, workflow processes,
+This section covers the technical architecture of the **Government Workshop Management System**,
+including system design patterns, database structure, dynamic workflow processes,
 and technology stack decisions for Malaysian government compliance.
 
 ## Table of Contents
@@ -22,6 +22,15 @@ Complete workflow for processing KEW.PA-10 forms received from government depart
 ### [8. Workflow Option 2: Internal Inspection & KEW.PA-10 Generation](08-workflow-option-2.md)
 
 Proactive inspection workflow that generates KEW.PA-10 forms internally.
+
+### [9. PWA Requirement & Architecture (Proposed)](09-pwa-requirement.md)
+
+Technical requirements for Progressive Web App implementation to support mobile technician workflows.
+
+### [10. Workflow Swimlane Diagrams](10-workflow-swimlane-diagrams.md)
+
+Comprehensive swimlane diagrams illustrating the complete job lifecycle from creation to completion,
+including actor responsibilities, status transitions, and error handling flows.
 
 ### Planned Documentation
 

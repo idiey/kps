@@ -236,7 +236,7 @@ Complete core workshop and job management features with full UI functionality an
 5. `job_assignments` - Assignment history
 6. `users` - Enhanced with role, phone, department
 
-**All tables properly indexed with foreign key constraints**
+All tables properly indexed with foreign key constraints
 
 ### Routes Configuration
 

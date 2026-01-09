@@ -25,9 +25,12 @@ class StoreJobRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customer_id' => ['required', 'integer', 'exists:customers,id'],
-            'title' => ['required', 'string', 'max:255'],
+            'customer_id' => ['nullable', 'integer', 'exists:customers,id'],
+            'workflow_id' => ['nullable', 'integer', 'exists:workflows,id'],
+            'template_id' => ['nullable', 'integer', 'exists:job_templates,id'],
+            'title' => ['nullable', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'status' => ['required', Rule::enum(JobStatus::class)],
             'priority' => ['nullable', Rule::enum(JobPriority::class)],
             'vehicle_registration' => ['nullable', 'string', 'max:20'],
             'asset_tag' => ['nullable', 'string', 'max:50'],
@@ -50,5 +53,24 @@ class StoreJobRequest extends FormRequest
             'due_date' => 'due date',
             'assigned_to' => 'technician',
         ];
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        \Illuminate\Support\Facades\Log::error('Job Creation Validation Failed', [
+            'errors' => $validator->errors()->toArray(),
+            'input' => $this->all(),
+            'user' => $this->user()?->id,
+        ]);
+
+        parent::failedValidation($validator);
     }
 }

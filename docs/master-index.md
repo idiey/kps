@@ -46,6 +46,7 @@ System design, patterns, and technical architecture.
 - API Design - RESTful API structure
 - **[Workflow Option 1](02-architecture/07-workflow-option-1.md)** - External KEW.PA-10 reception
 - **[Workflow Option 2](02-architecture/08-workflow-option-2.md)** - Internal inspection workflow
+- **[PWA Requirement](02-architecture/09-pwa-requirement.md)** - Proposed mobile app architecture
 
 ### [03. Development](03-development/README.md)
 
@@ -89,6 +90,17 @@ User guides and role-specific documentation.
 - Inspector Guide - Pemeriksa guide
 - Approver Guide - Pelulus guide
 - Technician Guide - Juruteknik guide
+
+### [07. Testing](07-testing/README.md)
+
+TODO: Needs Content
+
+### [08. Business & Sales](08-business-sales/README.md)
+
+Selling and justifying the system to government workshop clients.
+
+- [Value Evaluation Report](08-business-sales/01-value-evaluation-report.md)
+- [Master Demo Strategy](08-business-sales/02-master-demo-strategy.md)
 
 ## Quick Navigation
 

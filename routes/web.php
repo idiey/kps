@@ -13,7 +13,6 @@ use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\JobAssignmentController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobNoteController;
-use App\Http\Controllers\KewPA10Controller;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\RepairCompletionController;
 use Illuminate\Support\Facades\Route;
@@ -79,23 +78,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Customer Search (autocomplete)
     Route::get('customers/search/autocomplete', [CustomerController::class, 'search'])
         ->name('customers.search');
-
-    // KEW.PA-10 Management
-    Route::resource('kew-pa-10', KewPA10Controller::class)
-        ->parameters(['kew-pa-10' => 'kewPA10']);
-
-    // KEW.PA-10 Workflow Actions
-    Route::post('kew-pa-10/{kewPA10}/verify', [KewPA10Controller::class, 'verify'])
-        ->name('kew-pa-10.verify');
-
-    Route::post('kew-pa-10/{kewPA10}/create-job', [KewPA10Controller::class, 'createJob'])
-        ->name('kew-pa-10.create-job');
-
-    Route::get('jobs/{job}/prepare-return', [KewPA10Controller::class, 'prepareReturn'])
-        ->name('jobs.prepare-return');
-
-    Route::post('jobs/{job}/mark-returned', [KewPA10Controller::class, 'markReturned'])
-        ->name('jobs.mark-returned');
 
     // Inspections
     Route::get('jobs/{job}/inspections/create', [InspectionController::class, 'create'])
@@ -194,6 +176,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('workflows', WorkflowController::class);
         Route::get('workflows/{workflow}/builder', [WorkflowController::class, 'builder'])
             ->name('workflows.builder');
+        Route::post('workflows/{workflow}/import', [WorkflowController::class, 'import'])
+            ->name('workflows.import');
 
         // Workflow Statuses
         Route::resource('workflows.statuses', WorkflowStatusController::class);

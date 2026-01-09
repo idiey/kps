@@ -12,32 +12,53 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import CustomerAutocomplete from '@/components/workshop/CustomerAutocomplete.vue';
+import WorkflowSelector from '@/components/job/WorkflowSelector.vue';
 import { useJobStatus } from '@/composables/useJobStatus';
 import { useToast } from '@/composables/useToast';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { index, store } from '@/routes/jobs';
-import type { Customer } from '@/types';
+import type { Customer, Workflow } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ArrowLeft, Save } from 'lucide-vue-next';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 interface Props {
     customers?: Customer[];
+    workflows?: Workflow[];
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const { getAllStatuses, getAllPriorities } = useJobStatus();
 const { success, error } = useToast();
 
+const selectedWorkflow = ref<Workflow | null>(null);
+
+// Auto-select default workflow on mount
+onMounted(() => {
+    if (props.workflows && props.workflows.length > 0) {
+        const defaultWf = props.workflows.find((w) => w.is_default);
+        selectedWorkflow.value = defaultWf || props.workflows[0];
+    }
+});
+
+const hasWorkflows = computed(() => props.workflows && props.workflows.length > 0);
+
 const form = useForm({
     customer_id: null as number | null,
+    workflow_id: null as number | null,
     description: '',
-    status: 'pending',
-    priority: 'normal',
-    expected_completion_date: '',
+    status: 'new',
+    priority: 'medium',
+    due_date: '',
     estimated_cost: '',
-    location: '',
+    asset_tag: '',
+    vehicle_registration: '',
+});
+
+// Sync selectedWorkflow to form
+watch(selectedWorkflow, (wf) => {
+    form.workflow_id = wf?.id ?? null;
 });
 
 const prefillSource = ref<string | null>(null);
@@ -101,12 +122,30 @@ const submitForm = () => {
                         <CardTitle>Job Details</CardTitle>
                     </CardHeader>
                     <CardContent class="space-y-6">
+                        <!-- Workflow Selection (if workflows available) -->
+                        <div v-if="hasWorkflows" class="space-y-2">
+                            <Label>
+                                Workflow
+                                <span class="text-destructive">*</span>
+                            </Label>
+                            <WorkflowSelector
+                                :workflows="workflows ?? []"
+                                v-model="selectedWorkflow"
+                            />
+                            <p
+                                v-if="form.errors.workflow_id"
+                                class="text-sm text-destructive"
+                            >
+                                {{ form.errors.workflow_id }}
+                            </p>
+                        </div>
+
                         <CustomerAutocomplete
                             v-model="form.customer_id"
                             label="Customer"
-                            required
                             :error="form.errors.customer_id"
                             :disabled="form.processing"
+                            :customers="customers"
                         />
 
                         <div class="space-y-2">
@@ -197,20 +236,20 @@ const submitForm = () => {
 
                         <div class="grid gap-6 sm:grid-cols-2">
                             <div class="space-y-2">
-                                <Label for="expected_completion_date"
-                                    >Expected Completion Date</Label
+                                <Label for="due_date"
+                                    >Due Date</Label
                                 >
                                 <Input
-                                    id="expected_completion_date"
-                                    v-model="form.expected_completion_date"
+                                    id="due_date"
+                                    v-model="form.due_date"
                                     type="date"
                                     :disabled="form.processing"
                                 />
                                 <p
-                                    v-if="form.errors.expected_completion_date"
+                                    v-if="form.errors.due_date"
                                     class="text-sm text-destructive"
                                 >
-                                    {{ form.errors.expected_completion_date }}
+                                    {{ form.errors.due_date }}
                                 </p>
                             </div>
 
@@ -236,20 +275,40 @@ const submitForm = () => {
                             </div>
                         </div>
 
-                        <div class="space-y-2">
-                            <Label for="location">Location</Label>
-                            <Input
-                                id="location"
-                                v-model="form.location"
-                                placeholder="Workshop location or address"
-                                :disabled="form.processing"
-                            />
-                            <p
-                                v-if="form.errors.location"
-                                class="text-sm text-destructive"
-                            >
-                                {{ form.errors.location }}
-                            </p>
+                        <div class="grid gap-6 sm:grid-cols-2">
+                            <div class="space-y-2">
+                                <Label for="asset_tag">Asset Tag</Label>
+                                <Input
+                                    id="asset_tag"
+                                    v-model="form.asset_tag"
+                                    placeholder="e.g. KKM/JKN/123"
+                                    :disabled="form.processing"
+                                />
+                                <p
+                                    v-if="form.errors.asset_tag"
+                                    class="text-sm text-destructive"
+                                >
+                                    {{ form.errors.asset_tag }}
+                                </p>
+                            </div>
+
+                            <div class="space-y-2">
+                                <Label for="vehicle_registration"
+                                    >Vehicle Registration</Label
+                                >
+                                <Input
+                                    id="vehicle_registration"
+                                    v-model="form.vehicle_registration"
+                                    placeholder="e.g. WAA 1234"
+                                    :disabled="form.processing"
+                                />
+                                <p
+                                    v-if="form.errors.vehicle_registration"
+                                    class="text-sm text-destructive"
+                                >
+                                    {{ form.errors.vehicle_registration }}
+                                </p>
+                            </div>
                         </div>
 
                         <div class="flex justify-end gap-2">

@@ -12,7 +12,10 @@
 
                 <!-- Modal panel -->
                 <div
-                    class="inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:align-middle"
+                    :class="[
+                        'inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:align-middle',
+                        hasRequiredForm ? 'sm:w-full sm:max-w-2xl' : 'sm:w-full sm:max-w-lg',
+                    ]"
                 >
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div class="sm:flex sm:items-start">
@@ -52,9 +55,61 @@
                                         {{ transition.confirmation_message }}
                                     </p>
 
-                                    <!-- Notes field (if required) -->
+                                    <!-- Loading state for form schema -->
                                     <div
-                                        v-if="transition.requires_comment"
+                                        v-if="hasRequiredForm && isLoadingSchema"
+                                        class="mt-4 flex items-center justify-center py-8"
+                                    >
+                                        <svg
+                                            class="h-8 w-8 animate-spin text-blue-600"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <circle
+                                                class="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                stroke-width="4"
+                                            />
+                                            <path
+                                                class="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                            />
+                                        </svg>
+                                        <span class="ml-2 text-gray-500"
+                                            >Loading form...</span
+                                        >
+                                    </div>
+
+                                    <!-- Dynamic Form -->
+                                    <div
+                                        v-else-if="hasRequiredForm && formSchema"
+                                        class="mt-4 max-h-96 overflow-y-auto"
+                                    >
+                                        <div class="mb-4 rounded-md bg-blue-50 p-3">
+                                            <p class="text-sm text-blue-700">
+                                                Please complete the required form
+                                                before proceeding with this
+                                                transition.
+                                            </p>
+                                        </div>
+                                        <DynamicFormRenderer
+                                            :schema="formSchema"
+                                            :initial-data="{}"
+                                            :job-id="job.id"
+                                            submit-label="Continue"
+                                            @submit="handleFormSubmit"
+                                            @cancel="$emit('close')"
+                                        />
+                                    </div>
+
+                                    <!-- Notes field (if required and no form) -->
+                                    <div
+                                        v-else-if="transition.requires_comment"
                                         class="mt-4"
                                     >
                                         <label
@@ -82,7 +137,10 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Footer buttons (only shown when no dynamic form is rendered) -->
                     <div
+                        v-if="!hasRequiredForm || !formSchema"
                         class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6"
                     >
                         <button
@@ -110,7 +168,9 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
+import axios from 'axios';
+import { computed, onMounted, reactive, ref } from 'vue';
+import DynamicFormRenderer from '../dynamic-form/DynamicFormRenderer.vue';
 
 const props = defineProps({
     transition: {
@@ -121,13 +181,64 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    requiredTemplateId: {
+        type: Number,
+        default: null,
+    },
 });
 
 const emit = defineEmits(['close', 'confirm']);
 
 const notes = ref('');
 const errors = reactive({});
+const formSchema = ref(null);
+const isLoadingSchema = ref(false);
 
+// Check if a form is required for this transition
+const hasRequiredForm = computed(() => props.requiredTemplateId !== null);
+
+// Load form schema on mount if template is required
+onMounted(async () => {
+    if (hasRequiredForm.value) {
+        await loadFormSchema();
+    }
+});
+
+/**
+ * Load the form schema for the required template
+ */
+const loadFormSchema = async () => {
+    isLoadingSchema.value = true;
+    try {
+        const response = await axios.get(
+            `/api/templates/${props.requiredTemplateId}/schema`,
+            {
+                params: { job_id: props.job.id },
+            },
+        );
+        formSchema.value = response.data;
+    } catch (error) {
+        console.error('Error loading form schema:', error);
+        // If schema load fails, allow transition without form
+        formSchema.value = null;
+    } finally {
+        isLoadingSchema.value = false;
+    }
+};
+
+/**
+ * Handle form submission from DynamicFormRenderer
+ */
+const handleFormSubmit = (formData) => {
+    emit('confirm', {
+        notes: notes.value,
+        field_data: formData,
+    });
+};
+
+/**
+ * Handle confirm button click (for transitions without form)
+ */
 const handleConfirm = () => {
     errors.notes = '';
 
@@ -139,6 +250,7 @@ const handleConfirm = () => {
 
     emit('confirm', {
         notes: notes.value,
+        field_data: {},
     });
 };
 

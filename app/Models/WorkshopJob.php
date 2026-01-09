@@ -31,7 +31,6 @@ class WorkshopJob extends Model
         'workflow_id',
         'current_workflow_status_id',
         'customer_id',
-        'kew_pa_10_id',
         'government_department_id',
         'asset_id',
         'assigned_to',
@@ -181,14 +180,6 @@ class WorkshopJob extends Model
     }
 
     /**
-     * Get the KEW.PA-10 form associated with this job.
-     */
-    public function kewPA10(): BelongsTo
-    {
-        return $this->belongsTo(KewPA10::class);
-    }
-
-    /**
      * Get the government department for this job.
      */
     public function governmentDepartment(): BelongsTo
@@ -309,14 +300,6 @@ class WorkshopJob extends Model
     public function canTransitionTo(JobStatus $targetStatus): bool
     {
         return $this->status->canTransitionTo($targetStatus);
-    }
-
-    /**
-     * Scope to eager load KEW.PA-10 relationships.
-     */
-    public function scopeWithKewPA10($query)
-    {
-        return $query->with(['kewPA10', 'governmentDepartment', 'asset']);
     }
 
     /**

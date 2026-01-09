@@ -124,6 +124,54 @@ class TemplateFieldTypeSeeder extends Seeder
                 ],
                 'is_active' => true,
             ],
+            // NEW: Inspection Form Field Types
+            [
+                'name' => 'Section Header',
+                'code' => 'section_header',
+                'component_name' => 'SectionHeaderField',
+                'validation_schema' => [
+                    'supports' => [],
+                ],
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Inspection Grid',
+                'code' => 'inspection_grid',
+                'component_name' => 'InspectionGridField',
+                'validation_schema' => [
+                    'supports' => ['required'],
+                    'requires' => ['options'], // columns and items config
+                ],
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Checkbox Grid',
+                'code' => 'checkbox_grid',
+                'component_name' => 'CheckboxGridField',
+                'validation_schema' => [
+                    'supports' => ['required'],
+                    'requires' => ['options'], // grid options config
+                ],
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Signature',
+                'code' => 'signature',
+                'component_name' => 'SignatureField',
+                'validation_schema' => [
+                    'supports' => ['required'],
+                ],
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Image Gallery',
+                'code' => 'image_gallery',
+                'component_name' => 'ImageGalleryField',
+                'validation_schema' => [
+                    'supports' => ['required', 'max_items', 'max_size'],
+                ],
+                'is_active' => true,
+            ],
         ];
 
         foreach ($fieldTypes as $fieldType) {

@@ -25,11 +25,23 @@
             No actions available for the current status.
         </p>
 
+        <!-- Form required indicator -->
+        <p
+            v-if="requiredTemplateId"
+            class="mt-2 text-xs text-blue-600"
+        >
+            <svg class="inline-block h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            A form is required before proceeding
+        </p>
+
         <!-- Transition Modal -->
         <TransitionModal
             v-if="showModal"
             :transition="selectedTransition"
             :job="job"
+            :required-template-id="requiredTemplateId"
             @close="showModal = false"
             @confirm="executeTransition"
         />
@@ -49,6 +61,10 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    requiredTemplateId: {
+        type: Number,
+        default: null,
+    },
 });
 
 const emit = defineEmits(['transition']);
@@ -59,12 +75,16 @@ const selectedTransition = ref(null);
 const handleTransition = (transition) => {
     selectedTransition.value = transition;
 
-    // Show modal if confirmation or comment is required
-    if (transition.confirmation_message || transition.requires_comment) {
+    // Always show modal if form is required OR confirmation/comment is needed
+    if (
+        props.requiredTemplateId ||
+        transition.confirmation_message ||
+        transition.requires_comment
+    ) {
         showModal.value = true;
     } else {
         // Execute directly
-        executeTransition({});
+        executeTransition({ notes: '', field_data: {} });
     }
 };
 

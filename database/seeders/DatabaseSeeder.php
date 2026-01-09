@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call(KewPa10WorkflowSeeder::class);
         $this->call(InternalInspectionWorkflowSeeder::class);
 
+        // Seed job templates (must run after workflows)
+        $this->call(StandardJobTemplateSeeder::class);
+
         // Seed KEW.PA-10 test data
         $this->call(KewPA10TestDataSeeder::class);
 

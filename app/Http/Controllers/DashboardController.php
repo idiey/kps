@@ -25,7 +25,7 @@ class DashboardController extends Controller
     public function workload(): Response
     {
         // Get all technicians with their job counts
-        $technicians = User::where('role', 'juruteknik')
+        $technicians = User::role('juruteknik')
             ->withCount(['assignedJobs as active_jobs_count' => function ($query) {
                 $query->whereNotIn('status', [JobStatus::COMPLETED->value, JobStatus::INVOICED->value]);
             }])

@@ -140,7 +140,7 @@ $asset = Asset::create([
    - **Asset**: Select "Toyota Hilux 4x4 - MOH-VEH-2025-001"
    - **Description**:
 
-     ```
+     ```text
      Vehicle engine overheating during operation. Radiator showing visible leaks.
      Requires immediate repair as vehicle is used for emergency medical transport.
      ```
@@ -165,7 +165,7 @@ $asset = Asset::create([
    - ✅ Check "Signatures verified"
    - Add verification notes:
 
-     ```
+     ```text
      Form received from MOH on [date]. All required signatures present.
      Budget allocation confirmed. Approved for workshop processing.
      ```
@@ -212,7 +212,7 @@ $asset = Asset::create([
    - **Inspector**: Select "Siti Nurhaliza (Pemeriksa)"
    - **Notes**:
 
-     ```
+     ```text
      Please inspect vehicle engine and radiator system.
      Verify extent of damage and provide repair recommendations.
      ```
@@ -289,7 +289,7 @@ $asset = Asset::create([
 
    **Current Asset Condition**:
 
-   ```
+   ```text
    Vehicle mileage: 125,000 km
    Overall condition: Fair, regular maintenance evident
    Engine bay: Clean but shows coolant staining from leak
@@ -297,7 +297,7 @@ $asset = Asset::create([
 
    **Visual Damage Assessment**:
 
-   ```
+   ```text
    - Radiator core: Multiple fin damage, visible corrosion
    - Coolant hoses: Upper hose shows cracking, requires replacement
    - Radiator cap: Seal deteriorated
@@ -306,7 +306,7 @@ $asset = Asset::create([
 
    **Functional Testing Results**:
 
-   ```
+   ```text
    - Engine starts normally
    - Temperature rises rapidly to 110°C within 5 minutes
    - Coolant leaking at rate of approximately 500ml per hour
@@ -315,7 +315,7 @@ $asset = Asset::create([
 
    **Safety Hazards Identified**:
 
-   ```
+   ```text
    - Risk of engine seizure if operated in current condition
    - Coolant spill creates slip hazard in workshop
    - Steam risk if operated hot
@@ -323,7 +323,7 @@ $asset = Asset::create([
 
    **Additional Issues Discovered**:
 
-   ```
+   ```text
    - Thermostat housing shows minor seepage
    - Fan belt showing wear (not urgent)
    - Coolant reservoir cracked (minor)
@@ -331,7 +331,7 @@ $asset = Asset::create([
 
    **Recommended Repairs**:
 
-   ```
+   ```text
    Priority 1 (Urgent):
    - Replace radiator assembly
    - Replace upper and lower coolant hoses
@@ -360,7 +360,7 @@ $asset = Asset::create([
 2. In the approval dialog:
    - **Approval Notes**:
 
-     ```
+     ```text
      Inspection completed. Repairs approved as recommended.
      All safety concerns noted. Proceed with radiator replacement.
      ```
@@ -383,7 +383,7 @@ If you want to test rejection (create a second inspection):
 1. Click "Reject" instead
 2. Provide reason:
 
-   ```
+   ```text
    Insufficient photos of engine block. Please provide additional
    photos showing water pump and engine block condition before approval.
    ```
@@ -478,7 +478,7 @@ If you want to test rejection (create a second inspection):
 
    **Work Description**:
 
-   ```
+   ```text
    Radiator Replacement - Complete System Overhaul
 
    Work Performed:
@@ -502,7 +502,7 @@ If you want to test rejection (create a second inspection):
 
    **Issues Encountered**:
 
-   ```
+   ```text
    - Lower radiator mount bracket was corroded, required replacement
    - One radiator mount bolt was seized, required drilling out
    - Coolant sensor wire connector brittle, handled carefully
@@ -512,7 +512,7 @@ If you want to test rejection (create a second inspection):
 
    **Recommendations**:
 
-   ```
+   ```text
    1. Schedule coolant system inspection in 6 months
    2. Replace coolant sensor within next 12 months (connector showing wear)
    3. Consider preventive replacement of water pump at next service
@@ -681,7 +681,7 @@ Add each part individually:
 2. Update job status to "COMPLETED"
 3. Add completion notes:
 
-   ```
+   ```text
    Work reviewed and approved. Quality meets workshop standards.
    All documentation complete. Ready for KEW.PA-10 return process.
    ```
@@ -724,7 +724,7 @@ Add each part individually:
 1. Click "Mark as Returned to Department"
 2. In the dialog, add notes:
 
-   ```
+   ```text
    KEW.PA-10 form and supporting documents returned to Ministry of Health
    on [date]. Received by Dr. Faizal Hassan. Vehicle released in good
    working condition. All repairs completed as specified.
@@ -805,7 +805,7 @@ echo "Status History: {$job->statusHistories->count()} transitions\n";
 
 ### Expected Output
 
-```
+```text
 KEW.PA-10: KEW.PA-10/MOH/2025/001
 Verified: Yes
 Job: WS-2025-0001

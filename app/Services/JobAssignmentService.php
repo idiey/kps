@@ -112,7 +112,7 @@ class JobAssignmentService
      */
     public function getAllTechniciansWorkload(): array
     {
-        $technicians = \App\Models\User::where('role', 'juruteknik')
+        $technicians = \App\Models\User::role('juruteknik')
             ->withCount(['assignedJobs' => function ($query) {
                 $query->whereNotIn('status', ['completed', 'invoiced']);
             }])

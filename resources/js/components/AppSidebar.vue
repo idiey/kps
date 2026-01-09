@@ -14,6 +14,8 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+
+import admin from '@/routes/admin';
 import { dashboard } from '@/routes';
 import { type NavItem, type UserRole } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
@@ -26,7 +28,9 @@ import {
     Folder,
     LayoutGrid,
     ListChecks,
+
     Users,
+    Workflow,
 } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
@@ -47,12 +51,7 @@ const allNavItems: NavItem[] = [
             'juruteknik',
         ],
     },
-    {
-        title: 'KEW.PA-10 Forms',
-        href: '/kew-pa-10',
-        icon: FileText,
-        roles: ['pentadbiran', 'penyelia', 'pemeriksa'],
-    },
+
     {
         title: 'Inspections',
         href: '/inspections',
@@ -76,6 +75,18 @@ const allNavItems: NavItem[] = [
         href: DashboardController.myJobs(),
         icon: ListChecks,
         roles: ['juruteknik', 'pentadbiran', 'penyelia'],
+    },
+    {
+        title: 'Workflow',
+        href: admin.workflows.index(),
+        icon: Workflow,
+        roles: ['pentadbiran'],
+    },
+    {
+        title: 'Templates',
+        href: admin.templates.index(),
+        icon: FileText,
+        roles: ['pentadbiran'],
     },
     {
         title: 'Workload',

@@ -31,7 +31,8 @@
       "Bash(ls -la \"c:\\\\Users\\\\zuraidiismail\\\\RnD\\\\workshop\\\\resources\\\\js\\\\Pages\"\" 2>/dev/null || echo \"Pages directory not found \")",
       "Bash(ls:*)",
       "Bash(php artisan config:clear:*)",
-      "Bash(php artisan view:clear:*)"
+      "Bash(php artisan view:clear:*)",
+      "Bash(php artisan db:seed:*)"
     ]
   }
 }

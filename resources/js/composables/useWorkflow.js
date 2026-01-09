@@ -3,6 +3,7 @@ import { ref } from 'vue';
 
 export function useWorkflow(jobId) {
     const availableTransitions = ref([]);
+    const currentStatus = ref(null);
     const fieldRules = ref({
         visibilityRules: {},
         requirementRules: [],
@@ -19,6 +20,7 @@ export function useWorkflow(jobId) {
                 `/api/jobs/${jobId}/available-transitions`,
             );
             availableTransitions.value = response.data.transitions || [];
+            currentStatus.value = response.data.current_status || null;
         } catch (error) {
             console.error('Error loading transitions:', error);
         } finally {
@@ -73,6 +75,7 @@ export function useWorkflow(jobId) {
 
     return {
         availableTransitions,
+        currentStatus,
         fieldRules,
         isLoading,
         loadAvailableTransitions,

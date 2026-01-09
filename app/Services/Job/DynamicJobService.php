@@ -133,6 +133,35 @@ class DynamicJobService
 
         $transition = $job->workflow->transitions()->findOrFail($transitionId);
 
+        // ---------------------------------------------------------------------
+        // Enforce Required Form Template for Current Status
+        // ---------------------------------------------------------------------
+        $currentStatus = $job->currentWorkflowStatus;
+        if ($currentStatus && $currentStatus->required_template_id) {
+            $requiredTemplate = $currentStatus->requiredTemplate;
+            
+            // Get all existing values
+            $existingValues = $job->getAllFieldValues();
+            
+            // Merge with incoming new data (if any)
+            $incomingData = $data['field_data'] ?? [];
+            $mergedData = array_merge($existingValues, $incomingData);
+
+            // Validate strict rules (all required fields must be present)
+            $errors = $this->templateRenderService->validateFormData($requiredTemplate, $mergedData);
+
+            if (!empty($errors)) {
+                // If data was provided in this request, maybe we should save it first?
+                // For now, fail hard to enforce completeness.
+                throw new \InvalidArgumentException("Cannot transition. Required form '{$requiredTemplate->name}' is incomplete or invalid. " . implode(', ', $flattenErrors ?? []));
+            }
+            
+            // If valid and we have new data, save it before transition
+            if (!empty($incomingData)) {
+                 $this->templateRenderService->saveFormData($job, $incomingData);
+            }
+        }
+
         $this->workflowExecutor->executeTransition($job, $transition, $data);
 
         return $job->fresh(['currentWorkflowStatus', 'workflow']);
@@ -189,6 +218,7 @@ class DynamicJobService
                     'code' => $job->currentWorkflowStatus->code,
                     'color' => $job->currentWorkflowStatus->color,
                     'icon' => $job->currentWorkflowStatus->icon,
+                    'required_template_id' => $job->currentWorkflowStatus->required_template_id,
                 ],
             ];
 
@@ -214,21 +244,46 @@ class DynamicJobService
             $fieldValues = $job->getAllFieldValues();
             $data['field_values'] = $fieldValues;
 
-            // Organize by section
+            // Organize by section for main job template
             $fieldsBySection = $job->template->fieldsBySection();
-            $data['fields_by_section'] = $fieldsBySection->map(function ($fields) use ($fieldValues) {
+            $data['fields_by_section'] = $this->transformFields($fieldsBySection, $fieldValues);
+        }
+
+        // Add required form for current status if applicable
+        if ($job->currentWorkflowStatus && $job->currentWorkflowStatus->required_template_id) {
+             $requiredTemplate = $job->currentWorkflowStatus->requiredTemplate;
+             if ($requiredTemplate) {
+                 $requiredFieldValues = $job->getAllFieldValues(); // We fetch all values, as they are stored by field_id
+                 $requiredFieldsBySection = $requiredTemplate->fieldsBySection();
+                 
+                 $data['active_status_form'] = [
+                     'template_id' => $requiredTemplate->id,
+                     'name' => $requiredTemplate->name,
+                     'description' => $requiredTemplate->description,
+                     'fields_by_section' => $this->transformFields($requiredFieldsBySection, $requiredFieldValues),
+                 ];
+             }
+        }
+
+        return $data;
+    }
+
+    protected function transformFields($fieldsBySection, $fieldValues)
+    {
+        return $fieldsBySection->map(function ($fields) use ($fieldValues) {
                 return $fields->map(function ($field) use ($fieldValues) {
                     return [
+                        'id' => $field->id,
                         'code' => $field->code,
                         'name' => $field->name,
                         'type' => $field->fieldType->code,
                         'value' => $fieldValues[$field->code] ?? null,
                         'help_text' => $field->help_text,
+                        'options' => $field->options,
+                        'is_required' => $field->is_required,
+                        'validation_rules' => $field->validation_rules,
                     ];
                 })->toArray();
             })->toArray();
-        }
-
-        return $data;
     }
 }

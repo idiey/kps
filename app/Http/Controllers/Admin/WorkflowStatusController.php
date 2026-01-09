@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Template\JobTemplate;
 use App\Models\Workflow\Workflow;
 use App\Models\Workflow\WorkflowStatus;
 use Illuminate\Http\Request;
@@ -32,8 +33,11 @@ class WorkflowStatusController extends Controller
      */
     public function create(Workflow $workflow)
     {
+        $templates = JobTemplate::active()->orderBy('name')->get(['id', 'name']);
+
         return Inertia::render('Admin/Workflows/Statuses/Create', [
             'workflow' => $workflow,
+            'templates' => $templates,
         ]);
     }
 
@@ -51,6 +55,7 @@ class WorkflowStatusController extends Controller
             'is_initial' => 'boolean',
             'is_final' => 'boolean',
             'display_order' => 'integer|min:0',
+            'required_template_id' => 'nullable|exists:job_templates,id',
         ]);
 
         // Ensure code is unique within workflow
@@ -105,9 +110,12 @@ class WorkflowStatusController extends Controller
             abort(404);
         }
 
+        $templates = JobTemplate::active()->orderBy('name')->get(['id', 'name']);
+
         return Inertia::render('Admin/Workflows/Statuses/Edit', [
             'workflow' => $workflow,
             'status' => $status,
+            'templates' => $templates,
         ]);
     }
 
@@ -130,6 +138,7 @@ class WorkflowStatusController extends Controller
             'is_initial' => 'boolean',
             'is_final' => 'boolean',
             'display_order' => 'integer|min:0',
+            'required_template_id' => 'nullable|exists:job_templates,id',
         ]);
 
         // Ensure code is unique within workflow (excluding current status)

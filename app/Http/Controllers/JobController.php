@@ -24,7 +24,8 @@ use Inertia\Response;
 class JobController extends Controller
 {
     public function __construct(
-        protected JobService $jobService
+        protected JobService $jobService,
+        protected \App\Services\Job\DynamicJobService $dynamicJobService
     ) {}
 
     /**
@@ -43,7 +44,9 @@ class JobController extends Controller
             'filters' => $filters,
             'statuses' => JobStatus::options(),
             'priorities' => JobPriority::options(),
-            'technicians' => User::where('role', 'juruteknik')->get(['id', 'name']),
+            'technicians' => User::role('juruteknik')->get(['id', 'name']),
+            'canCreate' => Gate::allows('create', WorkshopJob::class),
+            'canEdit' => true,
         ]);
     }
 
@@ -54,11 +57,17 @@ class JobController extends Controller
     {
         Gate::authorize('create', WorkshopJob::class);
 
+        // Get active workflows for job creation
+        $workflows = \App\Models\Workflow\Workflow::active()
+            ->orderBy('name')
+            ->get(['id', 'name', 'code', 'description', 'is_default']);
+
         return Inertia::render('Jobs/Create', [
             'customers' => Customer::orderBy('name')->get(['id', 'name', 'phone', 'email']),
-            'technicians' => User::where('role', 'juruteknik')->get(['id', 'name']),
+            'technicians' => User::role('juruteknik')->get(['id', 'name']),
             'statuses' => JobStatus::options(),
             'priorities' => JobPriority::options(),
+            'workflows' => $workflows,
         ]);
     }
 
@@ -67,10 +76,37 @@ class JobController extends Controller
      */
     public function store(StoreJobRequest $request): RedirectResponse
     {
-        $job = $this->jobService->createJob($request->validated());
+        try {
+            \Illuminate\Support\Facades\Log::info('Job Creation Attempt', [
+                'user' => auth()->id(),
+                'data' => $request->all(),
+            ]);
 
-        return redirect()->route('jobs.show', $job)
-            ->with('success', __('jobs.created_successfully'));
+            $data = $request->validated();
+
+            // set default title if missing
+            if (empty($data['title'])) {
+                $workflowName = null;
+                if (!empty($data['workflow_id'])) {
+                    $workflowName = \App\Models\Workflow\Workflow::find($data['workflow_id'])?->name;
+                }
+                $data['title'] = $workflowName ? "New $workflowName Job" : 'New Job';
+            }
+
+            $job = $this->jobService->createJob($data);
+
+            \Illuminate\Support\Facades\Log::info('Job Created Successfully', ['job_id' => $job->id]);
+
+            return redirect()->route('jobs.show', $job)
+                ->with('success', __('jobs.created_successfully'));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Job Creation Error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return back()->withErrors(['error' => 'Failed to create job: ' . $e->getMessage()])->withInput();
+        }
     }
 
     /**
@@ -89,11 +125,23 @@ class JobController extends Controller
             'assignments.assignedBy',
         ]);
 
+        $dynamicData = [];
+        if ($job->usesDynamicWorkflow()) {
+             $dynamicData = $this->dynamicJobService->getJobWithDynamicData($job);
+        }
+
         return Inertia::render('Jobs/Show', [
             'job' => $job,
+            'notes' => $job->notes,
+            'assignments' => $job->assignments,
+            'statusHistory' => $job->statusHistories,
+            'technicians' => User::role('juruteknik')->get(['id', 'name']),
             'statuses' => JobStatus::options(),
             'priorities' => JobPriority::options(),
             'allowedStatusTransitions' => $job->status->allowedTransitions(),
+            'canEdit' => Gate::allows('update', $job),
+            'canDelete' => Gate::allows('delete', $job),
+            'dynamicData' => $dynamicData,
         ]);
     }
 
@@ -109,7 +157,7 @@ class JobController extends Controller
         return Inertia::render('Jobs/Edit', [
             'job' => $job,
             'customers' => Customer::orderBy('name')->get(['id', 'name', 'phone', 'email']),
-            'technicians' => User::where('role', 'juruteknik')->get(['id', 'name']),
+            'technicians' => User::role('juruteknik')->get(['id', 'name']),
             'statuses' => JobStatus::options(),
             'priorities' => JobPriority::options(),
         ]);

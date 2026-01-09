@@ -100,7 +100,7 @@ class Workflow extends Model
      */
     public function templates(): BelongsToMany
     {
-        return $this->belongsToMany(JobTemplate::class, 'template_workflows')
+        return $this->belongsToMany(JobTemplate::class, 'template_workflows', 'workflow_id', 'template_id')
             ->withPivot('is_default')
             ->withTimestamps();
     }

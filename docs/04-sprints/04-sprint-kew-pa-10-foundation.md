@@ -227,7 +227,7 @@ Establish the database schema, model relationships, and workflow status system r
 
 **State Machine**: Complete workflow with allowedTransitions() validation
 
-```
+```text
 NEW → PENDING_INSPECTION → INSPECTION_IN_PROGRESS → INSPECTION_APPROVED
                          ↓                       ↓
                     INSPECTION_REJECTED     AWAITING_PARTS
@@ -304,7 +304,7 @@ NEW → PENDING_INSPECTION → INSPECTION_IN_PROGRESS → INSPECTION_APPROVED
 
 ### Entity Relationship Diagram
 
-```
+```text
 GovernmentDepartment (1) ──── (n) Asset
        │                           │
        │                           │

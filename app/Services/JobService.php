@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\JobStatus;
 use App\Events\JobStatusChanged;
 use App\Models\WorkshopJob;
+use App\Services\Template\TemplateRenderService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -15,12 +16,18 @@ use Illuminate\Support\Facades\DB;
  */
 class JobService
 {
+    public function __construct(
+        protected ?TemplateRenderService $templateRenderService = null
+    ) {
+        // Allow null for backward compatibility, resolve from container if needed
+        $this->templateRenderService ??= app(TemplateRenderService::class);
+    }
     /**
      * Get paginated jobs with optional filters.
      */
     public function getPaginatedJobs(array $filters = [], int $perPage = 15): LengthAwarePaginator
     {
-        $query = WorkshopJob::with(['customer', 'assignedUser']);
+        $query = WorkshopJob::with(['customer', 'assignedUser', 'workflow']);
 
         // Apply filters
         if (!empty($filters['status'])) {
@@ -61,7 +68,32 @@ class JobService
     public function createJob(array $data): WorkshopJob
     {
         return DB::transaction(function () use ($data) {
+            // Set initial workflow status if workflow is selected
+            if (!empty($data['workflow_id']) && empty($data['current_workflow_status_id'])) {
+                $initialStatus = \App\Models\Workflow\WorkflowStatus::where('workflow_id', $data['workflow_id'])
+                    ->where('is_initial', true)
+                    ->first();
+                
+                if ($initialStatus) {
+                    $data['current_workflow_status_id'] = $initialStatus->id;
+                }
+            }
+
+            // Auto-assign default template from workflow if not provided
+            if (!empty($data['workflow_id']) && empty($data['template_id'])) {
+                $workflow = \App\Models\Workflow\Workflow::find($data['workflow_id']);
+                $defaultTemplate = $workflow?->templates()->wherePivot('is_default', true)->first();
+                if ($defaultTemplate) {
+                    $data['template_id'] = $defaultTemplate->id;
+                }
+            }
+
             $job = WorkshopJob::create($data);
+
+            // Save dynamic field data if provided and job has a template
+            if (!empty($data['field_data']) && $job->template) {
+                $this->templateRenderService->saveFormData($job, $data['field_data']);
+            }
 
             // Create initial status history if user is authenticated
             if (auth()->check()) {

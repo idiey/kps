@@ -143,6 +143,7 @@
                             "
                             :job="job"
                             :available-transitions="availableTransitions"
+                            :required-template-id="job.current_workflow_status?.required_template_id"
                             @transition="handleTransition"
                         />
 

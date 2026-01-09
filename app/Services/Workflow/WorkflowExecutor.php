@@ -252,4 +252,43 @@ class WorkflowExecutor
 
         return $transitions;
     }
+
+    /**
+     * Check if a transition target status requires a form to be filled.
+     */
+    public function hasFormRequirement(WorkflowTransition $transition): bool
+    {
+        $toStatus = $transition->toStatus;
+        
+        return $toStatus && $toStatus->hasRequiredForm();
+    }
+
+    /**
+     * Get the required form schema for a transition's target status.
+     */
+    public function getRequiredFormSchema(WorkflowTransition $transition): ?array
+    {
+        $toStatus = $transition->toStatus;
+        
+        if (!$toStatus || !$toStatus->hasRequiredForm()) {
+            return null;
+        }
+
+        $template = $toStatus->requiredTemplate;
+        
+        return $template ? $template->getFormSchema() : null;
+    }
+
+    /**
+     * Check if form data has been submitted for a required form.
+     */
+    public function hasFormData(WorkshopJob $job, WorkflowTransition $transition, array $data): bool
+    {
+        if (!$this->hasFormRequirement($transition)) {
+            return true; // No form required
+        }
+
+        // Check if form_data was provided in the transition data
+        return !empty($data['field_data']);
+    }
 }

@@ -29,6 +29,10 @@ KEW.PA-10 Workflow Option 1 foundation (Phase 1-3): Database schema, status syst
 Dynamic Workflow Management System implementation: Database migrations, models, services, controllers,
 Vue components, and migration commands. **COMPLETE**
 
+### [6. Sprint 2 - Workflow Restructuring](05-sprint-2-workflow-restructuring.md) 🔄
+
+Job-centric workflow restructuring: Remove KEW.PA-10 module, add form templates to workflow steps. **IN PROGRESS**
+
 ### Upcoming Sprints
 
 The following sprint documentation will be created as we progress:
@@ -40,14 +44,13 @@ The following sprint documentation will be created as we progress:
 
 ## Current Sprint
 
-### KEW.PA-10 Foundation (Phase 4-7)
+### Sprint 2: Workflow Restructuring
 
-- **Status**: Ready to Start - Phase 1-3 Complete
-- **Goal**: Complete KEW.PA-10 Workflow Option 1 services, controllers, frontend, and permissions
-- **Duration**: Days 18-21
-- **Story Points**: 12/20 remaining (Services: 3, Controllers: 3, Frontend: 4, Permissions: 2)
-- **Phase 1-3**: ✅ 65% Complete (Database, Status System, Models)
-- **Phase 4-7**: ⏳ Pending (Services, Controllers, Frontend, Permissions)
+- **Status**: In Progress (B1 Complete)
+- **Goal**: Job-centric workflow with dynamic form templates
+- **Duration**: Days 18-25
+- **Progress**: Stream A ✅, Stream B 🔄 (1/3), Stream C ✅
+- **Next**: B2 Job Creation Flow, B3 Transition UI, D1-D2 Testing
 
 ## Sprint Schedule
 
@@ -71,7 +74,7 @@ The following sprint documentation will be created as we progress:
 - What will you do today?
 - Any blockers?
 
-### Sprint Planning
+### Planning Session
 
 - Day 1 of each sprint
 - Review backlog

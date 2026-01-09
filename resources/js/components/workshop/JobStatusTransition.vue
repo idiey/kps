@@ -11,12 +11,14 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useJobStatus } from '@/composables/useJobStatus';
 import { useToast } from '@/composables/useToast';
+import { updateStatus } from '@/routes/jobs';
 import type { WorkshopJob } from '@/types';
 import { useForm } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 
 interface Props {
     job: WorkshopJob;
+    formData?: Record<string, any>;
 }
 
 const props = defineProps<Props>();
@@ -35,10 +37,22 @@ const availableStatuses = computed(() =>
 const form = useForm({
     status: props.job.status,
     notes: '',
+    field_data: props.formData || {},
 });
 
+// Watch for changes in formData prop
+watch(
+    () => props.formData,
+    (newData) => {
+        if (newData) {
+            form.field_data = newData;
+        }
+    },
+    { deep: true }
+);
+
 const updateStatusHandler = () => {
-    form.put(updateStatus.url(props.job.id), {
+    form.patch(updateStatus.url(props.job.id), {
         onSuccess: () => {
             success(
                 'Status Updated',

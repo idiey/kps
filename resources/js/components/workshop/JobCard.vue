@@ -33,6 +33,9 @@ defineProps<Props>();
                 <div class="ml-4 flex flex-col items-end gap-2">
                     <JobStatusBadge :status="job.status" />
                     <JobPriorityBadge :priority="job.priority" />
+                    <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                        {{ job.workflow?.name || 'Standard' }}
+                    </span>
                 </div>
             </div>
         </CardHeader>
