@@ -3,7 +3,8 @@
 **Goal**: Create Job → Choose Workflow → Run Job (with form step activities)
 
 **Start Date**: 2026-01-07
-**Status**: ✅ Complete
+**Status**: ⛔ Deprecated (Moved to `docs/09-plan/02-sprints/01-sprint-2-workflow-restructuring.md`)
+**New Location**: [Go to New Sprint Plan](../../09-plan/02-sprints/01-sprint-2-workflow-restructuring.md)
 
 ---
 

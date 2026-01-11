@@ -11,6 +11,7 @@ import JobStatusTransition from '@/components/workshop/JobStatusTransition.vue';
 import TechnicianSelect from '@/components/workshop/TechnicianSelect.vue';
 import TimelineView from '@/components/workshop/TimelineView.vue';
 import DynamicJobForm from '@/components/workshop/DynamicJobForm.vue';
+import WorkflowTemplatesDisplay from '@/components/workshop/WorkflowTemplatesDisplay.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import { useToast } from '@/composables/useToast';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -258,6 +259,12 @@ const currentTechnicianId = computed(() => {
                             </div>
                         </CardContent>
                     </Card>
+
+                    <!-- Workflow Templates Display -->
+                    <WorkflowTemplatesDisplay
+                        v-if="dynamicData?.workflow_templates"
+                        :templates="dynamicData.workflow_templates"
+                    />
 
                     <Tabs default-value="notes" class="space-y-4">
                         <TabsList class="grid w-full grid-cols-3">

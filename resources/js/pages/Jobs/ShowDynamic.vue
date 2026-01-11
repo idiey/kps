@@ -51,40 +51,58 @@
                 <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
                     <!-- Main Content -->
                     <div class="space-y-6 lg:col-span-2">
-                        <!-- Dynamic Fields Display -->
+                        <!-- Dynamic Fields Display - Show all workflow templates -->
                         <div
+                            v-for="templateData in job.workflow_templates"
+                            :key="templateData.template_id"
                             class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
                         >
                             <div class="p-6">
-                                <h3
-                                    class="mb-4 text-lg font-semibold text-gray-900"
-                                >
-                                    Job Details
-                                </h3>
+                                <div class="mb-4 flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-gray-900">
+                                            {{ templateData.template_name }}
+                                        </h3>
+                                        <p class="text-sm text-gray-500">
+                                            Workflow Status: {{ templateData.status_name }}
+                                            <span
+                                                v-if="templateData.is_current_status"
+                                                class="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800"
+                                            >
+                                                Current
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
 
+                                <p
+                                    v-if="templateData.template_description"
+                                    class="mb-4 text-sm text-gray-600"
+                                >
+                                    {{ templateData.template_description }}
+                                </p>
+
+                                <!-- Sections within this template -->
                                 <div
-                                    v-for="section in groupedFields"
-                                    :key="section.name"
+                                    v-for="(
+                                        fields, sectionName
+                                    ) in templateData.fields_by_section"
+                                    :key="sectionName"
                                     class="mb-6 last:mb-0"
                                 >
                                     <h4
-                                        v-if="section.name !== 'default'"
+                                        v-if="sectionName !== 'default'"
                                         class="text-md mb-3 border-b pb-2 font-medium text-gray-700"
                                     >
-                                        {{ section.name }}
+                                        {{ sectionName }}
                                     </h4>
 
                                     <div
                                         class="grid grid-cols-1 gap-4 md:grid-cols-2"
                                     >
                                         <div
-                                            v-for="field in section.fields"
+                                            v-for="field in fields"
                                             :key="field.code"
-                                            :class="
-                                                field.grid_column_span === 12
-                                                    ? 'col-span-2'
-                                                    : ''
-                                            "
                                         >
                                             <label
                                                 class="block text-sm font-medium text-gray-500"
@@ -97,15 +115,25 @@
                                                 {{
                                                     formatFieldValue(
                                                         field,
-                                                        job.field_values[
-                                                            field.code
-                                                        ],
+                                                        field.value,
                                                     )
                                                 }}
                                             </p>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Show message if no templates found -->
+                        <div
+                            v-if="!job.workflow_templates || job.workflow_templates.length === 0"
+                            class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
+                        >
+                            <div class="p-6">
+                                <p class="text-sm text-gray-500">
+                                    No form templates attached to workflow statuses.
+                                </p>
                             </div>
                         </div>
 

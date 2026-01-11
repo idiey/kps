@@ -4,11 +4,13 @@ namespace App\Services;
 
 use App\Enums\JobStatus;
 use App\Events\JobStatusChanged;
+use App\Helpers\LoggingHelpers;
 use App\Models\WorkshopJob;
 use App\Services\Template\TemplateRenderService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Service class for managing workshop jobs.
@@ -67,46 +69,71 @@ class JobService
      */
     public function createJob(array $data): WorkshopJob
     {
-        return DB::transaction(function () use ($data) {
-            // Set initial workflow status if workflow is selected
-            if (!empty($data['workflow_id']) && empty($data['current_workflow_status_id'])) {
-                $initialStatus = \App\Models\Workflow\WorkflowStatus::where('workflow_id', $data['workflow_id'])
-                    ->where('is_initial', true)
-                    ->first();
-                
-                if ($initialStatus) {
-                    $data['current_workflow_status_id'] = $initialStatus->id;
+        Log::channel('workshop-jobs')->info('Job Creation Attempt', [
+            'user_id' => auth()->id(),
+            'data' => $data,
+        ]);
+
+        try {
+            return DB::transaction(function () use ($data) {
+                // Set initial workflow status if workflow is selected
+                if (!empty($data['workflow_id']) && empty($data['current_workflow_status_id'])) {
+                    $initialStatus = \App\Models\Workflow\WorkflowStatus::where('workflow_id', $data['workflow_id'])
+                        ->where('is_initial', true)
+                        ->first();
+                    
+                    if ($initialStatus) {
+                        $data['current_workflow_status_id'] = $initialStatus->id;
+                    }
                 }
-            }
 
-            // Auto-assign default template from workflow if not provided
-            if (!empty($data['workflow_id']) && empty($data['template_id'])) {
-                $workflow = \App\Models\Workflow\Workflow::find($data['workflow_id']);
-                $defaultTemplate = $workflow?->templates()->wherePivot('is_default', true)->first();
-                if ($defaultTemplate) {
-                    $data['template_id'] = $defaultTemplate->id;
+                // Auto-assign default template from workflow if not provided
+                if (!empty($data['workflow_id']) && empty($data['template_id'])) {
+                    $workflow = \App\Models\Workflow\Workflow::find($data['workflow_id']);
+                    $defaultTemplate = $workflow?->templates()->wherePivot('is_default', true)->first();
+                    if ($defaultTemplate) {
+                        $data['template_id'] = $defaultTemplate->id;
+                    }
                 }
-            }
 
-            $job = WorkshopJob::create($data);
+                $job = WorkshopJob::create($data);
 
-            // Save dynamic field data if provided and job has a template
-            if (!empty($data['field_data']) && $job->template) {
-                $this->templateRenderService->saveFormData($job, $data['field_data']);
-            }
+                // Save dynamic field data if provided and job has a template
+                if (!empty($data['field_data']) && $job->template) {
+                    $this->templateRenderService->saveFormData($job, $data['field_data']);
+                    Log::channel('workshop-jobs')->debug('Job Field Data Saved', [
+                        'job_id' => $job->id,
+                        'job_number' => $job->job_number,
+                        'field_count' => count($data['field_data']),
+                    ]);
+                }
 
-            // Create initial status history if user is authenticated
-            if (auth()->check()) {
-                $job->statusHistories()->create([
-                    'user_id' => auth()->id(),
-                    'from_status' => null,
-                    'to_status' => $job->status,
-                    'changed_at' => now(),
+                // Create initial status history if user is authenticated
+                if (auth()->check()) {
+                    $job->statusHistories()->create([
+                        'user_id' => auth()->id(),
+                        'from_status' => null,
+                        'to_status' => $job->status,
+                        'changed_at' => now(),
+                    ]);
+                }
+
+                LoggingHelpers::logJobOperation('Created', $job, [
+                    'workflow_id' => $job->workflow_id,
+                    'template_id' => $job->template_id,
+                    'status' => $job->status->value,
                 ]);
-            }
 
-            return $job->load(['customer', 'assignedUser']);
-        });
+                return $job->load(['customer', 'assignedUser']);
+            });
+        } catch (\Exception $e) {
+            Log::channel('workshop-jobs')->error('Job Creation Failed', [
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage(),
+                'data' => $data,
+            ]);
+            throw $e;
+        }
     }
 
     /**
@@ -114,21 +141,38 @@ class JobService
      */
     public function updateJob(WorkshopJob $job, array $data): WorkshopJob
     {
-        return DB::transaction(function () use ($job, $data) {
-            // Check if status is changing
-            $oldStatus = $job->status;
-            $newStatus = $data['status'] ?? null;
+        LoggingHelpers::logJobOperation('Update Attempt', $job, [
+            'changes' => array_keys($data),
+        ]);
 
-            // Update job
-            $job->update($data);
+        try {
+            return DB::transaction(function () use ($job, $data) {
+                // Check if status is changing
+                $oldStatus = $job->status;
+                $newStatus = $data['status'] ?? null;
 
-            // If status changed, record it
-            if ($newStatus && $oldStatus !== $newStatus) {
-                $this->recordStatusChange($job, $oldStatus, JobStatus::from($newStatus));
-            }
+                // Update job
+                $job->update($data);
 
-            return $job->fresh(['customer', 'assignedUser']);
-        });
+                // If status changed, record it
+                if ($newStatus && $oldStatus !== $newStatus) {
+                    $this->recordStatusChange($job, $oldStatus, JobStatus::from($newStatus));
+                }
+
+                LoggingHelpers::logJobOperation('Updated', $job, [
+                    'fields_updated' => array_keys($data),
+                ]);
+
+                return $job->fresh(['customer', 'assignedUser']);
+            });
+        } catch (\Exception $e) {
+            Log::channel('workshop-jobs')->error('Job Update Failed', [
+                'job_id' => $job->id,
+                'job_number' => $job->job_number,
+                'error' => $e->getMessage(),
+            ]);
+            throw $e;
+        }
     }
 
     /**
@@ -136,7 +180,20 @@ class JobService
      */
     public function deleteJob(WorkshopJob $job): bool
     {
-        return $job->delete();
+        LoggingHelpers::logJobOperation('Delete Attempt', $job);
+
+        $result = $job->delete();
+
+        if ($result) {
+            LoggingHelpers::logJobOperation('Deleted (Soft Delete)', $job);
+        } else {
+            Log::channel('workshop-jobs')->warning('Job Delete Failed', [
+                'job_id' => $job->id,
+                'job_number' => $job->job_number,
+            ]);
+        }
+
+        return $result;
     }
 
     /**
@@ -149,33 +206,61 @@ class JobService
     ): WorkshopJob {
         // Validate transition
         if (!$job->canTransitionTo($newStatus)) {
+            Log::channel('workshop-jobs')->warning('Status Transition Denied',
+ LoggingHelpers::jobContext($job, [
+                    'from_status' => $job->status->value,
+                    'to_status' => $newStatus->value,
+                    'reason' => 'Invalid transition',
+                ])
+            );
+
             throw new \InvalidArgumentException(
                 "Cannot transition from {$job->status->label()} to {$newStatus->label()}"
             );
         }
 
-        return DB::transaction(function () use ($job, $newStatus, $notes) {
-            $oldStatus = $job->status;
+        LoggingHelpers::logWorkflowTransition($job, $job->status->value, $newStatus->value, [
+            'notes' => $notes,
+        ]);
 
-            // Update job status
-            $job->update(['status' => $newStatus]);
+        try {
+            return DB::transaction(function () use ($job, $newStatus, $notes) {
+                $oldStatus = $job->status;
 
-            // Update timestamps based on status
-            match($newStatus) {
-                JobStatus::IN_PROGRESS => $job->update(['started_at' => $job->started_at ?? now()]),
-                JobStatus::COMPLETED => $job->update(['completed_at' => now()]),
-                JobStatus::INVOICED => $job->update(['invoiced_at' => now()]),
-                default => null,
-            };
+                // Update job status
+                $job->update(['status' => $newStatus]);
 
-            // Record status change
-            $this->recordStatusChange($job, $oldStatus, $newStatus, $notes);
+                // Update timestamps based on status
+                match($newStatus) {
+                    JobStatus::IN_PROGRESS => $job->update(['started_at' => $job->started_at ?? now()]),
+                    JobStatus::COMPLETED => $job->update(['completed_at' => now()]),
+                    JobStatus::INVOICED => $job->update(['invoiced_at' => now()]),
+                    default => null,
+                };
 
-            // Dispatch event
-            event(new JobStatusChanged($job, $oldStatus, $newStatus));
+                // Record status change
+                $this->recordStatusChange($job, $oldStatus, $newStatus, $notes);
 
-            return $job->fresh();
-        });
+                // Dispatch event
+                event(new JobStatusChanged($job, $oldStatus, $newStatus));
+
+                Log::channel('workshop-jobs')->info('Status Changed Successfully', [
+                    'job_id' => $job->id,
+                    'job_number' => $job->job_number,
+                    'from_status' => $oldStatus->value,
+                    'to_status' => $newStatus->value,
+                ]);
+
+                return $job->fresh();
+            });
+        } catch (\Exception $e) {
+            Log::channel('workshop-jobs')->error('Status Change Failed', [
+                'job_id' => $job->id,
+                'job_number' => $job->job_number,
+                'error' => $e->getMessage(),
+            ]);
+            throw $e;
+        }
     }
 
     /**

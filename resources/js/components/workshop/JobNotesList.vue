@@ -22,6 +22,12 @@ const props = withDefaults(defineProps<Props>(), {
     canEdit: false,
 });
 
+// Debug logs
+import { onMounted } from 'vue';
+onMounted(() => {
+    console.log('JobNotesList mounted with notes:', props.notes);
+});
+
 const { confirm } = useConfirmDialog();
 const { success, error } = useToast();
 
@@ -91,13 +97,13 @@ const handleSuccess = () => {
                             <div class="flex-1 space-y-2">
                                 <div class="flex items-center gap-2">
                                     <span class="text-sm font-medium">{{
-                                        note.created_by?.name || 'Unknown'
+                                        note.user?.name || 'Unknown'
                                     }}</span>
                                     <span class="text-xs text-muted-foreground">
                                         {{ formatDateTime(note.created_at) }}
                                     </span>
                                     <Badge
-                                        v-if="note.is_internal"
+                                        v-if="!note.is_public"
                                         variant="secondary"
                                         class="text-xs"
                                     >
@@ -106,7 +112,7 @@ const handleSuccess = () => {
                                     </Badge>
                                 </div>
                                 <p class="text-sm whitespace-pre-wrap">
-                                    {{ note.note }}
+                                    {{ note.content }}
                                 </p>
                             </div>
 

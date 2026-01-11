@@ -85,6 +85,15 @@ Business documentation and sales materials.
 - Demo strategy
 - Client presentations
 
+### [09. Project Planning](09-plan/README.md)
+
+Project planning documents, daily logs, and sprint management.
+
+- Daily achievement logs
+- Sprint planning
+- Work checkpoints
+- AI artifacts
+
 ## Quick Start
 
 New to the project? Start with [Getting Started Guide](01-getting-started/01-quick-start.md).

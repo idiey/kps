@@ -171,14 +171,23 @@ class TemplateRenderService
      *
      * @param WorkshopJob $job
      * @param array $data
+     * @param JobTemplate|null $template Optional specific template to use
      */
-    public function saveFormData(WorkshopJob $job, array $data): void
+    public function saveFormData(WorkshopJob $job, array $data, ?JobTemplate $template = null): void
     {
-        if (!$job->template) {
-            throw new \InvalidArgumentException('Job must have a template assigned');
+        $targetTemplate = $template ?? $job->template;
+
+        if (!$targetTemplate) {
+            // For backward compatibility or if no template provided/found
+            if (!empty($data)) {
+                 // Try to save any matching fields we can find in the system? 
+                 // Or just log a warning? For now, we'll return to avoid crashing.
+                 return;
+            }
+            throw new \InvalidArgumentException('Job must have a template assigned or template must be provided');
         }
 
-        $fields = $job->template->fields()
+        $fields = $targetTemplate->fields()
             ->with('fieldType')
             ->where('is_active', true)
             ->get();

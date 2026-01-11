@@ -23,8 +23,8 @@ const emit = defineEmits<{
 const { success, error } = useToast();
 
 const form = useForm({
-    note: props.note?.note || '',
-    is_internal: props.note?.is_internal || false,
+    content: props.note?.content || '',
+    is_public: props.note?.is_public || false,
 });
 
 const submitForm = () => {
@@ -59,34 +59,34 @@ const submitForm = () => {
 <template>
     <div class="space-y-4">
         <div class="space-y-2">
-            <Label for="note">Note</Label>
+            <Label for="content">Note Content</Label>
             <Textarea
-                id="note"
-                v-model="form.note"
+                id="content"
+                v-model="form.content"
                 placeholder="Enter job note..."
                 rows="4"
                 :disabled="form.processing"
             />
-            <p v-if="form.errors.note" class="text-sm text-destructive">
-                {{ form.errors.note }}
+            <p v-if="form.errors.content" class="text-sm text-destructive">
+                {{ form.errors.content }}
             </p>
         </div>
 
         <div class="flex items-center space-x-2">
             <Checkbox
-                id="is_internal"
-                v-model:checked="form.is_internal"
+                id="is_public"
+                v-model:checked="form.is_public"
                 :disabled="form.processing"
             />
-            <Label for="is_internal" class="cursor-pointer text-sm font-normal">
-                Internal note (not visible to customers)
+            <Label for="is_public" class="cursor-pointer text-sm font-normal">
+                Public note (visible to customers)
             </Label>
         </div>
 
         <div class="flex gap-2">
             <Button
                 @click="submitForm"
-                :disabled="form.processing || !form.note"
+                :disabled="form.processing || !form.content"
                 class="flex-1"
             >
                 {{ note ? 'Update Note' : 'Add Note' }}

@@ -708,7 +708,7 @@ updateStatus.patch = (args: { job: number | { id: number } } | [job: number | { 
     updateStatus.form = updateStatusForm
 /**
 * @see \App\Http\Controllers\JobController::timeline
- * @see app/Http/Controllers/JobController.php:206
+ * @see app/Http/Controllers/JobController.php:212
  * @route '/jobs/{job}/timeline'
  */
 export const timeline = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -723,7 +723,7 @@ timeline.definition = {
 
 /**
 * @see \App\Http\Controllers\JobController::timeline
- * @see app/Http/Controllers/JobController.php:206
+ * @see app/Http/Controllers/JobController.php:212
  * @route '/jobs/{job}/timeline'
  */
 timeline.url = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -756,7 +756,7 @@ timeline.url = (args: { job: number | { id: number } } | [job: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\JobController::timeline
- * @see app/Http/Controllers/JobController.php:206
+ * @see app/Http/Controllers/JobController.php:212
  * @route '/jobs/{job}/timeline'
  */
 timeline.get = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -765,7 +765,7 @@ timeline.get = (args: { job: number | { id: number } } | [job: number | { id: nu
 })
 /**
 * @see \App\Http\Controllers\JobController::timeline
- * @see app/Http/Controllers/JobController.php:206
+ * @see app/Http/Controllers/JobController.php:212
  * @route '/jobs/{job}/timeline'
  */
 timeline.head = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -775,7 +775,7 @@ timeline.head = (args: { job: number | { id: number } } | [job: number | { id: n
 
     /**
 * @see \App\Http\Controllers\JobController::timeline
- * @see app/Http/Controllers/JobController.php:206
+ * @see app/Http/Controllers/JobController.php:212
  * @route '/jobs/{job}/timeline'
  */
     const timelineForm = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -785,7 +785,7 @@ timeline.head = (args: { job: number | { id: number } } | [job: number | { id: n
 
             /**
 * @see \App\Http\Controllers\JobController::timeline
- * @see app/Http/Controllers/JobController.php:206
+ * @see app/Http/Controllers/JobController.php:212
  * @route '/jobs/{job}/timeline'
  */
         timelineForm.get = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -794,7 +794,7 @@ timeline.head = (args: { job: number | { id: number } } | [job: number | { id: n
         })
             /**
 * @see \App\Http\Controllers\JobController::timeline
- * @see app/Http/Controllers/JobController.php:206
+ * @see app/Http/Controllers/JobController.php:212
  * @route '/jobs/{job}/timeline'
  */
         timelineForm.head = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -889,7 +889,7 @@ assign.post = (args: { job: number | { id: number } } | [job: number | { id: num
     assign.form = assignForm
 /**
 * @see \App\Http\Controllers\JobAssignmentController::assignmentHistory
- * @see app/Http/Controllers/JobAssignmentController.php:50
+ * @see app/Http/Controllers/JobAssignmentController.php:63
  * @route '/jobs/{job}/assignment-history'
  */
 export const assignmentHistory = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -904,7 +904,7 @@ assignmentHistory.definition = {
 
 /**
 * @see \App\Http\Controllers\JobAssignmentController::assignmentHistory
- * @see app/Http/Controllers/JobAssignmentController.php:50
+ * @see app/Http/Controllers/JobAssignmentController.php:63
  * @route '/jobs/{job}/assignment-history'
  */
 assignmentHistory.url = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -937,7 +937,7 @@ assignmentHistory.url = (args: { job: number | { id: number } } | [job: number |
 
 /**
 * @see \App\Http\Controllers\JobAssignmentController::assignmentHistory
- * @see app/Http/Controllers/JobAssignmentController.php:50
+ * @see app/Http/Controllers/JobAssignmentController.php:63
  * @route '/jobs/{job}/assignment-history'
  */
 assignmentHistory.get = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -946,7 +946,7 @@ assignmentHistory.get = (args: { job: number | { id: number } } | [job: number |
 })
 /**
 * @see \App\Http\Controllers\JobAssignmentController::assignmentHistory
- * @see app/Http/Controllers/JobAssignmentController.php:50
+ * @see app/Http/Controllers/JobAssignmentController.php:63
  * @route '/jobs/{job}/assignment-history'
  */
 assignmentHistory.head = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -956,7 +956,7 @@ assignmentHistory.head = (args: { job: number | { id: number } } | [job: number 
 
     /**
 * @see \App\Http\Controllers\JobAssignmentController::assignmentHistory
- * @see app/Http/Controllers/JobAssignmentController.php:50
+ * @see app/Http/Controllers/JobAssignmentController.php:63
  * @route '/jobs/{job}/assignment-history'
  */
     const assignmentHistoryForm = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -966,7 +966,7 @@ assignmentHistory.head = (args: { job: number | { id: number } } | [job: number 
 
             /**
 * @see \App\Http\Controllers\JobAssignmentController::assignmentHistory
- * @see app/Http/Controllers/JobAssignmentController.php:50
+ * @see app/Http/Controllers/JobAssignmentController.php:63
  * @route '/jobs/{job}/assignment-history'
  */
         assignmentHistoryForm.get = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -975,7 +975,7 @@ assignmentHistory.head = (args: { job: number | { id: number } } | [job: number 
         })
             /**
 * @see \App\Http\Controllers\JobAssignmentController::assignmentHistory
- * @see app/Http/Controllers/JobAssignmentController.php:50
+ * @see app/Http/Controllers/JobAssignmentController.php:63
  * @route '/jobs/{job}/assignment-history'
  */
         assignmentHistoryForm.head = (args: { job: number | { id: number } } | [job: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

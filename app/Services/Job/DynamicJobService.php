@@ -2,12 +2,14 @@
 
 namespace App\Services\Job;
 
+use App\Helpers\LoggingHelpers;
 use App\Models\Template\JobTemplate;
 use App\Models\Workflow\Workflow;
 use App\Models\WorkshopJob;
 use App\Services\Template\TemplateRenderService;
 use App\Services\Workflow\WorkflowExecutor;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DynamicJobService
 {
@@ -24,59 +26,96 @@ class DynamicJobService
      */
     public function createJob(array $data): WorkshopJob
     {
-        return DB::transaction(function () use ($data) {
-            $templateId = $data['template_id'] ?? null;
-            $workflowId = $data['workflow_id'] ?? null;
+        Log::channel('workshop-jobs')->info('Dynamic Job Creation Attempt', [
+            'user_id' => auth()->id(),
+            'template_id' => $data['template_id'] ?? null,
+            'workflow_id' => $data['workflow_id'] ?? null,
+        ]);
 
-            if (!$templateId || !$workflowId) {
-                throw new \InvalidArgumentException('template_id and workflow_id are required');
-            }
+        try {
+            return DB::transaction(function () use ($data) {
+                $templateId = $data['template_id'] ?? null;
+                $workflowId = $data['workflow_id'] ?? null;
 
-            $template = JobTemplate::findOrFail($templateId);
-            $workflow = Workflow::findOrFail($workflowId);
+                if (!$templateId || !$workflowId) {
+                    throw new \InvalidArgumentException('template_id and workflow_id are required');
+                }
 
-            // Validate form data against template
-            $formData = $data['field_data'] ?? [];
-            $errors = $this->templateRenderService->validateFormData($template, $formData);
+                $template = JobTemplate::findOrFail($templateId);
+                $workflow = Workflow::findOrFail($workflowId);
 
-            if (!empty($errors)) {
-                throw new \InvalidArgumentException('Validation failed: ' . json_encode($errors));
-            }
+                Log::channel('workshop-jobs')->debug('Template and Workflow Loaded', [
+                    'template_name' => $template->name,
+                    'workflow_name' => $workflow->name,
+                ]);
 
-            // Get initial workflow status
-            $initialStatus = $workflow->initialStatus();
+                // Validate form data against template
+                $formData = $data['field_data'] ?? [];
+                $errors = $this->templateRenderService->validateFormData($template, $formData);
 
-            if (!$initialStatus) {
-                throw new \InvalidArgumentException('Workflow must have an initial status');
-            }
+                if (!empty($errors)) {
+                    Log::channel('workshop-jobs')->warning('Form Data Validation Failed', [
+                        'template_id' => $templateId,
+                        'errors' => $errors,
+                    ]);
+                    throw new \InvalidArgumentException('Validation failed: ' . json_encode($errors));
+                }
 
-            // Create the job
-            $job = WorkshopJob::create([
-                'template_id' => $template->id,
-                'workflow_id' => $workflow->id,
-                'current_workflow_status_id' => $initialStatus->id,
-                'customer_id' => $data['customer_id'] ?? null,
-                'title' => $data['title'] ?? '',
-                'description' => $data['description'] ?? '',
-                'priority' => $data['priority'] ?? 'medium',
-                'assigned_to' => $data['assigned_to'] ?? null,
-                'due_date' => $data['due_date'] ?? null,
-            ]);
+                // Get initial workflow status
+                $initialStatus = $workflow->initialStatus();
 
-            // Save dynamic field values
-            $this->templateRenderService->saveFormData($job, $formData);
+                if (!$initialStatus) {
+                    throw new \InvalidArgumentException('Workflow must have an initial status');
+                }
 
-            // Create initial status history
-            $job->statusHistories()->create([
+                // Create the job
+                $job = WorkshopJob::create([
+                    'template_id' => $template->id,
+                    'workflow_id' => $workflow->id,
+                    'current_workflow_status_id' => $initialStatus->id,
+                    'customer_id' => $data['customer_id'] ?? null,
+                    'title' => $data['title'] ?? '',
+                    'description' => $data['description'] ?? '',
+                    'priority' => $data['priority'] ?? 'medium',
+                    'assigned_to' => $data['assigned_to'] ?? null,
+                    'due_date' => $data['due_date'] ?? null,
+                ]);
+
+                // Save dynamic field values
+                $this->templateRenderService->saveFormData($job, $formData);
+
+                Log::channel('workshop-jobs')->debug('Dynamic Fields Saved', [
+                    'job_id' => $job->id,
+                    'job_number' => $job->job_number,
+                    'field_count' => count($formData),
+                ]);
+
+                // Create initial status history
+                $job->statusHistories()->create([
+                    'user_id' => auth()->id(),
+                    'from_status' => null,
+                    'to_status' => $initialStatus->code,
+                    'workflow_status_id' => $initialStatus->id,
+                    'changed_at' => now(),
+                ]);
+
+                LoggingHelpers::logJobOperation('Created (Dynamic)', $job, [
+                    'template_name' => $template->name,
+                    'workflow_name' => $workflow->name,
+                    'initial_status' => $initialStatus->code,
+                ]);
+
+                return $job->load(['template', 'workflow', 'currentWorkflowStatus', 'customer']);
+            });
+        } catch (\Exception $e) {
+            Log::channel('workshop-jobs')->error('Dynamic Job Creation Failed', [
                 'user_id' => auth()->id(),
-                'from_status' => null,
-                'to_status' => $initialStatus->code,
-                'workflow_status_id' => $initialStatus->id,
-                'changed_at' => now(),
+                'error' => $e->getMessage(),
+                'template_id' => $data['template_id'] ?? null,
+                'workflow_id' => $data['workflow_id'] ?? null,
             ]);
-
-            return $job->load(['template', 'workflow', 'currentWorkflowStatus', 'customer']);
-        });
+            throw $e;
+        }
     }
 
     /**
@@ -133,38 +172,76 @@ class DynamicJobService
 
         $transition = $job->workflow->transitions()->findOrFail($transitionId);
 
-        // ---------------------------------------------------------------------
-        // Enforce Required Form Template for Current Status
-        // ---------------------------------------------------------------------
-        $currentStatus = $job->currentWorkflowStatus;
-        if ($currentStatus && $currentStatus->required_template_id) {
-            $requiredTemplate = $currentStatus->requiredTemplate;
-            
-            // Get all existing values
-            $existingValues = $job->getAllFieldValues();
-            
-            // Merge with incoming new data (if any)
-            $incomingData = $data['field_data'] ?? [];
-            $mergedData = array_merge($existingValues, $incomingData);
+        Log::channel('workshop-jobs')->info('Workflow Transition Attempt', [
+            'job_id' => $job->id,
+            'job_number' => $job->job_number,
+            'transition_id' => $transition->id,
+            'transition_name' => $transition->name,
+            'from_status' => $job->currentWorkflowStatus->code,
+            'to_status' => $transition->toStatus->code,
+        ]);
 
-            // Validate strict rules (all required fields must be present)
-            $errors = $this->templateRenderService->validateFormData($requiredTemplate, $mergedData);
+        try {
+            // ---------------------------------------------------------------------
+            // Enforce Required Form Template for Current Status
+            // ---------------------------------------------------------------------
+            $currentStatus = $job->currentWorkflowStatus;
+            if ($currentStatus && $currentStatus->required_template_id) {
+                $requiredTemplate = $currentStatus->requiredTemplate;
+                
+                // Get all existing values
+                $existingValues = $job->getAllFieldValues();
+                
+                // Merge with incoming new data (if any)
+                $incomingData = $data['field_data'] ?? [];
+                $mergedData = array_merge($existingValues, $incomingData);
 
-            if (!empty($errors)) {
-                // If data was provided in this request, maybe we should save it first?
-                // For now, fail hard to enforce completeness.
-                throw new \InvalidArgumentException("Cannot transition. Required form '{$requiredTemplate->name}' is incomplete or invalid. " . implode(', ', $flattenErrors ?? []));
+                // Validate strict rules (all required fields must be present)
+                $errors = $this->templateRenderService->validateFormData($requiredTemplate, $mergedData);
+
+                if (!empty($errors)) {
+                    Log::channel('workshop-jobs')->warning('Required Form Validation Failed', [
+                        'job_id' => $job->id,
+                        'job_number' => $job->job_number,
+                        'required_template' => $requiredTemplate->name,
+                        'errors' => $errors,
+                    ]);
+                    // If data was provided in this request, maybe we should save it first?
+                    // For now, fail hard to enforce completeness.
+                    throw new \InvalidArgumentException("Cannot transition. Required form '{$requiredTemplate->name}' is incomplete or invalid. " . implode(', ', $flattenErrors ?? []));
+                }
+                
+                // If valid and we have new data, save it before transition
+                if (!empty($incomingData)) {
+                     $this->templateRenderService->saveFormData($job, $incomingData);
+                     Log::channel('workshop-jobs')->debug('Form Data Saved Before Transition', [
+                         'job_id' => $job->id,
+                         'field_count' => count($incomingData),
+                     ]);
+                }
             }
-            
-            // If valid and we have new data, save it before transition
-            if (!empty($incomingData)) {
-                 $this->templateRenderService->saveFormData($job, $incomingData);
-            }
+
+            $this->workflowExecutor->executeTransition($job, $transition, $data);
+
+            LoggingHelpers::logWorkflowTransition($job->fresh(), 
+                $currentStatus->code,
+                $transition->toStatus->code,
+                [
+                    'transition_name' => $transition->name,
+                    'notes' => $data['notes'] ?? null,
+                ]
+            );
+
+            return $job->fresh(['currentWorkflowStatus', 'workflow']);
+        } catch (\Exception $e) {
+            Log::channel('workshop-jobs')->error('Workflow Transition Failed', [
+                'job_id' => $job->id,
+                'job_number' => $job->job_number,
+                'transition_id' => $transitionId,
+                'error' => $e->getMessage(),
+            ]);
+            throw $e;
         }
-
-        $this->workflowExecutor->executeTransition($job, $transition, $data);
-
-        return $job->fresh(['currentWorkflowStatus', 'workflow']);
     }
 
     /**
@@ -198,62 +275,83 @@ class DynamicJobService
             'updated_at' => $job->updated_at,
         ];
 
-        // Add template info
-        if ($job->template) {
-            $data['template'] = [
-                'id' => $job->template->id,
-                'name' => $job->template->name,
-                'code' => $job->template->code,
-            ];
-        }
-
-        // Add workflow info
-        if ($job->workflow && $job->currentWorkflowStatus) {
-            $data['workflow'] = [
-                'id' => $job->workflow->id,
-                'name' => $job->workflow->name,
-                'current_status' => [
-                    'id' => $job->currentWorkflowStatus->id,
-                    'name' => $job->currentWorkflowStatus->name,
-                    'code' => $job->currentWorkflowStatus->code,
-                    'color' => $job->currentWorkflowStatus->color,
-                    'icon' => $job->currentWorkflowStatus->icon,
-                    'required_template_id' => $job->currentWorkflowStatus->required_template_id,
-                ],
-            ];
-
-            // Add available transitions
-            $data['available_transitions'] = $this->getAvailableTransitions($job)->map(function ($transition) {
-                return [
-                    'id' => $transition->id,
-                    'name' => $transition->name,
-                    'button_label' => $transition->button_label,
-                    'button_color' => $transition->button_color,
-                    'to_status' => [
-                        'name' => $transition->toStatus->name,
-                        'color' => $transition->toStatus->color,
-                    ],
-                    'requires_comment' => $transition->requires_comment,
-                    'confirmation_message' => $transition->confirmation_message,
-                ];
-            })->toArray();
-        }
-
-        // Add dynamic field values
-        if ($job->template) {
+        // Add dynamic field values - Load from workflow statuses, not job.template
+        if ($job->workflow) {
             $fieldValues = $job->getAllFieldValues();
             $data['field_values'] = $fieldValues;
 
-            // Organize by section for main job template
-            $fieldsBySection = $job->template->fieldsBySection();
-            $data['fields_by_section'] = $this->transformFields($fieldsBySection, $fieldValues);
+            // Get all workflow statuses that have required templates
+            $statusesWithTemplates = $job->workflow->statuses()
+                ->whereNotNull('required_template_id')
+                ->with(['requiredTemplate.fields.fieldType'])
+                ->orderBy('display_order')
+                ->get();
+
+            // Build array of templates with their data
+            $data['workflow_templates'] = $statusesWithTemplates->map(function ($status) use ($fieldValues, $job) {
+                $template = $status->requiredTemplate;
+                $fieldsBySection = $template->fieldsBySection();
+
+                return [
+                    'status_id' => $status->id,
+                    'status_name' => $status->name,
+                    'status_code' => $status->code,
+                    'template_id' => $template->id,
+                    'template_name' => $template->name,
+                    'template_code' => $template->code,
+                    'template_description' => $template->description,
+                    'is_current_status' => $status->id === $job->current_workflow_status_id,
+                    'fields_by_section' => $this->transformFields($fieldsBySection, $fieldValues),
+                ];
+            })->toArray();
+
+
+            // Add workflow info
+            if ($job->currentWorkflowStatus) {
+                $data['workflow'] = [
+                    'id' => $job->workflow->id,
+                    'name' => $job->workflow->name,
+                    'current_status' => [
+                        'id' => $job->currentWorkflowStatus->id,
+                        'name' => $job->currentWorkflowStatus->name,
+                        'code' => $job->currentWorkflowStatus->code,
+                        'color' => $job->currentWorkflowStatus->color,
+                        'icon' => $job->currentWorkflowStatus->icon,
+                        'required_template_id' => $job->currentWorkflowStatus->required_template_id,
+                    ],
+                    'statuses' => $job->workflow->statuses->map(function($status) {
+                        return [
+                            'id' => $status->id,
+                            'name' => $status->name,
+                            'code' => $status->code,
+                            'color' => $status->color,
+                        ];
+                    })->toArray(),
+                ];
+
+                // Add available transitions
+                $data['available_transitions'] = $this->getAvailableTransitions($job)->map(function ($transition) {
+                    return [
+                        'id' => $transition->id,
+                        'name' => $transition->name,
+                        'button_label' => $transition->button_label,
+                        'button_color' => $transition->button_color,
+                        'to_status' => [
+                            'name' => $transition->toStatus->name,
+                            'color' => $transition->toStatus->color,
+                        ],
+                        'requires_comment' => $transition->requires_comment,
+                        'confirmation_message' => $transition->confirmation_message,
+                    ];
+                })->toArray();
+            }
         }
 
-        // Add required form for current status if applicable
+        // Keep active status form for editing (if at current status)
         if ($job->currentWorkflowStatus && $job->currentWorkflowStatus->required_template_id) {
              $requiredTemplate = $job->currentWorkflowStatus->requiredTemplate;
              if ($requiredTemplate) {
-                 $requiredFieldValues = $job->getAllFieldValues(); // We fetch all values, as they are stored by field_id
+                 $requiredFieldValues = $job->getAllFieldValues();
                  $requiredFieldsBySection = $requiredTemplate->fieldsBySection();
                  
                  $data['active_status_form'] = [
@@ -285,5 +383,24 @@ class DynamicJobService
                     ];
                 })->toArray();
             })->toArray();
+    }
+
+    /**
+     * Save form data for the job's current workflow status template.
+     * 
+     * @param WorkshopJob $job
+     * @param array $data
+     * @return void
+     */
+    public function saveCurrentStatusFormData(WorkshopJob $job, array $data): void
+    {
+        if (!$job->usesDynamicWorkflow() || empty($data)) {
+            return;
+        }
+
+        $currentStatus = $job->currentWorkflowStatus;
+        if ($currentStatus && $currentStatus->requiredTemplate) {
+            $this->templateRenderService->saveFormData($job, $data, $currentStatus->requiredTemplate);
+        }
     }
 }

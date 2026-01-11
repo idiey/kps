@@ -29,6 +29,7 @@ class UpdateJobStatusRequest extends FormRequest
         return [
             'status' => ['required', Rule::enum(JobStatus::class), Rule::in(array_map(fn($s) => $s->value, $allowedStatuses))],
             'notes' => ['nullable', 'string', 'max:1000'],
+            'field_data' => ['nullable', 'array'],
         ];
     }
 

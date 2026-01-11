@@ -2,9 +2,11 @@
 
 namespace App\Services\Workflow;
 
+use App\Helpers\LoggingHelpers;
 use App\Models\Workflow\WorkflowTransition;
 use App\Models\WorkshopJob;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class WorkflowExecutor
 {
@@ -26,51 +28,76 @@ class WorkflowExecutor
         WorkflowTransition $transition,
         array $data = []
     ): bool {
-        return DB::transaction(function () use ($job, $transition, $data) {
-            // 1. Validate transition is allowed
-            if (!$this->validateTransition($job, $transition)) {
-                throw new \InvalidArgumentException(
-                    "Invalid transition from {$job->currentWorkflowStatus->name} to {$transition->toStatus->name}"
-                );
-            }
+        Log::channel('workshop-jobs')->info('WorkflowExecutor: Executing Transition', [
+            'job_id' => $job->id,
+            'job_number' => $job->job_number,
+            'transition_id' => $transition->id,
+            'transition_name' => $transition->name,
+        ]);
 
-            // 2. Check user permissions
-            if (!$this->checkUserPermissions($transition)) {
-                throw new \UnauthorizedHttpException(
-                    'You do not have permission to execute this transition'
-                );
-            }
+        try {
+            $result = DB::transaction(function () use ($job, $transition, $data) {
+                // 1. Validate transition is allowed
+                if (!$this->validateTransition($job, $transition)) {
+                    throw new \InvalidArgumentException(
+                        "Invalid transition from {$job->currentWorkflowStatus->name} to {$transition->toStatus->name}"
+                    );
+                }
 
-            // 3. Evaluate transition conditions
-            if (!$this->evaluateConditions($job, $transition, $data)) {
-                throw new \InvalidArgumentException(
-                    'Transition conditions not met'
-                );
-            }
+                // 2. Check user permissions
+                if (!$this->checkUserPermissions($transition)) {
+                    throw new \UnauthorizedHttpException(
+                        'You do not have permission to execute this transition'
+                    );
+                }
 
-            // 4. Execute pre-transition rules
-            $this->ruleEngine->executeRules($job, $transition, 'before');
+                // 3. Evaluate transition conditions
+                if (!$this->evaluateConditions($job, $transition, $data)) {
+                    throw new \InvalidArgumentException(
+                        'Transition conditions not met'
+                    );
+                }
 
-            $oldStatus = $job->currentWorkflowStatus;
+                // 4. Execute pre-transition rules
+                $this->ruleEngine->executeRules($job, $transition, 'before');
 
-            // 5. Update job status
-            $job->current_workflow_status_id = $transition->to_status_id;
-            $job->save();
+                $oldStatus = $job->currentWorkflowStatus;
 
-            // 6. Record transition in history
-            $this->recordTransition($job, $transition, $oldStatus, $data);
+                // 5. Update job status
+                $job->current_workflow_status_id = $transition->to_status_id;
+                $job->save();
 
-            // 7. Execute transition actions
-            $this->executeTransitionActions($job, $transition, $data);
+                // 6. Record transition in history
+                $this->recordTransition($job, $transition, $oldStatus, $data);
 
-            // 8. Execute post-transition rules
-            $this->ruleEngine->executeRules($job, $transition, 'after');
+                // 7. Execute transition actions
+                $this->executeTransitionActions($job, $transition, $data);
 
-            // 9. Send notifications (if configured)
-            // TODO: Implement notification system
+                // 8. Execute post-transition rules
+                $this->ruleEngine->executeRules($job, $transition, 'after');
 
-            return true;
-        });
+                // 9. Send notifications (if configured)
+                // TODO: Implement notification system
+
+                return true;
+            });
+
+            Log::channel('workshop-jobs')->info('Workflow Transition Executed Successfully', [
+                'job_id' => $job->id,
+                'job_number' => $job->job_number,
+                'transition_name' => $transition->name,
+            ]);
+
+            return $result;
+        } catch (\Exception $e) {
+            Log::channel('workshop-jobs')->error('Workflow Transition Execution Failed', [
+                'job_id' => $job->id,
+                'job_number' => $job->job_number,
+                'transition_name' => $transition->name,
+                'error' => $e->getMessage(),
+            ]);
+            throw $e;
+        }
     }
 
     /**

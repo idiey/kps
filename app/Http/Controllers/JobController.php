@@ -193,6 +193,12 @@ class JobController extends Controller
     public function updateStatus(UpdateJobStatusRequest $request, WorkshopJob $job): RedirectResponse
     {
         $newStatus = JobStatus::from($request->validated('status'));
+        $fieldData = $request->validated('field_data');
+
+        // If dynamic workflow, save form data first
+        if ($job->usesDynamicWorkflow() && !empty($fieldData)) {
+            $this->dynamicJobService->saveCurrentStatusFormData($job, $fieldData);
+        }
 
         $this->jobService->changeStatus($job, $newStatus, $request->validated('notes'));
 

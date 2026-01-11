@@ -24,6 +24,13 @@ class JobAssignmentController extends Controller
     {
         $validated = $request->validated();
 
+        \Illuminate\Support\Facades\Log::channel('workshop-jobs')->info('Job Assignment Attempt', [
+            'job_id' => $job->id,
+            'job_number' => $job->job_number,
+            'assigned_to' => $validated['assigned_to'],
+            'is_reassignment' => (bool) $job->assigned_to,
+        ]);
+
         if ($job->assigned_to) {
             // Reassign
             $this->assignmentService->reassignJob(
@@ -39,6 +46,12 @@ class JobAssignmentController extends Controller
                 $validated['notes'] ?? null
             );
         }
+
+        \App\Helpers\LoggingHelpers::logAssignment(
+            $job->fresh(),
+            $validated['assigned_to'],
+            \App\Models\User::find($validated['assigned_to'])?->name ?? 'Unknown'
+        );
 
         return redirect()->back()
             ->with('success', __('assignments.job_assigned_successfully'));
