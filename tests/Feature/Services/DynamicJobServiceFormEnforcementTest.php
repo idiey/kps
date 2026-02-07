@@ -11,6 +11,7 @@ use App\Models\Workflow\WorkflowStatus;
 use App\Models\WorkshopJob;
 use App\Services\Job\DynamicJobService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class DynamicJobServiceFormEnforcementTest extends TestCase
@@ -31,24 +32,39 @@ class DynamicJobServiceFormEnforcementTest extends TestCase
         
         $this->service = app(DynamicJobService::class);
         $this->admin = User::factory()->create(['role' => 'pentadbiran']);
-        
-        // Create workflow with statuses
-        $this->workflow = Workflow::factory()->create();
-        $this->status1 = WorkflowStatus::factory()->create([
+
+        $adminRole = Role::firstOrCreate(['name' => 'pentadbiran', 'guard_name' => 'web'], ['is_active' => true]);
+        $this->admin->syncRoles([$adminRole->name]);
+
+        $this->workflow = Workflow::create([
+            'name' => 'Test Workflow',
+            'code' => 'test-workflow-' . uniqid(),
+            'is_active' => true,
+            'is_default' => false,
+            'allowed_roles' => [$adminRole->id],
+        ]);
+
+        $this->status1 = WorkflowStatus::create([
             'workflow_id' => $this->workflow->id,
-            'code' => 'status_1',
+            'name' => 'Status 1',
+            'code' => 'new',
             'is_initial' => true,
+            'display_order' => 0,
         ]);
-        $this->status2 = WorkflowStatus::factory()->create([
+
+        $this->status2 = WorkflowStatus::create([
             'workflow_id' => $this->workflow->id,
-            'code' => 'status_2',
+            'name' => 'Status 2',
+            'code' => 'in_progress',
+            'is_initial' => false,
+            'display_order' => 1,
         ]);
-        
-        // Create transition
+
         $this->workflow->transitions()->create([
             'from_status_id' => $this->status1->id,
             'to_status_id' => $this->status2->id,
             'name' => 'Test Transition',
+            'allowed_roles' => [$adminRole->id],
             'is_active' => true,
         ]);
         
@@ -58,17 +74,18 @@ class DynamicJobServiceFormEnforcementTest extends TestCase
             ['name' => 'Text', 'component_name' => 'TextInput']
         );
         
-        $this->requiredTemplate = JobTemplate::factory()->create([
+        $this->requiredTemplate = JobTemplate::create([
             'name' => 'Required Form',
             'code' => 'required_form',
         ]);
         
-        $this->requiredField = TemplateField::factory()->create([
+        $this->requiredField = TemplateField::create([
             'template_id' => $this->requiredTemplate->id,
             'field_type_id' => $fieldType->id,
             'name' => 'Required Field',
             'code' => 'required_field',
             'is_required' => true,
+            'display_order' => 0,
         ]);
     }
 
@@ -83,7 +100,7 @@ class DynamicJobServiceFormEnforcementTest extends TestCase
             'workflow_id' => $this->workflow->id,
             'current_workflow_status_id' => $this->status1->id,
             'template_id' => $this->requiredTemplate->id,
-            'status' => \App\Enums\JobStatus::Pending,
+            'status' => \App\Enums\JobStatus::NEW->value,
         ]);
 
         $transition = $this->workflow->transitions()->first();
@@ -108,7 +125,7 @@ class DynamicJobServiceFormEnforcementTest extends TestCase
             'workflow_id' => $this->workflow->id,
             'current_workflow_status_id' => $this->status1->id,
             'template_id' => $this->requiredTemplate->id,
-            'status' => \App\Enums\JobStatus::Pending,
+            'status' => \App\Enums\JobStatus::NEW->value,
         ]);
 
         $transition = $this->workflow->transitions()->first();
@@ -134,7 +151,7 @@ class DynamicJobServiceFormEnforcementTest extends TestCase
             'workflow_id' => $this->workflow->id,
             'current_workflow_status_id' => $this->status1->id,
             'template_id' => $this->requiredTemplate->id,
-            'status' => \App\Enums\JobStatus::Pending,
+            'status' => \App\Enums\JobStatus::NEW->value,
         ]);
 
         $transition = $this->workflow->transitions()->first();
@@ -166,14 +183,11 @@ class DynamicJobServiceFormEnforcementTest extends TestCase
             'workflow_id' => $this->workflow->id,
             'current_workflow_status_id' => $this->status1->id,
             'template_id' => $this->requiredTemplate->id,
-            'status' => \App\Enums\JobStatus::Pending,
+            'status' => \App\Enums\JobStatus::NEW->value,
         ]);
 
         // Pre-fill the required field
-        $job->fieldValues()->create([
-            'field_id' => $this->requiredField->id,
-            'value' => 'Pre-filled Value',
-        ]);
+        $job->setFieldValue('required_field', 'Pre-filled Value');
 
         $transition = $this->workflow->transitions()->first();
 

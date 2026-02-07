@@ -9,10 +9,20 @@ beforeEach(function () {
     $this->technician = User::factory()->create(['role' => 'juruteknik']);
     $this->technician2 = User::factory()->create(['role' => 'juruteknik']);
     $this->customer = Customer::factory()->create();
+    $this->adminRole = ensureRole('pentadbiran');
+    $this->technicianRole = ensureRole('juruteknik');
+    $this->admin->syncRoles([$this->adminRole->name]);
+    $this->technician->syncRoles([$this->technicianRole->name]);
+    $this->technician2->syncRoles([$this->technicianRole->name]);
+    $this->workflow = createWorkflowWithRoles([$this->adminRole->id, $this->technicianRole->id]);
+    $this->jobDefaults = [
+        'workflow_id' => $this->workflow->id,
+        'current_workflow_status_id' => $this->workflow->initialStatus()?->id,
+    ];
 });
 
 test('admin can assign job to technician', function () {
-    $job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $data = [
         'assigned_to' => $this->technician->id,
@@ -35,7 +45,7 @@ test('admin can assign job to technician', function () {
 });
 
 test('technician cannot assign jobs', function () {
-    $job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $data = [
         'assigned_to' => $this->technician2->id,
@@ -47,7 +57,7 @@ test('technician cannot assign jobs', function () {
 });
 
 test('admin can reassign job to different technician', function () {
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => $this->technician->id,
     ]);
@@ -89,7 +99,7 @@ test('admin can reassign job to different technician', function () {
 });
 
 test('assignment requires valid technician', function () {
-    $job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $data = [
         'assigned_to' => 999999,
@@ -101,7 +111,7 @@ test('assignment requires valid technician', function () {
 });
 
 test('admin can view assignment history', function () {
-    $job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     // Create assignment history
     $job->assignments()->create([

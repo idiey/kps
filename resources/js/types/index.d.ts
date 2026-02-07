@@ -3,6 +3,10 @@ import type { LucideIcon } from 'lucide-vue-next';
 
 export interface Auth {
     user: User;
+    permissions: string[];
+    roles: string[];
+    isCompanyAdmin: boolean;
+    assignedSites: string[];
 }
 
 export interface BreadcrumbItem {
@@ -16,6 +20,8 @@ export interface NavItem {
     icon?: LucideIcon;
     isActive?: boolean;
     roles?: UserRole[];
+    permission?: string;
+    children?: NavItem[];
 }
 
 export type AppPageProps<
@@ -66,7 +72,8 @@ export type UserRole =
     | 'penyelia'
     | 'pemeriksa'
     | 'pelulus'
-    | 'juruteknik';
+    | 'juruteknik'
+    | 'kaunter';
 export type NoteType =
     | 'general'
     | 'diagnostic'
@@ -120,9 +127,27 @@ export interface WorkshopJob {
     updated_at: string;
     deleted_at?: string | null;
 
+    // Base fields
+    job_mode: 'NORMAL' | 'KEW_PA_10';
+    expected_completion_date?: string | null;
+    location?: string | null;
+
+    // KEW.PA-10 Specific Fields
+    kew_vehicle_registration?: string | null;
+    kew_asset_tag?: string | null;
+    kew_department?: string | null;
+    kew_inspection_date?: string | null;
+    kew_inspector_name?: string | null;
+    kew_inspector_ic?: string | null;
+    kew_findings?: string | null;
+    kew_recommendations?: string | null;
+    kew_approval_status?: 'pending' | 'approved' | 'rejected' | null;
+    kew_rejection_reason?: string | null;
+
     // Relationships
     customer?: Customer;
     assigned_user?: User;
+    assigned_technician?: User; // Helper alias often used
     notes?: JobNote[];
     status_histories?: JobStatusHistory[];
     assignments?: JobAssignment[];
@@ -248,3 +273,45 @@ export interface PaginatedResponse<T> {
     links: PaginationLinks;
     meta: PaginationMeta;
 }
+
+// Site/Workshop Types
+
+export type SiteRole = 'site_admin' | 'supervisor' | 'technician' | 'staff';
+
+export interface Company {
+    id: string;
+    name: string;
+    subdomain?: string;
+    tier: 'free' | 'professional' | 'enterprise';
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Workshop {
+    id: string;
+    company_id?: string;
+    name: string;
+    code: string;
+    address?: string;
+    phone?: string;
+    email?: string;
+    operating_hours?: Record<string, { open: string; close: string }>;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+    deleted_at?: string | null;
+
+    // Relationships
+    company?: Company;
+    assigned_users?: (User & { pivot?: { role: SiteRole } })[];
+}
+
+export interface SiteContext {
+    site: Workshop | null;
+    siteRole: SiteRole | null;
+    isSiteSelected: boolean;
+    isSiteAdmin: boolean;
+    isSupervisor: boolean;
+}
+

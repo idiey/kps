@@ -9,7 +9,16 @@ beforeEach(function () {
     $this->admin = User::factory()->create(['role' => 'pentadbiran']);
     $this->technician = User::factory()->create(['role' => 'juruteknik']);
     $this->customer = Customer::factory()->create();
-    $this->job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $this->adminRole = ensureRole('pentadbiran');
+    $this->technicianRole = ensureRole('juruteknik');
+    $this->admin->syncRoles([$this->adminRole->name]);
+    $this->technician->syncRoles([$this->technicianRole->name]);
+    $this->workflow = createWorkflowWithRoles([$this->adminRole->id, $this->technicianRole->id]);
+    $this->jobDefaults = [
+        'workflow_id' => $this->workflow->id,
+        'current_workflow_status_id' => $this->workflow->initialStatus()?->id,
+    ];
+    $this->job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 });
 
 test('admin can create job note', function () {

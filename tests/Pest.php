@@ -43,5 +43,53 @@ expect()->extend('toBeOne', function () {
 
 function something()
 {
-    // ..
+}
+
+function ensureRole(string $name): \Spatie\Permission\Models\Role
+{
+    return \Spatie\Permission\Models\Role::firstOrCreate(
+        ['name' => $name, 'guard_name' => 'web'],
+        ['is_active' => true]
+    );
+}
+
+function createWorkflowWithRoles(array $allowedRoleIds): \App\Models\Workflow\Workflow
+{
+    $allowedRoleIds = array_values(array_unique(array_map('intval', $allowedRoleIds)));
+
+    $workflow = \App\Models\Workflow\Workflow::create([
+        'name' => 'Test Workflow ' . uniqid(),
+        'code' => 'test-workflow-' . uniqid(),
+        'description' => null,
+        'is_active' => true,
+        'is_default' => false,
+        'allowed_roles' => $allowedRoleIds,
+    ]);
+
+    $s1 = $workflow->statuses()->create([
+        'name' => 'New',
+        'code' => 'new',
+        'is_initial' => true,
+        'is_final' => false,
+        'display_order' => 0,
+    ]);
+
+    $s2 = $workflow->statuses()->create([
+        'name' => 'In Progress',
+        'code' => 'in_progress',
+        'is_initial' => false,
+        'is_final' => false,
+        'display_order' => 1,
+    ]);
+
+    $workflow->transitions()->create([
+        'name' => 'Start',
+        'from_status_id' => $s1->id,
+        'to_status_id' => $s2->id,
+        'allowed_roles' => $allowedRoleIds,
+        'is_active' => true,
+        'display_order' => 0,
+    ]);
+
+    return $workflow;
 }

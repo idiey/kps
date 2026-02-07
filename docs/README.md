@@ -2,12 +2,14 @@
 
 ## Overview
 
-Welcome to the **Government Workshop Management System (KEW.PA-10)** documentation.
+Welcome to the **Workshop Management System** documentation.
 This documentation follows a context-based organization with numbered priority folders,
 making it easy to find information based on what you need to accomplish.
 
-This system is specifically designed for Malaysian government agencies to manage asset maintenance,
-repairs, and inspections using the official KEW.PA-10 procurement form.
+This is a versatile multi-tenant workshop platform supporting:
+- **Government Operations**: Full KEW.PA-10 compliance for Malaysian government agencies
+- **Normal Operations**: Walk-in customers, bookings, quotations, and invoicing
+- **Multi-Region Support**: Manage multiple workshops across different regions under one company
 
 ## Documentation Structure
 
@@ -98,6 +100,8 @@ Project planning documents, daily logs, and sprint management.
 
 New to the project? Start with [Getting Started Guide](01-getting-started/01-quick-start.md).
 
+**For Solution Architects & Teams**: See [Architecture & Capability Overview](ARCHITECTURE_CAPABILITY_OVERVIEW.md) for a comprehensive guide to the system's architecture and scalability.
+
 Need to set up development environment? See [Development Setup](01-getting-started/02-installation.md).
 
 Working on a feature? Check [Development Guide](03-development/01-developer-guide.md).
@@ -144,6 +148,6 @@ When adding or updating documentation:
 
 ---
 
-**Last Updated**: 2026-01-07
-**Documentation Version**: 2.0
+**Last Updated**: 2026-02-02
+**Documentation Version**: 3.0
 **Following**: [claude-docs standards](https://github.com/nasrulhazim/claude-docs)

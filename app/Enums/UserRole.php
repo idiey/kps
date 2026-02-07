@@ -9,6 +9,7 @@ enum UserRole: string
     case PEMERIKSA = 'pemeriksa'; // Inspector
     case PELULUS = 'pelulus'; // Approver
     case JURUTEKNIK = 'juruteknik'; // Technician
+    case KAUNTER = 'kaunter'; // Front Desk
 
     /**
      * Get the display label for the role.
@@ -21,6 +22,7 @@ enum UserRole: string
             self::PEMERIKSA => 'Inspector (Pemeriksa)',
             self::PELULUS => 'Approver (Pelulus)',
             self::JURUTEKNIK => 'Technician (Juruteknik)',
+            self::KAUNTER => 'Front Desk (Kaunter)',
         };
     }
 
@@ -35,6 +37,7 @@ enum UserRole: string
             self::PEMERIKSA => 'Inspector',
             self::PELULUS => 'Approver',
             self::JURUTEKNIK => 'Technician',
+            self::KAUNTER => 'Front Desk',
         };
     }
 
@@ -49,6 +52,7 @@ enum UserRole: string
             self::PEMERIKSA => 'Pemeriksa',
             self::PELULUS => 'Pelulus',
             self::JURUTEKNIK => 'Juruteknik',
+            self::KAUNTER => 'Kaunter',
         };
     }
 
@@ -123,6 +127,7 @@ enum UserRole: string
             self::PENYELIA => 'Approves/rejects inspections and completion reports, oversees work quality',
             self::JURUTEKNIK => 'Performs repairs, creates completion reports, and documents work performed',
             self::PELULUS => 'Reviews and approves workflow processes',
+            self::KAUNTER => 'Manages front desk operations, job intake, and customer interactions',
         };
     }
 

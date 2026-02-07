@@ -13,8 +13,7 @@ class RoleManagementController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // TODO: Add role middleware - only PENTADBIRAN should access
-        // $this->middleware('role:pentadbiran');
+        $this->middleware('role:pentadbiran');
     }
 
     /**
@@ -124,7 +123,7 @@ class RoleManagementController extends Controller
             'permissions' => 'nullable|array',
             'permissions.*' => 'exists:permissions,id',
         ]);
-
+        
         $role->update([
             'name' => $validated['name'],
             'description' => $validated['description'] ?? null,
@@ -132,14 +131,30 @@ class RoleManagementController extends Controller
             'metadata' => $validated['metadata'] ?? null,
             'is_active' => $validated['is_active'] ?? true,
         ]);
-
+        
         // Sync permissions
-        if (isset($validated['permissions'])) {
+        \Log::info('Updating role permissions', [
+            'role_id' => $role->id,
+            'role_name' => $role->name,
+            'permissions_received' => $validated['permissions'] ?? 'NOT SET',
+            'all_request_data' => $request->all(),
+        ]);
+
+        if (isset($validated['permissions']) && !empty($validated['permissions'])) {
             $permissions = Permission::whereIn('id', $validated['permissions'])->get();
+            \Log::info('Syncing permissions', [
+                'permission_ids' => $validated['permissions'],
+                'permissions_found' => $permissions->pluck('name')->toArray(),
+            ]);
             $role->syncPermissions($permissions);
+        } else {
+            // If permissions array is not set or empty, remove all permissions
+            \Log::info('No permissions received, clearing all');
+            $role->syncPermissions([]);
         }
 
-        return back()->with('success', 'Role updated successfully.');
+        return redirect()->route('admin.roles.edit', $role)
+            ->with('success', 'Role updated successfully.');
     }
 
     /**

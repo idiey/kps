@@ -11,13 +11,16 @@ graph TD
     A[Pelulus<br/>Approver] --> B[Penyelia<br/>Supervisor]
     B --> C[Pemeriksa<br/>Inspector]
     B --> D[Juruteknik<br/>Technician]
+    B --> D[Juruteknik<br/>Technician]
     E[Pentadbiran<br/>Admin Officer] -.-> B
+    F[Kaunter<br/>Front Desk] --> E
 
     style A fill:#ffcccc
     style B fill:#e6ccff
     style C fill:#cce6ff
     style D fill:#ccffcc
     style E fill:#ffffcc
+    style F fill:#ffebcc
 ```
 
 ## Role Definitions
@@ -80,7 +83,7 @@ graph TD
 | Feature | View | Create | Edit | Delete | Approve |
 |---------|------|--------|------|--------|---------|
 | KEW.PA-10 Forms | ✅ All | ❌ | ✅ Status | ❌ | ❌ |
-| Job Records | ✅ All | ❌ | ✅ | ❌ | ❌ |
+| Job Records | ✅ All | ✅ | ✅ | ❌ | ❌ |
 | Inspections | ✅ All | ❌ | ❌ | ❌ | ✅ |
 | Work Orders | ✅ All | ✅ | ✅ | ❌ | ❌ |
 | Technician Assignment | ✅ | ✅ | ✅ | ✅ | ❌ |
@@ -170,6 +173,45 @@ graph TD
 - GPS location capture
 - Barcode scanning for asset IDs
 - Sync when online
+
+---
+
+### 🟠 Kaunter (Front Desk)
+
+**English**: Front Desk
+**Bahasa Malaysia**: Kaunter
+
+**Primary Responsibility**: Job initiation, walk-in customer management, and reception
+
+**Permissions Matrix**:
+
+| Feature | View | Create | Edit | Delete | Approve |
+|---------|------|--------|------|--------|---------|
+| KEW.PA-10 Forms | ✅ All | ✅ | ✅ | ❌ | ❌ |
+| Job Records | ✅ All | ✅ | ✅ | ❌ | ❌ |
+| Inspections | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Users | ✅ Team | ❌ | ❌ | ❌ | ❌ |
+| Reports | ❌ | ❌ | ❌ | ❌ | ❌ |
+
+**Key Actions**:
+
+- Greet customers
+- Register walk-in requests
+- Create new job records (Normal & KEW.PA-10)
+- Verify received documents
+- Direct inquiries
+
+**Workflows Involved**:
+
+- Option 1: Initial reception and job creation
+- Option 2: Job creation
+
+**Typical Daily Tasks**:
+
+1. Manage reception desk
+2. Create jobs for walk-in customers
+3. Receive KEW.PA-10 forms
+4. Update basic job details
 
 ---
 

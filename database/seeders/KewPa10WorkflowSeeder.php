@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Template\JobTemplate;
 use App\Models\Workflow\Workflow;
 use App\Models\Workflow\WorkflowStatus;
 use App\Models\Workflow\WorkflowTransition;
@@ -13,6 +14,9 @@ class KewPa10WorkflowSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->call(KewPA10TemplateSeeder::class);
+        $kewPa10Template = JobTemplate::where('code', 'kew-pa-10')->first();
+
         // 1. Ensure Roles Exist
         $adminRole = Role::firstOrCreate(['name' => 'pentadbiran', 'guard_name' => 'web'], ['description' => 'Admin Officer']);
         $supervisorRole = Role::firstOrCreate(['name' => 'penyelia', 'guard_name' => 'web'], ['description' => 'Supervisor']);
@@ -27,6 +31,7 @@ class KewPa10WorkflowSeeder extends Seeder
                 'description' => 'Workflow for handling KEW.PA-10 forms received from government departments requesting asset repairs.',
                 'is_active' => true,
                 'is_default' => false,
+                'allowed_roles' => [$adminRole->id, $supervisorRole->id, $inspectorRole->id, $technicianRole->id],
                 'metadata' => [
                     'type' => 'repair',
                     'form' => 'KEW.PA-10'
@@ -46,6 +51,7 @@ class KewPa10WorkflowSeeder extends Seeder
                 'is_initial' => true,
                 'is_final' => false,
                 'display_order' => 10,
+                'required_template_id' => $kewPa10Template?->id,
             ],
             [
                 'name' => 'Registered',

@@ -1,0 +1,44 @@
+=================================================
+DATA AUDIT REPORT - 2026-02-03 08:06:52
+=================================================
+
+QUERY 1: Jobs per Workflow Type
+--------------------------------------------------
+  ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'workshop.workflows' doesn't exist (Connection: mysql, SQL: 
+        SELECT 
+            w.name AS workflow_name, 
+            COUNT(j.id) AS job_count,
+            ROUND(COUNT(j.id) * 100.0 / (SELECT COUNT(*) FROM workshop_jobs), 2) AS percentage
+        FROM workshop_jobs j
+        LEFT JOIN workflows w ON j.workflow_id = w.id
+        GROUP BY w.name
+        ORDER BY job_count DESC
+    )
+
+QUERY 2: Overall Statistics
+--------------------------------------------------
+  ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'workshop.workflows' doesn't exist (Connection: mysql, SQL: 
+        SELECT 
+            (SELECT COUNT(*) FROM workshop_jobs) AS total_jobs,
+            (SELECT COUNT(*) FROM workshop_jobs WHERE workflow_id IS NOT NULL) AS jobs_with_workflow,
+            (SELECT COUNT(*) FROM workflows WHERE is_active = 1) AS active_workflows,
+            (SELECT COUNT(*) FROM form_templates WHERE is_active = 1) AS active_templates,
+            (SELECT COUNT(*) FROM job_form_data) AS total_form_submissions,
+            (SELECT COUNT(*) FROM workflow_rules) AS total_workflow_rules
+    )
+
+QUERY 3: KEW.PA-10 Jobs Identification
+--------------------------------------------------
+  ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'workshop.job_form_data' doesn't exist (Connection: mysql, SQL: select count(*) as aggregate from `workshop_jobs` as `j` inner join `job_form_data` as `jfd` on `j`.`id` = `jfd`.`job_id` left join `form_templates` as `ft` on `jfd`.`form_template_id` = `ft`.`id` where (`ft`.`name` LIKE %KEW% or `ft`.`name` LIKE %PA-10%))
+
+QUERY 4: Active Workflow Rules
+--------------------------------------------------
+  ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'workshop.workflow_rules' doesn't exist (Connection: mysql, SQL: select `wr`.`id`, `w`.`name` as `workflow_name`, `wr`.`from_status`, `wr`.`to_status` from `workflow_rules` as `wr` inner join `workflows` as `w` on `wr`.`workflow_id` = `w`.`id` where `w`.`is_active` = 1)
+
+QUERY 5: Template Variations
+--------------------------------------------------
+  ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'workshop.form_templates' doesn't exist (Connection: mysql, SQL: select `ft`.`id`, `ft`.`name`, `ft`.`version`, COUNT(jfd.id) as usage_count from `form_templates` as `ft` left join `job_form_data` as `jfd` on `ft`.`id` = `jfd`.`form_template_id` group by `ft`.`id`, `ft`.`name`, `ft`.`version` order by `usage_count` desc)
+
+QUERY 6: Recent Activity (Last 30 Days)
+--------------------------------------------------
+  ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'workshop.workflows' doesn't exist (Connection: mysql, SQL: select DATE(j.created_at) as creation_date, `w`.`name` as `workflow_name`, COUNT(j.id) as jobs_created from `workshop_jobs` as `j` left join `workflows` as `w` on `j`.`workflow_id` = `w`.`id` where `j`.`created_at` >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) group by DATE(j.created_at), `w`.`name` order by `creation_date` desc limit 10)

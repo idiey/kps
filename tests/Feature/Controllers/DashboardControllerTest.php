@@ -10,6 +10,15 @@ beforeEach(function () {
     $this->admin = User::factory()->create(['role' => 'pentadbiran']);
     $this->technician = User::factory()->create(['role' => 'juruteknik']);
     $this->customer = Customer::factory()->create();
+    $this->adminRole = ensureRole('pentadbiran');
+    $this->technicianRole = ensureRole('juruteknik');
+    $this->admin->syncRoles([$this->adminRole->name]);
+    $this->technician->syncRoles([$this->technicianRole->name]);
+    $this->workflow = createWorkflowWithRoles([$this->adminRole->id, $this->technicianRole->id]);
+    $this->jobDefaults = [
+        'workflow_id' => $this->workflow->id,
+        'current_workflow_status_id' => $this->workflow->initialStatus()?->id,
+    ];
 });
 
 test('admin can view workload dashboard', function () {
@@ -32,14 +41,16 @@ test('technician can view workload dashboard', function () {
 test('workload dashboard shows technician job counts', function () {
     $tech1 = User::factory()->create(['role' => 'juruteknik', 'name' => 'Tech One']);
     $tech2 = User::factory()->create(['role' => 'juruteknik', 'name' => 'Tech Two']);
+    $tech1->syncRoles([$this->technicianRole->name]);
+    $tech2->syncRoles([$this->technicianRole->name]);
 
-    WorkshopJob::factory()->count(3)->create([
+    WorkshopJob::factory()->count(3)->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => $tech1->id,
         'status' => JobStatus::IN_PROGRESS,
     ]);
 
-    WorkshopJob::factory()->count(2)->create([
+    WorkshopJob::factory()->count(2)->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => $tech2->id,
         'status' => JobStatus::IN_PROGRESS,
@@ -61,17 +72,17 @@ test('workload dashboard shows technician job counts', function () {
 });
 
 test('workload dashboard shows overall statistics', function () {
-    WorkshopJob::factory()->create([
+    WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::NEW,
     ]);
 
-    WorkshopJob::factory()->count(2)->create([
+    WorkshopJob::factory()->count(2)->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::IN_PROGRESS,
     ]);
 
-    WorkshopJob::factory()->create([
+    WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::COMPLETED,
     ]);
@@ -91,13 +102,13 @@ test('workload dashboard shows overall statistics', function () {
 });
 
 test('workload dashboard shows overdue jobs', function () {
-    WorkshopJob::factory()->create([
+    WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::IN_PROGRESS,
         'due_date' => now()->subDays(2),
     ]);
 
-    WorkshopJob::factory()->create([
+    WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::IN_PROGRESS,
         'due_date' => now()->addDays(2),
@@ -115,12 +126,12 @@ test('workload dashboard shows overdue jobs', function () {
 });
 
 test('technician workload dashboard shows only their jobs', function () {
-    WorkshopJob::factory()->count(2)->create([
+    WorkshopJob::factory()->count(2)->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => $this->technician->id,
     ]);
 
-    WorkshopJob::factory()->create([
+    WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => null,
     ]);

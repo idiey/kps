@@ -27,6 +27,8 @@ class User extends Authenticatable
         'role',
         'phone',
         'department',
+        'active',
+        'company_id',
     ];
 
     /**
@@ -97,6 +99,40 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the company (HQ) this user belongs to.
+     */
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    /**
+     * Get workshops/sites this user is assigned to.
+     */
+    public function assignedWorkshops()
+    {
+        return $this->belongsToMany(Workshop::class, 'workshop_user')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    /**
+     * Check if user is an HQ-level user (has company_id set).
+     */
+    public function isHqUser(): bool
+    {
+        return $this->company_id !== null;
+    }
+
+    /**
+     * Check if user is a global admin (no company restriction).
+     */
+    public function isGlobalAdmin(): bool
+    {
+        return $this->company_id === null && $this->hasRole('pentadbiran');
+    }
+
+    /**
      * Check if user has a specific role.
      */
     public function hasRole(string|array|\App\Enums\UserRole $role): bool
@@ -131,5 +167,37 @@ class User extends Authenticatable
     {
         $value = $this->role instanceof \App\Enums\UserRole ? $this->role->value : $this->role;
         return $value === 'juruteknik';
+    }
+
+    /**
+     * Check if user is a site admin only (has site_admin pivot role but not a global admin).
+     * These users should be redirected to their assigned site.
+     */
+    public function isSiteAdminOnly(): bool
+    {
+        // If user is a global admin, they're not site-admin-only
+        if ($this->isGlobalAdmin()) {
+            return false;
+        }
+        
+        // If user has company admin role (pentadbiran), they're not site-admin-only
+        if ($this->hasRole('pentadbiran')) {
+            return false;
+        }
+
+        // Check if they have at least one workshop with site_admin pivot role
+        return $this->assignedWorkshops()
+            ->wherePivot('role', 'site_admin')
+            ->exists();
+    }
+
+    /**
+     * Get the first workshop where user is a site admin.
+     */
+    public function getFirstSiteAdminWorkshop(): ?Workshop
+    {
+        return $this->assignedWorkshops()
+            ->wherePivot('role', 'site_admin')
+            ->first();
     }
 }

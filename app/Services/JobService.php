@@ -2,11 +2,10 @@
 
 namespace App\Services;
 
+use App\Enums\JobMode;
 use App\Enums\JobStatus;
-use App\Events\JobStatusChanged;
 use App\Helpers\LoggingHelpers;
 use App\Models\WorkshopJob;
-use App\Services\Template\TemplateRenderService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -19,21 +18,29 @@ use Illuminate\Support\Facades\Log;
 class JobService
 {
     public function __construct(
-        protected ?TemplateRenderService $templateRenderService = null
-    ) {
-        // Allow null for backward compatibility, resolve from container if needed
-        $this->templateRenderService ??= app(TemplateRenderService::class);
-    }
+        protected JobStatusService $jobStatusService,
+        protected KewPa10ValidationService $kewValidationService
+    ) {}
+
     /**
      * Get paginated jobs with optional filters.
      */
     public function getPaginatedJobs(array $filters = [], int $perPage = 15): LengthAwarePaginator
     {
-        $query = WorkshopJob::with(['customer', 'assignedUser', 'workflow']);
+        $query = WorkshopJob::with(['customer', 'assignedUser']);
+
+        if (auth()->check()) {
+            // Simplified role check logic can be added here if needed
+            // Previously relied on dynamic workflow allowed_roles
+        }
 
         // Apply filters
         if (!empty($filters['status'])) {
             $query->ofStatus($filters['status']);
+        }
+        
+        if (!empty($filters['job_mode'])) {
+            $query->where('job_mode', $filters['job_mode']);
         }
 
         if (!empty($filters['priority'])) {
@@ -76,37 +83,15 @@ class JobService
 
         try {
             return DB::transaction(function () use ($data) {
-                // Set initial workflow status if workflow is selected
-                if (!empty($data['workflow_id']) && empty($data['current_workflow_status_id'])) {
-                    $initialStatus = \App\Models\Workflow\WorkflowStatus::where('workflow_id', $data['workflow_id'])
-                        ->where('is_initial', true)
-                        ->first();
-                    
-                    if ($initialStatus) {
-                        $data['current_workflow_status_id'] = $initialStatus->id;
-                    }
-                }
-
-                // Auto-assign default template from workflow if not provided
-                if (!empty($data['workflow_id']) && empty($data['template_id'])) {
-                    $workflow = \App\Models\Workflow\Workflow::find($data['workflow_id']);
-                    $defaultTemplate = $workflow?->templates()->wherePivot('is_default', true)->first();
-                    if ($defaultTemplate) {
-                        $data['template_id'] = $defaultTemplate->id;
-                    }
+                // Ensure job_mode is set
+                $data['job_mode'] ??= JobMode::NORMAL->value;
+                
+                // For Normal jobs, status is typically NEW
+                if (empty($data['status'])) {
+                    $data['status'] = JobStatus::NEW->value;
                 }
 
                 $job = WorkshopJob::create($data);
-
-                // Save dynamic field data if provided and job has a template
-                if (!empty($data['field_data']) && $job->template) {
-                    $this->templateRenderService->saveFormData($job, $data['field_data']);
-                    Log::channel('workshop-jobs')->debug('Job Field Data Saved', [
-                        'job_id' => $job->id,
-                        'job_number' => $job->job_number,
-                        'field_count' => count($data['field_data']),
-                    ]);
-                }
 
                 // Create initial status history if user is authenticated
                 if (auth()->check()) {
@@ -115,12 +100,12 @@ class JobService
                         'from_status' => null,
                         'to_status' => $job->status,
                         'changed_at' => now(),
+                        'notes' => 'Job created',
                     ]);
                 }
 
                 LoggingHelpers::logJobOperation('Created', $job, [
-                    'workflow_id' => $job->workflow_id,
-                    'template_id' => $job->template_id,
+                    'job_mode' => $job->job_mode?->value,
                     'status' => $job->status->value,
                 ]);
 
@@ -148,15 +133,19 @@ class JobService
         try {
             return DB::transaction(function () use ($job, $data) {
                 // Check if status is changing
-                $oldStatus = $job->status;
-                $newStatus = $data['status'] ?? null;
+                $newStatus = isset($data['status']) ? JobStatus::tryFrom($data['status']) : null;
+                
+                // If checking KEW specs
+                if ($job->job_mode === JobMode::KEW_PA_10 && !empty($data['kew_findings'])) {
+                   // Optional validations here
+                }
 
                 // Update job
                 $job->update($data);
 
-                // If status changed, record it
-                if ($newStatus && $oldStatus !== $newStatus) {
-                    $this->recordStatusChange($job, $oldStatus, JobStatus::from($newStatus));
+                // If status passed in data, use service to transition
+                if ($newStatus && $newStatus !== $job->status) {
+                    $this->jobStatusService->transitionStatus($job, $newStatus);
                 }
 
                 LoggingHelpers::logJobOperation('Updated', $job, [
@@ -204,52 +193,17 @@ class JobService
         JobStatus $newStatus,
         ?string $notes = null
     ): WorkshopJob {
-        // Validate transition
-        if (!$job->canTransitionTo($newStatus)) {
-            Log::channel('workshop-jobs')->warning('Status Transition Denied',
- LoggingHelpers::jobContext($job, [
-                    'from_status' => $job->status->value,
-                    'to_status' => $newStatus->value,
-                    'reason' => 'Invalid transition',
-                ])
-            );
-
-            throw new \InvalidArgumentException(
-                "Cannot transition from {$job->status->label()} to {$newStatus->label()}"
-            );
-        }
-
-        LoggingHelpers::logWorkflowTransition($job, $job->status->value, $newStatus->value, [
-            'notes' => $notes,
-        ]);
-
         try {
             return DB::transaction(function () use ($job, $newStatus, $notes) {
-                $oldStatus = $job->status;
+                // Validate KEW specific gates
+                if ($job->job_mode === JobMode::KEW_PA_10) {
+                    if ($newStatus === JobStatus::INSPECTION_APPROVED || $newStatus === JobStatus::INSPECTION_REJECTED) {
+                        $this->kewValidationService->ensureInspectionComplete($job);
+                    }
+                }
 
-                // Update job status
-                $job->update(['status' => $newStatus]);
-
-                // Update timestamps based on status
-                match($newStatus) {
-                    JobStatus::IN_PROGRESS => $job->update(['started_at' => $job->started_at ?? now()]),
-                    JobStatus::COMPLETED => $job->update(['completed_at' => now()]),
-                    JobStatus::INVOICED => $job->update(['invoiced_at' => now()]),
-                    default => null,
-                };
-
-                // Record status change
-                $this->recordStatusChange($job, $oldStatus, $newStatus, $notes);
-
-                // Dispatch event
-                event(new JobStatusChanged($job, $oldStatus, $newStatus));
-
-                Log::channel('workshop-jobs')->info('Status Changed Successfully', [
-                    'job_id' => $job->id,
-                    'job_number' => $job->job_number,
-                    'from_status' => $oldStatus->value,
-                    'to_status' => $newStatus->value,
-                ]);
+                // Delegate transition logic to JobStatusService
+                $this->jobStatusService->transitionStatus($job, $newStatus, $notes);
 
                 return $job->fresh();
             });
@@ -299,24 +253,6 @@ class JobService
         return WorkshopJob::overdue()
             ->with(['customer', 'assignedUser'])
             ->get();
-    }
-
-    /**
-     * Record a status change in history.
-     */
-    protected function recordStatusChange(
-        WorkshopJob $job,
-        JobStatus $fromStatus,
-        JobStatus $toStatus,
-        ?string $notes = null
-    ): void {
-        $job->statusHistories()->create([
-            'user_id' => auth()->id(),
-            'from_status' => $fromStatus,
-            'to_status' => $toStatus,
-            'notes' => $notes,
-            'changed_at' => now(),
-        ]);
     }
 
     /**

@@ -1,24 +1,26 @@
-# Government Workshop Management System (KEW.PA-10) - Documentation Index
+# Workshop Management System - Documentation Index
 
-> **Project**: Government Workshop Management System (KEW.PA-10)
-> **Version**: 1.0.0-dev
-> **Tech Stack**: Laravel 12 + Vue.js 3 + Inertia.js
-> **Last Updated**: 2025-12-28
-> **Status**: Development Phase - Sprint 0
+> **Project**: Workshop Management System
+> **Version**: 2.0.0-rework
+> **Tech Stack**: Laravel 12 + Vue.js 3 + Inertia.js + React Native (Mobile)
+> **Last Updated**: 2026-02-02
+> **Status**: Week 6 - Integration Testing & UAT
 > **Documentation Standard**: [claude-docs](https://github.com/nasrulhazim/claude-docs)
 
 ## Project Overview
 
-The Government Workshop Management System is a specialized full-stack web application built with Laravel 12, Vue.js 3, and Inertia.js specifically designed for **Malaysian government agencies** to manage asset maintenance, repairs, and inspections using the official **KEW.PA-10** procurement form.
+The Workshop Management System is a versatile multi-tenant full-stack web application built with Laravel 12, Vue.js 3, and Inertia.js designed for workshop operations including **Malaysian government agencies** (KEW.PA-10 compliance) and **normal workshop operations** (walk-in/booked customers, quotations, invoicing, inventory management).
 
 ### Key Characteristics
 
+- **Multi-Tenant**: Support multiple companies with multiple workshops per region
+- **Dual Job Modes**: KEW.PA-10 (Government) and Normal (Walk-in/Booked)
 - **Government Compliance**: Full KEW.PA-10 form processing and audit trails
+- **Workshop Features**: Quotations, Invoicing, Parts Inventory, Appointment Booking
 - **Bilingual**: English and Bahasa Malaysia interface
-- **Five Role System**: Pentadbiran, Penyelia, Pemeriksa, Pelulus, Juruteknik
-- **Two Workflows**: External KEW.PA-10 reception and internal inspection
-- **Digital Signatures**: Government-approved digital signature integration
+- **Flexible Roles**: Template-based roles (Government 5-role + Workshop roles)
 - **Photo Documentation**: Comprehensive before/during/after photo management
+- **Notifications**: SMS/WhatsApp alerts for customers
 
 ## Documentation Organization
 
@@ -44,9 +46,17 @@ System design, patterns, and technical architecture.
 - Frontend Architecture - Vue.js and Inertia.js
 - Security Architecture - Authentication and authorization
 - API Design - RESTful API structure
+- **[Multi-Tenant Architecture](02-architecture/11-multi-tenant-architecture.md)** ⭐ Multi-region support
+- **[Job Mode System](02-architecture/12-job-mode-system.md)** ⭐ Dual job modes (Government/Normal)
+- **[Simplified Job Modes](02-architecture/16-simplified-job-modes.md)** ⭐ Current Implementation
+- **[Job Request Swimlane](02-architecture/17-job-request-swimlane.md)** - Workflow visualization
 - **[Workflow Option 1](02-architecture/07-workflow-option-1.md)** - External KEW.PA-10 reception
 - **[Workflow Option 2](02-architecture/08-workflow-option-2.md)** - Internal inspection workflow
-- **[PWA Requirement](02-architecture/09-pwa-requirement.md)** - Proposed mobile app architecture
+- **[PWA Requirement](02-architecture/09-pwa-requirement.md)** - Progressive web app architecture
+- **[Mobile Application PRD](02-architecture/11-mobile-prd.md)** ⭐ React Native mobile app
+- **[Mobile API Design](02-architecture/13-mobile-api-design.md)** - REST API for mobile
+- **[Offline Sync Strategy](02-architecture/14-offline-sync.md)** - SQLite + background sync
+- **[Notification Architecture](02-architecture/15-notification-architecture.md)** - Push notifications
 
 ### [03. Development](03-development/README.md)
 
@@ -62,13 +72,13 @@ Developer guides, coding standards, and workflows.
 
 Sprint planning, user stories, and progress tracking.
 
-- [Sprint Overview](04-sprints/01-sprint-overview.md) - All sprint planning
-- [Sprint 0 - Foundation](04-sprints/02-sprint-0-foundation.md) - Current sprint (Days 1-10)
-- Sprint 1 - Core Features (Days 11-20)
-- Sprint 2 - Advanced Features (Days 21-30)
-- Sprint 3 - Integration (Days 31-40)
-- Sprint 4 - Reporting (Days 41-50)
-- Sprint 5 - Release (Days 51-60)
+- [Rework Phase Overview](04-sprints/03-sprint-rework-overview.md) - High-level rework plan
+- [Sprint 0 - Foundation](04-sprints/02-sprint-0-foundation.md) - Completed
+- [Sprint 1 - Core Features](04-sprints/03-sprint-1-core.md) - Completed
+- [Week 4 - Frontend Kickoff](04-sprints/WEEK4-FRONTEND-KICKOFF.md) - Completed
+- [Week 5 - Production Prep](04-sprints/WEEK5-COMPLETE.md) - Completed
+- **[Week 6 - Integration Testing](04-sprints/WEEK6-PROGRESS.md)** - 🟡 Current Work
+
 
 ### [05. Deployment](05-deployment/README.md)
 
@@ -142,34 +152,32 @@ Selling and justifying the system to government workshop clients.
 
 ## Project Status
 
-### Current Phase: Sprint 0 - Foundation
+### Current Phase: Week 6 - Integration Testing
 
-**Sprint Goal**: Establish Laravel foundation with Vue.js/Inertia.js and database
+**Goal**: Comprehensive testing and user acceptance validation (UAT)
 
-**Sprint Duration**: Days 1-10
-
-**Progress**: Day 1
+**Status**: In Progress (Day 1)
 
 ### Completed ✅
 
-- Repository initialization
-- Documentation structure (claude-docs standard)
-- Technology stack selection (Laravel + Vue.js + Inertia.js)
-- Project planning and roadmap
+- **Sprint 0-2 & Week 1-5**: Foundation, Core Features, Frontend Kickoff.
+- Multi-tenant architecture implemented
+- Dual Job Modes (KEW/Normal/Warranty) implemented with static approach
+- Unified process flow (Simplified Architecture)
+- Mobile App PRD and API Design
 
 ### In Progress 🔄
 
-- Laravel project initialization
-- Database schema design (migrations)
-- Core models and controllers
-- Vue.js component structure
+- **Week 6**: Integration Testing
+- Creating comprehensive test suite (Unit/Feature/Integration)
+- KEW.PA-10 Workflow verification
+- Admin module testing
+- UAT Preparation
 
 ### Upcoming ⏳
 
-- Authentication setup (Sanctum)
-- Basic CRUD operations
-- Inertia.js pages
-- Testing framework setup
+- **Week 7**: Bug Fixes & Pre-release Polish
+- **Week 8**: Production Deployment
 
 ## Technology Stack
 

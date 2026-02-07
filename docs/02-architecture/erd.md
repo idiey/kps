@@ -1,18 +1,21 @@
 # Entity Relationship Diagram (ERD)
 
-> **Last Updated**: 2026-01-07
+> **Last Updated**: 2026-02-02  
+> **Version**: 2.0.0-rework  
+> **Status**: Multi-Tenant + Full Workshop Features  
 
-This document provides a comprehensive Entity Relationship Diagram (ERD) for the Workshop Management System. The diagram illustrates all database entities, their attributes, and the relationships between them.
+This document provides a comprehensive Entity Relationship Diagram (ERD) for the Workshop Management System v2.0. The diagram illustrates all database entities, their attributes, and the relationships between them.
 
 ## Overview
 
-The Workshop Management System is built around a **Job-centric architecture** with the following key domains:
+The Workshop Management System is built around a **multi-tenant, job-centric architecture** with the following key domains:
 
-- **Core**: Workshop jobs, customers, and assets
-- **Workflow**: Dynamic workflow engine with statuses, transitions, and rules
-- **Templates**: Dynamic form templates with configurable fields
-- **User Management**: Users, roles, and permissions
-- **Reporting**: Inspection reports, completion reports, and job documentation
+- **Multi-Tenant**: Companies and workshops hierarchy
+- **Core**: Jobs, customers, vehicles, and dual job modes (KEW.PA-10 / Normal)
+- **Workshop Features**: Quotations, invoices, inventory, appointments
+- **User Management**: Flexible roles, teams, and permissions
+- **Mobile**: Offline sync, device registration, push notifications
+- **Government (KEW.PA-10)**: Digital forms, inspections, approvals, audit trails
 
 ---
 

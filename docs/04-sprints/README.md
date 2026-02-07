@@ -1,113 +1,48 @@
-# Sprint Planning
+# Sprint & Progress Tracking
 
 ## Overview
 
-Sprint planning, user stories, daily todos, and progress tracking for the Workshop Management System development.
+Project tracking has evolved from standard Sprints to a Weekly Progress model to better accommodate the rework phase and rapid iteration.
 
 ## Table of Contents
 
-### Current Sprints
+### Current Phase
 
-### [1. Sprint Overview](01-sprint-overview.md)
+### [Week 6: Integration Testing](WEEK6-PROGRESS.md) 🟡
+- **Status**: In Progress
+- **Focus**: Test Suite Cleanup, Integration Testing, UAT Prep
+- [Testing Plan](WEEK6-TESTING-PLAN.md)
+- [Cleanup Log](WEEK6-TEST-CLEANUP.md)
 
-High-level sprint structure, timeline, and release planning.
+### Recent Completed Phases
 
-### [2. Sprint 0 - Foundation](02-sprint-0-foundation.md) ✅
+### [Week 5: Production Prep](WEEK5-COMPLETE.md) ✅
+- **Status**: Complete
+- **Focus**: Sidebar fixes, Data Seeding, Role Permissions
+- [Production Prep Plan](WEEK5-PRODUCTION-PREP-PLAN.md)
 
+### [Week 4: Frontend Kickoff](WEEK4-COMPLETE.md) ✅
+- **Status**: Complete
+- **Focus**: UI implementation, Component library
+- [Frontend Kickoff](WEEK4-FRONTEND-KICKOFF.md)
+
+### [Sprint 2: Workflow Restructuring](05-sprint-2-workflow-restructuring.md) ✅
+- **Status**: Complete (Superseded by Week 4-5 work)
+- **Focus**: Transitioning to static workflows
+
+### Archived Sprints
+
+### [Sprint 0 - Foundation](02-sprint-0-foundation.md) ✅
 Foundation sprint (Days 1-10): Laravel setup, database, core models. **COMPLETE**
 
-### [3. Sprint 1 - Core Features](03-sprint-1-core.md) 🔄
+### [Sprint 1 - Core Features](03-sprint-1-core.md) ✅
+Core features sprint (Days 11-20): CRUD operations, workflows. **COMPLETE**
 
-Core features sprint (Days 11-20): CRUD operations, workflows. **IN PROGRESS - Backend Complete**
-
-### [4. Sprint: KEW.PA-10 Foundation](04-sprint-kew-pa-10-foundation.md) ✅
-
-KEW.PA-10 Workflow Option 1 foundation (Phase 1-3): Database schema, status system, inspection infrastructure. **COMPLETE**
-
-### [5. Sprint 1 - Dynamic Workflow System](../../SPRINT_1_SUMMARY.md) ✅
-
-Dynamic Workflow Management System implementation: Database migrations, models, services, controllers,
-Vue components, and migration commands. **COMPLETE**
-
-### [6. Sprint 2 - Workflow Restructuring](05-sprint-2-workflow-restructuring.md) 🔄
-
-Job-centric workflow restructuring: Remove KEW.PA-10 module, add form templates to workflow steps. **IN PROGRESS**
-
-### Upcoming Sprints
-
-The following sprint documentation will be created as we progress:
-
-- **05-sprint-2-advanced.md** - Advanced features sprint (Days 21-30): Time tracking, inventory
-- **06-sprint-3-integration.md** - Integration sprint (Days 31-40): Real-time updates, integrations
-- **07-sprint-4-reporting.md** - Reporting sprint (Days 41-50): Analytics, reports, exports
-- **08-sprint-5-release.md** - Release sprint (Days 51-60): Testing, QA, deployment
-
-## Current Sprint
-
-### Sprint 2: Workflow Restructuring
-
-- **Status**: In Progress (B1 Complete)
-- **Goal**: Job-centric workflow with dynamic form templates
-- **Duration**: Days 18-25
-- **Progress**: Stream A ✅, Stream B 🔄 (1/3), Stream C ✅
-- **Next**: B2 Job Creation Flow, B3 Transition UI, D1-D2 Testing
-
-## Sprint Schedule
-
-| Sprint   | Duration   | Focus             | Story Points | Status          |
-| -------- | ---------- | ----------------- | ------------ | --------------- |
-| Sprint 0 | Days 1-10  | Foundation        | 16           | ✅ Complete     |
-| Sprint 1 | Days 11-20 | Core Features     | 16           | 🔄 In Progress  |
-| Sprint 2 | Days 21-30 | Advanced Features | 21           | ⏳ Pending      |
-| Sprint 3 | Days 31-40 | Integration       | 18           | ⏳ Pending      |
-| Sprint 4 | Days 41-50 | Reporting         | 16           | ⏳ Pending      |
-| Sprint 5 | Days 51-60 | Release           | 13           | ⏳ Pending      |
-
-**Total**: 100 story points over 60 days
-
-## Sprint Ceremonies
-
-### Daily Standup
-
-- Time: 9:00 AM (15 minutes)
-- What did you do yesterday?
-- What will you do today?
-- Any blockers?
-
-### Planning Session
-
-- Day 1 of each sprint
-- Review backlog
-- Commit to sprint goal
-- Break down user stories
-
-### Sprint Review
-
-- Last day of sprint
-- Demo completed features
-- Gather feedback
-- Update backlog
-
-### Sprint Retrospective
-
-- Last day of sprint
-- What went well?
-- What could be improved?
-- Action items for next sprint
+### [Sprint: KEW.PA-10 Foundation](04-sprint-kew-pa-10-foundation.md) ✅
+KEW.PA-10 Workflow Option 1 foundation. **COMPLETE**
 
 ## Progress Tracking
 
-- **Burndown Charts**: Track daily progress
-- **Velocity**: Measure team capacity
-- **Definition of Done**: Clear acceptance criteria
-- **Blockers**: Track and resolve quickly
-
-## Related Documentation
-
-- [Implementation Roadmap](../05-deployment/01-implementation-roadmap.md)
-- [Development Guide](../03-development/01-developer-guide.md)
-- [Architecture](../02-architecture/README.md)
-
----
-
-**Next**: [Sprint Overview →](01-sprint-overview.md)
+- **Weekly Plans**: Each week has a dedicated PROGESS.md and PLAN.md
+- **Daily Updates**: Progress recorded in weekly files
+- **Task Management**: `task.md` used for granular tracking

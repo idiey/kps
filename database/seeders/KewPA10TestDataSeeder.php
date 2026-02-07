@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Enums\JobPriority;
 use App\Models\Asset;
 use App\Models\GovernmentDepartment;
-use App\Models\KewPA10;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -104,24 +103,31 @@ class KewPA10TestDataSeeder extends Seeder
         $this->command->info("✓ Asset created: {$asset->asset_name} ({$asset->asset_tag})");
 
         $this->command->newLine();
-        $this->command->info('Creating KEW.PA-10 form (ready for testing)...');
+        $this->command->info('Creating KEW.PA-10 job (ready for testing)...');
 
-        // Create KEW.PA-10 form (NOT verified yet, so you can test the verification process)
-        $kew = KewPA10::firstOrCreate(
+        // Create KEW.PA-10 Job (using new static architecture)
+        $job = \App\Models\WorkshopJob::firstOrCreate(
             ['kew_pa_10_number' => 'KEW.PA-10/MOH/2025/001'],
             [
-                'government_department_id' => $dept->id,
-                'asset_id' => $asset->id,
-                'description' => 'Vehicle engine overheating during operation. Radiator showing visible leaks. Requires immediate repair as vehicle is used for emergency medical transport.',
-                'priority' => JobPriority::HIGH,
-                'budget_allocation_reference' => 'BA-MOH-2025-12345',
-                'received_date' => now(),
-                'form_completeness_verified' => false, // Test verification workflow
-                'signatures_verified' => false,
-                'verification_notes' => null,
+                'job_mode' => \App\Enums\JobMode::KEW_PA_10,
+                'customer_id' => null, // Optional for KEW jobs as dept is stored in kew_pa_10_government_department_id
+                'title' => 'Emergency Repair - Toyota Hilux',
+                'description' => 'Vehicle engine overheating during operation. Radiator showing visible leaks.', // Main job description
+                'status' => \App\Enums\JobStatus::NEW,
+                
+                // Static KEW.PA-10 Fields
+                'kew_pa_10_government_department_id' => $dept->id,
+                'kew_pa_10_asset_id' => $asset->id,
+                'kew_pa_10_description' => 'Vehicle engine overheating during operation. Radiator showing visible leaks. Requires immediate repair as vehicle is used for emergency medical transport.',
+                'kew_pa_10_priority' => \App\Enums\KewPa10Priority::URGENT,
+                'kew_pa_10_budget_reference' => 'BA-MOH-2025-12345',
+                'kew_pa_10_received_date' => now(),
+                'kew_pa_10_form_verified' => false,
+                'kew_pa_10_signatures_verified' => false,
             ]
         );
-        $this->command->info("✓ KEW.PA-10 created: {$kew->kew_pa_10_number}");
+        
+        $this->command->info("✓ KEW.PA-10 Job created: {$job->kew_pa_10_number} (Job #{$job->job_number})");
         $this->command->warn('  → NOT verified yet (test the verification workflow)');
 
         $this->command->newLine();
