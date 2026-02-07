@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { SidebarInset } from '@/components/ui/sidebar';
+import { digitWorkshop } from '@/styles/digit-workshop-ui';
+import { cn } from '@/lib/utils';
 import { computed } from 'vue';
 
 interface Props {
@@ -8,7 +10,14 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const className = computed(() => props.class);
+const className = computed(() =>
+    cn(
+        props.variant === 'sidebar'
+            ? digitWorkshop.layout.contentContainer
+            : 'mx-auto flex h-full w-full max-w-7xl flex-1 flex-col gap-4 rounded-xl',
+        props.class,
+    ),
+);
 </script>
 
 <template>
@@ -17,7 +26,6 @@ const className = computed(() => props.class);
     </SidebarInset>
     <main
         v-else
-        class="mx-auto flex h-full w-full max-w-7xl flex-1 flex-col gap-4 rounded-xl"
         :class="className"
     >
         <slot />

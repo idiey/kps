@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { digitWorkshop } from '@/styles/digit-workshop-ui';
 import { ArrowLeft, Briefcase, Users, TrendingUp, CheckCircle, Clock } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
 
@@ -79,22 +80,22 @@ const breadcrumbs: BreadcrumbItem[] = [
     <Head :title="`${workshop.name} - Analytics`" />
 
     <SiteLayout :breadcrumbs="breadcrumbs" :site="site" :site-role="siteRole">
-        <div class="space-y-6">
+        <div class="space-y-8">
             <!-- Header -->
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-4">
-                    <Button variant="ghost" size="icon" as-child>
+                    <Button variant="ghost" size="icon" as-child :class="digitWorkshop.button.iconButton">
                         <Link :href="`/admin/workshops/${workshop.id}`">
                             <ArrowLeft class="h-5 w-5" />
                         </Link>
                     </Button>
                     <div>
-                        <h2 class="text-2xl font-bold tracking-tight">Analytics</h2>
-                        <p class="text-muted-foreground">Performance metrics for {{ workshop.name }}</p>
+                        <h2 :class="digitWorkshop.typography.pageTitle">Analytics</h2>
+                        <p :class="digitWorkshop.typography.pageSubtitle">Performance metrics for {{ workshop.name }}</p>
                     </div>
                 </div>
                 <Select :model-value="selectedPeriod" @update:model-value="(val) => changePeriod(val as string | null)">
-                    <SelectTrigger class="w-48">
+                    <SelectTrigger :class="['w-48', digitWorkshop.form.selectBase]">
                         <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -109,73 +110,73 @@ const breadcrumbs: BreadcrumbItem[] = [
             <!-- Stats Overview -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Total Jobs -->
-                <Card>
+                <Card :class="digitWorkshop.card.cardGradientHero">
                     <CardContent class="pt-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-medium text-muted-foreground">Total Jobs</p>
+                                <p class="text-xs font-medium text-[#6B6B6B]">Total Jobs</p>
                                 <p class="mt-2 text-3xl font-bold">{{ stats.jobs.total }}</p>
                                 <p class="text-xs text-muted-foreground mt-1">
                                     +{{ stats.jobs.period_count }} this period
                                 </p>
                             </div>
-                            <div class="p-3 bg-primary/10 rounded-full">
-                                <Briefcase class="h-6 w-6 text-primary" />
-                            </div>
+                            <span :class="digitWorkshop.card.iconChipSoft + ' size-10'">
+                                <Briefcase class="h-5 w-5" />
+                            </span>
                         </div>
                     </CardContent>
                 </Card>
 
                 <!-- Completed Jobs -->
-                <Card>
+                <Card :class="digitWorkshop.card.cardGradientMint">
                     <CardContent class="pt-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-medium text-muted-foreground">Completed</p>
+                                <p class="text-xs font-medium text-[#6B6B6B]">Completed</p>
                                 <p class="mt-2 text-3xl font-bold">{{ stats.jobs.completed }}</p>
                                 <p class="text-xs text-muted-foreground mt-1">
                                     {{ completionRate }}% completion rate
                                 </p>
                             </div>
-                            <div class="p-3 bg-green-100 dark:bg-green-900/20 rounded-full">
-                                <CheckCircle class="h-6 w-6 text-green-600" />
-                            </div>
+                            <span :class="digitWorkshop.card.iconChip + ' size-10'">
+                                <CheckCircle class="h-5 w-5" />
+                            </span>
                         </div>
                     </CardContent>
                 </Card>
 
                 <!-- In Progress -->
-                <Card>
+                <Card :class="digitWorkshop.card.cardGradientYellow">
                     <CardContent class="pt-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-medium text-muted-foreground">In Progress</p>
+                                <p class="text-xs font-medium text-[#6B6B6B]">In Progress</p>
                                 <p class="mt-2 text-3xl font-bold">{{ stats.jobs.in_progress }}</p>
                                 <p class="text-xs text-muted-foreground mt-1">
                                     Active work
                                 </p>
                             </div>
-                            <div class="p-3 bg-yellow-100 dark:bg-yellow-900/20 rounded-full">
-                                <Clock class="h-6 w-6 text-yellow-600" />
-                            </div>
+                            <span :class="digitWorkshop.card.iconChipYellow + ' size-10'">
+                                <Clock class="h-5 w-5" />
+                            </span>
                         </div>
                     </CardContent>
                 </Card>
 
                 <!-- Customers -->
-                <Card>
+                <Card :class="digitWorkshop.card.cardGradientBlue">
                     <CardContent class="pt-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-medium text-muted-foreground">Customers</p>
+                                <p class="text-xs font-medium text-[#6B6B6B]">Customers</p>
                                 <p class="mt-2 text-3xl font-bold">{{ stats.customers.total }}</p>
                                 <p class="text-xs text-muted-foreground mt-1">
                                     +{{ stats.customers.new_period }} new
                                 </p>
                             </div>
-                            <div class="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-full">
-                                <Users class="h-6 w-6 text-blue-600" />
-                            </div>
+                            <span :class="digitWorkshop.card.iconChipBlue + ' size-10'">
+                                <Users class="h-5 w-5" />
+                            </span>
                         </div>
                     </CardContent>
                 </Card>
@@ -184,7 +185,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             <!-- Team & Status Distribution -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Team Stats -->
-                <Card>
+                <Card :class="digitWorkshop.card.cardBase">
                     <CardHeader>
                         <CardTitle>Team Distribution</CardTitle>
                         <CardDescription>Users assigned by role</CardDescription>
@@ -193,15 +194,15 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
                                 <span class="text-sm">Supervisors</span>
-                                <Badge variant="secondary">{{ stats.users.by_role.supervisor }}</Badge>
+                                <Badge :class="digitWorkshop.badge.badgeMuted">{{ stats.users.by_role.supervisor }}</Badge>
                             </div>
                             <div class="flex items-center justify-between">
                                 <span class="text-sm">Technicians</span>
-                                <Badge variant="secondary">{{ stats.users.by_role.technician }}</Badge>
+                                <Badge :class="digitWorkshop.badge.badgeMuted">{{ stats.users.by_role.technician }}</Badge>
                             </div>
                             <div class="flex items-center justify-between">
                                 <span class="text-sm">Staff</span>
-                                <Badge variant="secondary">{{ stats.users.by_role.staff }}</Badge>
+                                <Badge :class="digitWorkshop.badge.badgeMuted">{{ stats.users.by_role.staff }}</Badge>
                             </div>
                             <div class="pt-4 border-t flex items-center justify-between font-medium">
                                 <span>Total Assigned</span>
@@ -212,7 +213,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </Card>
 
                 <!-- Jobs by Status -->
-                <Card>
+                <Card :class="digitWorkshop.card.cardBase">
                     <CardHeader>
                         <CardTitle>Jobs by Status</CardTitle>
                         <CardDescription>Current status distribution</CardDescription>
@@ -225,7 +226,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 class="flex items-center justify-between"
                             >
                                 <span class="text-sm capitalize">{{ status.replace('_', ' ') }}</span>
-                                <Badge variant="outline">{{ count }}</Badge>
+                                <Badge :class="digitWorkshop.badge.badgeOutline">{{ count }}</Badge>
                             </div>
                             <div v-if="Object.keys(stats.jobsByStatus).length === 0" class="text-center py-4 text-muted-foreground">
                                 No job data available
@@ -236,7 +237,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
 
             <!-- Jobs Trend -->
-            <Card v-if="Object.keys(stats.jobsTrend).length > 0">
+            <Card v-if="Object.keys(stats.jobsTrend).length > 0" :class="digitWorkshop.card.cardBase">
                 <CardHeader>
                     <CardTitle>Jobs Trend</CardTitle>
                     <CardDescription>New jobs over {{ periodLabels[period] }}</CardDescription>
@@ -246,7 +247,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <div 
                             v-for="(count, key) in stats.jobsTrend" 
                             :key="key"
-                            class="flex-1 bg-primary/20 rounded-t flex items-end justify-center"
+                            class="flex-1 bg-[#EAF7EE] rounded-t-xl flex items-end justify-center"
                             :style="{ height: `${Math.max(count * 10, 10)}%` }"
                         >
                             <span class="text-xs font-medium pb-1">{{ count }}</span>

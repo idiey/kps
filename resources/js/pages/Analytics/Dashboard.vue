@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AppLayout from '@/layouts/AppLayout.vue';
+import { digitWorkshop } from '@/styles/digit-workshop-ui';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router } from '@inertiajs/vue3';
 import {
@@ -134,15 +135,15 @@ const formatPercentage = (num: number): string => {
 
 const getStatusColor = (status: string): string => {
     const colors: Record<string, string> = {
-        completed: 'bg-green-100 text-green-800',
-        in_progress: 'bg-blue-100 text-blue-800',
-        assigned: 'bg-yellow-100 text-yellow-800',
-        pending_assignment: 'bg-gray-100 text-gray-800',
-        inspection: 'bg-purple-100 text-purple-800',
-        cancelled: 'bg-red-100 text-red-800',
-        draft: 'bg-gray-100 text-gray-800',
+        completed: 'border border-[#CFE7D6] bg-[#EAF7EE] text-[#2E6B35]',
+        in_progress: 'border border-[#D5E4FF] bg-[#E8F0FF] text-[#4A6FD8]',
+        assigned: 'border border-[#F3E6B5] bg-[#FFF4D8] text-[#C9821B]',
+        pending_assignment: 'border border-[#E0E0E0] bg-[#F2F2F2] text-[#6B6B6B]',
+        inspection: 'border border-[#E2D7FF] bg-[#F1E9FF] text-[#7A55D8]',
+        cancelled: 'border border-[#F2D2D2] bg-[#FBECEC] text-[#C14B4B]',
+        draft: 'border border-[#E0E0E0] bg-[#F2F2F2] text-[#6B6B6B]',
     };
-    return colors[status] || 'bg-gray-100 text-gray-800';
+    return colors[status] || 'border border-[#E0E0E0] bg-[#F2F2F2] text-[#6B6B6B]';
 };
 
 const chartData = computed(() => {
@@ -172,14 +173,14 @@ const chartData = computed(() => {
     <Head title="Analitik Kerja" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="space-y-6 p-6">
+        <div class="space-y-8">
             <!-- Header -->
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold tracking-tight">
+                    <h1 :class="digitWorkshop.typography.pageTitle">
                         Analitik Kerja
                     </h1>
-                    <p class="text-muted-foreground">
+                    <p :class="digitWorkshop.typography.pageSubtitle">
                         Pandangan keseluruhan prestasi bengkel dan metrik utama
                     </p>
                 </div>
@@ -191,7 +192,7 @@ const chartData = computed(() => {
                         :model-value="selectedPeriod"
                         @update:model-value="changePeriod"
                     >
-                        <SelectTrigger class="w-48">
+                        <SelectTrigger :class="['w-48', digitWorkshop.form.selectBase]">
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -211,14 +212,16 @@ const chartData = computed(() => {
 
             <!-- Overview Cards -->
             <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-                <Card>
+                <Card :class="digitWorkshop.card.cardGradientHero">
                     <CardHeader
                         class="flex flex-row items-center justify-between space-y-0 pb-2"
                     >
-                        <CardTitle class="text-sm font-medium"
+                        <CardTitle class="text-xs font-medium text-[#6B6B6B]"
                             >Jumlah Kerja</CardTitle
                         >
-                        <Activity class="h-4 w-4 text-muted-foreground" />
+                        <span :class="digitWorkshop.card.iconChipSoft + ' size-9'">
+                            <Activity class="h-4 w-4" />
+                        </span>
                     </CardHeader>
                     <CardContent>
                         <div class="text-2xl font-bold">
@@ -227,14 +230,16 @@ const chartData = computed(() => {
                     </CardContent>
                 </Card>
 
-                <Card>
+                <Card :class="digitWorkshop.card.cardGradientMint">
                     <CardHeader
                         class="flex flex-row items-center justify-between space-y-0 pb-2"
                     >
-                        <CardTitle class="text-sm font-medium"
+                        <CardTitle class="text-xs font-medium text-[#6B6B6B]"
                             >Selesai</CardTitle
                         >
-                        <CheckCircle class="h-4 w-4 text-muted-foreground" />
+                        <span :class="digitWorkshop.card.iconChip + ' size-9'">
+                            <CheckCircle class="h-4 w-4" />
+                        </span>
                     </CardHeader>
                     <CardContent>
                         <div class="text-2xl font-bold">
@@ -253,12 +258,14 @@ const chartData = computed(() => {
                     </CardContent>
                 </Card>
 
-                <Card>
+                <Card :class="digitWorkshop.card.cardGradientBlue">
                     <CardHeader
                         class="flex flex-row items-center justify-between space-y-0 pb-2"
                     >
-                        <CardTitle class="text-sm font-medium">Aktif</CardTitle>
-                        <Clock class="h-4 w-4 text-muted-foreground" />
+                        <CardTitle class="text-xs font-medium text-[#6B6B6B]">Aktif</CardTitle>
+                        <span :class="digitWorkshop.card.iconChipBlue + ' size-9'">
+                            <Clock class="h-4 w-4" />
+                        </span>
                     </CardHeader>
                     <CardContent>
                         <div class="text-2xl font-bold">
@@ -267,14 +274,16 @@ const chartData = computed(() => {
                     </CardContent>
                 </Card>
 
-                <Card>
+                <Card :class="digitWorkshop.card.cardGradientMint">
                     <CardHeader
                         class="flex flex-row items-center justify-between space-y-0 pb-2"
                     >
-                        <CardTitle class="text-sm font-medium"
+                        <CardTitle class="text-xs font-medium text-[#6B6B6B]"
                             >Pelanggan</CardTitle
                         >
-                        <Users class="h-4 w-4 text-muted-foreground" />
+                        <span :class="digitWorkshop.card.iconChipSoft + ' size-9'">
+                            <Users class="h-4 w-4" />
+                        </span>
                     </CardHeader>
                     <CardContent>
                         <div class="text-2xl font-bold">
@@ -285,14 +294,16 @@ const chartData = computed(() => {
                     </CardContent>
                 </Card>
 
-                <Card>
+                <Card :class="digitWorkshop.card.cardGradientYellow">
                     <CardHeader
                         class="flex flex-row items-center justify-between space-y-0 pb-2"
                     >
-                        <CardTitle class="text-sm font-medium"
+                        <CardTitle class="text-xs font-medium text-[#6B6B6B]"
                             >Kadar Siap</CardTitle
                         >
-                        <TrendingUp class="h-4 w-4 text-muted-foreground" />
+                        <span :class="digitWorkshop.card.iconChipYellow + ' size-9'">
+                            <TrendingUp class="h-4 w-4" />
+                        </span>
                     </CardHeader>
                     <CardContent>
                         <div class="text-2xl font-bold">
@@ -308,17 +319,17 @@ const chartData = computed(() => {
 
             <!-- Main Content Tabs -->
             <Tabs default-value="trends" class="space-y-4">
-                <TabsList>
-                    <TabsTrigger value="trends">Trend</TabsTrigger>
-                    <TabsTrigger value="status">Status</TabsTrigger>
-                    <TabsTrigger value="customers">Pelanggan</TabsTrigger>
-                    <TabsTrigger value="technicians">Juruteknik</TabsTrigger>
-                    <TabsTrigger value="performance">Prestasi</TabsTrigger>
+                <TabsList :class="digitWorkshop.tabs.tabsList">
+                    <TabsTrigger value="trends" :class="digitWorkshop.tabs.tabTrigger">Trend</TabsTrigger>
+                    <TabsTrigger value="status" :class="digitWorkshop.tabs.tabTrigger">Status</TabsTrigger>
+                    <TabsTrigger value="customers" :class="digitWorkshop.tabs.tabTrigger">Pelanggan</TabsTrigger>
+                    <TabsTrigger value="technicians" :class="digitWorkshop.tabs.tabTrigger">Juruteknik</TabsTrigger>
+                    <TabsTrigger value="performance" :class="digitWorkshop.tabs.tabTrigger">Prestasi</TabsTrigger>
                 </TabsList>
 
                 <!-- Job Trends Tab -->
                 <TabsContent value="trends" class="space-y-4">
-                    <Card>
+                    <Card :class="digitWorkshop.card.cardBase">
                         <CardHeader>
                             <CardTitle>Trend Kerja Mengikut Masa</CardTitle>
                             <CardDescription>
@@ -376,7 +387,7 @@ const chartData = computed(() => {
 
                 <!-- Status Distribution Tab -->
                 <TabsContent value="status" class="space-y-4">
-                    <Card>
+                    <Card :class="digitWorkshop.card.cardBase">
                         <CardHeader>
                             <CardTitle>Distribusi Status</CardTitle>
                             <CardDescription>
@@ -390,7 +401,7 @@ const chartData = computed(() => {
                                 <div
                                     v-for="status in analytics.statusDistribution"
                                     :key="status.status"
-                                    class="flex items-center justify-between rounded-lg border p-3"
+                                    class="flex items-center justify-between rounded-xl border border-[#E0E0E0] bg-white p-3"
                                 >
                                     <div class="flex items-center gap-2">
                                         <Badge
@@ -413,7 +424,7 @@ const chartData = computed(() => {
                 <!-- Customer Stats Tab -->
                 <TabsContent value="customers" class="space-y-4">
                     <div class="grid gap-4 md:grid-cols-2">
-                        <Card>
+                        <Card :class="digitWorkshop.card.cardBase">
                             <CardHeader>
                                 <CardTitle>Jenis Pelanggan</CardTitle>
                                 <CardDescription>
@@ -439,7 +450,7 @@ const chartData = computed(() => {
                             </CardContent>
                         </Card>
 
-                        <Card>
+                        <Card :class="digitWorkshop.card.cardBase">
                             <CardHeader>
                                 <CardTitle>Pelanggan Teratas</CardTitle>
                                 <CardDescription>
@@ -479,7 +490,7 @@ const chartData = computed(() => {
 
                 <!-- Technician Performance Tab -->
                 <TabsContent value="technicians" class="space-y-4">
-                    <Card>
+                    <Card :class="digitWorkshop.card.cardBase">
                         <CardHeader>
                             <CardTitle>Prestasi Juruteknik</CardTitle>
                             <CardDescription>
@@ -491,7 +502,7 @@ const chartData = computed(() => {
                                 <div
                                     v-for="tech in analytics.technicianPerformance"
                                     :key="tech.technician_name"
-                                    class="grid gap-4 rounded-lg border p-4 md:grid-cols-5"
+                                    class="grid gap-4 rounded-2xl border border-[#E0E0E0] bg-white/70 p-4 md:grid-cols-5"
                                 >
                                     <div class="font-medium">
                                         {{ tech.technician_name }}
@@ -549,7 +560,7 @@ const chartData = computed(() => {
                 <!-- Performance Metrics Tab -->
                 <TabsContent value="performance" class="space-y-4">
                     <div class="grid gap-4 md:grid-cols-2">
-                        <Card>
+                        <Card :class="digitWorkshop.card.cardBase">
                             <CardHeader>
                                 <CardTitle>Masa Siapan</CardTitle>
                                 <CardDescription>
@@ -632,11 +643,9 @@ const chartData = computed(() => {
                                                 <div
                                                     class="flex items-center gap-2"
                                                 >
-                                                    <div
-                                                        class="h-2 w-20 rounded-full bg-gray-200"
-                                                    >
+                                                    <div class="h-2 w-20 rounded-full bg-[#EAF0F0]">
                                                         <div
-                                                            class="h-2 rounded-full bg-blue-600"
+                                                            class="h-2 rounded-full bg-[#84C024]"
                                                             :style="{
                                                                 width: `${(count / Object.values(analytics.completionTimes.distribution).reduce((a, b) => a + b, 0)) * 100}%`,
                                                             }"
@@ -654,7 +663,7 @@ const chartData = computed(() => {
                             </CardContent>
                         </Card>
 
-                        <Card>
+                        <Card :class="digitWorkshop.card.cardBase">
                             <CardHeader>
                                 <CardTitle
                                     >Hasil Terpantas & Terlambat</CardTitle
@@ -671,12 +680,12 @@ const chartData = computed(() => {
                                             analytics.completionTimes
                                                 .fastest_job
                                         "
-                                        class="rounded-lg border bg-green-50 p-3"
+                                        class="rounded-xl border border-[#CFE7D6] bg-[#EAF7EE] p-3"
                                     >
-                                        <h4 class="font-medium text-green-800">
+                                        <h4 class="font-medium text-[#2E6B35]">
                                             Terpantas
                                         </h4>
-                                        <div class="text-sm text-green-700">
+                                        <div class="text-sm text-[#2E6B35]">
                                             <div>
                                                 {{
                                                     analytics.completionTimes
@@ -704,12 +713,12 @@ const chartData = computed(() => {
                                             analytics.completionTimes
                                                 .slowest_job
                                         "
-                                        class="rounded-lg border bg-red-50 p-3"
+                                        class="rounded-xl border border-[#F3E6B5] bg-[#FFF4D8] p-3"
                                     >
-                                        <h4 class="font-medium text-red-800">
+                                        <h4 class="font-medium text-[#8A6B1F]">
                                             Terlambat
                                         </h4>
-                                        <div class="text-sm text-red-700">
+                                        <div class="text-sm text-[#8A6B1F]">
                                             <div>
                                                 {{
                                                     analytics.completionTimes

@@ -6,6 +6,7 @@ import { type BreadcrumbItem, type Workshop as WorkshopType, type SiteRole } fro
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { digitWorkshop } from '@/styles/digit-workshop-ui';
 import { ArrowLeft, Edit, Power, Trash2, Briefcase, Users, BarChart3, UserPlus, Wallet, ClipboardList } from 'lucide-vue-next';
 import { computed } from 'vue';
 import { calculatePercentage, formatCompactCurrency, formatNumber } from '@/utils/currency';
@@ -99,21 +100,21 @@ const jobStatusItems = computed(() => {
 
     <SiteLayout :breadcrumbs="breadcrumbs" :site="site" :site-role="siteRole">
 
-        <div class="space-y-6">
+        <div class="space-y-8">
         <!-- Header -->
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <Button variant="ghost" size="icon" as-child>
+                <Button variant="ghost" size="icon" as-child :class="digitWorkshop.button.iconButton">
                     <Link href="/admin/workshops">
                         <ArrowLeft class="h-5 w-5" />
                     </Link>
                 </Button>
                 <div>
-                    <h2 class="text-2xl font-bold tracking-tight">Workshop Details</h2>
-                    <p class="text-muted-foreground">View workshop information and statistics</p>
+                    <h2 :class="digitWorkshop.typography.pageTitle">Workshop Details</h2>
+                    <p :class="digitWorkshop.typography.pageSubtitle">View workshop information and statistics</p>
                 </div>
             </div>
-            <Button as-child>
+            <Button as-child :class="digitWorkshop.button.btnPrimary">
                 <Link :href="`/admin/workshops/${workshop.id}/edit`">
                     <Edit class="mr-2 h-4 w-4" />
                     Edit Workshop
@@ -125,90 +126,90 @@ const jobStatusItems = computed(() => {
         <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
             <div class="space-y-6 xl:col-span-2">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                    <Card>
+                    <Card :class="digitWorkshop.card.cardGradientHero">
                         <CardContent class="pt-6">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <p class="text-sm font-medium text-muted-foreground">Total Jobs</p>
+                                    <p class="text-xs font-medium text-[#6B6B6B]">Total Jobs</p>
                                     <p class="mt-2 text-3xl font-bold">{{ formatNumber(stats.total_jobs) }}</p>
                                 </div>
-                                <div class="p-3 bg-primary/10 rounded-full">
-                                    <Briefcase class="h-8 w-8 text-primary" />
-                                </div>
+                                <span :class="digitWorkshop.card.iconChipSoft + ' size-10'">
+                                    <Briefcase class="h-5 w-5" />
+                                </span>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card :class="digitWorkshop.card.cardGradientBlue">
                         <CardContent class="pt-6">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <p class="text-sm font-medium text-muted-foreground">Jobs This Month</p>
+                                    <p class="text-xs font-medium text-[#6B6B6B]">Jobs This Month</p>
                                     <p class="mt-2 text-3xl font-bold">{{ formatNumber(stats.jobs_this_month) }}</p>
                                 </div>
-                                <div class="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-full">
-                                    <BarChart3 class="h-8 w-8 text-blue-600 dark:text-blue-400" />
-                                </div>
+                                <span :class="digitWorkshop.card.iconChipBlue + ' size-10'">
+                                    <BarChart3 class="h-5 w-5" />
+                                </span>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card :class="digitWorkshop.card.cardGradientMint">
                         <CardContent class="pt-6">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <p class="text-sm font-medium text-muted-foreground">Collections This Month</p>
+                                    <p class="text-xs font-medium text-[#6B6B6B]">Collections This Month</p>
                                     <p class="mt-2 text-3xl font-bold">{{ formatCompactCurrency(stats.revenue_this_month) }}</p>
                                 </div>
-                                <div class="p-3 bg-emerald-100 dark:bg-emerald-900/20 rounded-full">
-                                    <Wallet class="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
-                                </div>
+                                <span :class="digitWorkshop.card.iconChip + ' size-10'">
+                                    <Wallet class="h-5 w-5" />
+                                </span>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card :class="digitWorkshop.card.cardGradientYellow">
                         <CardContent class="pt-6">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <p class="text-sm font-medium text-muted-foreground">Pending Actions</p>
+                                    <p class="text-xs font-medium text-[#6B6B6B]">Pending Actions</p>
                                     <p class="mt-2 text-3xl font-bold">{{ formatNumber(stats.pending_actions) }}</p>
                                 </div>
-                                <div class="p-3 bg-amber-100 dark:bg-amber-900/20 rounded-full">
-                                    <ClipboardList class="h-8 w-8 text-amber-600 dark:text-amber-400" />
-                                </div>
+                                <span :class="digitWorkshop.card.iconChipYellow + ' size-10'">
+                                    <ClipboardList class="h-5 w-5" />
+                                </span>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card :class="digitWorkshop.card.cardGradientMint">
                         <CardContent class="pt-6">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <p class="text-sm font-medium text-muted-foreground">Active Technicians</p>
+                                    <p class="text-xs font-medium text-[#6B6B6B]">Active Technicians</p>
                                     <p class="mt-2 text-3xl font-bold">{{ formatNumber(stats.active_technicians) }}</p>
                                 </div>
-                                <div class="p-3 bg-green-100 dark:bg-green-900/20 rounded-full">
-                                    <Users class="h-8 w-8 text-green-600 dark:text-green-400" />
-                                </div>
+                                <span :class="digitWorkshop.card.iconChipSoft + ' size-10'">
+                                    <Users class="h-5 w-5" />
+                                </span>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card :class="digitWorkshop.card.cardGradientBlue">
                         <CardContent class="pt-6">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <p class="text-sm font-medium text-muted-foreground">Assigned Users</p>
+                                    <p class="text-xs font-medium text-[#6B6B6B]">Assigned Users</p>
                                     <p class="mt-2 text-3xl font-bold">{{ formatNumber(workshop.assigned_users_count || 0) }}</p>
                                 </div>
-                                <div class="p-3 bg-indigo-100 dark:bg-indigo-900/20 rounded-full">
-                                    <UserPlus class="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
-                                </div>
+                                <span :class="digitWorkshop.card.iconChipBlue + ' size-10'">
+                                    <UserPlus class="h-5 w-5" />
+                                </span>
                             </div>
-                            <Button variant="link" size="sm" class="mt-2 px-0" as-child>
+                            <Button variant="link" size="sm" class="mt-2 px-0 text-[#2E6B35]" as-child>
                                 <Link :href="`/admin/workshops/${workshop.id}/users`">
-                                    Manage Users →
+                                    Manage Users ->
                                 </Link>
                             </Button>
                         </CardContent>
@@ -216,7 +217,7 @@ const jobStatusItems = computed(() => {
                 </div>
             </div>
 
-            <Card class="xl:row-span-2">
+            <Card class="xl:row-span-2" :class="digitWorkshop.card.cardBase">
                 <CardHeader>
                     <CardTitle>Job Status</CardTitle>
                     <CardDescription>Status distribution for this site</CardDescription>
@@ -229,20 +230,20 @@ const jobStatusItems = computed(() => {
                         <div
                             v-for="item in jobStatusItems"
                             :key="item.status"
-                            class="flex items-center justify-between rounded-md border px-3 py-2"
+                            class="flex items-center justify-between rounded-xl border border-[#E0E0E0] bg-white/70 px-3 py-2"
                         >
                             <div class="min-w-0">
                                 <p class="text-sm font-medium capitalize">{{ item.status.replaceAll('_', ' ') }}</p>
                                 <p class="text-xs text-muted-foreground">{{ item.percentage }}</p>
                             </div>
-                            <Badge variant="secondary">{{ formatNumber(item.count) }}</Badge>
+                            <Badge :class="digitWorkshop.badge.badgeMuted">{{ formatNumber(item.count) }}</Badge>
                         </div>
                     </div>
                 </CardContent>
             </Card>
         </div>
 
-        <Card v-if="techWorkload && techWorkload.length > 0">
+        <Card v-if="techWorkload && techWorkload.length > 0" :class="digitWorkshop.card.cardBase">
             <CardHeader>
                 <CardTitle>Technician Workload</CardTitle>
                 <CardDescription>Active jobs assigned to each technician</CardDescription>
@@ -252,29 +253,29 @@ const jobStatusItems = computed(() => {
                     <div
                         v-for="tech in techWorkload"
                         :key="tech.name"
-                        class="flex items-center justify-between rounded-md border px-4 py-3"
+                        class="flex items-center justify-between rounded-xl border border-[#E0E0E0] bg-white/70 px-4 py-3"
                     >
                         <div>
                             <p class="font-medium">{{ tech.name }}</p>
                             <p class="text-xs text-muted-foreground">Active jobs</p>
                         </div>
-                        <Badge variant="secondary">{{ formatNumber(tech.jobs) }}</Badge>
+                        <Badge :class="digitWorkshop.badge.badgeMuted">{{ formatNumber(tech.jobs) }}</Badge>
                     </div>
                 </div>
             </CardContent>
         </Card>
 
         <!-- Workshop Info Card -->
-        <Card>
+        <Card :class="digitWorkshop.card.cardBase">
             <CardHeader>
                 <div class="flex items-start justify-between">
                     <div>
                         <CardTitle class="text-2xl">{{ workshop.name }}</CardTitle>
                         <CardDescription class="mt-2">
-                            <code class="px-2 py-1 bg-muted rounded text-sm">{{ workshop.code }}</code>
+                            <code class="px-2 py-1 bg-[#F2F2F2] rounded text-sm">{{ workshop.code }}</code>
                         </CardDescription>
                     </div>
-                    <Badge :variant="workshop.is_active ? 'default' : 'outline'" class="text-sm">
+                    <Badge :class="workshop.is_active ? digitWorkshop.badge.badgeSuccess : digitWorkshop.badge.badgeOutline" class="text-sm">
                         {{ workshop.is_active ? 'Active' : 'Inactive' }}
                     </Badge>
                 </div>
@@ -305,15 +306,16 @@ const jobStatusItems = computed(() => {
                 </div>
 
                 <!-- Actions -->
-                <div class="flex gap-3 pt-6 border-t">
+                <div class="flex gap-3 pt-6 border-t border-[#EDEDED]">
                     <Button
                         :variant="workshop.is_active ? 'outline' : 'default'"
                         @click="toggleStatus"
+                        :class="workshop.is_active ? digitWorkshop.button.btnSecondary : digitWorkshop.button.btnPrimary"
                     >
                         <Power class="mr-2 h-4 w-4" />
                         {{ workshop.is_active ? 'Deactivate' : 'Activate' }}
                     </Button>
-                    <Button variant="destructive" @click="deleteWorkshop">
+                    <Button variant="outline" @click="deleteWorkshop" class="border-[#F2D2D2] text-[#D14B4B] hover:bg-[#FBECEC]">
                         <Trash2 class="mr-2 h-4 w-4" />
                         Delete Workshop
                     </Button>
@@ -323,13 +325,13 @@ const jobStatusItems = computed(() => {
 
         <!-- Quick Links -->
         <div class="flex gap-4">
-            <Button variant="outline" as-child>
+            <Button variant="outline" as-child :class="digitWorkshop.button.btnSecondary">
                 <Link :href="`/admin/workshops/${workshop.id}/users`">
                     <Users class="mr-2 h-4 w-4" />
-                    Manage Users
+                    Manage Users ->
                 </Link>
             </Button>
-            <Button variant="outline" as-child>
+            <Button variant="outline" as-child :class="digitWorkshop.button.btnSecondary">
                 <Link :href="`/admin/workshops/${workshop.id}/analytics`">
                     <BarChart3 class="mr-2 h-4 w-4" />
                     View Analytics
@@ -338,14 +340,14 @@ const jobStatusItems = computed(() => {
         </div>
 
         <!-- Assigned Users List -->
-        <Card v-if="workshop.assignedUsers && workshop.assignedUsers.length > 0">
+        <Card v-if="workshop.assignedUsers && workshop.assignedUsers.length > 0" :class="digitWorkshop.card.cardBase">
             <CardHeader>
                 <div class="flex items-center justify-between">
                     <div>
                         <CardTitle>Assigned Users</CardTitle>
                         <CardDescription>Users assigned to this workshop with their roles</CardDescription>
                     </div>
-                    <Button size="sm" as-child>
+                    <Button size="sm" as-child :class="digitWorkshop.button.btnPrimary">
                         <Link :href="`/admin/workshops/${workshop.id}/users`">
                             <UserPlus class="mr-2 h-4 w-4" />
                             Assign User
@@ -358,14 +360,14 @@ const jobStatusItems = computed(() => {
                     <div
                         v-for="user in workshop.assignedUsers"
                         :key="user.id"
-                        class="p-4 border rounded-lg"
+                        class="p-4 border border-[#E0E0E0] rounded-2xl bg-white/70"
                     >
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="font-medium">{{ user.name }}</p>
                                 <p class="text-sm text-muted-foreground">{{ user.email }}</p>
                             </div>
-                            <Badge variant="secondary" class="capitalize">
+                            <Badge :class="digitWorkshop.badge.badgeMuted" class="capitalize">
                                 {{ user.pivot.role }}
                             </Badge>
                         </div>
@@ -375,7 +377,7 @@ const jobStatusItems = computed(() => {
         </Card>
 
         <!-- Recent Jobs -->
-        <Card v-if="workshop.jobs && workshop.jobs.length > 0">
+        <Card v-if="workshop.jobs && workshop.jobs.length > 0" :class="digitWorkshop.card.cardBase">
             <CardHeader>
                 <CardTitle>Recent Jobs</CardTitle>
                 <CardDescription>Latest jobs assigned to this workshop</CardDescription>
@@ -385,14 +387,14 @@ const jobStatusItems = computed(() => {
                     <div
                         v-for="job in workshop.jobs"
                         :key="job.id"
-                        class="p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                        class="p-4 border border-[#E0E0E0] rounded-2xl hover:bg-[#F8FCFC] transition-colors"
                     >
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="font-medium">{{ job.registration_no || 'N/A' }}</p>
                                 <p class="text-sm text-muted-foreground">{{ job.job_mode }}</p>
                             </div>
-                            <Badge variant="secondary">{{ job.status }}</Badge>
+                            <Badge :class="digitWorkshop.badge.badgeMuted">{{ job.status }}</Badge>
                         </div>
                     </div>
                 </div>
