@@ -43,7 +43,13 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user()?->load('roles'),
+                'permissions' => $request->user()?->getAllPermissions()->pluck('name')->toArray() ?? [],
+                'roles' => $request->user()?->getRoleNames()->toArray() ?? [],
+                'isCompanyAdmin' => $request->user()?->hasRole('pentadbiran'),
+                'isSiteAdminOnly' => $request->user()?->isSiteAdminOnly() ?? false,
+                'assignedSites' => $request->user()?->assignedWorkshops()->pluck('workshops.id')->toArray() ?? [],
+                'siteAdminWorkshop' => $request->user()?->getFirstSiteAdminWorkshop()?->only(['id', 'name', 'code']),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];

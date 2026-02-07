@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\JobMode;
 use App\Enums\JobPriority;
 use App\Enums\JobStatus;
-use App\Models\Job\JobFieldValue;
-use App\Models\Template\JobTemplate;
-use App\Models\Workflow\Workflow;
-use App\Models\Workflow\WorkflowStatus;
+use App\Enums\KewPa10Priority;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,11 +23,9 @@ class WorkshopJob extends Model
      * @var array<string>
      */
     protected $fillable = [
+        // Core job fields
         'job_number',
         'job_reference',
-        'template_id',
-        'workflow_id',
-        'current_workflow_status_id',
         'customer_id',
         'government_department_id',
         'asset_id',
@@ -52,6 +48,36 @@ class WorkshopJob extends Model
         'kew_pa_10_returned_at',
         'estimated_hours',
         'actual_hours',
+        
+        // Static job mode
+        'job_mode',
+        
+        // Static KEW.PA-10 fields
+        'kew_pa_10_number',
+        'kew_pa_10_received_date',
+        'kew_pa_10_government_department_id',
+        'kew_pa_10_asset_id',
+        'kew_pa_10_description',
+        'kew_approval_status',
+        'kew_approved_by_id',
+        'kew_approved_at',
+        'kew_rejection_reason',
+
+        'kew_pa_10_priority',
+        'kew_pa_10_budget_reference',
+        'kew_pa_10_document_path',
+        'kew_pa_10_form_verified',
+        'kew_pa_10_signatures_verified',
+        
+        // Extended KEW fields
+        'kew_vehicle_registration',
+        'kew_asset_tag',
+        'kew_department_name',
+        'kew_inspection_date',
+        'kew_inspector_name',
+        'kew_inspector_ic',
+        'kew_findings',
+        'kew_recommendations',
     ];
 
     /**
@@ -62,8 +88,10 @@ class WorkshopJob extends Model
     protected function casts(): array
     {
         return [
+            // Core fields
             'status' => JobStatus::class,
             'priority' => JobPriority::class,
+            'job_mode' => JobMode::class,
             'estimated_cost' => 'decimal:2',
             'actual_cost' => 'decimal:2',
             'estimated_hours' => 'decimal:2',
@@ -76,6 +104,14 @@ class WorkshopJob extends Model
             'estimated_completion_date' => 'date',
             'inspection_required' => 'boolean',
             'inspection_approved' => 'boolean',
+            
+            // KEW.PA-10 static fields
+            'kew_pa_10_received_date' => 'date',
+            'kew_pa_10_priority' => KewPa10Priority::class,
+            'kew_pa_10_form_verified' => 'boolean',
+
+            'kew_pa_10_signatures_verified' => 'boolean',
+            'kew_inspection_date' => 'date',
         ];
     }
 
@@ -320,94 +356,95 @@ class WorkshopJob extends Model
     }
 
     /**
-     * Get the template for this job.
+     * Get the KEW.PA-10 government department.
      */
-    public function template(): BelongsTo
+    public function kewPa10GovernmentDepartment(): BelongsTo
     {
-        return $this->belongsTo(JobTemplate::class);
+        return $this->belongsTo(GovernmentDepartment::class, 'kew_pa_10_government_department_id');
     }
 
     /**
-     * Get the workflow for this job.
+     * Get the KEW.PA-10 asset.
      */
-    public function workflow(): BelongsTo
+    public function kewPa10Asset(): BelongsTo
     {
-        return $this->belongsTo(Workflow::class);
+        return $this->belongsTo(Asset::class, 'kew_pa_10_asset_id');
     }
 
     /**
-     * Get the current workflow status.
+     * Check if this is a KEW.PA-10 job.
      */
-    public function currentWorkflowStatus(): BelongsTo
+    public function isKewPa10(): bool
     {
-        return $this->belongsTo(WorkflowStatus::class, 'current_workflow_status_id');
+        return $this->job_mode === JobMode::KEW_PA_10;
     }
 
     /**
-     * Get all field values for this job.
+     * Check if this is a normal job.
      */
-    public function fieldValues(): HasMany
+    public function isNormal(): bool
     {
-        return $this->hasMany(JobFieldValue::class, 'job_id');
+        return $this->job_mode === JobMode::NORMAL;
     }
 
     /**
-     * Get a specific field value by field code.
+     * Scope to filter KEW.PA-10 jobs only.
      */
-    public function getFieldValue(string $fieldCode)
+    public function scopeKewPa10($query)
     {
-        $field = $this->template?->fields()->where('code', $fieldCode)->first();
+        return $query->where('job_mode', JobMode::KEW_PA_10);
+    }
 
-        if (!$field) {
-            return null;
+    /**
+     * Scope to filter normal jobs only.
+     */
+    public function scopeNormal($query)
+    {
+        return $query->where('job_mode', JobMode::NORMAL);
+    }
+
+    /**
+     * Check if KEW.PA-10 form is complete and validated.
+     */
+    public function isKewPa10FormComplete(): bool
+    {
+        if (!$this->isKewPa10()) {
+            return false;
         }
 
-        $fieldValue = $this->fieldValues()->where('field_id', $field->id)->first();
-
-        return $fieldValue?->getValue();
+        return $this->kew_pa_10_form_verified === true
+            && $this->kew_pa_10_signatures_verified === true
+            && !empty($this->kew_pa_10_number)
+            && !empty($this->kew_pa_10_received_date);
     }
 
     /**
-     * Set a specific field value by field code.
+     * Get KEW.PA-10 completion percentage.
      */
-    public function setFieldValue(string $fieldCode, $value): void
+    public function getKewPa10CompletionPercentage(): int
     {
-        $field = $this->template?->fields()->where('code', $fieldCode)->first();
-
-        if (!$field) {
-            throw new \InvalidArgumentException("Field with code '{$fieldCode}' not found in template");
+        if (!$this->isKewPa10()) {
+            return 0;
         }
 
-        $fieldValue = $this->fieldValues()->firstOrNew(['field_id' => $field->id]);
-        $fieldValue->setValue($value);
-        $fieldValue->save();
-    }
+        $fields = [
+            'kew_pa_10_number',
+            'kew_pa_10_received_date',
+            'kew_pa_10_government_department_id',
+            'kew_pa_10_asset_id',
+            'kew_pa_10_description',
+            'kew_pa_10_priority',
+            'kew_pa_10_form_verified',
+            'kew_pa_10_signatures_verified',
+        ];
 
-    /**
-     * Get all field values as associative array.
-     */
-    public function getAllFieldValues(): array
-    {
-        return JobFieldValue::getJobFieldValues($this);
-    }
-
-    /**
-     * Check if this job uses dynamic workflow system.
-     */
-    public function usesDynamicWorkflow(): bool
-    {
-        return $this->workflow_id !== null;
-    }
-
-    /**
-     * Get available workflow transitions from current status.
-     */
-    public function getAvailableTransitions()
-    {
-        if (!$this->usesDynamicWorkflow() || !$this->currentWorkflowStatus) {
-            return collect();
+        $filled = 0;
+        foreach ($fields as $field) {
+            if (!empty($this->$field)) {
+                $filled++;
+            }
         }
 
-        return $this->workflow->getAvailableTransitionsFrom($this->currentWorkflowStatus);
+        return (int) (($filled / count($fields)) * 100);
     }
 }

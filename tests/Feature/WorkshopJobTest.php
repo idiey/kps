@@ -12,6 +12,15 @@ beforeEach(function () {
     $this->admin = User::factory()->create(['role' => 'pentadbiran']);
     $this->technician = User::factory()->create(['role' => 'juruteknik']);
     $this->customer = Customer::factory()->create();
+    $this->adminRole = ensureRole('pentadbiran');
+    $this->technicianRole = ensureRole('juruteknik');
+    $this->admin->syncRoles([$this->adminRole->name]);
+    $this->technician->syncRoles([$this->technicianRole->name]);
+    $this->workflow = createWorkflowWithRoles([$this->adminRole->id, $this->technicianRole->id]);
+    $this->jobDefaults = [
+        'workflow_id' => $this->workflow->id,
+        'current_workflow_status_id' => $this->workflow->initialStatus()?->id,
+    ];
 });
 
 test('it can create a job with auto generated job number', function () {
@@ -27,7 +36,7 @@ test('it can create a job with auto generated job number', function () {
 });
 
 test('it validates status transitions', function () {
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::NEW,
     ]);
@@ -40,9 +49,7 @@ test('it validates status transitions', function () {
 test('it can assign job to technician', function () {
     $this->actingAs($this->admin);
 
-    $job = WorkshopJob::factory()->create([
-        'customer_id' => $this->customer->id,
-    ]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $service = new JobAssignmentService();
     $assignment = $service->assignJob($job, $this->technician->id, 'Initial assignment');
@@ -55,7 +62,7 @@ test('it can assign job to technician', function () {
 test('it can change job status with validation', function () {
     $this->actingAs($this->admin);
 
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::NEW,
     ]);
@@ -79,7 +86,7 @@ test('it can change job status with validation', function () {
 test('it prevents invalid status transitions', function () {
     $this->actingAs($this->admin);
 
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::NEW,
     ]);
@@ -91,9 +98,7 @@ test('it prevents invalid status transitions', function () {
 test('it can add notes to job', function () {
     $this->actingAs($this->technician);
 
-    $job = WorkshopJob::factory()->create([
-        'customer_id' => $this->customer->id,
-    ]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $service = new JobNoteService();
     $note = $service->createNote($job, 'Test note content', false, 'general');
@@ -107,10 +112,9 @@ test('it tracks assignment history', function () {
     $this->actingAs($this->admin);
 
     $technician2 = User::factory()->create(['role' => 'juruteknik']);
+    $technician2->syncRoles([$this->technicianRole->name]);
 
-    $job = WorkshopJob::factory()->create([
-        'customer_id' => $this->customer->id,
-    ]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $service = new JobAssignmentService();
 
@@ -131,12 +135,12 @@ test('it tracks assignment history', function () {
 });
 
 test('it can filter jobs by status', function () {
-    WorkshopJob::factory()->create([
+    WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::NEW,
     ]);
 
-    WorkshopJob::factory()->create([
+    WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::IN_PROGRESS,
     ]);
@@ -150,12 +154,12 @@ test('it can filter jobs by status', function () {
 });
 
 test('it can get jobs for technician', function () {
-    WorkshopJob::factory()->create([
+    WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => $this->technician->id,
     ]);
 
-    WorkshopJob::factory()->create([
+    WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => null,
     ]);
@@ -167,13 +171,13 @@ test('it can get jobs for technician', function () {
 });
 
 test('it detects overdue jobs', function () {
-    $overdueJob = WorkshopJob::factory()->create([
+    $overdueJob = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'due_date' => now()->subDays(1),
         'status' => JobStatus::IN_PROGRESS,
     ]);
 
-    $onTimeJob = WorkshopJob::factory()->create([
+    $onTimeJob = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'due_date' => now()->addDays(1),
         'status' => JobStatus::IN_PROGRESS,

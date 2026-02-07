@@ -10,7 +10,10 @@ export function urlIsActive(
     urlToCheck: NonNullable<InertiaLinkProps['href']>,
     currentUrl: string,
 ) {
-    return toUrl(urlToCheck) === currentUrl;
+    const normalizedUrl = toUrl(urlToCheck);
+    // Exact match OR prefix match with path separator
+    return currentUrl === normalizedUrl ||
+        currentUrl.startsWith(normalizedUrl + '/');
 }
 
 export function toUrl(href: NonNullable<InertiaLinkProps['href']>) {

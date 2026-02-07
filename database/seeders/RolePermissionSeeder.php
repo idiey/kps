@@ -43,6 +43,10 @@ class RolePermissionSeeder extends Seeder
             'generate-reports',
             'export-reports',
 
+            // Analytics permissions
+            'view-analytics',
+            'export-analytics',
+
             // Note permissions
             'view-notes',
             'create-notes',
@@ -54,6 +58,32 @@ class RolePermissionSeeder extends Seeder
             'approve-jobs',
             'reject-jobs',
             'inspect-jobs',
+
+            // Role & Permission management (Admin only)
+            'view-roles',
+            'create-roles',
+            'edit-roles',
+            'delete-roles',
+            'assign-permissions',
+
+            // Asset management (Admin only)
+            'view-assets',
+            'create-assets',
+            'edit-assets',
+            'delete-assets',
+            'track-asset-condition',
+
+            // Parts Inventory management (Admin only)
+            'view-inventory',
+            'create-inventory',
+            'edit-inventory',
+            'delete-inventory',
+            'adjust-stock',
+            'view-stock-movements',
+
+            // System Settings (Admin only)
+            'view-settings',
+            'edit-settings',
         ];
 
         foreach ($permissions as $permission) {
@@ -83,6 +113,7 @@ class RolePermissionSeeder extends Seeder
             'view-private-notes',
             'view-reports',
             'generate-reports',
+            'view-analytics',
         ]);
 
         // Technician - Can work on assigned jobs
@@ -106,6 +137,7 @@ class RolePermissionSeeder extends Seeder
             'create-notes',
             'view-private-notes',
             'view-reports',
+            'view-analytics',
         ]);
 
         // Approver - Can approve/reject jobs
@@ -120,6 +152,20 @@ class RolePermissionSeeder extends Seeder
             'view-reports',
             'generate-reports',
             'export-reports',
+            'view-analytics',
+        ]);
+
+        // Front Desk - Can create jobs and manage customers (walk-in service)
+        $frontdesk = Role::firstOrCreate(['name' => 'kaunter']);
+        $frontdesk->givePermissionTo([
+            'view-jobs',
+            'create-jobs',
+            'edit-jobs',
+            'view-customers',
+            'create-customers',
+            'edit-customers',
+            'view-notes',
+            'create-notes',
         ]);
 
         $this->command->info('Roles and permissions seeded successfully!');

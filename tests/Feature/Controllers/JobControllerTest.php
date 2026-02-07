@@ -11,11 +11,20 @@ beforeEach(function () {
     $this->admin = User::factory()->create(['role' => 'pentadbiran']);
     $this->technician = User::factory()->create(['role' => 'juruteknik']);
     $this->customer = Customer::factory()->create();
+    $this->adminRole = ensureRole('pentadbiran');
+    $this->technicianRole = ensureRole('juruteknik');
+    $this->admin->syncRoles([$this->adminRole->name]);
+    $this->technician->syncRoles([$this->technicianRole->name]);
+    $this->workflow = createWorkflowWithRoles([$this->adminRole->id, $this->technicianRole->id]);
+    $this->jobDefaults = [
+        'workflow_id' => $this->workflow->id,
+        'current_workflow_status_id' => $this->workflow->initialStatus()?->id,
+    ];
 });
 
 // Index Tests
 test('admin can view jobs index page', function () {
-    WorkshopJob::factory()->count(3)->create(['customer_id' => $this->customer->id]);
+    WorkshopJob::factory()->count(3)->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $response = $this->actingAs($this->admin)->get(route('jobs.index'));
 
@@ -42,8 +51,8 @@ test('guest cannot view jobs index', function () {
 });
 
 test('jobs can be filtered by status', function () {
-    WorkshopJob::factory()->create(['customer_id' => $this->customer->id, 'status' => JobStatus::NEW]);
-    WorkshopJob::factory()->create(['customer_id' => $this->customer->id, 'status' => JobStatus::IN_PROGRESS]);
+    WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id, 'status' => JobStatus::NEW]);
+    WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id, 'status' => JobStatus::IN_PROGRESS]);
 
     $response = $this->actingAs($this->admin)->get(route('jobs.index', ['status' => JobStatus::NEW->value]));
 
@@ -55,8 +64,8 @@ test('jobs can be filtered by status', function () {
 });
 
 test('jobs can be filtered by assigned technician', function () {
-    WorkshopJob::factory()->create(['customer_id' => $this->customer->id, 'assigned_to' => $this->technician->id]);
-    WorkshopJob::factory()->create(['customer_id' => $this->customer->id, 'assigned_to' => null]);
+    WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id, 'assigned_to' => $this->technician->id]);
+    WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id, 'assigned_to' => null]);
 
     $response = $this->actingAs($this->admin)->get(route('jobs.index', ['assigned_to' => $this->technician->id]));
 
@@ -68,12 +77,12 @@ test('jobs can be filtered by assigned technician', function () {
 });
 
 test('jobs can be searched', function () {
-    WorkshopJob::factory()->create([
+    WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'title' => 'Engine Repair',
         'vehicle_registration' => 'ABC1234',
     ]);
-    WorkshopJob::factory()->create([
+    WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'title' => 'Brake Service',
     ]);
@@ -88,7 +97,7 @@ test('jobs can be searched', function () {
 
 // Show Tests
 test('admin can view job details', function () {
-    $job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $response = $this->actingAs($this->admin)->get(route('jobs.show', $job));
 
@@ -101,7 +110,7 @@ test('admin can view job details', function () {
 });
 
 test('technician can view job details', function () {
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => $this->technician->id,
     ]);
@@ -132,8 +141,10 @@ test('technician can view create job page', function () {
 test('admin can create job', function () {
     $data = [
         'customer_id' => $this->customer->id,
+        'workflow_id' => $this->workflow->id,
         'title' => 'Vehicle Repair',
         'description' => 'Needs engine check',
+        'status' => JobStatus::NEW->value,
         'priority' => JobPriority::HIGH->value,
         'vehicle_registration' => 'WXY9876',
         'estimated_cost' => 1500.00,
@@ -153,8 +164,10 @@ test('admin can create job', function () {
 test('technician can create job', function () {
     $data = [
         'customer_id' => $this->customer->id,
+        'workflow_id' => $this->workflow->id,
         'title' => 'Brake Replacement',
         'description' => 'Replace brake pads',
+        'status' => JobStatus::NEW->value,
     ];
 
     $response = $this->actingAs($this->technician)->post(route('jobs.store'), $data);
@@ -168,8 +181,10 @@ test('technician can create job', function () {
 test('job creation requires valid customer', function () {
     $data = [
         'customer_id' => 999999,
+        'workflow_id' => $this->workflow->id,
         'title' => 'Test Job',
         'description' => 'Test Description',
+        'status' => JobStatus::NEW->value,
     ];
 
     $response = $this->actingAs($this->admin)->post(route('jobs.store'), $data);
@@ -180,14 +195,16 @@ test('job creation requires valid customer', function () {
 test('job creation validates required fields', function () {
     $response = $this->actingAs($this->admin)->post(route('jobs.store'), []);
 
-    $response->assertSessionHasErrors(['customer_id', 'title', 'description']);
+    $response->assertSessionHasErrors(['workflow_id', 'description', 'status']);
 });
 
 test('job creation validates due date is not in past', function () {
     $data = [
         'customer_id' => $this->customer->id,
+        'workflow_id' => $this->workflow->id,
         'title' => 'Test Job',
         'description' => 'Test',
+        'status' => JobStatus::NEW->value,
         'due_date' => now()->subDays(1)->format('Y-m-d'),
     ];
 
@@ -198,7 +215,7 @@ test('job creation validates due date is not in past', function () {
 
 // Edit Tests
 test('admin can view edit job page', function () {
-    $job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $response = $this->actingAs($this->admin)->get(route('jobs.edit', $job));
 
@@ -212,7 +229,7 @@ test('admin can view edit job page', function () {
 });
 
 test('assigned technician can view edit job page', function () {
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => $this->technician->id,
     ]);
@@ -223,7 +240,7 @@ test('assigned technician can view edit job page', function () {
 });
 
 test('unassigned technician cannot view edit job page', function () {
-    $job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $response = $this->actingAs($this->technician)->get(route('jobs.edit', $job));
 
@@ -232,7 +249,7 @@ test('unassigned technician cannot view edit job page', function () {
 
 // Update Tests
 test('admin can update job', function () {
-    $job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $data = [
         'title' => 'Updated Title',
@@ -251,7 +268,7 @@ test('admin can update job', function () {
 });
 
 test('assigned technician can update job', function () {
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => $this->technician->id,
     ]);
@@ -270,7 +287,7 @@ test('assigned technician can update job', function () {
 });
 
 test('unassigned technician cannot update job', function () {
-    $job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $response = $this->actingAs($this->technician)->put(route('jobs.update', $job), ['title' => 'Test']);
 
@@ -279,7 +296,7 @@ test('unassigned technician cannot update job', function () {
 
 // Delete Tests
 test('admin can delete job', function () {
-    $job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $response = $this->actingAs($this->admin)->delete(route('jobs.destroy', $job));
 
@@ -288,7 +305,7 @@ test('admin can delete job', function () {
 });
 
 test('technician cannot delete job', function () {
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => $this->technician->id,
     ]);
@@ -300,7 +317,7 @@ test('technician cannot delete job', function () {
 
 // Status Update Tests
 test('admin can update job status', function () {
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::NEW,
     ]);
@@ -327,7 +344,7 @@ test('admin can update job status', function () {
 });
 
 test('assigned technician can update job status', function () {
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'assigned_to' => $this->technician->id,
         'status' => JobStatus::NEW,
@@ -350,7 +367,7 @@ test('assigned technician can update job status', function () {
 });
 
 test('cannot update to invalid status transition', function () {
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::NEW,
     ]);
@@ -366,7 +383,7 @@ test('cannot update to invalid status transition', function () {
 
 // Timeline Tests
 test('admin can view job timeline', function () {
-    $job = WorkshopJob::factory()->create(['customer_id' => $this->customer->id]);
+    $job = WorkshopJob::factory()->create($this->jobDefaults + ['customer_id' => $this->customer->id]);
 
     $response = $this->actingAs($this->admin)->get(route('jobs.timeline', $job));
 
@@ -379,7 +396,7 @@ test('admin can view job timeline', function () {
 });
 
 test('job timeline includes status changes', function () {
-    $job = WorkshopJob::factory()->create([
+    $job = WorkshopJob::factory()->create($this->jobDefaults + [
         'customer_id' => $this->customer->id,
         'status' => JobStatus::NEW,
     ]);

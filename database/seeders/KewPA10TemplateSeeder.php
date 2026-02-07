@@ -26,7 +26,6 @@ class KewPA10TemplateSeeder extends Seeder
                 'color' => 'blue',
                 'is_active' => true,
                 'is_default' => false,
-                'created_by' => 1,
             ]
         );
 

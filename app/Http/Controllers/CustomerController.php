@@ -57,9 +57,13 @@ class CustomerController extends Controller
     /**
      * Store a newly created customer.
      */
-    public function store(StoreCustomerRequest $request): RedirectResponse
+    public function store(StoreCustomerRequest $request)
     {
         $customer = Customer::create($request->validated());
+
+        if ($request->wantsJson()) {
+            return response()->json($customer);
+        }
 
         return redirect()->route('customers.show', $customer)
             ->with('success', __('customers.created_successfully'));

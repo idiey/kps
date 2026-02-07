@@ -30,8 +30,8 @@ class CustomerPolicy
      */
     public function create(User $user): bool
     {
-        // Admin and technicians can create customers
-        return $user->hasAnyRole(['pentadbiran', 'juruteknik']);
+        // Admin, technicians, and front desk can create customers
+        return $user->hasAnyRole(['pentadbiran', 'juruteknik', 'kaunter']);
     }
 
     /**
@@ -44,8 +44,8 @@ class CustomerPolicy
             return true;
         }
 
-        // Technicians can update customers
-        if ($user->hasRole('juruteknik')) {
+        // Technicians and front desk can update customers
+        if ($user->hasAnyRole(['juruteknik', 'kaunter'])) {
             return true;
         }
 

@@ -1,20 +1,16 @@
 <?php
 
 use App\Http\Controllers\Admin\RoleManagementController;
-use App\Http\Controllers\Admin\TemplateController;
-use App\Http\Controllers\Admin\TemplateFieldController;
-use App\Http\Controllers\Admin\WorkflowController;
-use App\Http\Controllers\Admin\WorkflowStatusController;
-use App\Http\Controllers\Admin\WorkflowTransitionController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DynamicJobController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\JobAssignmentController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobNoteController;
+use App\Http\Controllers\KewApprovalController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\RepairCompletionController;
+use App\Http\Controllers\JobAnalyticsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -41,6 +37,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard/statistics', [DashboardController::class, 'statistics'])
         ->name('dashboard.statistics');
 
+    // Analytics Dashboard
+    Route::get('analytics', [JobAnalyticsController::class, 'index'])
+        ->name('analytics.index');
+
+    // Job Mode Selection & Creation Routes (NEW - Architecture Simplification)
+    // Place BEFORE resource routes to avoid conflicts
+    Route::prefix('jobs')->group(function () {
+        // Job mode selector
+        Route::get('select-mode', [JobController::class, 'selectMode'])
+            ->name('jobs.select-mode');
+        
+        // KEW.PA-10 job creation
+        Route::get('create/kew', [JobController::class, 'createKew'])
+            ->name('jobs.create.kew');
+        
+        // Normal job creation
+        Route::get('create/normal', [JobController::class, 'createNormal'])
+            ->name('jobs.create.normal');
+    });
+
     // Jobs Resource Routes
     Route::resource('jobs', JobController::class);
 
@@ -51,6 +67,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Job Timeline
     Route::get('jobs/{job}/timeline', [JobController::class, 'timeline'])
         ->name('jobs.timeline');
+
+    // KEW.PA-10 Approval Routes (NEW - Architecture Simplification)
+    Route::prefix('jobs/kew')->name('jobs.kew.')->group(function () {
+        // Approve inspection
+        Route::post('{job}/approve', [KewApprovalController::class, 'approve'])
+            ->middleware('role:penyelia|pentadbiran|pelulus')
+            ->name('approve');
+        
+        // Reject inspection (requires reason)
+        Route::post('{job}/reject', [KewApprovalController::class, 'reject'])
+            ->middleware('role:penyelia|pentadbiran|pelulus')
+            ->name('reject');
+        
+        // View approval history
+        Route::get('{job}/history', [KewApprovalController::class, 'history'])
+            ->name('history');
+        
+        // List pending approvals (supervisor dashboard)
+        Route::get('pending', [KewApprovalController::class, 'index'])
+            ->middleware('role:penyelia|pentadbiran|pelulus')
+            ->name('pending');
+    });
 
     // Job Assignment Routes
     Route::post('jobs/{job}/assign', [JobAssignmentController::class, 'store'])
@@ -142,78 +180,33 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('completion/{report}/parts/{partIndex}', [RepairCompletionController::class, 'removePart'])
         ->name('completion.remove-part');
 
-    // Dynamic Workflow System Routes
-    // Template selection and dynamic job creation
-    Route::get('jobs/templates/select', [DynamicJobController::class, 'create'])
-        ->name('jobs.select-template');
 
-    Route::get('jobs/create/{template}', [DynamicJobController::class, 'create'])
-        ->name('jobs.create-dynamic');
-
-    // Workflow transitions
-    Route::post('jobs/{job}/transitions/{transition}', [DynamicJobController::class, 'executeTransition'])
-        ->name('jobs.execute-transition');
-
-    // API endpoints for dynamic forms
-    Route::get('api/jobs/{job}/available-transitions', [DynamicJobController::class, 'getAvailableTransitions'])
-        ->name('api.jobs.available-transitions');
-
-    Route::get('api/jobs/{job}/field-rules', [DynamicJobController::class, 'getFieldRules'])
-        ->name('api.jobs.field-rules');
-
-    Route::post('api/templates/{template}/validate', [DynamicJobController::class, 'validateFieldData'])
-        ->name('api.templates.validate');
-
-    Route::get('api/templates/{template}/schema', [DynamicJobController::class, 'getFormSchema'])
-        ->name('api.templates.schema');
-
-    Route::get('api/templates/{template}/workflows', [DynamicJobController::class, 'getWorkflows'])
-        ->name('api.templates.workflows');
 
     // Admin Routes (Pentadbiran only)
     Route::prefix('admin')->name('admin.')->group(function () {
-        // Workflow Management
-        Route::resource('workflows', WorkflowController::class);
-        Route::get('workflows/{workflow}/builder', [WorkflowController::class, 'builder'])
-            ->name('workflows.builder');
-        Route::post('workflows/{workflow}/import', [WorkflowController::class, 'import'])
-            ->name('workflows.import');
+        // Workshop Management
+        Route::resource('workshops', \App\Http\Controllers\Admin\WorkshopController::class);
+        Route::post('workshops/{workshop}/toggle-status', [\App\Http\Controllers\Admin\WorkshopController::class, 'toggleStatus'])
+            ->name('workshops.toggle-status');
 
-        // Workflow Statuses
-        Route::resource('workflows.statuses', WorkflowStatusController::class);
-        Route::post('workflows/{workflow}/statuses/reorder', [WorkflowStatusController::class, 'reorder'])
-            ->name('workflows.statuses.reorder');
+        // Workshop User Management
+        Route::get('workshops/{workshop}/users', [\App\Http\Controllers\Admin\WorkshopUserController::class, 'index'])
+            ->name('workshops.users.index');
+        Route::post('workshops/{workshop}/users', [\App\Http\Controllers\Admin\WorkshopUserController::class, 'store'])
+            ->name('workshops.users.store');
+        Route::patch('workshops/{workshop}/users/{user}', [\App\Http\Controllers\Admin\WorkshopUserController::class, 'update'])
+            ->name('workshops.users.update');
+        Route::delete('workshops/{workshop}/users/{user}', [\App\Http\Controllers\Admin\WorkshopUserController::class, 'destroy'])
+            ->name('workshops.users.destroy');
 
-        // Workflow Transitions
-        Route::resource('workflows.transitions', WorkflowTransitionController::class);
-        Route::post('workflows/{workflow}/transitions/reorder', [WorkflowTransitionController::class, 'reorder'])
-            ->name('workflows.transitions.reorder');
-        Route::patch('workflows/{workflow}/transitions/{transition}/conditions', [WorkflowTransitionController::class, 'updateConditions'])
-            ->name('workflows.transitions.update-conditions');
-        Route::patch('workflows/{workflow}/transitions/{transition}/actions', [WorkflowTransitionController::class, 'updateActions'])
-            ->name('workflows.transitions.update-actions');
+        // Workshop Analytics
+        Route::get('workshops/{workshop}/analytics', [\App\Http\Controllers\Admin\WorkshopAnalyticsController::class, 'show'])
+            ->name('workshops.analytics');
 
-        // Template Management
-        Route::resource('templates', TemplateController::class);
-        Route::get('templates/{template}/workflows', [TemplateController::class, 'getWorkflows'])
-            ->name('templates.workflows');
-        Route::get('templates/{template}/schema', [TemplateController::class, 'getSchema'])
-            ->name('templates.schema');
-        Route::post('templates/{template}/workflows/{workflow}', [TemplateController::class, 'attachWorkflow'])
-            ->name('templates.attach-workflow');
-        Route::delete('templates/{template}/workflows/{workflow}', [TemplateController::class, 'detachWorkflow'])
-            ->name('templates.detach-workflow');
+        // Site-Scoped Jobs (displays jobs filtered by site with dual sidebar)
+        Route::get('workshops/{workshop}/jobs', [\App\Http\Controllers\Admin\WorkshopController::class, 'jobs'])
+            ->name('workshops.jobs');
 
-        // Template Fields
-        Route::resource('templates.fields', TemplateFieldController::class);
-        Route::post('templates/{template}/fields/reorder', [TemplateFieldController::class, 'reorder'])
-            ->name('templates.fields.reorder');
-        Route::post('templates/{template}/fields/{field}/duplicate', [TemplateFieldController::class, 'duplicate'])
-            ->name('templates.fields.duplicate');
-        Route::get('templates/{template}/fields/{field}/preview', [TemplateFieldController::class, 'preview'])
-            ->name('templates.fields.preview');
-        Route::post('templates/{template}/fields/{field}/test-formula', [TemplateFieldController::class, 'testFormula'])
-            ->name('templates.fields.test-formula');
 
         // Role and Permission Management
         Route::resource('roles', RoleManagementController::class);
@@ -233,6 +226,41 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->name('roles.assign-users');
         Route::delete('roles/{role}/users', [RoleManagementController::class, 'removeUsers'])
             ->name('roles.remove-users');
+
+        // User Management
+        Route::resource('users', \App\Http\Controllers\Admin\UserManagementController::class);
+        Route::patch('users/{user}/toggle-activation', [\App\Http\Controllers\Admin\UserManagementController::class, 'toggleActivation'])
+            ->name('users.toggle-activation');
+
+        // Reports
+        Route::get('reports', [\App\Http\Controllers\Admin\ReportController::class, 'index'])
+            ->name('reports.index');
+        Route::post('reports/jobs', [\App\Http\Controllers\Admin\ReportController::class, 'jobReport'])
+            ->name('reports.jobs');
+        Route::post('reports/customers', [\App\Http\Controllers\Admin\ReportController::class, 'customerReport'])
+            ->name('reports.customers');
+        Route::post('reports/performance', [\App\Http\Controllers\Admin\ReportController::class, 'performanceReport'])
+            ->name('reports.performance');
+
+        // Asset Management
+        Route::resource('assets', \App\Http\Controllers\Admin\AssetController::class);
+
+        // Parts Inventory
+        Route::resource('inventory', \App\Http\Controllers\Admin\InventoryController::class);
+        Route::post('inventory/{part}/adjust-stock', [\App\Http\Controllers\Admin\InventoryController::class, 'adjustStock'])
+            ->name('inventory.adjust-stock');
+
+        // Settings
+        Route::get('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'index'])
+            ->name('settings.index');
+        Route::post('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'store'])
+            ->name('settings.store');
+        Route::patch('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'update'])
+            ->name('settings.update');
+        Route::delete('settings/{setting}', [\App\Http\Controllers\Admin\SettingsController::class, 'destroy'])
+            ->name('settings.destroy');
+        Route::post('settings/initialize', [\App\Http\Controllers\Admin\SettingsController::class, 'initializeDefaults'])
+            ->name('settings.initialize');
     });
 });
 

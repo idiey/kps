@@ -16,20 +16,24 @@ class DatabaseSeeder extends Seeder
         // Seed roles and permissions first
         $this->call(RolePermissionSeeder::class);
 
-        // Seed template field types
-        $this->call(TemplateFieldTypeSeeder::class);
+        // Site Seeder - Creates default VOCM company and sites
+        $this->call(SiteSeeder::class);
 
-        // Seed workflows (Option 1 & Option 2)
-        $this->call(KewPa10WorkflowSeeder::class);
-        $this->call(InternalInspectionWorkflowSeeder::class);
+        // Production Prep Seeder (Mock Data for Demo)
+        $this->call(ProductionSeeder::class);
 
-        // Seed job templates (must run after workflows)
-        $this->call(StandardJobTemplateSeeder::class);
+        // NOTE: The following seeders are REMOVED as part of architecture simplification:
+        // - TemplateFieldTypeSeeder (template_field_types table dropped)
+        // - KewPa10WorkflowSeeder (workflows/workflow_statuses tables dropped)
+        // - InternalInspectionWorkflowSeeder (workflows/workflow_statuses tables dropped)
+        // - BackfillWorkflowAllowedRolesSeeder (workflows table dropped)
+        // - BackfillWorkflowTransitionAllowedRolesSeeder (workflow_transitions table dropped)
+        // - StandardJobTemplateSeeder (job_templates table dropped)
 
-        // Seed KEW.PA-10 test data
-        $this->call(KewPA10TestDataSeeder::class);
+        // Seed KEW.PA-10 test data (uses static columns now)
+        // $this->call(KewPA10TestDataSeeder::class); // Replaced by ProductionSeeder
 
         // Seed workshop data (users, customers, jobs)
-        $this->call(WorkshopSeeder::class);
+        // $this->call(WorkshopSeeder::class); // Replaced by ProductionSeeder
     }
 }

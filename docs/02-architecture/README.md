@@ -12,8 +12,7 @@ and technology stack decisions for Malaysian government compliance.
 
 ### [1. Dynamic Workflow Management System](../../DYNAMIC_WORKFLOW_SYSTEM.md)
 
-Complete documentation for the dynamic workflow system that allows administrators to create and manage
-multiple workflows, templates, and field configurations without code changes.
+**Note**: Dynamic workflow system is being deprecated in favor of static job mode workflows.
 
 ### [7. Workflow Option 1: External KEW.PA-10 Reception](07-workflow-option-1.md)
 
@@ -31,6 +30,28 @@ Technical requirements for Progressive Web App implementation to support mobile 
 
 Comprehensive swimlane diagrams illustrating the complete job lifecycle from creation to completion,
 including actor responsibilities, status transitions, and error handling flows.
+
+### [11. Mobile Application: Product Requirements Document](11-mobile-prd.md)
+
+Complete PRD for mobile application development using React Native + Expo. Covers business objectives,
+technical architecture, feature requirements, development roadmap, testing strategy, and deployment plan
+for iOS and Android field applications.
+
+### [12. Multi-Tenant Architecture](12-multi-tenant-architecture.md) ⭐ NEW
+
+Company → Workshop hierarchy, data isolation, user assignment, and tenant scoping implementation.
+
+### [13. Job Mode System](13-job-mode-system.md)
+
+Dual-mode job system (KEW.PA-10 Government vs Normal), workflow differences, and form adaptation.
+
+### [16. Simplified Job Modes](16-simplified-job-modes.md) ⭐ CURRENT
+
+Current implementation detailing the simplified, static approach for handling different job modes (Normal, KEW.PA-10, Warranty) without complex dynamic workflows.
+
+### [17. Job Request Swimlane](17-job-request-swimlane.md)
+
+Visual swimlane diagrams illustrating the job request and processing workflows for different job modes.
 
 ### Planned Documentation
 
@@ -62,7 +83,7 @@ The following documentation is planned for upcoming sprints:
 - **Cache/Queue**: Redis
 - **Authentication**: Laravel Sanctum
 
-### Frontend
+### Frontend (Web)
 
 - **Framework**: Vue.js 3 (Composition API)
 - **Bridge**: Inertia.js
@@ -70,6 +91,18 @@ The following documentation is planned for upcoming sprints:
 - **Styling**: TailwindCSS
 - **State**: Pinia
 - **Charts**: Chart.js
+
+### Mobile (iOS & Android)
+
+- **Framework**: React Native + Expo
+- **Language**: TypeScript
+- **Navigation**: React Navigation 6
+- **State**: Zustand
+- **API Client**: TanStack Query (React Query)
+- **Styling**: NativeWind (TailwindCSS for mobile)
+- **Storage**: Expo SQLite + SecureStore
+- **Camera**: Expo Camera
+- **Notifications**: Firebase Cloud Messaging
 
 ## Architecture Diagrams
 

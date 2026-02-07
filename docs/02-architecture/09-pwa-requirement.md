@@ -1,46 +1,114 @@
-# 09. PWA Requirement & Architecture (Proposed)
+# Progressive Web App (PWA) Requirement
 
-## 📌 Context
+## Overview
 
-To support technicians in the workshop environment (where Wi-Fi might be unstable and mobile data is preferred), the system requires transformation into a **Progressive Web App (PWA)**. This will allow the use of native mobile features and improve the reliability of the "Evidence Management" module.
+The Workshop management System includes a Progressive Web App (PWA) to provide mobile-first experiences for field technicians and workshop staff who need to access the system on mobile devices.
 
-## 🚀 Key Requirements
+## PWA Capabilities
 
-### 1. Offline Photo Queueing
-- **Technician Need:** Take photos even when the connection drops.
-- **Technical Requirement:** Implement **IndexedDB** storage to queue photo uploads.
-- **Workflow:** Photos captured via `JobPhoto` module should be stored locally first, then synced automatically to `PhotoStorageService` once the connection is restored.
+### Core Features
 
-### 2. Push Notifications
-- **Role Need:** Supervisors and Technicians need real-time alerts for new job assignments.
-- **Technical Requirement:** Integration with **Web Push API** and **Service Workers**.
-- **Implementation:** Use a library like `Vite PWA Plugin` to manage the service worker lifecycle.
+1. **Offline Support**
+   - Service worker caching
+   - IndexedDB for local data storage
+   - Background sync for pending operations
 
-### 3. Home Screen Installation (A2HS)
-- **User Need:** Access the workshop system like a native app without a browser URL bar.
-- **Technical Requirement:**
-  - Web Manifest (`manifest.json`) with workshop icons and theme colors.
-  - Responsive design ensuring all "Job" and "Inspection" pages are mobile-first.
+2. **Installable**
+   - Add to home screen on iOS and Android
+   - Native-like app experience
+   - Standalone display mode
 
-### 4. Biometric Authentication (Optional/Future)
-- **Security Need:** Fast login for technicians in the field.
-- **Technical Requirement:** **WebAuthn API** for face/fingerprint unlock.
+3. **Responsive Design**
+   - Mobile-optimized layouts
+   - Touch-friendly controls
+   - Adaptive UI components
+
+4. **Performance**
+   - Fast initial load with app shell
+   - Lazy loading of resources
+   - Optimized assets
+
+## Technical Requirements
+
+### Manifest File (`manifest.json`)
+
+```json
+{
+  "name": "Workshop Management System",
+  "short_name": "Workshop",
+  "description": "Multi-tenant workshop management platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4F46E5",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+```
+
+### Service Worker
+
+Implement service worker for:
+- Static asset caching
+- API response caching  
+- Offline fallback pages
+- Background sync queue
+
+## Use Cases
+
+### Field Technician Workflow
+
+1. Install PWA on mobile device
+2. Access job list offline
+3. View job details and history
+4. Capture photos (requires online)
+5. Update job status
+6. Sync changes when online
+
+### Mobile Advantages
+
+- **No app store approval** - Deploy updates instantly
+- **Cross-platform** - Single codebase for iOS/Android
+- **Lower development cost** - Use existing Vue.js components
+- **SEO friendly** - Indexable web content
+
+##Native Mobile App Comparison
+
+> **Note**: The system also includes a **React Native mobile application** ([see Mobile PRD](11-mobile-prd.md)) which offers superior offline capabilities and native device integration.
+>
+> **When to use PWA**:
+> - Quick access without installation
+> - Web-based workflows
+> - Cross-platform consistency
+>
+> **When to use Native App**:
+> - Extensive offline usage
+> - Advanced camera/GPS features
+> - Push notifications
+> - Biometric authentication
+
+## Browser Support
+
+| Browser | Version | PWA Support |
+|---------|---------|-------------|
+| Chrome | 80+ | ✅ Full |
+| Safari (iOS) | 14+ | ⚠️ Limited |
+| Edge | 80+ | ✅ Full |
+| Firefox | 90+ | ✅ Full |
+| Samsung Internet | 12+ | ✅ Full |
 
 ---
 
-## 🛠️ Proposed Tech Stack
-
-- **Library:** [Vite PWA Plugin](https://vite-pwa-org.netlify.app/)
-- **Strategy:** `InjectManifest` for custom background sync logic.
-- **Cache Strategy:** `CacheFirst` for static assets (CSS/JS/Icons) to ensure instant load.
-
-## 🏁 Success Criteria
-
-1. System passes Lighthouse PWA audit (100/100).
-2. Technician can open the app and view their current "My Jobs" list without an active internet connection.
-3. "Add to Home Screen" prompt appears on Android/iOS devices.
-
----
-
-**Last Updated**: 2026-01-07
-**Status**: Proposed / High Priority
+**Related Documentation**:
+- [Mobile Application PRD](11-mobile-prd.md) - Native mobile app
+- [Offline Sync Strategy](14-offline-sync.md) - Synchronization architecture

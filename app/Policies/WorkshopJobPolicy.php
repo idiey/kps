@@ -21,8 +21,24 @@ class WorkshopJobPolicy
      */
     public function view(User $user, WorkshopJob $job): bool
     {
-        // All authenticated users can view individual jobs
-        return true;
+        // 1. Management Roles: Admin, Supervisor, Front Desk, Approver - View ALL
+        if ($user->hasAnyRole(['pentadbiran', 'penyelia', 'kaunter', 'pelulus'])) {
+            return true;
+        }
+
+        // 2. Assigned User - View THEIR jobs (Technicians, etc.)
+        if ($job->assigned_to == $user->id) {
+            return true;
+        }
+
+        // 3. KEW.PA-10 Special: Inspectors can view all KEW jobs
+        if ($job->job_mode === \App\Enums\JobMode::KEW_PA_10) {
+            if ($user->hasRole('pemeriksa')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -30,8 +46,10 @@ class WorkshopJobPolicy
      */
     public function create(User $user): bool
     {
-        // Admin and technicians can create jobs
-        return $user->hasAnyRole(['pentadbiran', 'juruteknik']);
+        // Admin, supervisors, and front desk can create jobs
+        // Front desk handles walk-in customers
+        // Supervisors create KEW.PA-10 jobs
+        return $user->hasAnyRole(['pentadbiran', 'penyelia', 'kaunter']);
     }
 
     /**
@@ -49,6 +67,13 @@ class WorkshopJobPolicy
             return true;
         }
 
+        // Inspector can update KEW.PA-10 jobs assigned to them
+        if ($user->hasRole('pemeriksa') && $job->assigned_to === $user->id) {
+            if ($job->job_mode === \App\Enums\JobMode::KEW_PA_10) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -57,14 +82,21 @@ class WorkshopJobPolicy
      */
     public function updateStatus(User $user, WorkshopJob $job): bool
     {
-        // Admin can change any job status
-        if ($user->hasRole('pentadbiran')) {
+        // Admin and Supervisor can change any job status
+        if ($user->hasAnyRole(['pentadbiran', 'penyelia'])) {
             return true;
         }
 
         // Technician can change status of jobs assigned to them
-        if ($user->hasRole('juruteknik') && $job->assigned_to === $user->id) {
+        if ($user->hasRole('juruteknik') && $job->assigned_to == $user->id) {
             return true;
+        }
+
+        // Inspector can change status of KEW.PA-10 jobs assigned to them
+        if ($user->hasRole('pemeriksa') && $job->assigned_to === $user->id) {
+            if ($job->job_mode === \App\Enums\JobMode::KEW_PA_10) {
+                return true;
+            }
         }
 
         return false;
@@ -75,8 +107,8 @@ class WorkshopJobPolicy
      */
     public function assign(User $user, WorkshopJob $job): bool
     {
-        // Only admin can assign/reassign jobs
-        return $user->hasRole('pentadbiran');
+        // Admin and Supervisor can assign/reassign jobs
+        return $user->hasAnyRole(['pentadbiran', 'penyelia']);
     }
 
     /**
@@ -84,8 +116,8 @@ class WorkshopJobPolicy
      */
     public function createNote(User $user, WorkshopJob $job): bool
     {
-        // Admin and technicians can create notes
-        return $user->hasAnyRole(['pentadbiran', 'juruteknik']);
+        // Admin, technicians, and inspectors can create notes
+        return $user->hasAnyRole(['pentadbiran', 'juruteknik', 'pemeriksa']);
     }
 
     /**

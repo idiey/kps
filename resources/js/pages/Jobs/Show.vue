@@ -10,8 +10,10 @@ import JobStatusBadge from '@/components/workshop/JobStatusBadge.vue';
 import JobStatusTransition from '@/components/workshop/JobStatusTransition.vue';
 import TechnicianSelect from '@/components/workshop/TechnicianSelect.vue';
 import TimelineView from '@/components/workshop/TimelineView.vue';
-import DynamicJobForm from '@/components/workshop/DynamicJobForm.vue';
-import WorkflowTemplatesDisplay from '@/components/workshop/WorkflowTemplatesDisplay.vue';
+
+import JobModeBadge from '@/components/jobs/JobModeBadge.vue';
+import KewApprovalPanel from '@/components/jobs/KewApprovalPanel.vue';
+import KewApprovalHistory from '@/components/jobs/KewApprovalHistory.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import { useToast } from '@/composables/useToast';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -45,31 +47,21 @@ interface Props {
     technicians?: UserType[];
     canEdit?: boolean;
     canDelete?: boolean;
-    dynamicData?: any;
+    canApprove?: boolean;  // NEW: Can approve KEW inspections
+    canAssign?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
     canEdit: false,
     canDelete: false,
+    canApprove: false,
+    canAssign: false,
 });
 
 const { confirm } = useConfirmDialog();
 const { success, error } = useToast();
 
-// Dynamic form data
-const formData = ref<Record<string, any>>({});
 
-// Check if there's an active status form
-const hasActiveForm = computed(() => {
-    return props.dynamicData?.active_status_form?.fields_by_section;
-});
-
-// Flatten fields for easier rendering
-const activeFormFields = computed(() => {
-    if (!hasActiveForm.value) return [];
-    const sections = props.dynamicData.active_status_form.fields_by_section;
-    return Object.values(sections).flat();
-});
 
 const deleteJob = async () => {
     const confirmed = await confirm({
@@ -148,6 +140,7 @@ const currentTechnicianId = computed(() => {
                             <div class="flex items-start justify-between">
                                 <CardTitle>Job Information</CardTitle>
                                 <div class="flex gap-2">
+                                    <JobModeBadge v-if="job.job_mode" :mode="job.job_mode" size="md" />
                                     <JobStatusBadge :status="job.status" />
                                     <JobPriorityBadge
                                         :priority="job.priority"
@@ -257,22 +250,66 @@ const currentTechnicianId = computed(() => {
                                     {{ formatDateTime(job.updated_at) }}
                                 </span>
                             </div>
+
+                            <!-- KEW.PA-10 Specific Fields -->
+                            <div v-if="job.job_mode === 'KEW_PA_10'" class="border-t pt-4 space-y-4">
+                                <h3 class="text-sm font-semibold text-foreground mb-3">KEW.PA-10 Inspection Details</h3>
+                                
+                                <div class="grid gap-4 sm:grid-cols-2">
+                                    <div v-if="job.kew_vehicle_registration">
+                                        <p class="text-sm font-medium text-muted-foreground">🚗 Vehicle Registration</p>
+                                        <p class="font-medium">{{ job.kew_vehicle_registration }}</p>
+                                    </div>
+                                    <div v-if="job.kew_asset_tag">
+                                        <p class="text-sm font-medium text-muted-foreground">📝 Asset Tag</p>
+                                        <p class="font-medium">{{ job.kew_asset_tag }}</p>
+                                    </div>
+                                </div>
+
+                                <div v-if="job.kew_department">
+                                    <p class="text-sm font-medium text-muted-foreground">🏛️ Department</p>
+                                    <p>{{ job.kew_department }}</p>
+                                </div>
+
+                                <div class="grid gap-4 sm:grid-cols-2">
+                                    <div v-if="job.kew_inspection_date">
+                                        <p class="text-sm font-medium text-muted-foreground">📅 Inspection Date</p>
+                                        <p>{{ formatDate(job.kew_inspection_date) }}</p>
+                                    </div>
+                                    <div v-if="job.kew_inspector_name">
+                                        <p class="text-sm font-medium text-muted-foreground">👤 Inspector Name</p>
+                                        <p>{{ job.kew_inspector_name }}</p>
+                                    </div>
+                                </div>
+
+                                <div v-if="job.kew_inspector_ic" class="grid gap-4 sm:grid-cols-2">
+                                    <div>
+                                        <p class="text-sm font-medium text-muted-foreground">🆔 Inspector IC Number</p>
+                                        <p>{{ job.kew_inspector_ic }}</p>
+                                    </div>
+                                </div>
+
+                                <div v-if="job.kew_findings">
+                                    <p class="text-sm font-medium text-muted-foreground mb-1">🔍 Inspection Findings</p>
+                                    <p class="whitespace-pre-wrap bg-muted/50 p-3 rounded-md">{{ job.kew_findings }}</p>
+                                </div>
+
+                                <div v-if="job.kew_recommendations">
+                                    <p class="text-sm font-medium text-muted-foreground mb-1">📋 Recommendations</p>
+                                    <p class="whitespace-pre-wrap bg-muted/50 p-3 rounded-md">{{ job.kew_recommendations }}</p>
+                                </div>
+                            </div>
                         </CardContent>
                     </Card>
 
-                    <!-- Workflow Templates Display -->
-                    <WorkflowTemplatesDisplay
-                        v-if="dynamicData?.workflow_templates"
-                        :templates="dynamicData.workflow_templates"
-                    />
-
                     <Tabs default-value="notes" class="space-y-4">
-                        <TabsList class="grid w-full grid-cols-3">
+                        <TabsList :class="job.job_mode === 'KEW_PA_10' ? 'grid w-full grid-cols-4' : 'grid w-full grid-cols-3'">
                             <TabsTrigger value="notes">Notes</TabsTrigger>
                             <TabsTrigger value="assignments"
                                 >Assignments</TabsTrigger
                             >
                             <TabsTrigger value="timeline">Timeline</TabsTrigger>
+                            <TabsTrigger v-if="job.job_mode === 'KEW_PA_10'" value="approvals">Approvals</TabsTrigger>
                         </TabsList>
 
                         <TabsContent value="notes" class="space-y-4">
@@ -303,37 +340,46 @@ const currentTechnicianId = computed(() => {
                                 :assignments="assignments"
                             />
                         </TabsContent>
+
+                        <TabsContent v-if="job.job_mode === 'KEW_PA_10'" value="approvals" class="space-y-4">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>KEW.PA-10 Inspection Approval</CardTitle>
+                                    <p class="text-sm text-muted-foreground mt-1">
+                                        Review and approve or reject this KEW.PA-10 inspection.
+                                    </p>
+                                </CardHeader>
+                                <CardContent>
+                                    <KewApprovalPanel :job="job" :can-approve="canApprove" />
+                                </CardContent>
+                            </Card>
+
+                            <Card v-if="statusHistory.length > 0">
+                                <CardHeader>
+                                    <CardTitle>Approval History</CardTitle>
+                                    <p class="text-sm text-muted-foreground mt-1">
+                                        Complete history of approval decisions for this job.
+                                    </p>
+                                </CardHeader>
+                                <CardContent>
+                                    <KewApprovalHistory :history="statusHistory" />
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
                     </Tabs>
                 </div>
 
                 <div class="space-y-6">
-                    <!-- Required Form for Current Status -->
-                    <Card v-if="hasActiveForm">
-                        <CardHeader>
-                            <CardTitle>{{ dynamicData.active_status_form.name }}</CardTitle>
-                            <p class="text-sm text-muted-foreground mt-1">
-                                {{ dynamicData.active_status_form.description || 'Complete this form to proceed with workflow transitions.' }}
-                            </p>
-                        </CardHeader>
-                        <CardContent>
-                            <DynamicJobForm
-                                v-model="formData"
-                                :fields="activeFormFields"
-                                :readonly="!canEdit"
-                            />
-                        </CardContent>
-                    </Card>
-
                     <Card>
                         <CardHeader>
                             <CardTitle>Status</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <JobStatusTransition :job="job" :form-data="formData" />
+                            <JobStatusTransition :job="job" />
                         </CardContent>
                     </Card>
 
-                    <Card v-if="technicians">
+                    <Card v-if="technicians && canAssign">
                         <CardHeader>
                             <CardTitle>Assignment</CardTitle>
                         </CardHeader>

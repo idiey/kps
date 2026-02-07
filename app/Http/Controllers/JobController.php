@@ -14,6 +14,7 @@ use App\Services\JobService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -24,8 +25,7 @@ use Inertia\Response;
 class JobController extends Controller
 {
     public function __construct(
-        protected JobService $jobService,
-        protected \App\Services\Job\DynamicJobService $dynamicJobService
+        protected JobService $jobService
     ) {}
 
     /**
@@ -35,7 +35,7 @@ class JobController extends Controller
     {
         Gate::authorize('viewAny', WorkshopJob::class);
 
-        $filters = $request->only(['status', 'priority', 'assigned_to', 'customer_id', 'search', 'overdue']);
+        $filters = $request->only(['status', 'priority', 'assigned_to', 'customer_id', 'search', 'overdue', 'job_mode']);
 
         $jobs = $this->jobService->getPaginatedJobs($filters, 15);
 
@@ -46,30 +46,71 @@ class JobController extends Controller
             'priorities' => JobPriority::options(),
             'technicians' => User::role('juruteknik')->get(['id', 'name']),
             'canCreate' => Gate::allows('create', WorkshopJob::class),
-            'canEdit' => true,
+            'canEdit' => true, // Permission checks handled in methods
         ]);
     }
 
     /**
      * Show the form for creating a new job.
+     * Redirects to mode selection (KEW.PA-10 vs Normal)
      */
-    public function create(): Response
+    public function create(): RedirectResponse
     {
         Gate::authorize('create', WorkshopJob::class);
 
-        // Get active workflows for job creation
-        $workflows = \App\Models\Workflow\Workflow::active()
-            ->orderBy('name')
-            ->get(['id', 'name', 'code', 'description', 'is_default']);
+        // Redirect to mode selection instead of showing old form
+        return redirect()->route('jobs.select-mode');
+    }
 
-        return Inertia::render('Jobs/Create', [
-            'customers' => Customer::orderBy('name')->get(['id', 'name', 'phone', 'email']),
-            'technicians' => User::role('juruteknik')->get(['id', 'name']),
-            'statuses' => JobStatus::options(),
-            'priorities' => JobPriority::options(),
-            'workflows' => $workflows,
+    /**
+     * Show job mode selection page (NEW - Architecture Simplification).
+     * Users choose between KEW.PA-10 and Normal job modes.
+     */
+    public function selectMode(): Response
+    {
+        Gate::authorize('create', WorkshopJob::class);
+
+        // Check if user has permission to create KEW.PA-10 jobs
+        // Supervisors, front desk, and admins can create KEW jobs
+        $canCreateKew = auth()->user()?->hasRole(['penyelia', 'pentadbiran', 'kaunter']);
+
+        return Inertia::render('Jobs/SelectMode', [
+            'canCreateKew' => $canCreateKew,
         ]);
     }
+
+    /**
+     * Show KEW.PA-10 job creation form (NEW - Architecture Simplification).
+     * Government inspection job with specific required fields.
+     */
+    public function createKew(): Response
+    {
+        Gate::authorize('create', WorkshopJob::class);
+
+        // Verify user can create KEW.PA-10 jobs
+        if (!auth()->user()?->hasRole(['penyelia', 'pentadbiran', 'kaunter'])) {
+            abort(403, 'Only supervisors and front desk can create KEW.PA-10 jobs.');
+        }
+
+        return Inertia::render('Jobs/CreateKewPa10', [
+            'customers' => Customer::orderBy('name')->get(['id', 'name', 'phone', 'email']),
+        ]);
+    }
+
+    /**
+     * Show normal job creation form (NEW - Architecture Simplification).
+     * Standard workshop job with customer, priority, and cost estimation.
+     */
+    public function createNormal(): Response
+    {
+        Gate::authorize('create', WorkshopJob::class);
+
+        return Inertia::render('Jobs/CreateNormal', [
+            'customers' => Customer::orderBy('name')->get(['id', 'name', 'phone', 'email']),
+            'priorities' => JobPriority::options(),
+        ]);
+    }
+
 
     /**
      * Store a newly created job.
@@ -77,7 +118,7 @@ class JobController extends Controller
     public function store(StoreJobRequest $request): RedirectResponse
     {
         try {
-            \Illuminate\Support\Facades\Log::info('Job Creation Attempt', [
+            Log::info('Job Creation Attempt', [
                 'user' => auth()->id(),
                 'data' => $request->all(),
             ]);
@@ -86,21 +127,17 @@ class JobController extends Controller
 
             // set default title if missing
             if (empty($data['title'])) {
-                $workflowName = null;
-                if (!empty($data['workflow_id'])) {
-                    $workflowName = \App\Models\Workflow\Workflow::find($data['workflow_id'])?->name;
-                }
-                $data['title'] = $workflowName ? "New $workflowName Job" : 'New Job';
+                $data['title'] = 'New Job';
             }
 
             $job = $this->jobService->createJob($data);
 
-            \Illuminate\Support\Facades\Log::info('Job Created Successfully', ['job_id' => $job->id]);
+            Log::info('Job Created Successfully', ['job_id' => $job->id]);
 
             return redirect()->route('jobs.show', $job)
                 ->with('success', __('jobs.created_successfully'));
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Job Creation Error', [
+            Log::error('Job Creation Error', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
@@ -125,10 +162,9 @@ class JobController extends Controller
             'assignments.assignedBy',
         ]);
 
-        $dynamicData = [];
-        if ($job->usesDynamicWorkflow()) {
-             $dynamicData = $this->dynamicJobService->getJobWithDynamicData($job);
-        }
+        // Check if user can approve KEW inspections
+        $canApprove = $job->job_mode === 'KEW_PA_10' 
+            && auth()->user()?->hasRole(['supervisor', 'admin', 'pentadbir']);
 
         return Inertia::render('Jobs/Show', [
             'job' => $job,
@@ -138,10 +174,11 @@ class JobController extends Controller
             'technicians' => User::role('juruteknik')->get(['id', 'name']),
             'statuses' => JobStatus::options(),
             'priorities' => JobPriority::options(),
-            'allowedStatusTransitions' => $job->status->allowedTransitions(),
+            'allowedStatusTransitions' => $job->status->allowedTransitions($job->job_mode), // Enum method needs update if it relies on workflow
             'canEdit' => Gate::allows('update', $job),
             'canDelete' => Gate::allows('delete', $job),
-            'dynamicData' => $dynamicData,
+            'canApprove' => $canApprove,
+            'canAssign' => Gate::allows('assign', $job),
         ]);
     }
 
@@ -193,13 +230,7 @@ class JobController extends Controller
     public function updateStatus(UpdateJobStatusRequest $request, WorkshopJob $job): RedirectResponse
     {
         $newStatus = JobStatus::from($request->validated('status'));
-        $fieldData = $request->validated('field_data');
-
-        // If dynamic workflow, save form data first
-        if ($job->usesDynamicWorkflow() && !empty($fieldData)) {
-            $this->dynamicJobService->saveCurrentStatusFormData($job, $fieldData);
-        }
-
+        
         $this->jobService->changeStatus($job, $newStatus, $request->validated('notes'));
 
         return redirect()->back()
