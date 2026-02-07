@@ -24,10 +24,12 @@ class KewPA10TestDataSeeder extends Seeder
             [
                 'name' => 'Ahmad Ibrahim',
                 'password' => Hash::make('password'),
-                'role' => 'pentadbiran',
                 'email_verified_at' => now(),
             ]
         );
+        if (!$admin->hasRole('pentadbiran')) {
+            $admin->assignRole('pentadbiran');
+        }
         $this->command->info("✓ Admin Officer created: {$admin->email} / password");
 
         $inspector = User::firstOrCreate(
@@ -35,10 +37,12 @@ class KewPA10TestDataSeeder extends Seeder
             [
                 'name' => 'Siti Nurhaliza',
                 'password' => Hash::make('password'),
-                'role' => 'pemeriksa',
                 'email_verified_at' => now(),
             ]
         );
+        if (!$inspector->hasRole('pemeriksa')) {
+            $inspector->assignRole('pemeriksa');
+        }
         $this->command->info("✓ Inspector created: {$inspector->email} / password");
 
         $supervisor = User::firstOrCreate(
@@ -46,10 +50,12 @@ class KewPA10TestDataSeeder extends Seeder
             [
                 'name' => 'Razak Abdullah',
                 'password' => Hash::make('password'),
-                'role' => 'penyelia',
                 'email_verified_at' => now(),
             ]
         );
+        if (!$supervisor->hasRole('penyelia')) {
+            $supervisor->assignRole('penyelia');
+        }
         $this->command->info("✓ Supervisor created: {$supervisor->email} / password");
 
         $technician = User::firstOrCreate(
@@ -57,10 +63,12 @@ class KewPA10TestDataSeeder extends Seeder
             [
                 'name' => 'Muthu Kumar',
                 'password' => Hash::make('password'),
-                'role' => 'juruteknik',
                 'email_verified_at' => now(),
             ]
         );
+        if (!$technician->hasRole('juruteknik')) {
+            $technician->assignRole('juruteknik');
+        }
         $this->command->info("✓ Technician created: {$technician->email} / password");
 
         $this->command->newLine();

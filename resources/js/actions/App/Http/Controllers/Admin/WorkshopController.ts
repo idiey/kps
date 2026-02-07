@@ -79,7 +79,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::create
- * @see app/Http/Controllers/Admin/WorkshopController.php:78
+ * @see app/Http/Controllers/Admin/WorkshopController.php:86
  * @route '/admin/workshops/create'
  */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -94,7 +94,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::create
- * @see app/Http/Controllers/Admin/WorkshopController.php:78
+ * @see app/Http/Controllers/Admin/WorkshopController.php:86
  * @route '/admin/workshops/create'
  */
 create.url = (options?: RouteQueryOptions) => {
@@ -103,7 +103,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::create
- * @see app/Http/Controllers/Admin/WorkshopController.php:78
+ * @see app/Http/Controllers/Admin/WorkshopController.php:86
  * @route '/admin/workshops/create'
  */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -112,7 +112,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::create
- * @see app/Http/Controllers/Admin/WorkshopController.php:78
+ * @see app/Http/Controllers/Admin/WorkshopController.php:86
  * @route '/admin/workshops/create'
  */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -122,7 +122,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopController::create
- * @see app/Http/Controllers/Admin/WorkshopController.php:78
+ * @see app/Http/Controllers/Admin/WorkshopController.php:86
  * @route '/admin/workshops/create'
  */
     const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -132,7 +132,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::create
- * @see app/Http/Controllers/Admin/WorkshopController.php:78
+ * @see app/Http/Controllers/Admin/WorkshopController.php:86
  * @route '/admin/workshops/create'
  */
         createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -141,7 +141,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::create
- * @see app/Http/Controllers/Admin/WorkshopController.php:78
+ * @see app/Http/Controllers/Admin/WorkshopController.php:86
  * @route '/admin/workshops/create'
  */
         createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -157,7 +157,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     create.form = createForm
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::store
- * @see app/Http/Controllers/Admin/WorkshopController.php:90
+ * @see app/Http/Controllers/Admin/WorkshopController.php:98
  * @route '/admin/workshops'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -172,7 +172,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::store
- * @see app/Http/Controllers/Admin/WorkshopController.php:90
+ * @see app/Http/Controllers/Admin/WorkshopController.php:98
  * @route '/admin/workshops'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -181,7 +181,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::store
- * @see app/Http/Controllers/Admin/WorkshopController.php:90
+ * @see app/Http/Controllers/Admin/WorkshopController.php:98
  * @route '/admin/workshops'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -191,7 +191,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopController::store
- * @see app/Http/Controllers/Admin/WorkshopController.php:90
+ * @see app/Http/Controllers/Admin/WorkshopController.php:98
  * @route '/admin/workshops'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -201,7 +201,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::store
- * @see app/Http/Controllers/Admin/WorkshopController.php:90
+ * @see app/Http/Controllers/Admin/WorkshopController.php:98
  * @route '/admin/workshops'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -212,7 +212,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::show
- * @see app/Http/Controllers/Admin/WorkshopController.php:101
+ * @see app/Http/Controllers/Admin/WorkshopController.php:109
  * @route '/admin/workshops/{workshop}'
  */
 export const show = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -227,7 +227,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::show
- * @see app/Http/Controllers/Admin/WorkshopController.php:101
+ * @see app/Http/Controllers/Admin/WorkshopController.php:109
  * @route '/admin/workshops/{workshop}'
  */
 show.url = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -260,7 +260,7 @@ show.url = (args: { workshop: string | { id: string } } | [workshop: string | { 
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::show
- * @see app/Http/Controllers/Admin/WorkshopController.php:101
+ * @see app/Http/Controllers/Admin/WorkshopController.php:109
  * @route '/admin/workshops/{workshop}'
  */
 show.get = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -269,7 +269,7 @@ show.get = (args: { workshop: string | { id: string } } | [workshop: string | { 
 })
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::show
- * @see app/Http/Controllers/Admin/WorkshopController.php:101
+ * @see app/Http/Controllers/Admin/WorkshopController.php:109
  * @route '/admin/workshops/{workshop}'
  */
 show.head = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -279,7 +279,7 @@ show.head = (args: { workshop: string | { id: string } } | [workshop: string | {
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopController::show
- * @see app/Http/Controllers/Admin/WorkshopController.php:101
+ * @see app/Http/Controllers/Admin/WorkshopController.php:109
  * @route '/admin/workshops/{workshop}'
  */
     const showForm = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -289,7 +289,7 @@ show.head = (args: { workshop: string | { id: string } } | [workshop: string | {
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::show
- * @see app/Http/Controllers/Admin/WorkshopController.php:101
+ * @see app/Http/Controllers/Admin/WorkshopController.php:109
  * @route '/admin/workshops/{workshop}'
  */
         showForm.get = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -298,7 +298,7 @@ show.head = (args: { workshop: string | { id: string } } | [workshop: string | {
         })
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::show
- * @see app/Http/Controllers/Admin/WorkshopController.php:101
+ * @see app/Http/Controllers/Admin/WorkshopController.php:109
  * @route '/admin/workshops/{workshop}'
  */
         showForm.head = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -314,7 +314,7 @@ show.head = (args: { workshop: string | { id: string } } | [workshop: string | {
     show.form = showForm
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::edit
- * @see app/Http/Controllers/Admin/WorkshopController.php:173
+ * @see app/Http/Controllers/Admin/WorkshopController.php:181
  * @route '/admin/workshops/{workshop}/edit'
  */
 export const edit = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -329,7 +329,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::edit
- * @see app/Http/Controllers/Admin/WorkshopController.php:173
+ * @see app/Http/Controllers/Admin/WorkshopController.php:181
  * @route '/admin/workshops/{workshop}/edit'
  */
 edit.url = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -362,7 +362,7 @@ edit.url = (args: { workshop: string | { id: string } } | [workshop: string | { 
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::edit
- * @see app/Http/Controllers/Admin/WorkshopController.php:173
+ * @see app/Http/Controllers/Admin/WorkshopController.php:181
  * @route '/admin/workshops/{workshop}/edit'
  */
 edit.get = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -371,7 +371,7 @@ edit.get = (args: { workshop: string | { id: string } } | [workshop: string | { 
 })
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::edit
- * @see app/Http/Controllers/Admin/WorkshopController.php:173
+ * @see app/Http/Controllers/Admin/WorkshopController.php:181
  * @route '/admin/workshops/{workshop}/edit'
  */
 edit.head = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -381,7 +381,7 @@ edit.head = (args: { workshop: string | { id: string } } | [workshop: string | {
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopController::edit
- * @see app/Http/Controllers/Admin/WorkshopController.php:173
+ * @see app/Http/Controllers/Admin/WorkshopController.php:181
  * @route '/admin/workshops/{workshop}/edit'
  */
     const editForm = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -391,7 +391,7 @@ edit.head = (args: { workshop: string | { id: string } } | [workshop: string | {
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::edit
- * @see app/Http/Controllers/Admin/WorkshopController.php:173
+ * @see app/Http/Controllers/Admin/WorkshopController.php:181
  * @route '/admin/workshops/{workshop}/edit'
  */
         editForm.get = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -400,7 +400,7 @@ edit.head = (args: { workshop: string | { id: string } } | [workshop: string | {
         })
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::edit
- * @see app/Http/Controllers/Admin/WorkshopController.php:173
+ * @see app/Http/Controllers/Admin/WorkshopController.php:181
  * @route '/admin/workshops/{workshop}/edit'
  */
         editForm.head = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -416,7 +416,7 @@ edit.head = (args: { workshop: string | { id: string } } | [workshop: string | {
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::update
- * @see app/Http/Controllers/Admin/WorkshopController.php:188
+ * @see app/Http/Controllers/Admin/WorkshopController.php:196
  * @route '/admin/workshops/{workshop}'
  */
 export const update = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -431,7 +431,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::update
- * @see app/Http/Controllers/Admin/WorkshopController.php:188
+ * @see app/Http/Controllers/Admin/WorkshopController.php:196
  * @route '/admin/workshops/{workshop}'
  */
 update.url = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -464,7 +464,7 @@ update.url = (args: { workshop: string | { id: string } } | [workshop: string | 
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::update
- * @see app/Http/Controllers/Admin/WorkshopController.php:188
+ * @see app/Http/Controllers/Admin/WorkshopController.php:196
  * @route '/admin/workshops/{workshop}'
  */
 update.put = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -473,7 +473,7 @@ update.put = (args: { workshop: string | { id: string } } | [workshop: string | 
 })
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::update
- * @see app/Http/Controllers/Admin/WorkshopController.php:188
+ * @see app/Http/Controllers/Admin/WorkshopController.php:196
  * @route '/admin/workshops/{workshop}'
  */
 update.patch = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -483,7 +483,7 @@ update.patch = (args: { workshop: string | { id: string } } | [workshop: string 
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopController::update
- * @see app/Http/Controllers/Admin/WorkshopController.php:188
+ * @see app/Http/Controllers/Admin/WorkshopController.php:196
  * @route '/admin/workshops/{workshop}'
  */
     const updateForm = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -498,7 +498,7 @@ update.patch = (args: { workshop: string | { id: string } } | [workshop: string 
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::update
- * @see app/Http/Controllers/Admin/WorkshopController.php:188
+ * @see app/Http/Controllers/Admin/WorkshopController.php:196
  * @route '/admin/workshops/{workshop}'
  */
         updateForm.put = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -512,7 +512,7 @@ update.patch = (args: { workshop: string | { id: string } } | [workshop: string 
         })
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::update
- * @see app/Http/Controllers/Admin/WorkshopController.php:188
+ * @see app/Http/Controllers/Admin/WorkshopController.php:196
  * @route '/admin/workshops/{workshop}'
  */
         updateForm.patch = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -528,7 +528,7 @@ update.patch = (args: { workshop: string | { id: string } } | [workshop: string 
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::destroy
- * @see app/Http/Controllers/Admin/WorkshopController.php:199
+ * @see app/Http/Controllers/Admin/WorkshopController.php:207
  * @route '/admin/workshops/{workshop}'
  */
 export const destroy = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -543,7 +543,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::destroy
- * @see app/Http/Controllers/Admin/WorkshopController.php:199
+ * @see app/Http/Controllers/Admin/WorkshopController.php:207
  * @route '/admin/workshops/{workshop}'
  */
 destroy.url = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -576,7 +576,7 @@ destroy.url = (args: { workshop: string | { id: string } } | [workshop: string |
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::destroy
- * @see app/Http/Controllers/Admin/WorkshopController.php:199
+ * @see app/Http/Controllers/Admin/WorkshopController.php:207
  * @route '/admin/workshops/{workshop}'
  */
 destroy.delete = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -586,7 +586,7 @@ destroy.delete = (args: { workshop: string | { id: string } } | [workshop: strin
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopController::destroy
- * @see app/Http/Controllers/Admin/WorkshopController.php:199
+ * @see app/Http/Controllers/Admin/WorkshopController.php:207
  * @route '/admin/workshops/{workshop}'
  */
     const destroyForm = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -601,7 +601,7 @@ destroy.delete = (args: { workshop: string | { id: string } } | [workshop: strin
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::destroy
- * @see app/Http/Controllers/Admin/WorkshopController.php:199
+ * @see app/Http/Controllers/Admin/WorkshopController.php:207
  * @route '/admin/workshops/{workshop}'
  */
         destroyForm.delete = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -617,7 +617,7 @@ destroy.delete = (args: { workshop: string | { id: string } } | [workshop: strin
     destroy.form = destroyForm
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::toggleStatus
- * @see app/Http/Controllers/Admin/WorkshopController.php:268
+ * @see app/Http/Controllers/Admin/WorkshopController.php:276
  * @route '/admin/workshops/{workshop}/toggle-status'
  */
 export const toggleStatus = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -632,7 +632,7 @@ toggleStatus.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::toggleStatus
- * @see app/Http/Controllers/Admin/WorkshopController.php:268
+ * @see app/Http/Controllers/Admin/WorkshopController.php:276
  * @route '/admin/workshops/{workshop}/toggle-status'
  */
 toggleStatus.url = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -665,7 +665,7 @@ toggleStatus.url = (args: { workshop: string | { id: string } } | [workshop: str
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::toggleStatus
- * @see app/Http/Controllers/Admin/WorkshopController.php:268
+ * @see app/Http/Controllers/Admin/WorkshopController.php:276
  * @route '/admin/workshops/{workshop}/toggle-status'
  */
 toggleStatus.post = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -675,7 +675,7 @@ toggleStatus.post = (args: { workshop: string | { id: string } } | [workshop: st
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopController::toggleStatus
- * @see app/Http/Controllers/Admin/WorkshopController.php:268
+ * @see app/Http/Controllers/Admin/WorkshopController.php:276
  * @route '/admin/workshops/{workshop}/toggle-status'
  */
     const toggleStatusForm = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -685,7 +685,7 @@ toggleStatus.post = (args: { workshop: string | { id: string } } | [workshop: st
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::toggleStatus
- * @see app/Http/Controllers/Admin/WorkshopController.php:268
+ * @see app/Http/Controllers/Admin/WorkshopController.php:276
  * @route '/admin/workshops/{workshop}/toggle-status'
  */
         toggleStatusForm.post = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -696,7 +696,7 @@ toggleStatus.post = (args: { workshop: string | { id: string } } | [workshop: st
     toggleStatus.form = toggleStatusForm
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::jobs
- * @see app/Http/Controllers/Admin/WorkshopController.php:219
+ * @see app/Http/Controllers/Admin/WorkshopController.php:227
  * @route '/admin/workshops/{workshop}/jobs'
  */
 export const jobs = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -711,7 +711,7 @@ jobs.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::jobs
- * @see app/Http/Controllers/Admin/WorkshopController.php:219
+ * @see app/Http/Controllers/Admin/WorkshopController.php:227
  * @route '/admin/workshops/{workshop}/jobs'
  */
 jobs.url = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -744,7 +744,7 @@ jobs.url = (args: { workshop: string | { id: string } } | [workshop: string | { 
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::jobs
- * @see app/Http/Controllers/Admin/WorkshopController.php:219
+ * @see app/Http/Controllers/Admin/WorkshopController.php:227
  * @route '/admin/workshops/{workshop}/jobs'
  */
 jobs.get = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -753,7 +753,7 @@ jobs.get = (args: { workshop: string | { id: string } } | [workshop: string | { 
 })
 /**
 * @see \App\Http\Controllers\Admin\WorkshopController::jobs
- * @see app/Http/Controllers/Admin/WorkshopController.php:219
+ * @see app/Http/Controllers/Admin/WorkshopController.php:227
  * @route '/admin/workshops/{workshop}/jobs'
  */
 jobs.head = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -763,7 +763,7 @@ jobs.head = (args: { workshop: string | { id: string } } | [workshop: string | {
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopController::jobs
- * @see app/Http/Controllers/Admin/WorkshopController.php:219
+ * @see app/Http/Controllers/Admin/WorkshopController.php:227
  * @route '/admin/workshops/{workshop}/jobs'
  */
     const jobsForm = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -773,7 +773,7 @@ jobs.head = (args: { workshop: string | { id: string } } | [workshop: string | {
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::jobs
- * @see app/Http/Controllers/Admin/WorkshopController.php:219
+ * @see app/Http/Controllers/Admin/WorkshopController.php:227
  * @route '/admin/workshops/{workshop}/jobs'
  */
         jobsForm.get = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -782,7 +782,7 @@ jobs.head = (args: { workshop: string | { id: string } } | [workshop: string | {
         })
             /**
 * @see \App\Http\Controllers\Admin\WorkshopController::jobs
- * @see app/Http/Controllers/Admin/WorkshopController.php:219
+ * @see app/Http/Controllers/Admin/WorkshopController.php:227
  * @route '/admin/workshops/{workshop}/jobs'
  */
         jobsForm.head = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

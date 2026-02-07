@@ -5,6 +5,7 @@ namespace App\Enums;
 enum UserRole: string
 {
     case PENTADBIRAN = 'pentadbiran'; // Admin Officer
+    case COMPANY_ADMIN = 'company_admin'; // Company Admin
     case PENYELIA = 'penyelia'; // Supervisor
     case PEMERIKSA = 'pemeriksa'; // Inspector
     case PELULUS = 'pelulus'; // Approver
@@ -18,6 +19,7 @@ enum UserRole: string
     {
         return match($this) {
             self::PENTADBIRAN => 'Admin Officer (Pentadbiran)',
+            self::COMPANY_ADMIN => 'Admin Company',
             self::PENYELIA => 'Supervisor (Penyelia)',
             self::PEMERIKSA => 'Inspector (Pemeriksa)',
             self::PELULUS => 'Approver (Pelulus)',
@@ -33,6 +35,7 @@ enum UserRole: string
     {
         return match($this) {
             self::PENTADBIRAN => 'Admin Officer',
+            self::COMPANY_ADMIN => 'Company Admin',
             self::PENYELIA => 'Supervisor',
             self::PEMERIKSA => 'Inspector',
             self::PELULUS => 'Approver',
@@ -48,6 +51,7 @@ enum UserRole: string
     {
         return match($this) {
             self::PENTADBIRAN => 'Pentadbiran',
+            self::COMPANY_ADMIN => 'Admin Syarikat',
             self::PENYELIA => 'Penyelia',
             self::PEMERIKSA => 'Pemeriksa',
             self::PELULUS => 'Pelulus',
@@ -123,6 +127,7 @@ enum UserRole: string
     {
         return match($this) {
             self::PENTADBIRAN => 'Manages KEW.PA-10 forms, administrative tasks, and form verification',
+            self::COMPANY_ADMIN => 'Manages company sites and site admins, and monitors business analytics',
             self::PEMERIKSA => 'Conducts inspections, creates inspection reports, and documents findings',
             self::PENYELIA => 'Approves/rejects inspections and completion reports, oversees work quality',
             self::JURUTEKNIK => 'Performs repairs, creates completion reports, and documents work performed',

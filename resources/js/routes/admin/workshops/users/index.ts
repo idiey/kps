@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::index
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:25
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:26
  * @route '/admin/workshops/{workshop}/users'
  */
 export const index = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::index
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:25
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:26
  * @route '/admin/workshops/{workshop}/users'
  */
 index.url = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ index.url = (args: { workshop: string | { id: string } } | [workshop: string | {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::index
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:25
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:26
  * @route '/admin/workshops/{workshop}/users'
  */
 index.get = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -58,7 +58,7 @@ index.get = (args: { workshop: string | { id: string } } | [workshop: string | {
 })
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::index
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:25
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:26
  * @route '/admin/workshops/{workshop}/users'
  */
 index.head = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -68,7 +68,7 @@ index.head = (args: { workshop: string | { id: string } } | [workshop: string | 
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::index
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:25
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:26
  * @route '/admin/workshops/{workshop}/users'
  */
     const indexForm = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -78,7 +78,7 @@ index.head = (args: { workshop: string | { id: string } } | [workshop: string | 
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::index
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:25
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:26
  * @route '/admin/workshops/{workshop}/users'
  */
         indexForm.get = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -87,7 +87,7 @@ index.head = (args: { workshop: string | { id: string } } | [workshop: string | 
         })
             /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::index
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:25
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:26
  * @route '/admin/workshops/{workshop}/users'
  */
         indexForm.head = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -103,7 +103,7 @@ index.head = (args: { workshop: string | { id: string } } | [workshop: string | 
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::store
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:67
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:77
  * @route '/admin/workshops/{workshop}/users'
  */
 export const store = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -118,7 +118,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::store
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:67
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:77
  * @route '/admin/workshops/{workshop}/users'
  */
 store.url = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -151,7 +151,7 @@ store.url = (args: { workshop: string | { id: string } } | [workshop: string | {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::store
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:67
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:77
  * @route '/admin/workshops/{workshop}/users'
  */
 store.post = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -161,7 +161,7 @@ store.post = (args: { workshop: string | { id: string } } | [workshop: string | 
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::store
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:67
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:77
  * @route '/admin/workshops/{workshop}/users'
  */
     const storeForm = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -171,7 +171,7 @@ store.post = (args: { workshop: string | { id: string } } | [workshop: string | 
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::store
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:67
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:77
  * @route '/admin/workshops/{workshop}/users'
  */
         storeForm.post = (args: { workshop: string | { id: string } } | [workshop: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -182,7 +182,7 @@ store.post = (args: { workshop: string | { id: string } } | [workshop: string | 
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::update
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:80
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:105
  * @route '/admin/workshops/{workshop}/users/{user}'
  */
 export const update = (args: { workshop: string | { id: string }, user: number | { id: number } } | [workshop: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -197,7 +197,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::update
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:80
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:105
  * @route '/admin/workshops/{workshop}/users/{user}'
  */
 update.url = (args: { workshop: string | { id: string }, user: number | { id: number } } | [workshop: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -227,7 +227,7 @@ update.url = (args: { workshop: string | { id: string }, user: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::update
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:80
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:105
  * @route '/admin/workshops/{workshop}/users/{user}'
  */
 update.patch = (args: { workshop: string | { id: string }, user: number | { id: number } } | [workshop: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -237,7 +237,7 @@ update.patch = (args: { workshop: string | { id: string }, user: number | { id: 
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::update
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:80
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:105
  * @route '/admin/workshops/{workshop}/users/{user}'
  */
     const updateForm = (args: { workshop: string | { id: string }, user: number | { id: number } } | [workshop: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -252,7 +252,7 @@ update.patch = (args: { workshop: string | { id: string }, user: number | { id: 
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::update
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:80
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:105
  * @route '/admin/workshops/{workshop}/users/{user}'
  */
         updateForm.patch = (args: { workshop: string | { id: string }, user: number | { id: number } } | [workshop: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -268,7 +268,7 @@ update.patch = (args: { workshop: string | { id: string }, user: number | { id: 
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::destroy
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:98
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:123
  * @route '/admin/workshops/{workshop}/users/{user}'
  */
 export const destroy = (args: { workshop: string | { id: string }, user: number | { id: number } } | [workshop: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -283,7 +283,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::destroy
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:98
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:123
  * @route '/admin/workshops/{workshop}/users/{user}'
  */
 destroy.url = (args: { workshop: string | { id: string }, user: number | { id: number } } | [workshop: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -313,7 +313,7 @@ destroy.url = (args: { workshop: string | { id: string }, user: number | { id: n
 
 /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::destroy
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:98
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:123
  * @route '/admin/workshops/{workshop}/users/{user}'
  */
 destroy.delete = (args: { workshop: string | { id: string }, user: number | { id: number } } | [workshop: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -323,7 +323,7 @@ destroy.delete = (args: { workshop: string | { id: string }, user: number | { id
 
     /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::destroy
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:98
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:123
  * @route '/admin/workshops/{workshop}/users/{user}'
  */
     const destroyForm = (args: { workshop: string | { id: string }, user: number | { id: number } } | [workshop: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -338,7 +338,7 @@ destroy.delete = (args: { workshop: string | { id: string }, user: number | { id
 
             /**
 * @see \App\Http\Controllers\Admin\WorkshopUserController::destroy
- * @see app/Http/Controllers/Admin/WorkshopUserController.php:98
+ * @see app/Http/Controllers/Admin/WorkshopUserController.php:123
  * @route '/admin/workshops/{workshop}/users/{user}'
  */
         destroyForm.delete = (args: { workshop: string | { id: string }, user: number | { id: number } } | [workshop: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

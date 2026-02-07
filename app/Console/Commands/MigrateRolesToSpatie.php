@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Role;
 
 class MigrateRolesToSpatie extends Command
@@ -65,6 +66,13 @@ class MigrateRolesToSpatie extends Command
                 'is_active' => true,
             ],
             [
+                'name' => UserRole::COMPANY_ADMIN->value,
+                'description' => 'Company Admin - Manages company sites and site admins, and monitors analytics',
+                'color' => 'teal',
+                'is_system_role' => true,
+                'is_active' => true,
+            ],
+            [
                 'name' => UserRole::PENYELIA->value,
                 'description' => 'Supervisor - Reviews and approves inspection and completion reports',
                 'color' => 'blue',
@@ -109,6 +117,11 @@ class MigrateRolesToSpatie extends Command
      */
     protected function assignRolesToUsers(): void
     {
+        if (!Schema::hasColumn('users', 'role')) {
+            $this->warn('users.role column not found; skipping legacy role migration.');
+            return;
+        }
+
         $users = User::all();
         $bar = $this->output->createProgressBar($users->count());
         $bar->start();
@@ -121,15 +134,15 @@ class MigrateRolesToSpatie extends Command
 
         foreach ($users as $user) {
             try {
-                // Skip if user doesn't have a role enum value
+                // Skip if user doesn't have a role value
                 if (!$user->role) {
                     $stats['skipped']++;
                     $bar->advance();
                     continue;
                 }
 
-                // Get the role name from enum
-                $roleName = $user->role->value;
+                // Get the role name from enum or string
+                $roleName = $user->role instanceof UserRole ? $user->role->value : $user->role;
 
                 // Check if role exists in Spatie
                 $role = Role::where('name', $roleName)->first();

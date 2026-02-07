@@ -164,7 +164,7 @@ class JobController extends Controller
 
         // Check if user can approve KEW inspections
         $canApprove = $job->job_mode === 'KEW_PA_10' 
-            && auth()->user()?->hasRole(['supervisor', 'admin', 'pentadbir']);
+            && auth()->user()?->hasAnyRole(['penyelia', 'pentadbiran', 'pelulus']);
 
         return Inertia::render('Jobs/Show', [
             'job' => $job,

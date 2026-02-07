@@ -10,7 +10,6 @@ use App\Models\JobStatusHistory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Enums\JobStatus;
-use App\Enums\UserRole;
 
 class ProductionSeeder extends Seeder
 {
@@ -27,7 +26,6 @@ class ProductionSeeder extends Seeder
             [
                 'name' => 'Ahmad Admin',
                 'password' => Hash::make('password'),
-                'role' => UserRole::PENTADBIRAN,
             ]
         );
         if (!$admin->hasRole('pentadbiran')) {
@@ -39,7 +37,6 @@ class ProductionSeeder extends Seeder
             [
                 'name' => 'Razak Supervisor',
                 'password' => Hash::make('password'),
-                'role' => UserRole::PENYELIA,
             ]
         );
         
@@ -54,7 +51,6 @@ class ProductionSeeder extends Seeder
             [
                 'name' => 'Siti Inspector',
                 'password' => Hash::make('password'),
-                'role' => UserRole::PEMERIKSA,
             ]
         );
         
@@ -67,7 +63,6 @@ class ProductionSeeder extends Seeder
             [
                 'name' => 'Ali Technician',
                 'password' => Hash::make('password'),
-                'role' => UserRole::JURUTEKNIK,
             ]
         );
         
@@ -80,7 +75,6 @@ class ProductionSeeder extends Seeder
             [
                 'name' => 'Zarina Frontdesk',
                 'password' => Hash::make('password'),
-                'role' => UserRole::KAUNTER,
             ]
         );
         
@@ -152,7 +146,6 @@ class ProductionSeeder extends Seeder
                 [
                     'name' => 'Badrul VOCM Admin',
                     'password' => Hash::make('password'),
-                    'role' => UserRole::PENTADBIRAN,
                     'company_id' => $vocm->id,
                 ]
             );
@@ -172,7 +165,7 @@ class ProductionSeeder extends Seeder
             [
                 'name' => 'Sara Site Admin',
                 'password' => Hash::make('password'),
-                'role' => UserRole::PENYELIA, // Site admins have supervisor-level base permissions
+                // Site admins have supervisor-level base permissions
             ]
         );
         if (!$siteAdmin->hasRole('penyelia')) {

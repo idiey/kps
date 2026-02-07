@@ -21,17 +21,25 @@ class WorkshopController extends Controller
         $this->middleware('auth');
         // Only require pentadbiran role for create, edit, update, delete routes
         // View routes (index, show) use policy-based authorization
-        $this->middleware('role:pentadbiran')->except(['index', 'show']);
+        $this->middleware('role:pentadbiran|company_admin')->except(['index', 'show']);
     }
 
     /**
      * Display a listing of workshops.
      */
-    public function index(Request $request): Response
+    public function index(Request $request): Response|RedirectResponse
     {
         Gate::authorize('viewAny', Workshop::class);
 
         $user = $request->user();
+
+        // Site admins should be redirected to their assigned workshop
+        if ($user && $user->isSiteAdminOnly()) {
+            $workshop = $user->getFirstSiteAdminWorkshop();
+            if ($workshop) {
+                return redirect()->route('admin.workshops.show', $workshop->id);
+            }
+        }
         
         $query = Workshop::with('company')
             ->withCount(['jobs', 'customers', 'assignedUsers']);

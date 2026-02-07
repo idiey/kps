@@ -23,7 +23,6 @@ class WorkshopSeeder extends Seeder
             [
                 'name' => 'Ahmad bin Abdullah',
                 'password' => Hash::make('password'),
-                'role' => 'pentadbiran',
                 'phone' => '03-88881234',
                 'department' => 'Pentadbiran',
             ]
@@ -35,7 +34,6 @@ class WorkshopSeeder extends Seeder
             [
                 'name' => 'Siti Nurhaliza',
                 'password' => Hash::make('password'),
-                'role' => 'penyelia',
                 'phone' => '03-88881235',
                 'department' => 'Teknikal',
             ]
@@ -47,7 +45,6 @@ class WorkshopSeeder extends Seeder
             [
                 'name' => 'Mohamed bin Hassan',
                 'password' => Hash::make('password'),
-                'role' => 'juruteknik',
                 'phone' => '03-88881236',
                 'department' => 'Teknikal',
             ]
@@ -59,7 +56,6 @@ class WorkshopSeeder extends Seeder
             [
                 'name' => 'Tan Wei Ming',
                 'password' => Hash::make('password'),
-                'role' => 'juruteknik',
                 'phone' => '03-88881237',
                 'department' => 'Teknikal',
             ]
@@ -71,7 +67,6 @@ class WorkshopSeeder extends Seeder
             [
                 'name' => 'Rajeswari Devi',
                 'password' => Hash::make('password'),
-                'role' => 'pemeriksa',
                 'phone' => '03-88881238',
                 'department' => 'Pemeriksaan',
             ]
@@ -83,7 +78,6 @@ class WorkshopSeeder extends Seeder
             [
                 'name' => 'Dato\' Ibrahim bin Mahmud',
                 'password' => Hash::make('password'),
-                'role' => 'pelulus',
                 'phone' => '03-88881239',
                 'department' => 'Pengurusan',
             ]

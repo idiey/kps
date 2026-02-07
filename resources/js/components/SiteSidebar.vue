@@ -28,6 +28,7 @@ import {
     SidebarMenuItem,
     SidebarGroup,
     SidebarGroupContent,
+    type SidebarProps,
 } from '@/components/ui/sidebar';
 import NavUser from '@/components/NavUser.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -37,9 +38,12 @@ import type { Workshop, SiteRole, NavItem } from '@/types';
 interface Props {
     site: Workshop;
     siteRole?: SiteRole;
+    collapsible?: SidebarProps['collapsible'];
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+    collapsible: 'none',
+});
 const emit = defineEmits<{
     close: [];
 }>();
@@ -128,10 +132,7 @@ const siteBaseUrl = computed(() => `/admin/workshops/${props.site.id}`);
 </script>
 
 <template>
-    <Sidebar 
-        collapsible="none"
-        variant="inset"
-    >
+    <Sidebar :collapsible="props.collapsible" variant="inset">
         <SidebarHeader>
             <SidebarMenu>
                 <SidebarMenuItem>

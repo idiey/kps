@@ -41,12 +41,11 @@ class VerifySeededData extends Command
             $userData[] = [
                 $user->name,
                 $user->email,
-                $user->role,
                 $user->getRoleNames()->implode(', '),
             ];
         }
         $this->table(
-            ['Name', 'Email', 'Legacy Role', 'Spatie Roles'],
+            ['Name', 'Email', 'Spatie Roles'],
             $userData
         );
 

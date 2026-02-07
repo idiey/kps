@@ -38,7 +38,6 @@ export interface User {
     name: string;
     email: string;
     avatar?: string;
-    role: string;
     phone?: string;
     department?: string;
     email_verified_at: string | null;
@@ -69,6 +68,7 @@ export type JobStatus =
 export type JobPriority = 'low' | 'medium' | 'high' | 'urgent';
 export type UserRole =
     | 'pentadbiran'
+    | 'company_admin'
     | 'penyelia'
     | 'pemeriksa'
     | 'pelulus'
@@ -314,4 +314,3 @@ export interface SiteContext {
     isSiteAdmin: boolean;
     isSupervisor: boolean;
 }
-

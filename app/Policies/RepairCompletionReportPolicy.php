@@ -33,7 +33,7 @@ class RepairCompletionReportPolicy
     public function create(User $user): bool
     {
         // Only Technicians (Juruteknik) can create repair completion reports
-        return $this->authorize('create', $user, 'RepairCompletionReport', $user->role->canRepair());
+        return $this->authorize('create', $user, 'RepairCompletionReport', $user->hasRole('juruteknik'));
     }
 
     /**
@@ -43,7 +43,7 @@ class RepairCompletionReportPolicy
     {
         $authorized = false;
         // Technicians can update their own reports only if not yet signed
-        if ($user->role->canRepair() && $report->technician_id === $user->id) {
+        if ($user->hasRole('juruteknik') && $report->technician_id === $user->id) {
             // Cannot update if already signed
             $authorized = !$report->isSigned();
         }
@@ -58,7 +58,7 @@ class RepairCompletionReportPolicy
     {
         $authorized = false;
         // Technicians can add parts to their own reports only if not yet signed
-        if ($user->role->canRepair() && $report->technician_id === $user->id) {
+        if ($user->hasRole('juruteknik') && $report->technician_id === $user->id) {
             $authorized = !$report->isSigned();
         }
 
@@ -72,7 +72,7 @@ class RepairCompletionReportPolicy
     {
         $authorized = false;
         // Technicians can sign their own reports only if not yet signed
-        if ($user->role->canRepair() && $report->technician_id === $user->id) {
+        if ($user->hasRole('juruteknik') && $report->technician_id === $user->id) {
             $authorized = !$report->isSigned();
         }
 
@@ -85,7 +85,7 @@ class RepairCompletionReportPolicy
     public function review(User $user, RepairCompletionReport $report): bool
     {
         // Only Supervisors (Penyelia) can review repair completion reports
-        $authorized = $user->role->canSupervise();
+        $authorized = $user->hasRole('penyelia');
         return $this->authorize('review', $user, 'RepairCompletionReport', $authorized, $report);
     }
 
@@ -96,12 +96,12 @@ class RepairCompletionReportPolicy
     {
         $authorized = false;
         // Technicians can delete their own reports only if not yet signed
-        if ($user->role->canRepair() && $report->technician_id === $user->id) {
+        if ($user->hasRole('juruteknik') && $report->technician_id === $user->id) {
             $authorized = !$report->isSigned();
         }
 
         // Admin Officers can delete any repair completion report
-        if ($user->role->canManageKewPA10()) {
+        if ($user->hasRole('pentadbiran')) {
             $authorized = true;
         }
 
@@ -114,7 +114,7 @@ class RepairCompletionReportPolicy
     public function restore(User $user, RepairCompletionReport $report): bool
     {
         // Only Admin Officers can restore repair completion reports
-        $authorized = $user->role->canManageKewPA10();
+        $authorized = $user->hasRole('pentadbiran');
         return $this->authorize('restore', $user, 'RepairCompletionReport', $authorized, $report);
     }
 
@@ -124,7 +124,7 @@ class RepairCompletionReportPolicy
     public function forceDelete(User $user, RepairCompletionReport $report): bool
     {
         // Only Admin Officers can force delete repair completion reports
-        $authorized = $user->role->canManageKewPA10();
+        $authorized = $user->hasRole('pentadbiran');
         return $this->authorize('forceDelete', $user, 'RepairCompletionReport', $authorized, $report);
     }
 }

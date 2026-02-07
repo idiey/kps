@@ -54,15 +54,20 @@ class StrictRoleWorkflowJobDemoSeeder extends Seeder
 
     protected function ensureUser(string $email, string $name, string $role): User
     {
-        return User::firstOrCreate(
+        $user = User::firstOrCreate(
             ['email' => $email],
             [
                 'name' => $name,
                 'password' => Hash::make('password'),
-                'role' => $role,
                 'email_verified_at' => now(),
             ]
         );
+
+        if (!$user->hasRole($role)) {
+            $user->assignRole($role);
+        }
+
+        return $user;
     }
 
     /**
@@ -145,4 +150,3 @@ class StrictRoleWorkflowJobDemoSeeder extends Seeder
         ]);
     }
 }
-

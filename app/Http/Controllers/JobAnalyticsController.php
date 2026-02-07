@@ -179,13 +179,13 @@ class JobAnalyticsController extends Controller
         $completionTimes = JobStatusHistory::select(
             'workshop_jobs.job_number',
             'workshop_jobs.title',
-            DB::raw('MIN(job_status_history.created_at) as start_time'),
-            DB::raw('MAX(job_status_history.created_at) as end_time')
+            DB::raw('MIN(job_status_histories.created_at) as start_time'),
+            DB::raw('MAX(job_status_histories.created_at) as end_time')
         )
-            ->join('workshop_jobs', 'job_status_history.workshop_job_id', '=', 'workshop_jobs.id')
+            ->join('workshop_jobs', 'job_status_histories.workshop_job_id', '=', 'workshop_jobs.id')
             ->where('workshop_jobs.status', 'completed')
             ->whereBetween('workshop_jobs.created_at', [$startDate, $endDate])
-            ->where('job_status_history.new_status', '!=', 'cancelled')
+            ->where('job_status_histories.to_status', '!=', 'cancelled')
             ->groupBy('workshop_jobs.id', 'workshop_jobs.job_number', 'workshop_jobs.title')
             ->get()
             ->map(function ($job) {

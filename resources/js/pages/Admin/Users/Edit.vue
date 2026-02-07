@@ -54,6 +54,7 @@ const submit = () => {
 const getRoleDisplayName = (roleName: string) => {
     const roleMap: Record<string, string> = {
         pentadbiran: 'Pentadbiran',
+        company_admin: 'Admin Company',
         penyelia: 'Penyelia',
         pemeriksa: 'Pemeriksa',
         pelulus: 'Pelulus',

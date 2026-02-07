@@ -9,6 +9,7 @@ use App\Models\Workshop;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -26,7 +27,7 @@ class WorkshopUserController extends Controller
     {
         Gate::authorize('manageUsers', $workshop);
 
-        $workshop->load(['assignedUsers', 'company']);
+        $workshop->load(['company']);
 
         // Get available users for assignment (HQ users or unassigned users)
         $availableUsers = User::query()
@@ -36,11 +37,20 @@ class WorkshopUserController extends Controller
                     $query->where('company_id', $workshop->company_id);
                 }
             })
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'company_admin');
+            })
             ->whereDoesntHave('assignedWorkshops', function ($query) use ($workshop) {
                 $query->where('workshop_id', $workshop->id);
             })
             ->orderBy('name')
-            ->get(['id', 'name', 'email', 'role']);
+            ->get(['id', 'name', 'email']);
+
+        $assignedUsers = $workshop->assignedUsers()
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'company_admin');
+            })
+            ->get();
 
         // Get the current user's role at this site
         $user = $request->user();
@@ -53,7 +63,7 @@ class WorkshopUserController extends Controller
 
         return Inertia::render('Admin/Workshops/Users/Index', [
             'workshop' => $workshop,
-            'assignedUsers' => $workshop->assignedUsers,
+            'assignedUsers' => $assignedUsers,
             'availableUsers' => $availableUsers,
             // Site context for dual sidebar
             'site' => $workshop,
@@ -66,10 +76,25 @@ class WorkshopUserController extends Controller
      */
     public function store(AssignWorkshopUserRequest $request, Workshop $workshop): RedirectResponse
     {
-        $workshop->assignUser(
-            $request->validated('user_id'),
-            $request->validated('role')
-        );
+        $userId = $request->validated('user_id');
+
+        if (!$userId) {
+            $data = $request->validated('new_user');
+            $actor = $request->user();
+            $roleName = $data['role'] ?? 'penyelia';
+
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'active' => true,
+                'company_id' => $workshop->company_id ?? $actor->company_id,
+            ]);
+            $user->assignRole($roleName);
+            $userId = $user->id;
+        }
+
+        $workshop->assignUser($userId, $request->validated('role'));
 
         return back()->with('success', 'User assigned to workshop successfully.');
     }
@@ -82,7 +107,7 @@ class WorkshopUserController extends Controller
         Gate::authorize('manageUsers', $workshop);
 
         $validated = $request->validate([
-            'role' => 'required|string|in:supervisor,technician,staff',
+            'role' => 'required|string|in:site_admin,supervisor,technician,staff',
         ]);
 
         $workshop->assignedUsers()->updateExistingPivot($user->id, [

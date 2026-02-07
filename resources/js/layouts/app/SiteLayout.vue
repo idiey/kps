@@ -26,9 +26,15 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const page = usePage();
-const isCompanyAdmin = computed(() => page.props.auth?.isCompanyAdmin ?? false);
+const roles = computed(() => (page.props.auth as any)?.roles ?? []);
+const isCompanyAdmin = computed(() =>
+    roles.value.includes('pentadbiran') || roles.value.includes('company_admin'),
+);
 const isSiteAdmin = computed(() => props.siteRole === 'site_admin');
-const showMainSidebar = computed(() => isCompanyAdmin.value && !isSiteAdmin.value);
+const showMainSidebar = computed(() => isCompanyAdmin.value);
+const siteSidebarCollapsible = computed(() =>
+    showMainSidebar.value ? 'none' : 'icon',
+);
 const siteDashboardUrl = computed(() => `/admin/workshops/${props.site.id}`);
 const normalizedBreadcrumbs = computed(() => {
     if (!props.breadcrumbs || props.breadcrumbs.length === 0) {
@@ -63,12 +69,16 @@ function handleCloseSite() {
         <SiteSidebar 
             :site="site" 
             :site-role="siteRole"
+            :collapsible="siteSidebarCollapsible"
             @close="handleCloseSite"
         />
         
         <!-- Main Content Area -->
         <AppContent variant="sidebar" class="overflow-x-hidden">
-            <AppSidebarHeader :breadcrumbs="normalizedBreadcrumbs" :show-sidebar-trigger="showMainSidebar" />
+            <AppSidebarHeader
+                :breadcrumbs="normalizedBreadcrumbs"
+                :show-sidebar-trigger="showMainSidebar || siteSidebarCollapsible !== 'none'"
+            />
             <slot />
         </AppContent>
     </AppShell>

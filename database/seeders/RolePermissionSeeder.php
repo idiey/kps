@@ -18,6 +18,9 @@ class RolePermissionSeeder extends Seeder
 
         // Create permissions
         $permissions = [
+            // Admin access (sidebar/navigation)
+            'admin.access',
+
             // Workshop Job permissions
             'view-jobs',
             'create-jobs',
@@ -95,6 +98,27 @@ class RolePermissionSeeder extends Seeder
         // Admin - Full access
         $admin = Role::firstOrCreate(['name' => 'pentadbiran']);
         $admin->givePermissionTo(Permission::all());
+
+        // Company Admin - Site management + analytics only (no job/customer creation)
+        $companyAdmin = Role::firstOrCreate(['name' => 'company_admin']);
+        $companyAdmin->givePermissionTo([
+            'admin.access',
+            // Admin modules shown in AppSidebar
+            'view-users',
+            'create-users',
+            'edit-users',
+            'view-roles',
+            'view-reports',
+            'generate-reports',
+            'export-reports',
+            'view-assets',
+            'view-inventory',
+            'view-stock-movements',
+            'view-settings',
+            // Analytics module
+            'view-analytics',
+            'export-analytics',
+        ]);
 
         // Supervisor - Can manage jobs and assign work
         $supervisor = Role::firstOrCreate(['name' => 'penyelia']);

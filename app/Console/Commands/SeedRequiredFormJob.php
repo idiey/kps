@@ -25,9 +25,8 @@ class SeedRequiredFormJob extends Command
     {
         $admin = User::firstOrCreate(
             ['email' => 'seed-admin@example.com'],
-            ['name' => 'Seed Admin', 'password' => bcrypt('password'), 'role' => 'pentadbiran']
+            ['name' => 'Seed Admin', 'password' => bcrypt('password')]
         );
-        $admin->forceFill(['role' => 'pentadbiran'])->save();
 
         $adminRole = Role::firstOrCreate(['name' => 'pentadbiran', 'guard_name' => 'web'], ['is_active' => true]);
         $admin->syncRoles([$adminRole->name]);
@@ -141,4 +140,3 @@ class SeedRequiredFormJob extends Command
         return self::SUCCESS;
     }
 }
-

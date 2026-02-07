@@ -34,6 +34,7 @@ const props = defineProps<{
 const getRoleDisplayName = (roleName: string) => {
     const roleMap: Record<string, string> = {
         pentadbiran: 'Pentadbiran',
+        company_admin: 'Admin Company',
         penyelia: 'Penyelia',
         pemeriksa: 'Pemeriksa',
         pelulus: 'Pelulus',
@@ -45,6 +46,7 @@ const getRoleDisplayName = (roleName: string) => {
 const getRoleBadgeVariant = (roleName: string) => {
     const variantMap: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
         pentadbiran: 'destructive',
+        company_admin: 'secondary',
         penyelia: 'default',
         pemeriksa: 'secondary',
         pelulus: 'default',

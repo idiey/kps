@@ -26,7 +26,7 @@ class JobPhotoPolicy
         $authorized = false;
         
         // Admin Officers can view all photos
-        if ($user->role->canManageKewPA10()) {
+        if ($user->hasRole('pentadbiran')) {
             $authorized = true;
         }
         // Public photos can be viewed by anyone
@@ -38,11 +38,11 @@ class JobPhotoPolicy
             $authorized = true;
         }
         // Technicians assigned to the job can view private photos
-        elseif ($user->role->canRepair() && $photo->workshopJob && $photo->workshopJob->assigned_to === $user->id) {
+        elseif ($user->hasRole('juruteknik') && $photo->workshopJob && $photo->workshopJob->assigned_to === $user->id) {
             $authorized = true;
         }
         // Supervisors can view all photos
-        elseif ($user->role->canSupervise()) {
+        elseif ($user->hasRole('penyelia')) {
             $authorized = true;
         }
 
@@ -55,7 +55,7 @@ class JobPhotoPolicy
     public function create(User $user): bool
     {
         // Inspectors and Technicians can create job photos
-        $authorized = $user->role->canInspect() || $user->role->canRepair();
+        $authorized = $user->hasAnyRole(['pemeriksa', 'juruteknik']);
         return $this->authorize('create', $user, 'JobPhoto', $authorized);
     }
 
@@ -66,7 +66,7 @@ class JobPhotoPolicy
     {
         $authorized = false;
         // Admin Officers can update any photo metadata
-        if ($user->role->canManageKewPA10()) {
+        if ($user->hasRole('pentadbiran')) {
             $authorized = true;
         }
         // Users can update their own photos (metadata only)
@@ -84,7 +84,7 @@ class JobPhotoPolicy
     {
         $authorized = false;
         // Admin Officers can change visibility of any photo
-        if ($user->role->canManageKewPA10()) {
+        if ($user->hasRole('pentadbiran')) {
             $authorized = true;
         }
         // Photo owners can change visibility of their own photos
@@ -102,7 +102,7 @@ class JobPhotoPolicy
     {
         $authorized = false;
         // Admin Officers can delete any photo
-        if ($user->role->canManageKewPA10()) {
+        if ($user->hasRole('pentadbiran')) {
             $authorized = true;
         }
         // Users can soft-delete their own photos
@@ -120,7 +120,7 @@ class JobPhotoPolicy
     {
         $authorized = false;
         // Admin Officers can restore any photo
-        if ($user->role->canManageKewPA10()) {
+        if ($user->hasRole('pentadbiran')) {
             $authorized = true;
         }
         // Users can restore their own photos
@@ -137,7 +137,7 @@ class JobPhotoPolicy
     public function forceDelete(User $user, JobPhoto $photo): bool
     {
         // Only Admin Officers can permanently delete photos
-        $authorized = $user->role->canManageKewPA10();
+        $authorized = $user->hasRole('pentadbiran');
         return $this->authorize('forceDelete', $user, 'JobPhoto', $authorized, $photo);
     }
 }

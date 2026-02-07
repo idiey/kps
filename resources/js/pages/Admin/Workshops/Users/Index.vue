@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
 import { ArrowLeft, UserPlus, Trash2 } from 'lucide-vue-next';
 import { ref } from 'vue';
 
@@ -14,7 +15,6 @@ interface User {
     id: number;
     name: string;
     email: string;
-    role: string;
 }
 
 interface AssignedUser extends User {
@@ -42,7 +42,19 @@ const form = useForm({
     role: 'staff',
 });
 
+const createForm = useForm({
+    role: 'site_admin',
+    new_user: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        role: 'penyelia',
+    },
+});
+
 const roleLabels: Record<string, string> = {
+    site_admin: 'Site Admin',
     supervisor: 'Supervisor',
     technician: 'Technician',
     staff: 'Staff',
@@ -53,6 +65,17 @@ const assignUser = () => {
         preserveScroll: true,
         onSuccess: () => {
             form.reset();
+        },
+    });
+};
+
+const createSiteAdmin = () => {
+    createForm.post(`/admin/workshops/${props.workshop.id}/users`, {
+        preserveScroll: true,
+        onSuccess: () => {
+            createForm.reset();
+            createForm.role = 'site_admin';
+            createForm.new_user.role = 'penyelia';
         },
     });
 };
@@ -136,6 +159,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
+                                    <SelectItem value="site_admin">Site Admin</SelectItem>
                                     <SelectItem value="supervisor">Supervisor</SelectItem>
                                     <SelectItem value="technician">Technician</SelectItem>
                                     <SelectItem value="staff">Staff</SelectItem>
@@ -146,6 +170,52 @@ const breadcrumbs: BreadcrumbItem[] = [
                             <UserPlus class="mr-2 h-4 w-4" />
                             Assign
                         </Button>
+                    </form>
+                </CardContent>
+            </Card>
+
+            <!-- Create Site Admin -->
+            <Card>
+                <CardHeader>
+                    <CardTitle>Create Site Admin</CardTitle>
+                    <CardDescription>Create a new user and assign them as site admin for this workshop</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form @submit.prevent="createSiteAdmin" class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Name</label>
+                            <Input v-model="createForm.new_user.name" type="text" />
+                            <p v-if="createForm.errors['new_user.name']" class="text-sm text-destructive mt-1">
+                                {{ createForm.errors['new_user.name'] }}
+                            </p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Email</label>
+                            <Input v-model="createForm.new_user.email" type="email" />
+                            <p v-if="createForm.errors['new_user.email']" class="text-sm text-destructive mt-1">
+                                {{ createForm.errors['new_user.email'] }}
+                            </p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Password</label>
+                            <Input v-model="createForm.new_user.password" type="password" />
+                            <p v-if="createForm.errors['new_user.password']" class="text-sm text-destructive mt-1">
+                                {{ createForm.errors['new_user.password'] }}
+                            </p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Confirm Password</label>
+                            <Input v-model="createForm.new_user.password_confirmation" type="password" />
+                        </div>
+                        <div class="md:col-span-2 flex items-center justify-between">
+                            <div class="text-sm text-muted-foreground">
+                                Role: Site Admin (base role: Penyelia)
+                            </div>
+                            <Button type="submit" :disabled="createForm.processing">
+                                <UserPlus class="mr-2 h-4 w-4" />
+                                Create & Assign
+                            </Button>
+                        </div>
                     </form>
                 </CardContent>
             </Card>
@@ -186,6 +256,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
+                                        <SelectItem value="site_admin">Site Admin</SelectItem>
                                         <SelectItem value="supervisor">Supervisor</SelectItem>
                                         <SelectItem value="technician">Technician</SelectItem>
                                         <SelectItem value="staff">Staff</SelectItem>

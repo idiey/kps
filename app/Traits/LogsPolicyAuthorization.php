@@ -39,7 +39,8 @@ trait LogsPolicyAuthorization
         $logData = [
             'user_id' => $user->id,
             'user_email' => $user->email,
-            'user_role' => $user->role->value ?? null,
+            'user_role' => $user->getRoleNames()->first(),
+            'user_roles' => $user->getRoleNames()->toArray(),
             'action' => $action,
             'resource' => $resource,
             'resource_id' => $model?->id ?? null,

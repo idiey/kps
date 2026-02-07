@@ -3,7 +3,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +23,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
         'phone',
         'department',
         'active',
@@ -54,7 +52,6 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
-            'role' => UserRole::class,
         ];
     }
 
@@ -133,31 +130,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if user has a specific role.
-     */
-    public function hasRole(string|array|\App\Enums\UserRole $role): bool
-    {
-        if (is_array($role)) {
-            foreach ($role as $r) {
-                if ($this->hasRole($r)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        $current = $this->role instanceof \App\Enums\UserRole ? $this->role->value : $this->role;
-        $target = $role instanceof \App\Enums\UserRole ? $role->value : $role;
-        return $current === $target;
-    }
-
-    /**
      * Check if user can assign jobs.
      */
     public function canAssignJobs(): bool
     {
-        $value = $this->role instanceof \App\Enums\UserRole ? $this->role->value : $this->role;
-        return in_array($value, ['pentadbiran', 'penyelia'], true);
+        return $this->hasAnyRole(['pentadbiran', 'penyelia']);
     }
 
     /**
@@ -165,8 +142,7 @@ class User extends Authenticatable
      */
     public function isTechnician(): bool
     {
-        $value = $this->role instanceof \App\Enums\UserRole ? $this->role->value : $this->role;
-        return $value === 'juruteknik';
+        return $this->hasRole('juruteknik');
     }
 
     /**
@@ -180,8 +156,8 @@ class User extends Authenticatable
             return false;
         }
         
-        // If user has company admin role (pentadbiran), they're not site-admin-only
-        if ($this->hasRole('pentadbiran')) {
+        // If user has company admin role, they're not site-admin-only
+        if ($this->hasRole(['pentadbiran', 'company_admin'])) {
             return false;
         }
 

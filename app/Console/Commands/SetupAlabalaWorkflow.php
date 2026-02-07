@@ -166,16 +166,14 @@ class SetupAlabalaWorkflow extends Command
 
         $pentadbirUser = User::firstOrCreate(
             ['email' => 'alabala-pentadbir@example.com'],
-            ['name' => 'Alabala Pentadbir', 'password' => bcrypt('password'), 'role' => 'pentadbiran']
+            ['name' => 'Alabala Pentadbir', 'password' => bcrypt('password')]
         );
-        $pentadbirUser->forceFill(['role' => 'pentadbiran'])->save();
         $pentadbirUser->syncRoles([$pentadbirRole->name]);
 
         $pelulusUser = User::firstOrCreate(
             ['email' => 'alabala-pelulus@example.com'],
-            ['name' => 'Alabala Pelulus', 'password' => bcrypt('password'), 'role' => 'pelulus']
+            ['name' => 'Alabala Pelulus', 'password' => bcrypt('password')]
         );
-        $pelulusUser->forceFill(['role' => 'pelulus'])->save();
         $pelulusUser->syncRoles([$pelulusRole->name]);
 
         $customer = Customer::firstOrCreate(

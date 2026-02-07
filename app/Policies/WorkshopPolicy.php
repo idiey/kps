@@ -95,8 +95,8 @@ class WorkshopPolicy
             return true;
         }
 
-        // HQ users with pentadbiran role can create workshops in their company
-        if ($user->company_id !== null && $user->hasRole('pentadbiran')) {
+        // HQ users with pentadbiran or company_admin role can create workshops in their company
+        if ($user->company_id !== null && $user->hasRole(['pentadbiran', 'company_admin'])) {
             return true;
         }
 
@@ -114,7 +114,7 @@ class WorkshopPolicy
         }
 
         // HQ admins can update workshops from their company
-        if ($this->isHqUser($user, $workshop) && $user->hasRole('pentadbiran')) {
+        if ($this->isHqUser($user, $workshop) && $user->hasRole(['pentadbiran', 'company_admin'])) {
             return true;
         }
 
@@ -137,7 +137,7 @@ class WorkshopPolicy
         }
 
         // HQ admins can delete workshops from their company
-        if ($this->isHqUser($user, $workshop) && $user->hasRole('pentadbiran')) {
+        if ($this->isHqUser($user, $workshop) && $user->hasRole(['pentadbiran', 'company_admin'])) {
             return true;
         }
 
@@ -173,7 +173,7 @@ class WorkshopPolicy
         }
 
         // HQ admins can manage users for their company's workshops
-        if ($this->isHqUser($user, $workshop) && $user->hasRole('pentadbiran')) {
+        if ($this->isHqUser($user, $workshop) && $user->hasRole(['pentadbiran', 'company_admin'])) {
             return true;
         }
 
@@ -227,7 +227,7 @@ class WorkshopPolicy
         // If workshop provided, check site-level access
         if ($workshop) {
             // HQ admins for this company
-            if ($this->isHqUser($user, $workshop) && $user->hasRole('pentadbiran')) {
+            if ($this->isHqUser($user, $workshop) && $user->hasRole(['pentadbiran', 'company_admin'])) {
                 return true;
             }
 
@@ -238,7 +238,6 @@ class WorkshopPolicy
         }
 
         // Pentadbiran role can view analytics generally
-        return $user->hasRole('pentadbiran');
+        return $user->hasRole(['pentadbiran', 'company_admin']);
     }
 }
-

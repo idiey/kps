@@ -55,7 +55,7 @@ class InspectionController extends Controller
         return Inertia::render('Inspections/Index', [
             'inspections' => $inspections,
             'filters' => $request->only(['status', 'inspector_id', 'job_id', 'search']),
-            'inspectors' => User::where('role', 'pemeriksa')->orderBy('name')->get(['id', 'name']),
+            'inspectors' => User::role('pemeriksa')->orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -68,7 +68,7 @@ class InspectionController extends Controller
 
         return Inertia::render('Inspections/Create', [
             'job' => $job->load(['kewPA10', 'asset', 'governmentDepartment']),
-            'inspectors' => User::where('role', 'pemeriksa')->orderBy('name')->get(['id', 'name', 'email']),
+            'inspectors' => User::role('pemeriksa')->orderBy('name')->get(['id', 'name', 'email']),
         ]);
     }
 
