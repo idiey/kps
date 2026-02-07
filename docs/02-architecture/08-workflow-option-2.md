@@ -1,5 +1,7 @@
 # Workflow Option 2: Internal Inspection & KEW.PA-10 Generation
 
+> **Status**: Conceptual. The current codebase uses simplified job modes; mobile app and digital-signature steps are not implemented here.
+
 ## Overview
 
 This workflow handles proactive internal asset inspections that identify maintenance needs

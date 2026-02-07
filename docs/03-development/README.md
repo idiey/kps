@@ -2,52 +2,41 @@
 
 ## Overview
 
-Developer guides, workflows, coding standards, and best practices for contributing to the Workshop Management System.
+Developer workflows, coding standards, and common tasks for the Workshop Management System.
 
-## Table of Contents
+## Quick Start Commands
 
-### Planned Documentation
-
-The following documentation is planned for upcoming sprints:
-
-- **01-developer-guide.md** - Complete developer onboarding and daily development workflow
-- **02-coding-standards.md** - PHP, JavaScript, Vue.js coding standards and conventions
-- **03-testing.md** - Writing and running tests with PHPUnit, Pest, and Vitest
-- **04-git-workflow.md** - Branching strategy, commit conventions, and pull request process
-- **05-api-development.md** - Building RESTful APIs with Laravel and Sanctum authentication
-
-## Quick Links
-
-### Common Development Tasks
-
-**Start development servers:**
+### Start Development Servers
 
 ```bash
-# Terminal 1: Laravel
-php artisan serve
+# Recommended (server + queue + Vite)
+composer run dev
+```
 
-# Terminal 2: Vite (hot reload)
+Or run separately:
+
+```bash
+php artisan serve
 npm run dev
 ```
 
-**Run tests:**
+### Run Tests
 
 ```bash
-# All tests
 php artisan test
-
-# Frontend tests
-npm run test
 ```
 
-**Code quality:**
+### Lint and Format
 
 ```bash
-# PHP
-./vendor/bin/phpstan analyse
-
-# JavaScript
+# JS/TS lint
 npm run lint
+
+# JS/TS format (resources only)
+npm run format
+
+# PHP format
+./vendor/bin/pint
 ```
 
 ## Development Environment
@@ -55,44 +44,64 @@ npm run lint
 ### Required Tools
 
 - PHP 8.2+
-- Composer 2.5+
+- Composer 2.x
 - Node.js 18+
 - MySQL/PostgreSQL
 - Git
-- IDE (VS Code, PHPStorm recommended)
 
-### Recommended VS Code Extensions
+### Frontend Stack
 
-- Laravel Extension Pack
-- Volar (Vue 3)
-- ESLint
-- Prettier
-- Tailwind CSS IntelliSense
+- Vue 3 + Inertia.js (TypeScript)
+- TailwindCSS v4
+- Vite
 
-## Development Workflow
+### Backend Stack
 
-1. Create feature branch
-2. Make changes following coding standards
-3. Write/update tests
-4. Run tests locally
-5. Commit with conventional commits
-6. Push and create pull request
-7. Code review
-8. Merge to main
+- Laravel 12
+- Fortify (auth)
+- Spatie Laravel-Permission (RBAC)
 
-## Getting Help
+## Project Structure (Key Paths)
 
-- Check [Getting Started](../01-getting-started/README.md) for setup issues
-- Review [Architecture](../02-architecture/README.md) for design questions
-- See [Sprint Planning](../04-sprints/README.md) for current tasks
-- Ask in team discussions
+- `routes/web.php` - Web routes (no API routes in this repo)
+- `app/Http/Controllers` - Controllers
+- `app/Services` - Business logic
+- `app/Policies` - Authorization policies
+- `resources/js/pages` - Inertia pages
+- `resources/js/components` - UI components
+
+## Common Tasks
+
+### Create a New Model + Migration
+
+```bash
+php artisan make:model Example -m
+```
+
+### Create a Controller
+
+```bash
+php artisan make:controller ExampleController
+```
+
+### Create a Form Request
+
+```bash
+php artisan make:request StoreExampleRequest
+```
+
+## Git Workflow
+
+- Create feature branches from `main`
+- Use conventional commits
+- Open PRs for review
 
 ## Related Documentation
 
-- [Getting Started](../01-getting-started/README.md) - Setup and installation
-- [Architecture](../02-architecture/README.md) - System design
-- [Sprints](../04-sprints/README.md) - Sprint planning
+- [Getting Started](../01-getting-started/README.md)
+- [Architecture](../02-architecture/README.md)
+- [Testing](../07-testing/README.md)
 
 ---
 
-**Next**: [Developer Guide →](01-developer-guide.md)
+**Last Updated**: 2026-02-07

@@ -38,6 +38,7 @@ export const digitWorkshopTokens = {
 } as const
 
 export const digitWorkshop = {
+  spacing: digitWorkshopTokens.spacing,
   layout: {
     pageWrapper: "min-h-screen bg-[#F8FCFC] text-[#303438]",
     contentContainer: "mx-auto w-full max-w-6xl px-6 py-6 lg:px-8 lg:py-8",

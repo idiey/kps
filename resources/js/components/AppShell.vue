@@ -4,14 +4,17 @@ import Toaster from '@/components/Toaster.vue';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { digitWorkshop } from '@/styles/digit-workshop-ui';
 import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 interface Props {
     variant?: 'header' | 'sidebar';
+    sidebarDefaultOpen?: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const isOpen = usePage().props.sidebarOpen;
+const defaultOpen = computed(() => props.sidebarDefaultOpen ?? isOpen);
 </script>
 
 <template>
@@ -24,7 +27,7 @@ const isOpen = usePage().props.sidebarOpen;
         <Toaster />
         <ConfirmDialog />
     </div>
-    <SidebarProvider v-else :default-open="isOpen" :class="digitWorkshop.layout.pageWrapper">
+    <SidebarProvider v-else :default-open="defaultOpen" :class="digitWorkshop.layout.pageWrapper">
         <slot />
         <Toaster />
         <ConfirmDialog />

@@ -35,6 +35,9 @@ const showMainSidebar = computed(() => isCompanyAdmin.value);
 const siteSidebarCollapsible = computed(() =>
     showMainSidebar.value ? 'none' : 'icon',
 );
+const sidebarDefaultOpen = computed(() =>
+    showMainSidebar.value ? false : undefined,
+);
 const siteDashboardUrl = computed(() => `/admin/workshops/${props.site.id}`);
 const normalizedBreadcrumbs = computed(() => {
     if (!props.breadcrumbs || props.breadcrumbs.length === 0) {
@@ -61,7 +64,7 @@ function handleCloseSite() {
 </script>
 
 <template>
-    <AppShell variant="sidebar">
+    <AppShell variant="sidebar" :sidebar-default-open="sidebarDefaultOpen">
         <!-- Company (Main) Sidebar: hidden for site admins -->
         <AppSidebar v-if="showMainSidebar" variant="sidebar" />
         

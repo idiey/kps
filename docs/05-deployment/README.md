@@ -2,121 +2,38 @@
 
 ## Overview
 
-Deployment procedures, implementation roadmap, CI/CD pipeline, and operational guides for the Workshop Management System.
+Deployment procedures and operational guides for the Workshop Management System.
+
+**Current State**: No automated deployment scripts are included in this repository. The production deployment guide and CI/CD pipeline documentation are planned.
 
 ## Table of Contents
 
 ### Current Documentation
 
-### [1. Implementation Roadmap](01-implementation-roadmap.md)
-
-Complete project timeline, milestones, and release plan.
-
-### [2. Sprint 1 Deployment Guide](../../SPRINT_1_SUMMARY.md)
-
-Sprint 1 Dynamic Workflow System deployment checklist, migration commands, and rollback procedures.
+- [Implementation Roadmap (Legacy)](01-implementation-roadmap.md) - Historical roadmap from the Dolibarr phase
 
 ### Planned Documentation
 
-The following documentation is planned for upcoming sprints:
+- `02-production-deployment.md` - Step-by-step production guide
+- `03-cicd-pipeline.md` - GitHub Actions or CI setup
+- `04-server-setup.md` - Nginx/Apache, PHP-FPM, database
+- `05-monitoring.md` - Monitoring, logging, maintenance
 
-- **02-production-deployment.md** - Step-by-step guide for deploying to production environment
-- **03-cicd-pipeline.md** - Continuous Integration and Deployment setup with GitHub Actions
-- **04-server-setup.md** - Production server configuration, Nginx, PHP-FPM, and database setup
-- **05-monitoring.md** - Application monitoring, logging, and maintenance procedures
+## Baseline Production Steps (General)
 
-## Quick Deploy
-
-### Production Deployment Checklist
-
-- [ ] Environment variables configured
-- [ ] Database migrations tested
-- [ ] Frontend assets built
-- [ ] Tests passing
-- [ ] Security audit completed
-- [ ] Backup strategy in place
-- [ ] Monitoring configured
-- [ ] SSL certificate installed
-
-### Deploy Command
-
-```bash
-# Production deployment
-./deploy.sh production
-```
-
-## Deployment Environments
-
-### Development
-
-- Local development machines
-- Docker containers (optional)
-- Hot reload with Vite
-
-### Staging
-
-- Mirror of production
-- Testing environment
-- Integration testing
-- UAT environment
-
-### Production
-
-- Live application
-- Optimized assets
-- Caching enabled
-- Queue workers running
-- Monitoring active
-
-## Deployment Strategy
-
-### Blue-Green Deployment
-
-- Zero-downtime deployments
-- Quick rollback capability
-- Gradual traffic shifting
-
-### Database Migrations
-
-- Run migrations before deployment
-- Test on staging first
-- Backup before migration
-- Rollback plan ready
-
-## Infrastructure
-
-### Server Requirements
-
-- **Web Server**: Nginx or Apache
-- **PHP**: 8.2+ with FPM
-- **Database**: MySQL 8.0+ or PostgreSQL 14+
-- **Cache**: Redis 7+
-- **Queue**: Redis or Supervisor
-- **SSL**: Let's Encrypt or commercial
-
-### Recommended Resources
-
-- **CPU**: 2+ cores
-- **RAM**: 4GB minimum, 8GB recommended
-- **Storage**: 20GB SSD
-- **Bandwidth**: 100Mbps
-
-## Security
-
-- HTTPS everywhere
-- Firewall configured
-- Regular security updates
-- Database backups
-- Application logging
-- Intrusion detection
+1. Configure `.env` for production
+2. Install dependencies: `composer install --no-dev` and `npm ci`
+3. Build assets: `npm run build`
+4. Run migrations: `php artisan migrate --force`
+5. Cache config/routes/views: `php artisan config:cache`, `php artisan route:cache`, `php artisan view:cache`
+6. Ensure queue workers are running
 
 ## Related Documentation
 
-- [Getting Started](../01-getting-started/README.md) - Setup
-- [Architecture](../02-architecture/README.md) - System design
-- [Development](../03-development/README.md) - Developer guide
-- [Sprints](../04-sprints/README.md) - Project planning
+- [Getting Started](../01-getting-started/README.md)
+- [Architecture](../02-architecture/README.md)
+- [Development](../03-development/README.md)
 
 ---
 
-**Next**: [Implementation Roadmap →](01-implementation-roadmap.md)
+**Last Updated**: 2026-02-07

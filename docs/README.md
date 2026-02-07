@@ -2,14 +2,17 @@
 
 ## Overview
 
-Welcome to the **Workshop Management System** documentation.
-This documentation follows a context-based organization with numbered priority folders,
-making it easy to find information based on what you need to accomplish.
+Welcome to the Workshop Management System documentation.
+This repository documents a multi-tenant Laravel 12 + Vue 3 + Inertia web app for workshop operations,
+including KEW.PA-10 (government) and normal job modes.
 
-This is a versatile multi-tenant workshop platform supporting:
-- **Government Operations**: Full KEW.PA-10 compliance for Malaysian government agencies
-- **Normal Operations**: Walk-in customers, bookings, quotations, and invoicing
-- **Multi-Region Support**: Manage multiple workshops across different regions under one company
+Core capabilities reflected in the codebase:
+- Dual job modes: KEW.PA-10 and Normal
+- Job lifecycle: intake, inspection, approvals, repair, completion
+- Photos, notes, assignments, and status history (audit trail)
+- Multi-tenant companies and workshop sites with role-based access
+- Admin modules: workshops, users, roles, assets, inventory, reports, settings
+- Analytics dashboards and report exports (PDF/Excel/CSV)
 
 ## Documentation Structure
 
@@ -27,10 +30,9 @@ Quick start guides, installation, and initial setup.
 System design, patterns, and architectural decisions.
 
 - Technical architecture
-- Database design
-- Frontend architecture (Vue.js + Inertia.js)
-- Backend architecture (Laravel)
-- Security architecture
+- Database design (simplified ERD)
+- Multi-tenant architecture
+- Simplified job modes
 
 ### [03. Development](03-development/README.md)
 
@@ -40,36 +42,35 @@ Developer guides, workflows, and best practices.
 - Coding standards
 - Git workflow
 - Testing guide
-- API development
+- Frontend conventions
 
 ### [04. Sprints](04-sprints/README.md)
 
-Sprint planning, daily todos, and project management.
+Sprint planning, weekly progress, and project management.
 
+- Weekly progress tracking
 - Sprint planning
-- Sprint 0 daily todos
 - User stories
-- Progress tracking
+- Progress checkpoints
 
 ### [05. Deployment](05-deployment/README.md)
 
 Deployment procedures and operational guides.
 
-- Implementation roadmap
-- Production deployment
-- CI/CD pipeline
-- Monitoring and maintenance
+- Production deployment (planned)
+- CI/CD pipeline (planned)
+- Monitoring and maintenance (planned)
 
 ### [06. User Guide](06-user-guide/README.md)
 
 User guides and role-specific documentation.
 
 - User roles and permissions
-- Admin Officer (Pentadbiran) guide
-- Supervisor (Penyelia) guide
-- Inspector (Pemeriksa) guide
-- Approver (Pelulus) guide
-- Technician (Juruteknik) guide
+- Admin Officer (Pentadbiran) guide (planned)
+- Supervisor (Penyelia) guide (planned)
+- Inspector (Pemeriksa) guide (planned)
+- Approver (Pelulus) guide (planned)
+- Technician (Juruteknik) guide (planned)
 
 ### [07. Testing](07-testing/README.md)
 
@@ -100,17 +101,17 @@ Project planning documents, daily logs, and sprint management.
 
 New to the project? Start with [Getting Started Guide](01-getting-started/01-quick-start.md).
 
-**For Solution Architects & Teams**: See [Architecture & Capability Overview](ARCHITECTURE_CAPABILITY_OVERVIEW.md) for a comprehensive guide to the system's architecture and scalability.
+**For Solution Architects & Teams**: See [Architecture & Capability Overview](ARCHITECTURE_CAPABILITY_OVERVIEW.md) for a comprehensive guide to the system's architecture and capabilities as implemented in code.
 
-Need to set up development environment? See [Development Setup](01-getting-started/02-installation.md).
+Need to set up development environment? See [Installation Guide](01-getting-started/02-installation.md).
 
-Working on a feature? Check [Development Guide](03-development/01-developer-guide.md).
+Working on a feature? Check [Development Guide](03-development/README.md).
 
 ## Finding Information
 
 - **Concepts and Design**: Check [Architecture](02-architecture/README.md) section
-- **Job Workflows**: Check [Workflow Option 1](02-architecture/07-workflow-option-1.md) and [Workflow Option 2](02-architecture/08-workflow-option-2.md)
-- **Database ERD**: Check [Entity Relationship Diagram](02-architecture/erd.md)
+- **Job Workflows**: Check [Simplified Job Modes](02-architecture/16-simplified-job-modes.md)
+- **Database ERD**: Check [Simplified ERD](02-architecture/erd-simplified.md)
 - **User Roles**: Check [User Roles and Permissions](06-user-guide/01-user-roles.md)
 - **How-to Guides**: Check [Development](03-development/README.md) section
 - **Project Planning**: Check [Sprints](04-sprints/README.md) section
@@ -120,11 +121,11 @@ Working on a feature? Check [Development Guide](03-development/01-developer-guid
 
 ## Documentation Standards
 
-This documentation follows the [claude-docs](https://github.com/nasrulhazim/claude-docs) standards:
+This documentation follows the claude-docs standards:
 
 - Context-based organization
-- Numbered priority (01-, 02-, 03-)
-- Progressive detail (overview → specifics)
+- Numbered priority folders (01-, 02-, 03-)
+- Progressive detail (overview -> specifics)
 - Self-documenting (each folder has README.md)
 - Markdown linting with markdownlint
 
@@ -132,10 +133,10 @@ This documentation follows the [claude-docs](https://github.com/nasrulhazim/clau
 
 When adding or updating documentation:
 
-1. Place files in appropriate context folder
+1. Place files in the appropriate context folder
 2. Use numbered prefixes (01-, 02-, 03-)
-3. Follow kebab-case naming (`01-feature-name.md`)
-4. Update context README.md with new entries
+3. Follow kebab-case naming (e.g., `01-feature-name.md`)
+4. Update the context README.md with new entries
 5. Run markdown linter: `markdownlint docs/**/*.md`
 6. Keep documentation synchronized with code changes
 
@@ -144,10 +145,10 @@ When adding or updating documentation:
 - Check existing documentation first
 - Search GitHub Issues
 - Ask in team discussions
-- Create detailed issue if needed
+- Create a detailed issue if needed
 
 ---
 
-**Last Updated**: 2026-02-02
-**Documentation Version**: 3.0
-**Following**: [claude-docs standards](https://github.com/nasrulhazim/claude-docs)
+**Last Updated**: 2026-02-07
+**Documentation Version**: 3.1
+**Following**: claude-docs standards

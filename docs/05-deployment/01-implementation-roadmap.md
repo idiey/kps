@@ -1,5 +1,7 @@
 # Implementation Roadmap
 
+> **Status**: Legacy (Dolibarr module phase). This roadmap does not reflect the current Laravel 12 application.
+
 > **Project**: Workshop Management Module for Dolibarr
 > **Version**: 1.0.0
 > **Timeline**: 60 Days (6 Sprints)

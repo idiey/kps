@@ -1,5 +1,7 @@
 # Entity Relationship Diagram (ERD)
 
+> **Status**: Legacy/extended reference. For the current implementation, see `erd-simplified.md`.
+
 > **Last Updated**: 2026-02-02  
 > **Version**: 2.0.0-rework  
 > **Status**: Multi-Tenant + Full Workshop Features  
