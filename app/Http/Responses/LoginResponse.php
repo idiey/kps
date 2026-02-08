@@ -17,14 +17,13 @@ class LoginResponse implements LoginResponseContract
     {
         $user = $request->user();
 
-        // If user is a site admin only (not global/company admin),
-        // redirect them to their assigned workshop
-        if ($user && $user->isSiteAdminOnly()) {
-            $workshop = $user->getFirstSiteAdminWorkshop();
-            
+        // Non-global admins should land on their first assigned workshop (site context)
+        if ($user && !$user->hasRole('company_admin')) {
+            $workshop = $user->getFirstAssignedWorkshop();
+
             if ($workshop) {
                 $workshopUrl = route('admin.workshops.show', $workshop->id);
-                
+
                 return $request->wantsJson()
                     ? response()->json(['two_factor' => false, 'redirect' => $workshopUrl])
                     : redirect()->to($workshopUrl);

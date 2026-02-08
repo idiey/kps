@@ -5,7 +5,7 @@
  * Secondary sidebar displayed when a site/workshop is selected.
  * Shows site-specific navigation items with permission-based filtering.
  */
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import {
     BarChart3,
     Briefcase,
@@ -48,18 +48,21 @@ const emit = defineEmits<{
     close: [];
 }>();
 
+const page = usePage();
 const { hasPermission } = usePermission();
 
 // Site-specific navigation items
 // Items WITHOUT permission are shown to all users
 const siteNavItems = computed<NavItem[]>(() => {
     const baseUrl = `/admin/workshops/${props.site.id}`;
+    const currentPath = page.url.split(/[?#]/)[0];
     
     const items: NavItem[] = [
         {
             title: 'Dashboard',
             href: baseUrl,
             icon: LayoutGrid,
+            isActive: currentPath === baseUrl,
             // No permission = shown to all
         },
         {

@@ -114,6 +114,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the first workshop this user is assigned to (any role).
+     */
+    public function getFirstAssignedWorkshop(): ?Workshop
+    {
+        return $this->assignedWorkshops()->first();
+    }
+
+    /**
      * Check if user is an HQ-level user (has company_id set).
      */
     public function isHqUser(): bool

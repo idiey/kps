@@ -14,7 +14,7 @@ import {
     SidebarMenuSubButton,
     SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
-import { cn } from '@/lib/utils';
+import { cn, toUrl } from '@/lib/utils';
 import { digitWorkshop } from '@/styles/digit-workshop-ui';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
@@ -39,20 +39,41 @@ const iconPalette = [
     'bg-[#E6F6F7] text-[#1F7E91]',
 ] as const;
 
-const iconChipClass = (index: number) =>
-    cn('flex size-8 items-center justify-center rounded-xl', iconPalette[index % iconPalette.length]);
+const iconChipClass = (item: NavItem, index: number) => {
+    if (item.title === 'Administration') {
+        return cn('flex size-8 items-center justify-center rounded-xl', 'bg-[#EEF2FF] text-[#4F46E5]');
+    }
+    return cn('flex size-8 items-center justify-center rounded-xl', iconPalette[index % iconPalette.length]);
+};
 
 const menuItemClass = (active: boolean) =>
     cn(digitWorkshop.sidebar.sidebarItem, active && digitWorkshop.sidebar.sidebarItemActive);
 
+const normalizeUrl = (url: string) => url.split(/[?#]/)[0];
+
 // Check if URL is active (exact match or prefix match)
-const isActive = (href: string): boolean => {
-    return page.url === href || page.url.startsWith(href + '/');
+const isActive = (item: NavItem): boolean => {
+    if (typeof item.isActive === 'boolean') {
+        return item.isActive;
+    }
+
+    const href = toUrl(item.href);
+    if (!href) {
+        return false;
+    }
+
+    const currentUrl = normalizeUrl(page.url);
+    const targetUrl = normalizeUrl(href);
+    if (item.children && item.children.length > 0) {
+        return currentUrl === targetUrl;
+    }
+
+    return currentUrl === targetUrl || currentUrl.startsWith(targetUrl + '/');
 };
 
 // Check if any child is active
 const isChildActive = (item: NavItem): boolean => {
-    return !!item.children?.some(child => isActive(child.href as string));
+    return !!item.children?.some(child => isActive(child));
 };
 </script>
 
@@ -67,17 +88,17 @@ const isChildActive = (item: NavItem): boolean => {
                 <Collapsible
                     v-if="item.children && item.children.length > 0"
                     as-child
-                    :default-open="isActive(item.href as string) || isChildActive(item)"
+                    :default-open="isActive(item) || isChildActive(item)"
                     class="group/collapsible"
                 >
                     <SidebarMenuItem>
                         <CollapsibleTrigger as-child>
                             <SidebarMenuButton
-                                :is-active="isActive(item.href as string) || isChildActive(item)"
+                                :is-active="isActive(item) || isChildActive(item)"
                                 :tooltip="item.title"
-                                :class="menuItemClass(isActive(item.href as string) || isChildActive(item))"
+                                :class="menuItemClass(isActive(item) || isChildActive(item))"
                             >
-                                <span :class="iconChipClass(index)">
+                                <span :class="iconChipClass(item, index)">
                                     <component :is="item.icon" class="size-4" />
                                 </span>
                                 <span>{{ item.title }}</span>
@@ -89,7 +110,7 @@ const isChildActive = (item: NavItem): boolean => {
                                 <SidebarMenuSubItem v-for="subItem in item.children" :key="subItem.title">
                                     <SidebarMenuSubButton
                                         as-child
-                                        :is-active="isActive(subItem.href as string)"
+                                        :is-active="isActive(subItem)"
                                     >
                                         <Link :href="subItem.href">
                                             <component v-if="subItem.icon" :is="subItem.icon" />
@@ -106,12 +127,12 @@ const isChildActive = (item: NavItem): boolean => {
                 <SidebarMenuItem v-else>
                     <SidebarMenuButton
                         as-child
-                        :is-active="isActive(item.href as string)"
+                        :is-active="isActive(item)"
                         :tooltip="item.title"
-                        :class="menuItemClass(isActive(item.href as string))"
+                        :class="menuItemClass(isActive(item))"
                     >
                         <Link :href="item.href">
-                            <span :class="iconChipClass(index)">
+                            <span :class="iconChipClass(item, index)">
                                 <component :is="item.icon" class="size-4" />
                             </span>
                             <span>{{ item.title }}</span>

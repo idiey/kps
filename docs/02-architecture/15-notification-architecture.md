@@ -1,6 +1,6 @@
 # Push Notification Architecture
 
-> **Status**: Planning  
+> **Status**: Planned (notification delivery not implemented in this repository)  
 > **Last Updated**: 2026-02-02  
 > **Version**: 1.0  
 > **Platform**: Firebase Cloud Messaging (FCM)  

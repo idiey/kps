@@ -16,6 +16,19 @@ Core capabilities reflected in the codebase:
 
 ## Documentation Structure
 
+### [00. Control Center](00-control-center/README.md)
+
+Single source of truth for project memory and AI agent reference.
+
+- Project brief
+- Brain index
+- Current state
+- System map
+- Decision log
+- AI agent brief
+- Intake log
+- Brain protocol
+
 ### [01. Getting Started](01-getting-started/README.md)
 
 Quick start guides, installation, and initial setup.
@@ -97,9 +110,18 @@ Project planning documents, daily logs, and sprint management.
 - Work checkpoints
 - AI artifacts
 
+### [10. Requirements](10-requirement/README.md)
+
+Short requirements and UI behavior notes for later evaluation.
+
+- Requirements log
+- Feature-specific requirement notes
+
 ## Quick Start
 
 New to the project? Start with [Getting Started Guide](01-getting-started/01-quick-start.md).
+
+For AI agents or quick orientation, start with [Control Center](00-control-center/README.md).
 
 **For Solution Architects & Teams**: See [Architecture & Capability Overview](ARCHITECTURE_CAPABILITY_OVERVIEW.md) for a comprehensive guide to the system's architecture and capabilities as implemented in code.
 
@@ -109,6 +131,7 @@ Working on a feature? Check [Development Guide](03-development/README.md).
 
 ## Finding Information
 
+- **Project Memory**: Check [Control Center](00-control-center/README.md)
 - **Concepts and Design**: Check [Architecture](02-architecture/README.md) section
 - **Job Workflows**: Check [Simplified Job Modes](02-architecture/16-simplified-job-modes.md)
 - **Database ERD**: Check [Simplified ERD](02-architecture/erd-simplified.md)
@@ -137,8 +160,9 @@ When adding or updating documentation:
 2. Use numbered prefixes (01-, 02-, 03-)
 3. Follow kebab-case naming (e.g., `01-feature-name.md`)
 4. Update the context README.md with new entries
-5. Run markdown linter: `markdownlint docs/**/*.md`
-6. Keep documentation synchronized with code changes
+5. Update the control center if scope or architecture changes
+6. Run markdown linter: `markdownlint docs/**/*.md`
+7. Keep documentation synchronized with code changes
 
 ## Need Help?
 
@@ -149,6 +173,6 @@ When adding or updating documentation:
 
 ---
 
-**Last Updated**: 2026-02-07
+**Last Updated**: 2026-02-08
 **Documentation Version**: 3.1
 **Following**: claude-docs standards

@@ -9,6 +9,7 @@ import { computed } from 'vue';
 interface Props {
     variant?: 'header' | 'sidebar';
     sidebarDefaultOpen?: boolean;
+    sidebarOpen?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -27,7 +28,12 @@ const defaultOpen = computed(() => props.sidebarDefaultOpen ?? isOpen);
         <Toaster />
         <ConfirmDialog />
     </div>
-    <SidebarProvider v-else :default-open="defaultOpen" :class="digitWorkshop.layout.pageWrapper">
+    <SidebarProvider
+        v-else
+        :default-open="defaultOpen"
+        :open="props.sidebarOpen"
+        :class="digitWorkshop.layout.pageWrapper"
+    >
         <slot />
         <Toaster />
         <ConfirmDialog />

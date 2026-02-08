@@ -146,7 +146,8 @@ class ProductionSeeder extends Seeder
                 [
                     'name' => 'Badrul VOCM Admin',
                     'password' => Hash::make('password'),
-                    'company_id' => $vocm->id,
+                    // Global admin: company_id must be null
+                    'company_id' => null,
                 ]
             );
             if (!$vocmAdmin->hasRole('pentadbiran')) {

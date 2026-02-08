@@ -1,7 +1,7 @@
 # Mobile Application: Product Requirements Document
 
 > **Version**: 1.0  
-> **Status**: Planning  
+> **Status**: Planned (not implemented in this repository)  
 > **Last Updated**: 2026-02-02  
 > **Platform**: React Native + Expo  
 > **Target**: iOS 14+ and Android 8.0+ (API 26+)

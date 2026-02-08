@@ -1,5 +1,7 @@
 # Progressive Web App (PWA) Requirement
 
+> **Status**: Planned. PWA functionality is not implemented in this repository.
+
 ## Overview
 
 The Workshop management System includes a Progressive Web App (PWA) to provide mobile-first experiences for field technicians and workshop staff who need to access the system on mobile devices.

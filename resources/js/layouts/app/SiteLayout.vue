@@ -3,8 +3,8 @@
  * Site Layout Component
  * 
  * Extended layout for site-scoped pages that includes the secondary site sidebar.
- * - Company admins (pentadbiran): see both main and site sidebars
- * - Site admins/users: see only site sidebar
+ * - Global admins: see both main and site sidebars
+ * - All other users: see only site sidebar
  */
 import AppContent from '@/components/AppContent.vue';
 import AppShell from '@/components/AppShell.vue';
@@ -26,18 +26,21 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const page = usePage();
-const roles = computed(() => (page.props.auth as any)?.roles ?? []);
-const isCompanyAdmin = computed(() =>
-    roles.value.includes('pentadbiran') || roles.value.includes('company_admin'),
+const isGlobalAdmin = computed(() => page.props.auth?.isGlobalAdmin ?? false);
+const showMainSidebar = computed(() => isGlobalAdmin.value);
+const forcedSidebarOpen = computed<boolean | undefined>(() =>
+    isGlobalAdmin.value ? false : undefined,
 );
-const isSiteAdmin = computed(() => props.siteRole === 'site_admin');
-const showMainSidebar = computed(() => isCompanyAdmin.value);
 const siteSidebarCollapsible = computed(() =>
     showMainSidebar.value ? 'none' : 'icon',
 );
-const sidebarDefaultOpen = computed(() =>
-    showMainSidebar.value ? false : undefined,
-);
+const sidebarDefaultOpen = computed(() => {
+    if (!showMainSidebar.value) {
+        return undefined;
+    }
+
+    return isGlobalAdmin.value ? false : undefined;
+});
 const siteDashboardUrl = computed(() => `/admin/workshops/${props.site.id}`);
 const normalizedBreadcrumbs = computed(() => {
     if (!props.breadcrumbs || props.breadcrumbs.length === 0) {
@@ -64,8 +67,12 @@ function handleCloseSite() {
 </script>
 
 <template>
-    <AppShell variant="sidebar" :sidebar-default-open="sidebarDefaultOpen">
-        <!-- Company (Main) Sidebar: hidden for site admins -->
+    <AppShell
+        variant="sidebar"
+        :sidebar-default-open="sidebarDefaultOpen"
+        :sidebar-open="forcedSidebarOpen"
+    >
+        <!-- Main Sidebar: global admin only -->
         <AppSidebar v-if="showMainSidebar" variant="sidebar" />
         
         <!-- Site (Secondary) Sidebar: always shown when accessing a site -->

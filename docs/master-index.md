@@ -3,7 +3,7 @@
 > **Project**: Workshop Management System
 > **Version**: 3.0.0
 > **Tech Stack**: Laravel 12 + Vue.js 3 + Inertia.js
-> **Last Updated**: 2026-02-07
+> **Last Updated**: 2026-02-08
 > **Status**: Week 6 - Integration Testing & UAT
 > **Documentation Standard**: claude-docs
 
@@ -25,6 +25,19 @@ The Workshop Management System is a multi-tenant web application built with Lara
 Start with the main [Documentation README](./README.md) for navigation.
 
 ## Documentation Structure
+
+### [00. Control Center](00-control-center/README.md)
+
+Project memory and AI agent reference.
+
+- [Project Brief](00-control-center/01-project-brief.md)
+- [Brain Index](00-control-center/00-brain-index.md)
+- [Current State](00-control-center/02-current-state.md)
+- [System Map](00-control-center/03-system-map.md)
+- [Decision Log](00-control-center/04-decisions.md)
+- [AI Agent Brief](00-control-center/05-ai-agent-brief.md)
+- [Intake Log](00-control-center/06-intake.md)
+- [Brain Protocol](00-control-center/07-brain-protocol.md)
 
 ### [01. Getting Started](01-getting-started/README.md)
 
@@ -93,15 +106,33 @@ Selling and justifying the system to government workshop clients.
 
 - [Value Evaluation Report](08-business-sales/01-value-evaluation-report.md)
 - [Master Demo Strategy](08-business-sales/02-master-demo-strategy.md)
+- [Landing Page Idea Map](08-business-sales/03-landing-page-idea-map.md)
+
+### [09. Project Planning](09-plan/README.md)
+
+Project planning documents, daily logs, and sprint management.
+
+- Daily achievement logs
+- Sprint planning
+- Work checkpoints
+- AI artifacts
+
+### [10. Requirements](10-requirement/README.md)
+
+Short requirements and UI behavior notes.
+
+- [Requirements Log](10-requirement/requirements-log.md)
+- [Sidebar Requirement](10-requirement/sidebar-requirement.md)
 
 ## Quick Navigation
 
 ### For New Developers
 
-1. [Quick Start](01-getting-started/01-quick-start.md)
-2. [Installation Guide](01-getting-started/02-installation.md)
-3. [Development Guide](03-development/README.md)
-4. [Week 6 Progress](04-sprints/WEEK6-PROGRESS.md)
+1. [Control Center](00-control-center/README.md)
+2. [Quick Start](01-getting-started/01-quick-start.md)
+3. [Installation Guide](01-getting-started/02-installation.md)
+4. [Development Guide](03-development/README.md)
+5. [Week 6 Progress](04-sprints/WEEK6-PROGRESS.md)
 
 ### For Project Managers
 
@@ -198,5 +229,5 @@ chore: update dependencies
 
 ---
 
-**Last Review**: 2026-02-07
+**Last Review**: 2026-02-08
 **Maintained By**: Workshop Management Development Team

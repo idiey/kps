@@ -5,6 +5,9 @@
     "scripts": {
         "build": "vite build",
         "build:ssr": "vite build && vite build --ssr",
+        "control-center:brain": "node scripts/control-center-brain.mjs",
+        "control-center:intake": "node scripts/control-center-intake.mjs",
+        "control-center:route": "node scripts/control-center-route.mjs",
         "dev": "vite",
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",

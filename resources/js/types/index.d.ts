@@ -5,8 +5,11 @@ export interface Auth {
     user: User;
     permissions: string[];
     roles: string[];
+    isGlobalAdmin: boolean;
     isCompanyAdmin: boolean;
+    isSiteAdminOnly: boolean;
     assignedSites: string[];
+    siteAdminWorkshop?: { id: string; name: string; code: string } | null;
 }
 
 export interface BreadcrumbItem {

@@ -1,5 +1,7 @@
 # Workflow Swimlane Diagrams
 
+> **Status**: Conceptual. Diagrams represent target process; current implementation uses simplified job modes.
+
 > **Last Updated**: 2026-01-08
 
 This document provides comprehensive swimlane diagrams illustrating the complete job lifecycle from creation to completion for all workflow types in the Workshop Management System.

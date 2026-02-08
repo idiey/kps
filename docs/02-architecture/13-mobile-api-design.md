@@ -1,6 +1,6 @@
 # Mobile API Design
 
-> **Status**: Planning  
+> **Status**: Planned (not implemented in this repository)  
 > **Last Updated**: 2026-02-02  
 > **Version**: 1.0  
 > **Platform**: React Native + Expo  

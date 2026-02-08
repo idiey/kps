@@ -55,48 +55,18 @@ const allNavItems: NavItem[] = [
         icon: LayoutGrid,
         // No permission = shown to all
     },
-    // {
-    //     title: 'Create Job',
-    //     href: JobController.selectMode().url,
-    //     icon: Briefcase,
-    //     // No permission = shown to all
-    // },
-    // {
-    //     title: 'Inspections',
-    //     href: '/inspections',
-    //     icon: ClipboardCheck,
-    //     // No permission = shown to all
-    // },
-    // {
-    //     title: 'Jobs',
-    //     href: JobController.index().url,
-    //     icon: Briefcase,
-    //     // No permission = shown to all
-    // },
     {
         title: 'Analytics',
         href: '/analytics',
         icon: TrendingUp,
         // No permission = shown to all
+    },    
+    {
+        title: 'Sites',
+        href: '/admin/workshops',
+        icon: Warehouse,
+        // permission: 'admin.access',
     },
-    // {
-    //     title: 'Customers',
-    //     href: CustomerController.index(),
-    //     icon: Users,
-    //     // No permission = shown to all
-    // },
-    // {
-    //     title: 'My Jobs',
-    //     href: DashboardController.myJobs(),
-    //     icon: ListChecks,
-    //     // No permission = shown to all
-    // },
-    // {
-    //     title: 'Workload',
-    //     href: DashboardController.workload(),
-    //     icon: BarChart3,
-    //     // No permission = shown to all
-    // },
     // Administration with nested children - only admin.access permission required
     {
         title: 'Administration',
@@ -109,11 +79,6 @@ const allNavItems: NavItem[] = [
                 href: '/admin/users',
                 icon: Users,
                 // No permission on children = shown if parent is accessible
-            },
-            {
-                title: 'Sites',
-                href: '/admin/workshops',
-                icon: Warehouse,
             },
             {
                 title: 'Role Management',

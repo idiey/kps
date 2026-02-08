@@ -46,6 +46,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user()?->load('roles'),
                 'permissions' => $request->user()?->getAllPermissions()->pluck('name')->toArray() ?? [],
                 'roles' => $request->user()?->getRoleNames()->toArray() ?? [],
+                'isGlobalAdmin' => $request->user()?->hasRole('company_admin') ?? false,
                 'isCompanyAdmin' => $request->user()?->hasRole(['pentadbiran', 'company_admin']),
                 'isSiteAdminOnly' => $request->user()?->isSiteAdminOnly() ?? false,
                 'assignedSites' => $request->user()?->assignedWorkshops()->pluck('workshops.id')->toArray() ?? [],

@@ -16,14 +16,25 @@ withDefaults(defineProps<Props>(), {
 });
 
 const page = usePage();
-const showMainSidebar = computed(() => !(page.props.auth?.isSiteAdminOnly ?? false));
+const isGlobalAdmin = computed(() => page.props.auth?.isGlobalAdmin ?? false);
+const showMainSidebar = computed(() => isGlobalAdmin.value);
+const lockSidebarOpen = computed(() => isGlobalAdmin.value);
+const forcedSidebarOpen = computed<boolean | undefined>(() =>
+    lockSidebarOpen.value ? true : undefined,
+);
+const showSidebarTrigger = computed(
+    () => showMainSidebar.value && !lockSidebarOpen.value,
+);
 </script>
 
 <template>
-    <AppShell variant="sidebar">
+    <AppShell variant="sidebar" :sidebar-open="forcedSidebarOpen">
         <AppSidebar v-if="showMainSidebar" />
         <AppContent variant="sidebar" class="overflow-x-hidden">
-            <AppSidebarHeader :breadcrumbs="breadcrumbs" :show-sidebar-trigger="showMainSidebar" />
+            <AppSidebarHeader
+                :breadcrumbs="breadcrumbs"
+                :show-sidebar-trigger="showSidebarTrigger"
+            />
             <slot />
         </AppContent>
     </AppShell>
