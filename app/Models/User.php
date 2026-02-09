@@ -114,11 +114,29 @@ class User extends Authenticatable
     }
 
     /**
+     * Get KPS sites this user is assigned to.
+     */
+    public function kpsSites()
+    {
+        return $this->belongsToMany(\App\Models\Kps\Site::class, 'kps_site_user')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    /**
      * Get the first workshop this user is assigned to (any role).
      */
     public function getFirstAssignedWorkshop(): ?Workshop
     {
         return $this->assignedWorkshops()->first();
+    }
+
+    /**
+     * Get the first KPS site this user is assigned to.
+     */
+    public function getFirstKpsSite(): ?\App\Models\Kps\Site
+    {
+        return $this->kpsSites()->first();
     }
 
     /**
@@ -183,5 +201,17 @@ class User extends Authenticatable
         return $this->assignedWorkshops()
             ->wherePivot('role', 'site_admin')
             ->first();
+    }
+
+    /**
+     * Check if user is only assigned to KPS sites (no HQ permissions).
+     */
+    public function isKpsSiteOnly(): bool
+    {
+        if ($this->hasRole(['pentadbiran', 'company_admin'])) {
+            return false;
+        }
+
+        return $this->kpsSites()->exists();
     }
 }

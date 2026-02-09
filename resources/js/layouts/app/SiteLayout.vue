@@ -3,7 +3,7 @@
  * Site Layout Component
  * 
  * Extended layout for site-scoped pages that includes the secondary site sidebar.
- * - Global admins: see both main and site sidebars
+ * - Global + company admins: see both main and site sidebars
  * - All other users: see only site sidebar
  */
 import AppContent from '@/components/AppContent.vue';
@@ -27,20 +27,21 @@ const props = withDefaults(defineProps<Props>(), {
 
 const page = usePage();
 const isGlobalAdmin = computed(() => page.props.auth?.isGlobalAdmin ?? false);
-const showMainSidebar = computed(() => isGlobalAdmin.value);
+const isCompanyAdmin = computed(() => page.props.auth?.isCompanyAdmin ?? false);
+const showMainSidebar = computed(() => isCompanyAdmin.value);
+const lockSidebarOpen = computed(() => isGlobalAdmin.value);
 const forcedSidebarOpen = computed<boolean | undefined>(() =>
-    isGlobalAdmin.value ? false : undefined,
+    lockSidebarOpen.value ? true : undefined,
 );
 const siteSidebarCollapsible = computed(() =>
     showMainSidebar.value ? 'none' : 'icon',
 );
-const sidebarDefaultOpen = computed(() => {
-    if (!showMainSidebar.value) {
-        return undefined;
-    }
-
-    return isGlobalAdmin.value ? false : undefined;
-});
+const sidebarDefaultOpen = computed(() =>
+    showMainSidebar.value ? true : undefined,
+);
+const showSidebarTrigger = computed(
+    () => !lockSidebarOpen.value && (showMainSidebar.value || siteSidebarCollapsible.value !== 'none'),
+);
 const siteDashboardUrl = computed(() => `/admin/workshops/${props.site.id}`);
 const normalizedBreadcrumbs = computed(() => {
     if (!props.breadcrumbs || props.breadcrumbs.length === 0) {
@@ -72,7 +73,7 @@ function handleCloseSite() {
         :sidebar-default-open="sidebarDefaultOpen"
         :sidebar-open="forcedSidebarOpen"
     >
-        <!-- Main Sidebar: global admin only -->
+        <!-- Main Sidebar: global/company admins only -->
         <AppSidebar v-if="showMainSidebar" variant="sidebar" />
         
         <!-- Site (Secondary) Sidebar: always shown when accessing a site -->
@@ -87,7 +88,7 @@ function handleCloseSite() {
         <AppContent variant="sidebar" class="overflow-x-hidden">
             <AppSidebarHeader
                 :breadcrumbs="normalizedBreadcrumbs"
-                :show-sidebar-trigger="showMainSidebar || siteSidebarCollapsible !== 'none'"
+                :show-sidebar-trigger="showSidebarTrigger"
             />
             <slot />
         </AppContent>

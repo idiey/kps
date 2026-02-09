@@ -10,6 +10,7 @@ import PhotoController from './PhotoController'
 import RepairCompletionController from './RepairCompletionController'
 import Admin from './Admin'
 import Settings from './Settings'
+import Kps from './Kps'
 const Controllers = {
     DashboardController: Object.assign(DashboardController, DashboardController),
 JobAnalyticsController: Object.assign(JobAnalyticsController, JobAnalyticsController),
@@ -23,6 +24,7 @@ PhotoController: Object.assign(PhotoController, PhotoController),
 RepairCompletionController: Object.assign(RepairCompletionController, RepairCompletionController),
 Admin: Object.assign(Admin, Admin),
 Settings: Object.assign(Settings, Settings),
+Kps: Object.assign(Kps, Kps),
 }
 
 export default Controllers

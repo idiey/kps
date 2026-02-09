@@ -87,6 +87,15 @@ class RolePermissionSeeder extends Seeder
             // System Settings (Admin only)
             'view-settings',
             'edit-settings',
+
+            // KPS permissions
+            'kps.view',
+            'kps.manage_sites',
+            'kps.manage_peneroka',
+            'kps.manage_hutang',
+            'kps.manage_potongan',
+            'kps.view_reports',
+            'kps.approve_month',
         ];
 
         foreach ($permissions as $permission) {
@@ -118,6 +127,11 @@ class RolePermissionSeeder extends Seeder
             // Analytics module
             'view-analytics',
             'export-analytics',
+            // KPS HQ permissions
+            'kps.view',
+            'kps.manage_sites',
+            'kps.view_reports',
+            'kps.approve_month',
         ]);
 
         // Supervisor - Can manage jobs and assign work
@@ -138,6 +152,12 @@ class RolePermissionSeeder extends Seeder
             'view-reports',
             'generate-reports',
             'view-analytics',
+            // KPS site permissions
+            'kps.view',
+            'kps.manage_peneroka',
+            'kps.manage_hutang',
+            'kps.manage_potongan',
+            'kps.view_reports',
         ]);
 
         // Technician - Can work on assigned jobs
@@ -190,6 +210,8 @@ class RolePermissionSeeder extends Seeder
             'edit-customers',
             'view-notes',
             'create-notes',
+            // KPS minimal access
+            'kps.view',
         ]);
 
         $this->command->info('Roles and permissions seeded successfully!');

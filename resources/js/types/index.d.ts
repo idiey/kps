@@ -317,3 +317,71 @@ export interface SiteContext {
     isSiteAdmin: boolean;
     isSupervisor: boolean;
 }
+
+// KPS Types
+
+export type KpsSiteRole = 'site_admin' | 'staff';
+
+export interface KpsSite {
+    id: string;
+    name: string;
+    code: string;
+    address?: string;
+    phone?: string;
+    email?: string;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+    deleted_at?: string | null;
+}
+
+export interface KpsPeneroka {
+    id: string;
+    site_id: string;
+    name: string;
+    ic_number?: string | null;
+    phone?: string | null;
+    address?: string | null;
+    created_at: string;
+    updated_at: string;
+    deleted_at?: string | null;
+}
+
+export interface KpsDebt {
+    id: string;
+    peneroka_id: string;
+    priority: number;
+    balance: number;
+    original_amount: number;
+    due_date?: string | null;
+    description?: string | null;
+    created_at: string;
+    updated_at: string;
+    deleted_at?: string | null;
+    peneroka?: KpsPeneroka;
+}
+
+export interface KpsMonthlyDeduction {
+    id: string;
+    peneroka_id: string;
+    site_id: string;
+    month: string;
+    amount: number;
+    unallocated_amount: number;
+    is_closed: boolean;
+    closed_at?: string | null;
+    created_at: string;
+    updated_at: string;
+    peneroka?: KpsPeneroka;
+    allocations?: KpsDeductionAllocation[];
+}
+
+export interface KpsDeductionAllocation {
+    id: string;
+    monthly_deduction_id: string;
+    debt_id: string;
+    amount: number;
+    created_at: string;
+    updated_at: string;
+    debt?: KpsDebt;
+}
