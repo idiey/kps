@@ -17,20 +17,20 @@ class LoginResponse implements LoginResponseContract
     {
         $user = $request->user();
 
-        // Non-global admins should land on their first assigned workshop (site context)
-        if ($user && !$user->hasRole('company_admin')) {
-            $workshop = $user->getFirstAssignedWorkshop();
+        // Site admins should land on their first assigned KPS site
+        if ($user && $user->hasRole('site_admin')) {
+            $kpsSite = $user->getFirstKpsSite();
 
-            if ($workshop) {
-                $workshopUrl = route('admin.workshops.show', $workshop->id);
+            if ($kpsSite) {
+                $kpsSiteUrl = route('kps.sites.show', $kpsSite->id);
 
                 return $request->wantsJson()
-                    ? response()->json(['two_factor' => false, 'redirect' => $workshopUrl])
-                    : redirect()->to($workshopUrl);
+                    ? response()->json(['two_factor' => false, 'redirect' => $kpsSiteUrl])
+                    : redirect()->to($kpsSiteUrl);
             }
         }
 
-        // Default redirect to dashboard for other users
+        // Default redirect to dashboard for other users (global admins, etc.)
         return $request->wantsJson()
             ? response()->json(['two_factor' => false])
             : redirect()->intended(config('fortify.home'));

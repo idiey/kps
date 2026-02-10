@@ -125,114 +125,85 @@ const autoLogin = (email: string, role: string) => {
             </div>
         </form>
 
-        <!-- Test Accounts Section (Development Only) -->
+        <!-- Seeded Accounts (Development Only) -->
         <div class="mt-6 rounded-lg border border-dashed border-muted-foreground/30 bg-muted/30 p-4">
-            <details class="group">
+            <details class="group" open>
                 <summary class="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
-                    🧪 Test Accounts (Click to login)
+                    🧪 Seeded Accounts (Click to login)
                 </summary>
                 <div class="mt-4 space-y-3 text-xs">
                     <div 
-                        @click="autoLogin('admin@workshop.gov.my', 'Admin')"
+                        @click="autoLogin('global-admin@felda.gov.my', 'Global Admin')"
                         class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
                     >
                         <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">Admin</span>
-                            <span class="rounded-full bg-purple-100 dark:bg-purple-900/30 px-2 py-0.5 text-purple-700 dark:text-purple-300">Pentadbiran</span>
+                            <span class="font-semibold group-hover/item:text-primary transition-colors">Global Admin</span>
+                            <span class="rounded-full bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 text-amber-700 dark:text-amber-300">Pentadbiran</span>
                         </div>
                         <div class="space-y-1 text-muted-foreground">
-                            <div><span class="font-medium">Email:</span> admin@workshop.gov.my</div>
+                            <div><span class="font-medium">Email:</span> global-admin@felda.gov.my</div>
                             <div><span class="font-medium">Password:</span> password</div>
-                            <div class="text-[10px] mt-2 text-muted-foreground/70">Full system access, manage users, workshops, settings</div>
+                            <div class="text-[10px] mt-2 text-muted-foreground/70">Full system access, manage everything</div>
                         </div>
                     </div>
 
                     <div 
-                        @click="autoLogin('vocm-admin@workshop.gov.my', 'HQ Admin')"
+                        @click="autoLogin('hq-admin@felda.gov.my', 'HQ Admin')"
                         class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
                     >
                         <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">HQ Admin</span>
-                            <span class="rounded-full bg-indigo-100 dark:bg-indigo-900/30 px-2 py-0.5 text-indigo-700 dark:text-indigo-300">Pentadbiran (HQ)</span>
+                            <span class="font-semibold group-hover/item:text-primary transition-colors">Ahmad HQ Admin</span>
+                            <span class="rounded-full bg-indigo-100 dark:bg-indigo-900/30 px-2 py-0.5 text-indigo-700 dark:text-indigo-300">Company Admin</span>
                         </div>
                         <div class="space-y-1 text-muted-foreground">
-                            <div><span class="font-medium">Email:</span> vocm-admin@workshop.gov.my</div>
+                            <div><span class="font-medium">Email:</span> hq-admin@felda.gov.my</div>
                             <div><span class="font-medium">Password:</span> password</div>
-                            <div class="text-[10px] mt-2 text-muted-foreground/70">Manage company-wide settings, reports, and workshops</div>
+                            <div class="text-[10px] mt-2 text-muted-foreground/70">Manage all sites, users, reports, and KPS settings</div>
                         </div>
                     </div>
 
                     <div 
-                        @click="autoLogin('siteadmin@workshop.gov.my', 'Site Admin')"
+                        @click="autoLogin('admin-st@felda.gov.my', 'Site Admin ST')"
                         class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
                     >
                         <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">Site Admin</span>
+                            <span class="font-semibold group-hover/item:text-primary transition-colors">Fatimah Site Admin</span>
                             <span class="rounded-full bg-cyan-100 dark:bg-cyan-900/30 px-2 py-0.5 text-cyan-700 dark:text-cyan-300">Penyelia + Site Admin</span>
                         </div>
                         <div class="space-y-1 text-muted-foreground">
-                            <div><span class="font-medium">Email:</span> siteadmin@workshop.gov.my</div>
+                            <div><span class="font-medium">Email:</span> admin-st@felda.gov.my</div>
                             <div><span class="font-medium">Password:</span> password</div>
-                            <div class="text-[10px] mt-2 text-muted-foreground/70">Supervisor permissions + site admin privileges for Bengkel VOCM Petaling Jaya</div>
+                            <div class="text-[10px] mt-2 text-muted-foreground/70">Site admin for FELDA Sungai Tekam — manage peneroka, hutang, potongan</div>
                         </div>
                     </div>
 
                     <div 
-                        @click="autoLogin('supervisor@workshop.gov.my', 'Supervisor')"
+                        @click="autoLogin('admin-jk@felda.gov.my', 'Site Admin JK')"
                         class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
                     >
                         <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">Supervisor</span>
-                            <span class="rounded-full bg-blue-100 dark:bg-blue-900/30 px-2 py-0.5 text-blue-700 dark:text-blue-300">Penyelia</span>
+                            <span class="font-semibold group-hover/item:text-primary transition-colors">Razak Site Admin</span>
+                            <span class="rounded-full bg-cyan-100 dark:bg-cyan-900/30 px-2 py-0.5 text-cyan-700 dark:text-cyan-300">Penyelia + Site Admin</span>
                         </div>
                         <div class="space-y-1 text-muted-foreground">
-                            <div><span class="font-medium">Email:</span> supervisor@workshop.gov.my</div>
+                            <div><span class="font-medium">Email:</span> admin-jk@felda.gov.my</div>
                             <div><span class="font-medium">Password:</span> password</div>
-                            <div class="text-[10px] mt-2 text-muted-foreground/70">Approve KEW.PA-10 inspections, manage jobs</div>
+                            <div class="text-[10px] mt-2 text-muted-foreground/70">Site admin for FELDA Jengka — manage peneroka, hutang, potongan</div>
                         </div>
                     </div>
 
                     <div 
-                        @click="autoLogin('inspector@workshop.gov.my', 'Inspector')"
+                        @click="autoLogin('staff-st@felda.gov.my', 'Site Staff')"
                         class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
                     >
                         <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">Inspector</span>
-                            <span class="rounded-full bg-green-100 dark:bg-green-900/30 px-2 py-0.5 text-green-700 dark:text-green-300">Pemeriksa</span>
-                        </div>
-                        <div class="space-y-1 text-muted-foreground">
-                            <div><span class="font-medium">Email:</span> inspector@workshop.gov.my</div>
-                            <div><span class="font-medium">Password:</span> password</div>
-                        </div>
-                    </div>
-
-                    <div 
-                        @click="autoLogin('technician@workshop.gov.my', 'Technician')"
-                        class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
-                    >
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">Technician</span>
-                            <span class="rounded-full bg-orange-100 dark:bg-orange-900/30 px-2 py-0.5 text-orange-700 dark:text-orange-300">Juruteknik</span>
-                        </div>
-                        <div class="space-y-1 text-muted-foreground">
-                            <div><span class="font-medium">Email:</span> technician@workshop.gov.my</div>
-                            <div><span class="font-medium">Password:</span> password</div>
-                            <div class="text-[10px] mt-2 text-muted-foreground/70">Execute repairs, update job status, view assignments</div>
-                        </div>
-                    </div>
-
-                    <div 
-                        @click="autoLogin('frontdesk@workshop.gov.my', 'Frontdesk')"
-                        class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
-                    >
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">Frontdesk</span>
+                            <span class="font-semibold group-hover/item:text-primary transition-colors">Siti Staff</span>
                             <span class="rounded-full bg-pink-100 dark:bg-pink-900/30 px-2 py-0.5 text-pink-700 dark:text-pink-300">Kaunter</span>
                         </div>
                         <div class="space-y-1 text-muted-foreground">
-                            <div><span class="font-medium">Email:</span> frontdesk@workshop.gov.my</div>
+                            <div><span class="font-medium">Email:</span> staff-st@felda.gov.my</div>
                             <div><span class="font-medium">Password:</span> password</div>
-                            <div class="text-[10px] mt-2 text-muted-foreground/70">Register vehicles, manage customer queue, handle inquiries</div>
+                            <div class="text-[10px] mt-2 text-muted-foreground/70">Front desk staff for FELDA Sungai Tekam — data entry, view KPS</div>
                         </div>
                     </div>
 

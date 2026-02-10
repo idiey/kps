@@ -16,9 +16,9 @@ withDefaults(defineProps<Props>(), {
 });
 
 const page = usePage();
-const isGlobalAdmin = computed(() => page.props.auth?.isGlobalAdmin ?? false);
-const showMainSidebar = computed(() => isGlobalAdmin.value);
-const lockSidebarOpen = computed(() => isGlobalAdmin.value);
+const isCompanyAdmin = computed(() => page.props.auth?.isCompanyAdmin ?? false);
+const showMainSidebar = computed(() => isCompanyAdmin.value);
+const lockSidebarOpen = computed(() => isCompanyAdmin.value);
 const forcedSidebarOpen = computed<boolean | undefined>(() =>
     lockSidebarOpen.value ? true : undefined,
 );

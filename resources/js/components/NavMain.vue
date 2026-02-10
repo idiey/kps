@@ -15,7 +15,6 @@ import {
     SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { cn, toUrl } from '@/lib/utils';
-import { digitWorkshop } from '@/styles/digit-workshop-ui';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { ChevronRight } from 'lucide-vue-next';
@@ -47,7 +46,7 @@ const iconChipClass = (item: NavItem, index: number) => {
 };
 
 const menuItemClass = (active: boolean) =>
-    cn(digitWorkshop.sidebar.sidebarItem, active && digitWorkshop.sidebar.sidebarItemActive);
+    cn('group/menu-item', active && 'bg-sidebar-accent text-sidebar-accent-foreground');
 
 const normalizeUrl = (url: string) => url.split(/[?#]/)[0];
 
@@ -79,7 +78,7 @@ const isChildActive = (item: NavItem): boolean => {
 
 <template>
     <SidebarGroup class="px-2 py-0">
-        <SidebarGroupLabel :class="digitWorkshop.sidebar.sidebarGroupLabel">
+        <SidebarGroupLabel class="mb-2 text-xs font-medium text-sidebar-foreground/70">
             {{ props.label }}
         </SidebarGroupLabel>
         <SidebarMenu>

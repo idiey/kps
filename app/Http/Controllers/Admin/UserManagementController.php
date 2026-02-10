@@ -28,12 +28,6 @@ class UserManagementController extends Controller
     public function index(Request $request)
     {
         $query = User::with('roles');
-        $actor = $request->user();
-
-        // Company admins can only see users in their company
-        if ($actor->company_id) {
-            $query->where('company_id', $actor->company_id);
-        }
 
         // Search by name or email
         if ($request->filled('search')) {
@@ -76,13 +70,7 @@ class UserManagementController extends Controller
      */
     public function create()
     {
-        $actor = request()->user();
         $roles = Role::orderBy('name')->get();
-
-        // Company admins cannot create global admins
-        if ($actor->hasRole('company_admin')) {
-            $roles = $roles->reject(fn ($role) => $role->name === 'pentadbiran');
-        }
 
         return Inertia::render('Admin/Users/Create', [
             'roles' => $roles,
@@ -94,7 +82,6 @@ class UserManagementController extends Controller
      */
     public function store(Request $request)
     {
-        $actor = $request->user();
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -103,7 +90,6 @@ class UserManagementController extends Controller
                 'required',
                 'string',
                 'exists:roles,name',
-                Rule::when($actor->hasRole('company_admin'), Rule::notIn(['pentadbiran'])),
             ],
             'department' => ['nullable', 'string', 'max:255'],
             'active' => ['boolean'],
@@ -115,7 +101,6 @@ class UserManagementController extends Controller
             'password' => Hash::make($validated['password']),
             'department' => $validated['department'] ?? null,
             'active' => $validated['active'] ?? true,
-            'company_id' => $actor->company_id,
         ]);
 
         $user->assignRole($validated['role']);
@@ -130,13 +115,7 @@ class UserManagementController extends Controller
      */
     public function edit(User $user)
     {
-        $actor = request()->user();
-        $this->ensureSameCompany($actor, $user);
-
         $roles = Role::orderBy('name')->get();
-        if ($actor->hasRole('company_admin')) {
-            $roles = $roles->reject(fn ($role) => $role->name === 'pentadbiran');
-        }
 
         return Inertia::render('Admin/Users/Edit', [
             'user' => $user->load('roles'),
@@ -149,9 +128,6 @@ class UserManagementController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $actor = $request->user();
-        $this->ensureSameCompany($actor, $user);
-
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
@@ -160,7 +136,6 @@ class UserManagementController extends Controller
                 'required',
                 'string',
                 'exists:roles,name',
-                Rule::when($actor->hasRole('company_admin'), Rule::notIn(['pentadbiran'])),
             ],
             'department' => ['nullable', 'string', 'max:255'],
             'active' => ['boolean'],
@@ -192,8 +167,6 @@ class UserManagementController extends Controller
      */
     public function destroy(User $user)
     {
-        $this->ensureSameCompany(auth()->user(), $user);
-
         // Prevent deleting yourself
         if ($user->id === auth()->id()) {
             return back()->with('error', 'You cannot delete your own account.');
@@ -211,8 +184,6 @@ class UserManagementController extends Controller
      */
     public function toggleActivation(User $user)
     {
-        $this->ensureSameCompany(auth()->user(), $user);
-
         // Prevent deactivating yourself
         if ($user->id === auth()->id()) {
             return back()->with('error', 'You cannot deactivate your own account.');
@@ -225,12 +196,5 @@ class UserManagementController extends Controller
         $status = $user->active ? 'activated' : 'deactivated';
 
         return back()->with('success', "User {$status} successfully.");
-    }
-
-    private function ensureSameCompany(User $actor, User $target): void
-    {
-        if ($actor->company_id && $target->company_id !== $actor->company_id) {
-            abort(403);
-        }
     }
 }

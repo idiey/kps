@@ -9,13 +9,21 @@ use App\Models\JobPhoto;
 
 use App\Models\RepairCompletionReport;
 use App\Models\WorkshopJob;
+use App\Models\Kps\Debt;
+use App\Models\Kps\MonthlyDeduction;
+use App\Models\Kps\Peneroka;
+use App\Models\Kps\Site as KpsSite;
 use App\Policies\CustomerPolicy;
+use App\Policies\DebtPolicy;
 use App\Policies\InspectionReportPolicy;
 use App\Policies\JobNotePolicy;
 use App\Policies\JobPhotoPolicy;
+use App\Policies\KpsSitePolicy;
+use App\Policies\MonthlyDeductionPolicy;
 
 use App\Policies\RepairCompletionReportPolicy;
 use App\Policies\WorkshopJobPolicy;
+use App\Policies\PenerokaPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -35,6 +43,10 @@ class AppServiceProvider extends ServiceProvider
         RepairCompletionReport::class => RepairCompletionReportPolicy::class,
         JobPhoto::class => JobPhotoPolicy::class,
         \App\Models\Workshop::class => \App\Policies\WorkshopPolicy::class,
+        KpsSite::class => KpsSitePolicy::class,
+        Peneroka::class => PenerokaPolicy::class,
+        Debt::class => DebtPolicy::class,
+        MonthlyDeduction::class => MonthlyDeductionPolicy::class,
     ];
 
     /**

@@ -618,7 +618,7 @@ destroy.delete = (args: { role: number | { id: number } } | [role: number | { id
 /**
 * @see \App\Http\Controllers\Admin\RoleManagementController::permissions
  * @see app/Http/Controllers/Admin/RoleManagementController.php:204
- * @route '/admin/roles-permissions'
+ * @route '/admin/roles-permissions/view'
  */
 export const permissions = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: permissions.url(options),
@@ -627,13 +627,13 @@ export const permissions = (options?: RouteQueryOptions): RouteDefinition<'get'>
 
 permissions.definition = {
     methods: ["get","head"],
-    url: '/admin/roles-permissions',
+    url: '/admin/roles-permissions/view',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Admin\RoleManagementController::permissions
  * @see app/Http/Controllers/Admin/RoleManagementController.php:204
- * @route '/admin/roles-permissions'
+ * @route '/admin/roles-permissions/view'
  */
 permissions.url = (options?: RouteQueryOptions) => {
     return permissions.definition.url + queryParams(options)
@@ -642,7 +642,7 @@ permissions.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Admin\RoleManagementController::permissions
  * @see app/Http/Controllers/Admin/RoleManagementController.php:204
- * @route '/admin/roles-permissions'
+ * @route '/admin/roles-permissions/view'
  */
 permissions.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: permissions.url(options),
@@ -651,7 +651,7 @@ permissions.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\Admin\RoleManagementController::permissions
  * @see app/Http/Controllers/Admin/RoleManagementController.php:204
- * @route '/admin/roles-permissions'
+ * @route '/admin/roles-permissions/view'
  */
 permissions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: permissions.url(options),
@@ -661,7 +661,7 @@ permissions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\Admin\RoleManagementController::permissions
  * @see app/Http/Controllers/Admin/RoleManagementController.php:204
- * @route '/admin/roles-permissions'
+ * @route '/admin/roles-permissions/view'
  */
     const permissionsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: permissions.url(options),
@@ -671,7 +671,7 @@ permissions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Admin\RoleManagementController::permissions
  * @see app/Http/Controllers/Admin/RoleManagementController.php:204
- * @route '/admin/roles-permissions'
+ * @route '/admin/roles-permissions/view'
  */
         permissionsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: permissions.url(options),
@@ -680,7 +680,7 @@ permissions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Admin\RoleManagementController::permissions
  * @see app/Http/Controllers/Admin/RoleManagementController.php:204
- * @route '/admin/roles-permissions'
+ * @route '/admin/roles-permissions/view'
  */
         permissionsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: permissions.url({
@@ -748,523 +748,6 @@ updatePermissionMatrix.post = (options?: RouteQueryOptions): RouteDefinition<'po
         })
     
     updatePermissionMatrix.form = updatePermissionMatrixForm
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::updatePermissions
- * @see app/Http/Controllers/Admin/RoleManagementController.php:188
- * @route '/admin/roles/{role}/permissions'
- */
-export const updatePermissions = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
-    url: updatePermissions.url(args, options),
-    method: 'patch',
-})
-
-updatePermissions.definition = {
-    methods: ["patch"],
-    url: '/admin/roles/{role}/permissions',
-} satisfies RouteDefinition<["patch"]>
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::updatePermissions
- * @see app/Http/Controllers/Admin/RoleManagementController.php:188
- * @route '/admin/roles/{role}/permissions'
- */
-updatePermissions.url = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { role: args }
-    }
-
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { role: args.id }
-        }
-    
-    if (Array.isArray(args)) {
-        args = {
-                    role: args[0],
-                }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-                        role: typeof args.role === 'object'
-                ? args.role.id
-                : args.role,
-                }
-
-    return updatePermissions.definition.url
-            .replace('{role}', parsedArgs.role.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::updatePermissions
- * @see app/Http/Controllers/Admin/RoleManagementController.php:188
- * @route '/admin/roles/{role}/permissions'
- */
-updatePermissions.patch = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
-    url: updatePermissions.url(args, options),
-    method: 'patch',
-})
-
-    /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::updatePermissions
- * @see app/Http/Controllers/Admin/RoleManagementController.php:188
- * @route '/admin/roles/{role}/permissions'
- */
-    const updatePermissionsForm = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: updatePermissions.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'PATCH',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::updatePermissions
- * @see app/Http/Controllers/Admin/RoleManagementController.php:188
- * @route '/admin/roles/{role}/permissions'
- */
-        updatePermissionsForm.patch = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: updatePermissions.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PATCH',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    updatePermissions.form = updatePermissionsForm
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::deactivate
- * @see app/Http/Controllers/Admin/RoleManagementController.php:268
- * @route '/admin/roles/{role}/deactivate'
- */
-export const deactivate = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: deactivate.url(args, options),
-    method: 'post',
-})
-
-deactivate.definition = {
-    methods: ["post"],
-    url: '/admin/roles/{role}/deactivate',
-} satisfies RouteDefinition<["post"]>
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::deactivate
- * @see app/Http/Controllers/Admin/RoleManagementController.php:268
- * @route '/admin/roles/{role}/deactivate'
- */
-deactivate.url = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { role: args }
-    }
-
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { role: args.id }
-        }
-    
-    if (Array.isArray(args)) {
-        args = {
-                    role: args[0],
-                }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-                        role: typeof args.role === 'object'
-                ? args.role.id
-                : args.role,
-                }
-
-    return deactivate.definition.url
-            .replace('{role}', parsedArgs.role.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::deactivate
- * @see app/Http/Controllers/Admin/RoleManagementController.php:268
- * @route '/admin/roles/{role}/deactivate'
- */
-deactivate.post = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: deactivate.url(args, options),
-    method: 'post',
-})
-
-    /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::deactivate
- * @see app/Http/Controllers/Admin/RoleManagementController.php:268
- * @route '/admin/roles/{role}/deactivate'
- */
-    const deactivateForm = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: deactivate.url(args, options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::deactivate
- * @see app/Http/Controllers/Admin/RoleManagementController.php:268
- * @route '/admin/roles/{role}/deactivate'
- */
-        deactivateForm.post = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: deactivate.url(args, options),
-            method: 'post',
-        })
-    
-    deactivate.form = deactivateForm
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::activate
- * @see app/Http/Controllers/Admin/RoleManagementController.php:284
- * @route '/admin/roles/{role}/activate'
- */
-export const activate = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: activate.url(args, options),
-    method: 'post',
-})
-
-activate.definition = {
-    methods: ["post"],
-    url: '/admin/roles/{role}/activate',
-} satisfies RouteDefinition<["post"]>
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::activate
- * @see app/Http/Controllers/Admin/RoleManagementController.php:284
- * @route '/admin/roles/{role}/activate'
- */
-activate.url = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { role: args }
-    }
-
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { role: args.id }
-        }
-    
-    if (Array.isArray(args)) {
-        args = {
-                    role: args[0],
-                }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-                        role: typeof args.role === 'object'
-                ? args.role.id
-                : args.role,
-                }
-
-    return activate.definition.url
-            .replace('{role}', parsedArgs.role.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::activate
- * @see app/Http/Controllers/Admin/RoleManagementController.php:284
- * @route '/admin/roles/{role}/activate'
- */
-activate.post = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: activate.url(args, options),
-    method: 'post',
-})
-
-    /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::activate
- * @see app/Http/Controllers/Admin/RoleManagementController.php:284
- * @route '/admin/roles/{role}/activate'
- */
-    const activateForm = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: activate.url(args, options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::activate
- * @see app/Http/Controllers/Admin/RoleManagementController.php:284
- * @route '/admin/roles/{role}/activate'
- */
-        activateForm.post = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: activate.url(args, options),
-            method: 'post',
-        })
-    
-    activate.form = activateForm
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::getUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:294
- * @route '/admin/roles/{role}/users'
- */
-export const getUsers = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: getUsers.url(args, options),
-    method: 'get',
-})
-
-getUsers.definition = {
-    methods: ["get","head"],
-    url: '/admin/roles/{role}/users',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::getUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:294
- * @route '/admin/roles/{role}/users'
- */
-getUsers.url = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { role: args }
-    }
-
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { role: args.id }
-        }
-    
-    if (Array.isArray(args)) {
-        args = {
-                    role: args[0],
-                }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-                        role: typeof args.role === 'object'
-                ? args.role.id
-                : args.role,
-                }
-
-    return getUsers.definition.url
-            .replace('{role}', parsedArgs.role.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::getUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:294
- * @route '/admin/roles/{role}/users'
- */
-getUsers.get = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: getUsers.url(args, options),
-    method: 'get',
-})
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::getUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:294
- * @route '/admin/roles/{role}/users'
- */
-getUsers.head = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: getUsers.url(args, options),
-    method: 'head',
-})
-
-    /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::getUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:294
- * @route '/admin/roles/{role}/users'
- */
-    const getUsersForm = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: getUsers.url(args, options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::getUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:294
- * @route '/admin/roles/{role}/users'
- */
-        getUsersForm.get = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: getUsers.url(args, options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::getUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:294
- * @route '/admin/roles/{role}/users'
- */
-        getUsersForm.head = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: getUsers.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    getUsers.form = getUsersForm
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::assignUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:308
- * @route '/admin/roles/{role}/users'
- */
-export const assignUsers = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: assignUsers.url(args, options),
-    method: 'post',
-})
-
-assignUsers.definition = {
-    methods: ["post"],
-    url: '/admin/roles/{role}/users',
-} satisfies RouteDefinition<["post"]>
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::assignUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:308
- * @route '/admin/roles/{role}/users'
- */
-assignUsers.url = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { role: args }
-    }
-
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { role: args.id }
-        }
-    
-    if (Array.isArray(args)) {
-        args = {
-                    role: args[0],
-                }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-                        role: typeof args.role === 'object'
-                ? args.role.id
-                : args.role,
-                }
-
-    return assignUsers.definition.url
-            .replace('{role}', parsedArgs.role.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::assignUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:308
- * @route '/admin/roles/{role}/users'
- */
-assignUsers.post = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: assignUsers.url(args, options),
-    method: 'post',
-})
-
-    /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::assignUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:308
- * @route '/admin/roles/{role}/users'
- */
-    const assignUsersForm = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: assignUsers.url(args, options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::assignUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:308
- * @route '/admin/roles/{role}/users'
- */
-        assignUsersForm.post = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: assignUsers.url(args, options),
-            method: 'post',
-        })
-    
-    assignUsers.form = assignUsersForm
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::removeUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:327
- * @route '/admin/roles/{role}/users'
- */
-export const removeUsers = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
-    url: removeUsers.url(args, options),
-    method: 'delete',
-})
-
-removeUsers.definition = {
-    methods: ["delete"],
-    url: '/admin/roles/{role}/users',
-} satisfies RouteDefinition<["delete"]>
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::removeUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:327
- * @route '/admin/roles/{role}/users'
- */
-removeUsers.url = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { role: args }
-    }
-
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { role: args.id }
-        }
-    
-    if (Array.isArray(args)) {
-        args = {
-                    role: args[0],
-                }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-                        role: typeof args.role === 'object'
-                ? args.role.id
-                : args.role,
-                }
-
-    return removeUsers.definition.url
-            .replace('{role}', parsedArgs.role.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Admin\RoleManagementController::removeUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:327
- * @route '/admin/roles/{role}/users'
- */
-removeUsers.delete = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
-    url: removeUsers.url(args, options),
-    method: 'delete',
-})
-
-    /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::removeUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:327
- * @route '/admin/roles/{role}/users'
- */
-    const removeUsersForm = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: removeUsers.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'DELETE',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Admin\RoleManagementController::removeUsers
- * @see app/Http/Controllers/Admin/RoleManagementController.php:327
- * @route '/admin/roles/{role}/users'
- */
-        removeUsersForm.delete = (args: { role: number | { id: number } } | [role: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: removeUsers.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'DELETE',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    removeUsers.form = removeUsersForm
-const RoleManagementController = { index, create, store, show, edit, update, destroy, permissions, updatePermissionMatrix, updatePermissions, deactivate, activate, getUsers, assignUsers, removeUsers }
+const RoleManagementController = { index, create, store, show, edit, update, destroy, permissions, updatePermissionMatrix }
 
 export default RoleManagementController

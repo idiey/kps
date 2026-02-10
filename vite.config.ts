@@ -26,7 +26,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': 'C:/Users/zuraidiismail/RnD/workshop/resources/js',
+            '@': '/resources/js',
         },
     },
     server: {

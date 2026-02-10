@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { SidebarInset } from '@/components/ui/sidebar';
-import { digitWorkshop } from '@/styles/digit-workshop-ui';
 import { cn } from '@/lib/utils';
 import { computed } from 'vue';
 
@@ -13,7 +12,7 @@ const props = defineProps<Props>();
 const className = computed(() =>
     cn(
         props.variant === 'sidebar'
-            ? digitWorkshop.layout.contentContainer
+            ? 'flex min-h-screen w-full flex-col bg-muted/40'
             : 'mx-auto flex h-full w-full max-w-7xl flex-1 flex-col gap-4 rounded-xl',
         props.class,
     ),

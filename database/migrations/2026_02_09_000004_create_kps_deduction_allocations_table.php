@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('deduction_allocations', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->foreignUuid('monthly_deduction_id')->constrained('monthly_deductions')->onDelete('cascade');
+            $table->foreignUuid('debt_id')->constrained('debts')->onDelete('cascade');
+            $table->decimal('amount', 12, 2)->default(0);
+            $table->timestamps();
+
+            $table->index(['monthly_deduction_id', 'debt_id']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('deduction_allocations');
+    }
+};

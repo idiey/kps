@@ -16,24 +16,18 @@ class DatabaseSeeder extends Seeder
         // Seed roles and permissions first
         $this->call(RolePermissionSeeder::class);
 
-        // Site Seeder - Creates default VOCM company and sites
-        $this->call(SiteSeeder::class);
+        // KPS Site Seeder - Creates FELDA sites
+        $this->call(KpsSiteSeeder::class);
 
-        // Production Prep Seeder (Mock Data for Demo)
-        $this->call(ProductionSeeder::class);
+        // KPS Production Seeder - Creates users, penerokas, debts, and deductions
+        $this->call(KpsProductionSeeder::class);
 
-        // NOTE: The following seeders are REMOVED as part of architecture simplification:
-        // - TemplateFieldTypeSeeder (template_field_types table dropped)
-        // - KewPa10WorkflowSeeder (workflows/workflow_statuses tables dropped)
-        // - InternalInspectionWorkflowSeeder (workflows/workflow_statuses tables dropped)
-        // - BackfillWorkflowAllowedRolesSeeder (workflows table dropped)
-        // - BackfillWorkflowTransitionAllowedRolesSeeder (workflow_transitions table dropped)
-        // - StandardJobTemplateSeeder (job_templates table dropped)
-
-        // Seed KEW.PA-10 test data (uses static columns now)
-        // $this->call(KewPA10TestDataSeeder::class); // Replaced by ProductionSeeder
-
-        // Seed workshop data (users, customers, jobs)
-        // $this->call(WorkshopSeeder::class); // Replaced by ProductionSeeder
+        // NOTE: The following seeders are DEPRECATED as part of KPS implementation:
+        // - SiteSeeder (replaced by KpsSiteSeeder)
+        // - ProductionSeeder (replaced by KpsProductionSeeder)
+        // - WorkshopSeeder (workshop-specific, not needed for KPS)
+        // - KewPA10TestDataSeeder (workshop-specific, not needed for KPS)
+        // - All workflow-related seeders (workflows table dropped)
+        // - All template-related seeders (template tables dropped)
     }
 }

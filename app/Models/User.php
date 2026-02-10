@@ -26,7 +26,6 @@ class User extends Authenticatable
         'phone',
         'department',
         'active',
-        'company_id',
     ];
 
     /**
@@ -52,136 +51,37 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+            'active' => 'boolean',
         ];
     }
 
     /**
-     * Get the jobs assigned to this user.
+     * Get KPS sites this user is assigned to.
      */
-    public function assignedJobs()
+    public function kpsSites()
     {
-        return $this->hasMany(WorkshopJob::class, 'assigned_to');
-    }
-
-    /**
-     * Get jobs created/assigned by this user.
-     */
-    public function createdAssignments()
-    {
-        return $this->hasMany(JobAssignment::class, 'assigned_by');
-    }
-
-    /**
-     * Get assignments for this user.
-     */
-    public function receivedAssignments()
-    {
-        return $this->hasMany(JobAssignment::class, 'assigned_to');
-    }
-
-    /**
-     * Get notes created by this user.
-     */
-    public function jobNotes()
-    {
-        return $this->hasMany(JobNote::class);
-    }
-
-    /**
-     * Get status changes made by this user.
-     */
-    public function statusChanges()
-    {
-        return $this->hasMany(JobStatusHistory::class);
-    }
-
-    /**
-     * Get the company (HQ) this user belongs to.
-     */
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
-
-    /**
-     * Get workshops/sites this user is assigned to.
-     */
-    public function assignedWorkshops()
-    {
-        return $this->belongsToMany(Workshop::class, 'workshop_user')
+        return $this->belongsToMany(\App\Models\Kps\Site::class, 'kps_site_user')
             ->withPivot('role')
             ->withTimestamps();
     }
 
     /**
-     * Get the first workshop this user is assigned to (any role).
+     * Get the first KPS site this user is assigned to.
      */
-    public function getFirstAssignedWorkshop(): ?Workshop
+    public function getFirstKpsSite(): ?\App\Models\Kps\Site
     {
-        return $this->assignedWorkshops()->first();
+        return $this->kpsSites()->first();
     }
 
     /**
-     * Check if user is an HQ-level user (has company_id set).
+     * Check if user is only assigned to KPS sites (no HQ permissions).
      */
-    public function isHqUser(): bool
+    public function isKpsSiteOnly(): bool
     {
-        return $this->company_id !== null;
-    }
-
-    /**
-     * Check if user is a global admin (no company restriction).
-     */
-    public function isGlobalAdmin(): bool
-    {
-        return $this->company_id === null && $this->hasRole('pentadbiran');
-    }
-
-    /**
-     * Check if user can assign jobs.
-     */
-    public function canAssignJobs(): bool
-    {
-        return $this->hasAnyRole(['pentadbiran', 'penyelia']);
-    }
-
-    /**
-     * Check if user is a technician.
-     */
-    public function isTechnician(): bool
-    {
-        return $this->hasRole('juruteknik');
-    }
-
-    /**
-     * Check if user is a site admin only (has site_admin pivot role but not a global admin).
-     * These users should be redirected to their assigned site.
-     */
-    public function isSiteAdminOnly(): bool
-    {
-        // If user is a global admin, they're not site-admin-only
-        if ($this->isGlobalAdmin()) {
-            return false;
-        }
-        
-        // If user has company admin role, they're not site-admin-only
         if ($this->hasRole(['pentadbiran', 'company_admin'])) {
             return false;
         }
 
-        // Check if they have at least one workshop with site_admin pivot role
-        return $this->assignedWorkshops()
-            ->wherePivot('role', 'site_admin')
-            ->exists();
-    }
-
-    /**
-     * Get the first workshop where user is a site admin.
-     */
-    public function getFirstSiteAdminWorkshop(): ?Workshop
-    {
-        return $this->assignedWorkshops()
-            ->wherePivot('role', 'site_admin')
-            ->first();
+        return $this->kpsSites()->exists();
     }
 }
