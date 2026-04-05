@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, router, Link } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
+import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Badge } from '@/components/ui/badge';
@@ -45,11 +45,9 @@ const props = defineProps<{
 const getRoleDisplayName = (roleName: string) => {
     const roleMap: Record<string, string> = {
         pentadbiran: 'Pentadbiran',
-        company_admin: 'Admin Company',
-        penyelia: 'Penyelia',
-        pemeriksa: 'Pemeriksa',
-        pelulus: 'Pelulus',
-        juruteknik: 'Juruteknik',
+        company_admin: 'HQ Admin',
+        site_admin: 'Site Admin',
+        staff: 'Site Staff',
     };
     return roleMap[roleName] || roleName;
 };
@@ -64,7 +62,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 <template>
     <Head :title="`Role: ${getRoleDisplayName(role.name)}`" />
 
-    <AppLayout :breadcrumbs="breadcrumbs">
+    <KpsShellLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6">
             <!-- Header -->
             <div class="flex items-center justify-between">
@@ -187,5 +185,5 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </div>
             </div>
         </div>
-    </AppLayout>
+    </KpsShellLayout>
 </template>

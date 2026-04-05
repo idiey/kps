@@ -17,8 +17,8 @@ class LoginResponse implements LoginResponseContract
     {
         $user = $request->user();
 
-        // Site admins should land on their first assigned KPS site
-        if ($user && $user->hasRole('site_admin')) {
+        // Site-scoped users should land on their first assigned KPS site.
+        if ($user && $user->isKpsSiteOnly()) {
             $kpsSite = $user->getFirstKpsSite();
 
             if ($kpsSite) {
@@ -30,7 +30,7 @@ class LoginResponse implements LoginResponseContract
             }
         }
 
-        // Default redirect to dashboard for other users (global admins, etc.)
+        // Default redirect to the main dashboard for HQ users.
         return $request->wantsJson()
             ? response()->json(['two_factor' => false])
             : redirect()->intended(config('fortify.home'));

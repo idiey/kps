@@ -2,6 +2,7 @@
 
 namespace App\Models\Kps;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,13 @@ class MonthlyDeduction extends Model
             'is_closed' => 'boolean',
             'closed_at' => 'datetime',
         ];
+    }
+
+    public function setMonthAttribute($value): void
+    {
+        $this->attributes['month'] = $value
+            ? Carbon::parse($value)->toDateString()
+            : null;
     }
 
     public function peneroka(): BelongsTo

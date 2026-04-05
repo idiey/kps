@@ -13,7 +13,7 @@ withDefaults(
 </script>
 
 <template>
-    <Head title="Workshop Management System">
+    <Head title="KPS">
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -37,16 +37,16 @@ withDefaults(
                         >
                             <img
                                 src="/images/logo.png"
-                                alt="Workshop Management System"
+                                alt="KPS"
                                 class="h-6 w-6"
                             />
                         </div>
                         <div>
                             <p class="text-sm font-semibold text-[#101828]">
-                                Workshop Management System
+                                KPS
                             </p>
                             <p class="text-xs text-[#667085]">
-                                Audit-ready operations
+                                FELDA debt and deduction operations
                             </p>
                         </div>
                     </div>
@@ -64,7 +64,7 @@ withDefaults(
                             >Roles</a
                         >
                         <a href="#pricing" class="hover:text-[#101828]"
-                            >Pricing</a
+                            >Rollout</a
                         >
                         <a href="#faq" class="hover:text-[#101828]">FAQ</a>
                     </nav>
@@ -109,11 +109,11 @@ withDefaults(
                         <h1
                             class="mt-5 text-4xl font-semibold leading-tight text-[#101828] sm:text-5xl lg:text-6xl font-['Inter']"
                         >
-                            Digitize workshop workflows without slowing down
+                            Run multi-site debt allocation without spreadsheet drift
                         </h1>
                         <p class="mt-5 text-lg text-[#475467]">
-                            A bold, audit-ready workshop system that keeps approvals moving,
-                            evidence captured, and compliance intact for every repair.
+                            KPS gives HQ and site teams a structured, auditable way to manage
+                            peneroka, hutang, monthly potongan, and deterministic allocations.
                         </p>
                         <div class="mt-8 flex flex-wrap items-center gap-3">
                             <a
@@ -138,20 +138,20 @@ withDefaults(
                             </Link>
                         </div>
                         <p class="mt-4 text-xs text-[#667085]">
-                            No deployment risk. Audit-ready trails and approvals.
+                            Month closing, site scoping, and audit trails built in.
                         </p>
                         <div class="mt-6 flex flex-wrap gap-2 text-xs font-medium">
                             <span
                                 class="rounded-full border border-[#e4e7ec] bg-white px-3 py-1 text-[#2f6a1f]"
-                                >Audit trail ready</span
+                                >Deterministic allocation</span
                             >
                             <span
                                 class="rounded-full border border-[#e4e7ec] bg-white px-3 py-1 text-[#2f6a1f]"
-                                >Digital signatures</span
+                                >HQ and site scopes</span
                             >
                             <span
                                 class="rounded-full border border-[#e4e7ec] bg-white px-3 py-1 text-[#2f6a1f]"
-                                >Evidence capture</span
+                                >Monthly closing</span
                             >
                         </div>
                     </div>
@@ -173,7 +173,7 @@ withDefaults(
                                     ></span>
                                 </div>
                                 <span class="text-xs text-[#98a2b3]"
-                                    >Workflow overview</span
+                                    >KPS overview</span
                                 >
                             </div>
                             <div class="mt-5 grid gap-4 sm:grid-cols-2">
@@ -181,7 +181,7 @@ withDefaults(
                                     class="rounded-2xl border border-[#e4e7ec] bg-[#f3fbf6] p-4"
                                 >
                                     <p class="text-xs text-[#667085]">
-                                        Approval cycle
+                                        Monthly close time
                                     </p>
                                     <p
                                         class="mt-2 text-2xl font-semibold text-[#101828]"
@@ -196,7 +196,7 @@ withDefaults(
                                     class="rounded-2xl border border-[#e4e7ec] bg-white p-4"
                                 >
                                     <p class="text-xs text-[#667085]">
-                                        Evidence capture
+                                        Allocation coverage
                                     </p>
                                     <div class="mt-3 space-y-2">
                                         <div class="h-2 rounded-full bg-[#f0f8f1]">
@@ -207,7 +207,7 @@ withDefaults(
                                         <p
                                             class="text-xs font-medium text-[#2f6a1f]"
                                         >
-                                            92% documentation rate
+                                            92% of posted deductions allocated
                                         </p>
                                     </div>
                                 </div>
@@ -215,31 +215,31 @@ withDefaults(
                                     class="rounded-2xl border border-[#e4e7ec] bg-white p-4 sm:col-span-2"
                                 >
                                     <p class="text-xs text-[#667085]">
-                                        Active workflow
+                                        Active scope
                                     </p>
                                     <div class="mt-3 grid gap-3 sm:grid-cols-3">
                                         <div class="rounded-xl bg-[#f9fafb] p-3 text-xs">
                                             <p class="font-semibold text-[#2f6a1f]">
-                                                Intake
+                                                Sites
                                             </p>
                                             <p class="text-[#98a2b3]">
-                                                14 forms
+                                                14 active
                                             </p>
                                         </div>
                                         <div class="rounded-xl bg-[#f9fafb] p-3 text-xs">
                                             <p class="font-semibold text-[#2f6a1f]">
-                                                Inspection
+                                                Peneroka
                                             </p>
                                             <p class="text-[#98a2b3]">
-                                                8 assets
+                                                1,280 tracked
                                             </p>
                                         </div>
                                         <div class="rounded-xl bg-[#f9fafb] p-3 text-xs">
                                             <p class="font-semibold text-[#2f6a1f]">
-                                                Approval
+                                                Potongan
                                             </p>
                                             <p class="text-[#98a2b3]">
-                                                5 pending
+                                                April cycle open
                                             </p>
                                         </div>
                                     </div>
@@ -268,33 +268,33 @@ withDefaults(
                                 98%
                             </p>
                             <p class="mt-1 text-xs text-[#98a2b3]">
-                                Evidence completeness
+                                Allocation traceability
                             </p>
                         </div>
                         <div>
                             <p
                                 class="text-xs font-semibold uppercase tracking-[0.2em] text-[#98a2b3]"
                             >
-                                Approval speed
+                                HQ visibility
                             </p>
                             <p class="mt-2 text-2xl font-semibold text-[#101828]">
                                 1.8 days
                             </p>
                             <p class="mt-1 text-xs text-[#98a2b3]">
-                                Average cycle time
+                                Across all active sites
                             </p>
                         </div>
                         <div>
                             <p
                                 class="text-xs font-semibold uppercase tracking-[0.2em] text-[#98a2b3]"
                             >
-                                Roles covered
+                                Operating model
                             </p>
                             <p class="mt-2 text-2xl font-semibold text-[#101828]">
-                                5
+                                2
                             </p>
                             <p class="mt-1 text-xs text-[#98a2b3]">
-                                Admin to technician
+                                HQ and site scopes
                             </p>
                         </div>
                         <div>
@@ -325,11 +325,11 @@ withDefaults(
                             <h2
                                 class="mt-4 text-3xl font-semibold text-[#101828] sm:text-4xl font-['Inter']"
                             >
-                                End-to-end repair lifecycle, tracked and approved
+                                Monthly deductions flow, allocated and reviewable
                             </h2>
                             <p class="mt-4 text-base text-[#475467]">
-                                From intake to inspection to final approval, every step is visible
-                                to supervisors, inspectors, and approvers in one flow.
+                                From debt capture to month closing, every step is visible to HQ
+                                and site teams in one auditable workflow.
                             </p>
                             <div class="mt-6 flex flex-wrap gap-3">
                                 <a
@@ -355,30 +355,30 @@ withDefaults(
                                     class="rounded-2xl border border-[#e4e7ec] bg-[#f9fafb] p-4"
                                 >
                                     <p class="text-xs font-semibold text-[#2f6a1f]">
-                                        Intake
+                                        Potongan entry
                                     </p>
                                     <p class="mt-2 text-sm text-[#475467]">
-                                        New work orders automatically routed
+                                        Single and bulk monthly deduction entry
                                     </p>
                                 </div>
                                 <div
                                     class="rounded-2xl border border-[#e4e7ec] bg-[#f9fafb] p-4"
                                 >
                                     <p class="text-xs font-semibold text-[#2f6a1f]">
-                                        Inspection
+                                        Allocation
                                     </p>
                                     <p class="mt-2 text-sm text-[#475467]">
-                                        Evidence captured with timestamps
+                                        Priority waterfall applied consistently
                                     </p>
                                 </div>
                                 <div
                                     class="rounded-2xl border border-[#e4e7ec] bg-[#f9fafb] p-4"
                                 >
                                     <p class="text-xs font-semibold text-[#2f6a1f]">
-                                        Approval
+                                        Review
                                     </p>
                                     <p class="mt-2 text-sm text-[#475467]">
-                                        Multi-level sign-off ready
+                                        Reallocation and month closing with audit logs
                                     </p>
                                 </div>
                             </div>
@@ -434,14 +434,14 @@ withDefaults(
                                     </svg>
                                 </span>
                                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#98a2b3]">
-                                    Photo evidence
+                                    Multi-site
                                 </p>
                             </div>
                             <h3 class="mt-4 text-lg font-semibold text-[#101828]">
-                                Before, during, after
+                                HQ and site separation
                             </h3>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Mobile capture keeps inspectors and techs aligned.
+                                Dual navigation keeps HQ oversight separate from site operations.
                             </p>
                         </div>
                         <div class="rounded-2xl border border-[#e4e7ec] bg-gradient-to-br from-white via-[#fff9ed] to-[#fff1d6] p-6 shadow-sm">
@@ -464,14 +464,14 @@ withDefaults(
                                     </svg>
                                 </span>
                                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#98a2b3]">
-                                    Inventory
+                                    Allocation
                                 </p>
                             </div>
                             <h3 class="mt-4 text-lg font-semibold text-[#101828]">
-                                Parts and cost control
+                                Deterministic waterfall
                             </h3>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Track usage, approvals, and procurement spend.
+                                Priority, due date, and creation order stay predictable.
                             </p>
                         </div>
                         <div class="rounded-2xl border border-[#e4e7ec] bg-gradient-to-br from-white via-[#f0fbff] to-[#e6f6ff] p-6 shadow-sm">
@@ -493,14 +493,14 @@ withDefaults(
                                     </svg>
                                 </span>
                                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#98a2b3]">
-                                    Scheduling
+                                    Monthly closing
                                 </p>
                             </div>
                             <h3 class="mt-4 text-lg font-semibold text-[#101828]">
-                                Inspection readiness
+                                Locked accounting periods
                             </h3>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Keep recurring checks aligned to policy windows.
+                                Closed months stop edits and preserve the audit trail.
                             </p>
                         </div>
                         <div class="rounded-2xl border border-[#e4e7ec] bg-gradient-to-br from-white via-[#f6f0ff] to-[#efe7ff] p-6 shadow-sm">
@@ -531,7 +531,7 @@ withDefaults(
                                 Reports for leadership
                             </h3>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Export-ready KPI views for finance and oversight.
+                                Export-ready views for finance, compliance, and oversight.
                             </p>
                         </div>
                         <div class="rounded-2xl border border-[#e4e7ec] bg-gradient-to-br from-white via-[#fff1f5] to-[#ffe4ec] p-6 shadow-sm">
@@ -558,10 +558,10 @@ withDefaults(
                                 </p>
                             </div>
                             <h3 class="mt-4 text-lg font-semibold text-[#101828]">
-                                Role-based approvals
+                                Site-scoped access
                             </h3>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Ensure the right decision-makers sign at every stage.
+                                Users only see the sites and actions assigned to them.
                             </p>
                         </div>
                     </div>
@@ -578,11 +578,11 @@ withDefaults(
                             <h2
                                 class="mt-4 text-3xl font-semibold text-[#101828] font-['Inter']"
                             >
-                                One flow from intake to close
+                                One flow from debt entry to month close
                             </h2>
                             <p class="mt-3 text-base text-[#475467]">
-                                The end-to-end process translated into a single, visible pipeline
-                                with checkpoints for every role.
+                                The end-to-end KPS process translated into a single, visible
+                                pipeline with checkpoints for HQ and site teams.
                             </p>
                             <a
                                 href="#demo"
@@ -603,10 +603,10 @@ withDefaults(
                                     </div>
                                     <div>
                                         <p class="font-semibold text-[#101828]">
-                                            Receive form
+                                            Select site
                                         </p>
                                         <p class="text-[#667085]">
-                                            Intake queued with full metadata.
+                                            Work inside the correct site boundary from the start.
                                         </p>
                                     </div>
                                 </li>
@@ -618,10 +618,10 @@ withDefaults(
                                     </div>
                                     <div>
                                         <p class="font-semibold text-[#101828]">
-                                            Inspect asset
+                                            Register debt
                                         </p>
                                         <p class="text-[#667085]">
-                                            Evidence captured on-site.
+                                            Capture peneroka debts with priority and due date.
                                         </p>
                                     </div>
                                 </li>
@@ -633,10 +633,10 @@ withDefaults(
                                     </div>
                                     <div>
                                         <p class="font-semibold text-[#101828]">
-                                            Approve work
+                                            Enter potongan
                                         </p>
                                         <p class="text-[#667085]">
-                                            Supervisor and approver sign-off.
+                                            Post monthly deductions individually or in bulk.
                                         </p>
                                     </div>
                                 </li>
@@ -648,10 +648,10 @@ withDefaults(
                                     </div>
                                     <div>
                                         <p class="font-semibold text-[#101828]">
-                                            Repair and document
+                                            Allocate automatically
                                         </p>
                                         <p class="text-[#667085]">
-                                            Technician updates tracked live.
+                                            Apply the waterfall and record allocation line items.
                                         </p>
                                     </div>
                                 </li>
@@ -663,10 +663,10 @@ withDefaults(
                                     </div>
                                     <div>
                                         <p class="font-semibold text-[#101828]">
-                                            Close and archive
+                                            Review and close month
                                         </p>
                                         <p class="text-[#667085]">
-                                            Audit ready, exportable record.
+                                            Recalculate if needed, then lock the month with audit logs.
                                         </p>
                                     </div>
                                 </li>
@@ -688,11 +688,11 @@ withDefaults(
                                 <h2
                                     class="mt-4 text-3xl font-semibold text-[#101828] font-['Inter']"
                                 >
-                                    Built for enterprise-grade governance
+                                    Built for cooperative-grade governance
                                 </h2>
                                 <p class="mt-3 text-base text-[#6a5c37]">
-                                    Keep procurement, audit trails, and approval authority aligned
-                                    with policy through immutable logs and clear accountability.
+                                    Keep allocation logic, month locking, and cross-site visibility
+                                    aligned with policy through immutable logs and clear accountability.
                                 </p>
                             </div>
                             <div class="flex-1">
@@ -705,12 +705,12 @@ withDefaults(
                                     <div
                                         class="rounded-2xl bg-white p-4 text-sm text-[#5b4b2d]"
                                     >
-                                        Digital approvals
+                                        Month locking
                                     </div>
                                     <div
                                         class="rounded-2xl bg-white p-4 text-sm text-[#5b4b2d]"
                                     >
-                                        Evidence capture
+                                        Site scoping
                                     </div>
                                     <div
                                         class="rounded-2xl bg-white p-4 text-sm text-[#5b4b2d]"
@@ -733,52 +733,52 @@ withDefaults(
                         <h2
                             class="mt-4 text-3xl font-semibold text-[#101828] font-['Inter']"
                         >
-                            Every stakeholder sees their work clearly
+                            Every stakeholder sees the right scope
                         </h2>
                         <p class="mt-3 text-base text-[#475467]">
-                            Focused views for admin, supervisors, inspectors, approvers, and
-                            technicians.
+                            Focused views for HQ admins, site admins, site staff, and oversight
+                            teams.
                         </p>
                     </div>
                     <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         <div class="rounded-2xl border border-[#e4e7ec] bg-white p-6 shadow-sm">
                             <p class="text-sm font-semibold text-[#101828]">
-                                Admin Officer
+                                HQ Admin
                             </p>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Faster intake, clearer documentation, fewer backlogs.
+                                Full visibility across all sites, dashboards, and reporting.
                             </p>
                         </div>
                         <div class="rounded-2xl border border-[#e4e7ec] bg-white p-6 shadow-sm">
                             <p class="text-sm font-semibold text-[#101828]">
-                                Supervisor
+                                Company Admin
                             </p>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Immediate visibility into workload and approvals.
+                                Maintains site access, analytics, and operational configuration.
                             </p>
                         </div>
                         <div class="rounded-2xl border border-[#e4e7ec] bg-white p-6 shadow-sm">
                             <p class="text-sm font-semibold text-[#101828]">
-                                Inspector
+                                Site Admin
                             </p>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Mobile evidence capture with guided checklists.
+                                Manages peneroka, debts, deductions, and closing activities.
                             </p>
                         </div>
                         <div class="rounded-2xl border border-[#e4e7ec] bg-white p-6 shadow-sm">
                             <p class="text-sm font-semibold text-[#101828]">
-                                Approver
+                                Site Staff
                             </p>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Clear decision trails and risk visibility.
+                                Handles daily entry, review support, and site-scoped updates.
                             </p>
                         </div>
                         <div class="rounded-2xl border border-[#e4e7ec] bg-white p-6 shadow-sm">
                             <p class="text-sm font-semibold text-[#101828]">
-                                Technician
+                                Oversight Teams
                             </p>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Simple job cards and evidence prompts.
+                                Uses consolidated reports to monitor collection performance.
                             </p>
                         </div>
                     </div>
@@ -797,30 +797,30 @@ withDefaults(
                             <h2
                                 class="mt-4 text-3xl font-semibold text-[#101828] font-['Inter']"
                             >
-                                Trusted to cut approval backlog
+                                Trusted to reduce reconciliation backlog
                             </h2>
                             <p class="mt-3 text-base text-[#475467]">
-                                Short, outcome-focused feedback from pilot agencies.
+                                Short, outcome-focused feedback from cooperative rollout teams.
                             </p>
                         </div>
                         <div
                             class="rounded-2xl border border-[#e4e7ec] bg-[#f9fafb] p-5"
                         >
                             <p class="text-sm text-[#475467]">
-                                "Reduced approval backlog by 40% in three months."
+                                "Monthly allocation review now takes minutes instead of days."
                             </p>
                             <p class="mt-4 text-xs font-semibold text-[#2f6a1f]">
-                                State Workshop Unit
+                                Site Operations Team
                             </p>
                         </div>
                         <div
                             class="rounded-2xl border border-[#e4e7ec] bg-[#f9fafb] p-5"
                         >
                             <p class="text-sm text-[#475467]">
-                                "Audit preparation now takes hours instead of weeks."
+                                "HQ finally has one view across every site."
                             </p>
                             <p class="mt-4 text-xs font-semibold text-[#2f6a1f]">
-                                Public Works Division
+                                Cooperative HQ
                             </p>
                         </div>
                     </div>
@@ -836,17 +836,17 @@ withDefaults(
                         <h2
                             class="mt-4 text-3xl font-semibold text-[#101828] font-['Inter']"
                         >
-                            Procurement-ready rollout options
+                            Rollout options for KPS operations
                         </h2>
                         <p class="mt-3 text-base text-[#475467]">
-                            Start small, scale confidently across departments.
+                            Start with one site, then scale across the network.
                         </p>
                     </div>
                     <div class="mt-10 grid gap-6 lg:grid-cols-3">
                         <div class="rounded-2xl border border-[#e4e7ec] bg-white p-6 shadow-sm">
                             <p class="text-sm font-semibold text-[#101828]">Pilot</p>
                             <p class="mt-2 text-sm text-[#475467]">
-                                One workshop with core workflow.
+                                One site with peneroka, hutang, and potongan workflow.
                             </p>
                             <p class="mt-4 text-2xl font-semibold text-[#101828]">
                                 RM 35k
@@ -864,10 +864,10 @@ withDefaults(
                                 Most popular
                             </p>
                             <p class="mt-2 text-sm font-semibold text-[#101828]">
-                                Department Rollout
+                                Multi-Site Rollout
                             </p>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Multi-workshop deployment with analytics.
+                                Multi-site deployment with HQ dashboards and reporting.
                             </p>
                             <p class="mt-4 text-2xl font-semibold text-[#101828]">
                                 RM 45k
@@ -879,7 +879,7 @@ withDefaults(
                         <div class="rounded-2xl border border-[#e4e7ec] bg-white p-6 shadow-sm">
                             <p class="text-sm font-semibold text-[#101828]">Enterprise</p>
                             <p class="mt-2 text-sm text-[#475467]">
-                                Full-state rollout with integrations.
+                                Network-wide rollout with integrations and governance controls.
                             </p>
                             <p class="mt-4 text-2xl font-semibold text-[#101828]">
                                 RM 55k
@@ -922,20 +922,22 @@ withDefaults(
                                 class="rounded-2xl border border-[#e4e7ec] bg-white p-4 shadow-sm"
                             >
                                 <summary class="cursor-pointer text-sm font-semibold">
-                                    How do we handle bilingual forms?
+                                    How do we handle multi-site access?
                                 </summary>
                                 <p class="mt-3 text-sm text-[#475467]">
-                                    English and Bahasa Malaysia templates are built in.
+                                    HQ users can move across sites while site users stay scoped to
+                                    their assigned site.
                                 </p>
                             </details>
                             <details
                                 class="rounded-2xl border border-[#e4e7ec] bg-white p-4 shadow-sm"
                             >
                                 <summary class="cursor-pointer text-sm font-semibold">
-                                    What is the data retention policy?
+                                    What happens when a month is closed?
                                 </summary>
                                 <p class="mt-3 text-sm text-[#475467]">
-                                    Retention rules are configurable per agency requirements.
+                                    Closed months are locked from edits and the action is audit
+                                    logged.
                                 </p>
                             </details>
                             <details
@@ -959,14 +961,14 @@ withDefaults(
                         <h2
                             class="text-3xl font-semibold text-[#101828] sm:text-4xl font-['Inter']"
                         >
-                            Ready to modernize your workshop workflow?
+                            Ready to move KPS off spreadsheets?
                         </h2>
                         <p class="mt-3 text-base text-[#475467]">
-                            Book a demo or jump directly into your dashboard.
+                            Book a demo or jump directly into the live KPS dashboard.
                         </p>
                         <div class="mt-6 flex flex-wrap justify-center gap-3">
                             <a
-                                href="mailto:demo@workshop.app"
+                                href="mailto:demo@kps.app"
                                 class="inline-flex items-center justify-center rounded-xl bg-[color:var(--brand)] px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-[#8bc34a]/30 transition hover:bg-[#7ab93a]"
                             >
                                 Request a demo
@@ -997,10 +999,10 @@ withDefaults(
             >
                 <div>
                     <p class="font-semibold text-[#101828]">
-                        Workshop Management System
+                        KPS
                     </p>
                     <p class="mt-1 text-xs">
-                        Audit-ready operations platform
+                        FELDA debt and deduction platform
                     </p>
                 </div>
                 <div class="flex flex-wrap gap-4 text-xs">
@@ -1011,11 +1013,11 @@ withDefaults(
                         Workflow
                     </a>
                     <a href="#pricing" class="hover:text-[#101828]">
-                        Pricing
+                        Rollout
                     </a>
                     <a href="#faq" class="hover:text-[#101828]">FAQ</a>
                 </div>
-                <p class="text-xs">Audit-first. Operations-ready.</p>
+                <p class="text-xs">Audit-first. Allocation-ready.</p>
             </div>
         </footer>
     </div>

@@ -1,0 +1,194 @@
+- generic [ref=e4]:
+  - generic [ref=e7]:
+    - list [ref=e9]:
+      - listitem [ref=e10]:
+        - link "Site Workspace FELDA Sungai Tekam FELDA-ST" [ref=e11] [cursor=pointer]:
+          - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+          - generic [ref=e12]:
+            - generic [ref=e13]: Site Workspace
+            - generic [ref=e14]: FELDA Sungai Tekam
+            - generic [ref=e15]: FELDA-ST
+    - generic [ref=e17]:
+      - generic [ref=e18]: Site Navigation
+      - list [ref=e19]:
+        - listitem [ref=e20]:
+          - link "Site Dashboard" [ref=e21] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+            - img [ref=e23]
+            - generic [ref=e28]: Site Dashboard
+        - listitem [ref=e29]:
+          - link "Peneroka" [ref=e30] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka
+            - img [ref=e32]
+            - generic [ref=e37]: Peneroka
+        - listitem [ref=e38]:
+          - link "Hutang" [ref=e39] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang
+            - img [ref=e41]
+            - generic [ref=e44]: Hutang
+        - listitem [ref=e45]:
+          - link "Potongan Bulanan" [ref=e46] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/potongan
+            - img [ref=e48]
+            - generic [ref=e51]: Potongan Bulanan
+        - listitem [ref=e52]:
+          - link "Allocation Review" [ref=e53] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations
+            - img [ref=e55]
+            - generic [ref=e57]: Allocation Review
+        - listitem [ref=e58]:
+          - link "Reports" [ref=e59] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports
+            - img [ref=e61]
+            - generic [ref=e64]: Reports
+        - listitem [ref=e65]:
+          - link "Audit Trail" [ref=e66] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/audit-logs
+            - img [ref=e68]
+            - generic [ref=e72]: Audit Trail
+    - generic [ref=e73]:
+      - list [ref=e74]:
+        - listitem [ref=e75]:
+          - button "FA Fatimah Site Admin" [ref=e76]:
+            - generic [ref=e78]: FA
+            - generic [ref=e80]: Fatimah Site Admin
+            - img [ref=e81]
+      - generic [ref=e86]:
+        - text: Your Role
+        - paragraph [ref=e87]: site admin
+  - main [ref=e88]:
+    - generic [ref=e90]:
+      - generic [ref=e91]:
+        - button "Toggle Sidebar" [ref=e92]:
+          - img
+          - generic [ref=e93]: Toggle Sidebar
+        - generic [ref=e94]: KPS Live
+      - link "Preview Library" [ref=e95] [cursor=pointer]:
+        - /url: /kps/preview
+        - img
+        - generic [ref=e96]: Preview Library
+    - generic [ref=e97]:
+      - generic [ref=e98]:
+        - generic [ref=e99]:
+          - paragraph [ref=e100]: Site Workspace
+          - heading "FELDA Sungai Tekam" [level=1] [ref=e101]
+          - paragraph [ref=e102]: Monitor deduction recovery, debt exposure, and site activity from the live KPS workflow.
+        - generic [ref=e103]:
+          - link "Open Reports" [ref=e104] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports
+          - link "Allocation Review" [ref=e105] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations
+          - link "Back to Sites" [ref=e106] [cursor=pointer]:
+            - /url: /kps/sites
+      - generic [ref=e107]:
+        - generic [ref=e108]:
+          - paragraph [ref=e109]: Peneroka
+          - paragraph [ref=e110]: "15"
+          - paragraph [ref=e111]: Assigned to FELDA-ST in the current working set.
+        - generic [ref=e112]:
+          - paragraph [ref=e113]: Active Debts
+          - paragraph [ref=e114]: "22"
+          - paragraph [ref=e115]: Open balances still requiring site follow-up.
+        - generic [ref=e116]:
+          - paragraph [ref=e117]: Outstanding
+          - paragraph [ref=e118]: 21,409.00
+          - paragraph [ref=e119]: Live exposure across all hutang records linked to this site.
+        - generic [ref=e120]:
+          - paragraph [ref=e121]: April 2026
+          - generic [ref=e122]:
+            - paragraph [ref=e123]: "0.00"
+            - generic [ref=e124]: 0.0%
+          - paragraph [ref=e125]: Allocation effectiveness for the current month.
+      - generic [ref=e126]:
+        - generic [ref=e127]:
+          - generic [ref=e128]:
+            - generic [ref=e129]:
+              - paragraph [ref=e130]: Monthly Recovery
+              - heading "Deduction trend" [level=2] [ref=e131]
+            - generic [ref=e132]: FELDA-ST
+          - generic [ref=e133]:
+            - generic [ref=e137]:
+              - paragraph [ref=e138]: Nov
+              - paragraph [ref=e139]: "0.00"
+            - generic [ref=e143]:
+              - paragraph [ref=e144]: Dec
+              - paragraph [ref=e145]: 4,380.00
+            - generic [ref=e149]:
+              - paragraph [ref=e150]: Jan
+              - paragraph [ref=e151]: 3,874.00
+            - generic [ref=e155]:
+              - paragraph [ref=e156]: Feb
+              - paragraph [ref=e157]: 4,662.00
+            - generic [ref=e161]:
+              - paragraph [ref=e162]: Mar
+              - paragraph [ref=e163]: "0.00"
+            - generic [ref=e167]:
+              - paragraph [ref=e168]: Apr
+              - paragraph [ref=e169]: "0.00"
+        - generic [ref=e170]:
+          - generic [ref=e171]:
+            - generic [ref=e172]:
+              - paragraph [ref=e173]: Highest Outstanding
+              - heading "Peneroka watchlist" [level=2] [ref=e174]
+            - link "Manage peneroka" [ref=e175] [cursor=pointer]:
+              - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka
+          - generic [ref=e176]:
+            - generic [ref=e177]:
+              - generic [ref=e178]:
+                - generic [ref=e179]:
+                  - paragraph [ref=e180]: Ibrahim bin Ali
+                  - paragraph [ref=e181]: 730620-09-7890
+                - generic [ref=e182]: 3 debts
+              - paragraph [ref=e185]: Outstanding 4,619.00
+            - generic [ref=e186]:
+              - generic [ref=e187]:
+                - generic [ref=e188]:
+                  - paragraph [ref=e189]: Rohani binti Daud
+                  - paragraph [ref=e190]: 720110-14-1234
+                - generic [ref=e191]: 3 debts
+              - paragraph [ref=e194]: Outstanding 3,180.00
+            - generic [ref=e195]:
+              - generic [ref=e196]:
+                - generic [ref=e197]:
+                  - paragraph [ref=e198]: Noraini binti Ahmad
+                  - paragraph [ref=e199]: 690925-06-2345
+                - generic [ref=e200]: 2 debts
+              - paragraph [ref=e203]: Outstanding 2,616.00
+            - generic [ref=e204]:
+              - generic [ref=e205]:
+                - generic [ref=e206]:
+                  - paragraph [ref=e207]: Zainab binti Rahman
+                  - paragraph [ref=e208]: 660718-08-3456
+                - generic [ref=e209]: 3 debts
+              - paragraph [ref=e212]: Outstanding 2,593.00
+            - generic [ref=e213]:
+              - generic [ref=e214]:
+                - generic [ref=e215]:
+                  - paragraph [ref=e216]: Aminah binti Ismail
+                  - paragraph [ref=e217]: 671130-10-4567
+                - generic [ref=e218]: 3 debts
+              - paragraph [ref=e221]: Outstanding 2,033.00
+      - generic [ref=e222]:
+        - generic [ref=e223]:
+          - generic [ref=e224]:
+            - paragraph [ref=e225]: Site Activity
+            - heading "Operational audit stream" [level=2] [ref=e226]
+          - link "Open audit trail" [ref=e227] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/audit-logs
+        - table [ref=e229]:
+          - rowgroup [ref=e230]:
+            - row "Action Actor Summary Timestamp" [ref=e231]:
+              - columnheader "Action" [ref=e232]
+              - columnheader "Actor" [ref=e233]
+              - columnheader "Summary" [ref=e234]
+              - columnheader "Timestamp" [ref=e235]
+          - rowgroup [ref=e236]:
+            - row "Month Closed Fatimah Site Admin admin-st@felda.gov.my Month 2026-02-01 | Deductions Closed 15 2026-04-04 14:10:41" [ref=e237]:
+              - cell "Month Closed" [ref=e238]
+              - cell "Fatimah Site Admin admin-st@felda.gov.my" [ref=e239]:
+                - generic [ref=e240]:
+                  - paragraph [ref=e241]: Fatimah Site Admin
+                  - paragraph [ref=e242]: admin-st@felda.gov.my
+              - cell "Month 2026-02-01 | Deductions Closed 15" [ref=e243]
+              - cell "2026-04-04 14:10:41" [ref=e244]
+  - generic "Notifications"

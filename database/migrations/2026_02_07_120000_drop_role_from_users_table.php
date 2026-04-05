@@ -31,7 +31,7 @@ return new class extends Migration
         }
 
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('juruteknik')->after('email');
+            $table->string('role')->default('staff')->after('email');
             $table->index('role');
         });
     }

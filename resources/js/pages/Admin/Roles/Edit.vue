@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
+import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ArrowLeft, Save } from 'lucide-vue-next';
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 
 interface Permission {
     id: number;
@@ -32,10 +32,6 @@ const props = defineProps<{
     rolePermissionIds: number[];
 }>();
 
-console.log('Edit.vue - Initial props.rolePermissionIds:', props.rolePermissionIds);
-console.log('Edit.vue - Initial props.role:', props.role);
-alert('DEBUG: Edit.vue loaded! rolePermissionIds=' + JSON.stringify(props.rolePermissionIds));
-
 const form = useForm({
     name: props.role.name,
     description: props.role.description || '',
@@ -44,34 +40,19 @@ const form = useForm({
     permissions: [...props.rolePermissionIds],
 });
 
-console.log('Edit.vue - Form initialized with permissions:', form.permissions);
-
 const submit = () => {
-    console.log('Edit.vue - Submitting form with permissions:', form.permissions);
     form.put(`/admin/roles/${props.role.id}`, {
         preserveScroll: true,
-        onSuccess: () => {
-            console.log('Edit.vue - Form submitted successfully');
-        },
     });
 };
 
-// Watch for prop changes from backend after save/redirect
-watch(() => props.rolePermissionIds, (newIds) => {
-    console.log('Edit.vue - Watch triggered, newIds:', newIds);
-    form.permissions = [...newIds];
-}, { deep: true });
-
 const togglePermission = (permissionId: number) => {
-    console.log('Edit.vue - togglePermission called with:', permissionId);
-    console.log('Edit.vue - Current form.permissions before toggle:', [...form.permissions]);
     const index = form.permissions.indexOf(permissionId);
     if (index > -1) {
         form.permissions.splice(index, 1);
     } else {
         form.permissions.push(permissionId);
     }
-    console.log('Edit.vue - form.permissions after toggle:', [...form.permissions]);
 };
 
 const isPermissionSelected = (permissionId: number) => {
@@ -81,43 +62,22 @@ const isPermissionSelected = (permissionId: number) => {
 // Group permissions by module
 const groupedPermissions = computed(() => {
     const groups: Record<string, Permission[]> = {
-        'Workshop Jobs': [],
-        'Customers': [],
-        'Users': [],
-        'Reports': [],
-        'Analytics': [],
-        'Notes': [],
-        'Approvals': [],
+        KPS: [],
+        Users: [],
         'Roles & Permissions': [],
-        'Assets': [],
-        'Inventory': [],
-        'Settings': [],
+        Other: [],
     };
 
     props.permissions.forEach((permission) => {
         const name = permission.name.toLowerCase();
-        if (name.includes('job')) {
-            groups['Workshop Jobs'].push(permission);
-        } else if (name.includes('customer')) {
-            groups['Customers'].push(permission);
+        if (name.startsWith('kps.')) {
+            groups.KPS.push(permission);
         } else if (name.includes('user')) {
-            groups['Users'].push(permission);
-        } else if (name.includes('report')) {
-            groups['Reports'].push(permission);
-        } else if (name.includes('analytics')) {
-            groups['Analytics'].push(permission);
-        } else if (name.includes('note')) {
-            groups['Notes'].push(permission);
-        } else if (name.includes('approve') || name.includes('reject') || name.includes('inspect')) {
-            groups['Approvals'].push(permission);
+            groups.Users.push(permission);
         } else if (name.includes('role') || name.includes('permission')) {
             groups['Roles & Permissions'].push(permission);
-        } else if (name.includes('asset')) {
-            groups['Assets'].push(permission);
-        } else if (name.includes('inventory') || name.includes('stock')) {
-            groups['Inventory'].push(permission);
-        } else if (name.includes('setting')) {
-            groups['Settings'].push(permission);
+        } else {
+            groups.Other.push(permission);
         }
     });
 
@@ -135,7 +95,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 <template>
     <Head :title="`Edit Role: ${role.name}`" />
 
-    <AppLayout :breadcrumbs="breadcrumbs">
+    <KpsShellLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6">
             <!-- Header -->
             <div class="flex items-center justify-between">
@@ -278,5 +238,5 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </div>
             </form>
         </div>
-    </AppLayout>
+    </KpsShellLayout>
 </template>

@@ -30,7 +30,7 @@
             }
         </style>
 
-        <title inertia>Workshop System</title>
+        <title inertia>KPS</title>
 
 <link rel="icon" href="/images/logo.png" type="image/png">
 

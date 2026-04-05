@@ -1,0 +1,275 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - banner [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - img "KPS" [ref=e9]
+          - generic [ref=e10]:
+            - paragraph [ref=e11]: KPS
+            - paragraph [ref=e12]: FELDA debt and deduction operations
+        - navigation [ref=e13]:
+          - link "Features" [ref=e14] [cursor=pointer]:
+            - /url: "#features"
+          - link "Workflow" [ref=e15] [cursor=pointer]:
+            - /url: "#workflow"
+          - link "Roles" [ref=e16] [cursor=pointer]:
+            - /url: "#roles"
+          - link "Rollout" [ref=e17] [cursor=pointer]:
+            - /url: "#pricing"
+          - link "FAQ" [ref=e18] [cursor=pointer]:
+            - /url: "#faq"
+        - generic [ref=e19]:
+          - link "Log in" [ref=e20] [cursor=pointer]:
+            - /url: /login
+          - link "Register" [ref=e21] [cursor=pointer]:
+            - /url: /register
+    - main [ref=e22]:
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - paragraph [ref=e25]: Operations-ready platform
+          - heading "Run multi-site debt allocation without spreadsheet drift" [level=1] [ref=e26]
+          - paragraph [ref=e27]: KPS gives HQ and site teams a structured, auditable way to manage peneroka, hutang, monthly potongan, and deterministic allocations.
+          - generic [ref=e28]:
+            - link "Request a demo" [ref=e29] [cursor=pointer]:
+              - /url: "#demo"
+            - link "Log in" [ref=e30] [cursor=pointer]:
+              - /url: /login
+          - paragraph [ref=e31]: Month closing, site scoping, and audit trails built in.
+          - generic [ref=e32]:
+            - generic [ref=e33]: Deterministic allocation
+            - generic [ref=e34]: HQ and site scopes
+            - generic [ref=e35]: Monthly closing
+        - generic [ref=e37]:
+          - generic [ref=e43]: KPS overview
+          - generic [ref=e44]:
+            - generic [ref=e45]:
+              - paragraph [ref=e46]: Monthly close time
+              - paragraph [ref=e47]: 1.8 days
+              - paragraph [ref=e48]: "Target: under 2 days"
+            - generic [ref=e49]:
+              - paragraph [ref=e50]: Allocation coverage
+              - paragraph [ref=e54]: 92% of posted deductions allocated
+            - generic [ref=e55]:
+              - paragraph [ref=e56]: Active scope
+              - generic [ref=e57]:
+                - generic [ref=e58]:
+                  - paragraph [ref=e59]: Sites
+                  - paragraph [ref=e60]: 14 active
+                - generic [ref=e61]:
+                  - paragraph [ref=e62]: Peneroka
+                  - paragraph [ref=e63]: 1,280 tracked
+                - generic [ref=e64]:
+                  - paragraph [ref=e65]: Potongan
+                  - paragraph [ref=e66]: April cycle open
+          - generic [ref=e67]: Replace with live dashboard screenshot
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - paragraph [ref=e71]: Audit trail
+          - paragraph [ref=e72]: 98%
+          - paragraph [ref=e73]: Allocation traceability
+        - generic [ref=e74]:
+          - paragraph [ref=e75]: HQ visibility
+          - paragraph [ref=e76]: 1.8 days
+          - paragraph [ref=e77]: Across all active sites
+        - generic [ref=e78]:
+          - paragraph [ref=e79]: Operating model
+          - paragraph [ref=e80]: "2"
+          - paragraph [ref=e81]: HQ and site scopes
+        - generic [ref=e82]:
+          - paragraph [ref=e83]: Deployment
+          - paragraph [ref=e84]: 14 days
+          - paragraph [ref=e85]: To production-ready
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]:
+            - paragraph [ref=e89]: Feature highlight
+            - heading "Monthly deductions flow, allocated and reviewable" [level=2] [ref=e90]
+            - paragraph [ref=e91]: From debt capture to month closing, every step is visible to HQ and site teams in one auditable workflow.
+            - generic [ref=e92]:
+              - link "See a live walkthrough" [ref=e93] [cursor=pointer]:
+                - /url: "#demo"
+              - link "View workflow" [ref=e94] [cursor=pointer]:
+                - /url: "#workflow"
+          - generic [ref=e95]:
+            - paragraph [ref=e96]: Live process snapshot
+            - generic [ref=e97]:
+              - generic [ref=e98]:
+                - paragraph [ref=e99]: Potongan entry
+                - paragraph [ref=e100]: Single and bulk monthly deduction entry
+              - generic [ref=e101]:
+                - paragraph [ref=e102]: Allocation
+                - paragraph [ref=e103]: Priority waterfall applied consistently
+              - generic [ref=e104]:
+                - paragraph [ref=e105]: Review
+                - paragraph [ref=e106]: Reallocation and month closing with audit logs
+        - generic [ref=e107]:
+          - generic [ref=e108]:
+            - generic [ref=e109]:
+              - img [ref=e111]
+              - paragraph [ref=e114]: Audit trail
+            - heading "Tamper-evident records" [level=3] [ref=e115]
+            - paragraph [ref=e116]: Every action is captured with a full chain of custody.
+          - generic [ref=e117]:
+            - generic [ref=e118]:
+              - img [ref=e120]
+              - paragraph [ref=e123]: Multi-site
+            - heading "HQ and site separation" [level=3] [ref=e124]
+            - paragraph [ref=e125]: Dual navigation keeps HQ oversight separate from site operations.
+          - generic [ref=e126]:
+            - generic [ref=e127]:
+              - img [ref=e129]
+              - paragraph [ref=e132]: Allocation
+            - heading "Deterministic waterfall" [level=3] [ref=e133]
+            - paragraph [ref=e134]: Priority, due date, and creation order stay predictable.
+          - generic [ref=e135]:
+            - generic [ref=e136]:
+              - img [ref=e138]
+              - paragraph [ref=e141]: Monthly closing
+            - heading "Locked accounting periods" [level=3] [ref=e142]
+            - paragraph [ref=e143]: Closed months stop edits and preserve the audit trail.
+          - generic [ref=e144]:
+            - generic [ref=e145]:
+              - img [ref=e147]
+              - paragraph [ref=e148]: Analytics
+            - heading "Reports for leadership" [level=3] [ref=e149]
+            - paragraph [ref=e150]: Export-ready views for finance, compliance, and oversight.
+          - generic [ref=e151]:
+            - generic [ref=e152]:
+              - img [ref=e154]
+              - paragraph [ref=e157]: Access control
+            - heading "Site-scoped access" [level=3] [ref=e158]
+            - paragraph [ref=e159]: Users only see the sites and actions assigned to them.
+      - generic [ref=e161]:
+        - generic [ref=e162]:
+          - paragraph [ref=e163]: Workflow
+          - heading "One flow from debt entry to month close" [level=2] [ref=e164]
+          - paragraph [ref=e165]: The end-to-end KPS process translated into a single, visible pipeline with checkpoints for HQ and site teams.
+          - link "Walk me through it" [ref=e166] [cursor=pointer]:
+            - /url: "#demo"
+        - list [ref=e168]:
+          - listitem [ref=e169]:
+            - generic [ref=e170]: "1"
+            - generic [ref=e171]:
+              - paragraph [ref=e172]: Select site
+              - paragraph [ref=e173]: Work inside the correct site boundary from the start.
+          - listitem [ref=e174]:
+            - generic [ref=e175]: "2"
+            - generic [ref=e176]:
+              - paragraph [ref=e177]: Register debt
+              - paragraph [ref=e178]: Capture peneroka debts with priority and due date.
+          - listitem [ref=e179]:
+            - generic [ref=e180]: "3"
+            - generic [ref=e181]:
+              - paragraph [ref=e182]: Enter potongan
+              - paragraph [ref=e183]: Post monthly deductions individually or in bulk.
+          - listitem [ref=e184]:
+            - generic [ref=e185]: "4"
+            - generic [ref=e186]:
+              - paragraph [ref=e187]: Allocate automatically
+              - paragraph [ref=e188]: Apply the waterfall and record allocation line items.
+          - listitem [ref=e189]:
+            - generic [ref=e190]: "5"
+            - generic [ref=e191]:
+              - paragraph [ref=e192]: Review and close month
+              - paragraph [ref=e193]: Recalculate if needed, then lock the month with audit logs.
+      - generic [ref=e196]:
+        - generic [ref=e197]:
+          - paragraph [ref=e198]: Compliance
+          - heading "Built for cooperative-grade governance" [level=2] [ref=e199]
+          - paragraph [ref=e200]: Keep allocation logic, month locking, and cross-site visibility aligned with policy through immutable logs and clear accountability.
+        - generic [ref=e202]:
+          - generic [ref=e203]: Tamper-evident logs
+          - generic [ref=e204]: Month locking
+          - generic [ref=e205]: Site scoping
+          - generic [ref=e206]: Export-ready reports
+      - generic [ref=e207]:
+        - generic [ref=e208]:
+          - paragraph [ref=e209]: Role impact
+          - heading "Every stakeholder sees the right scope" [level=2] [ref=e210]
+          - paragraph [ref=e211]: Focused views for HQ admins, site admins, site staff, and oversight teams.
+        - generic [ref=e212]:
+          - generic [ref=e213]:
+            - paragraph [ref=e214]: HQ Admin
+            - paragraph [ref=e215]: Full visibility across all sites, dashboards, and reporting.
+          - generic [ref=e216]:
+            - paragraph [ref=e217]: Company Admin
+            - paragraph [ref=e218]: Maintains site access, analytics, and operational configuration.
+          - generic [ref=e219]:
+            - paragraph [ref=e220]: Site Admin
+            - paragraph [ref=e221]: Manages peneroka, debts, deductions, and closing activities.
+          - generic [ref=e222]:
+            - paragraph [ref=e223]: Site Staff
+            - paragraph [ref=e224]: Handles daily entry, review support, and site-scoped updates.
+          - generic [ref=e225]:
+            - paragraph [ref=e226]: Oversight Teams
+            - paragraph [ref=e227]: Uses consolidated reports to monitor collection performance.
+      - generic [ref=e229]:
+        - generic [ref=e230]:
+          - paragraph [ref=e231]: Social proof
+          - heading "Trusted to reduce reconciliation backlog" [level=2] [ref=e232]
+          - paragraph [ref=e233]: Short, outcome-focused feedback from cooperative rollout teams.
+        - generic [ref=e234]:
+          - paragraph [ref=e235]: "\"Monthly allocation review now takes minutes instead of days.\""
+          - paragraph [ref=e236]: Site Operations Team
+        - generic [ref=e237]:
+          - paragraph [ref=e238]: "\"HQ finally has one view across every site.\""
+          - paragraph [ref=e239]: Cooperative HQ
+      - generic [ref=e240]:
+        - generic [ref=e241]:
+          - paragraph [ref=e242]: Procurement
+          - heading "Rollout options for KPS operations" [level=2] [ref=e243]
+          - paragraph [ref=e244]: Start with one site, then scale across the network.
+        - generic [ref=e245]:
+          - generic [ref=e246]:
+            - paragraph [ref=e247]: Pilot
+            - paragraph [ref=e248]: One site with peneroka, hutang, and potongan workflow.
+            - paragraph [ref=e249]: RM 35k
+            - paragraph [ref=e250]: Procurement-ready documentation
+          - generic [ref=e251]:
+            - paragraph [ref=e252]: Most popular
+            - paragraph [ref=e253]: Multi-Site Rollout
+            - paragraph [ref=e254]: Multi-site deployment with HQ dashboards and reporting.
+            - paragraph [ref=e255]: RM 45k
+            - paragraph [ref=e256]: Training and onboarding included
+          - generic [ref=e257]:
+            - paragraph [ref=e258]: Enterprise
+            - paragraph [ref=e259]: Network-wide rollout with integrations and governance controls.
+            - paragraph [ref=e260]: RM 55k
+            - paragraph [ref=e261]: Custom governance modules
+      - generic [ref=e263]:
+        - generic [ref=e264]:
+          - paragraph [ref=e265]: FAQ
+          - heading "Common questions, clear answers" [level=2] [ref=e266]
+          - paragraph [ref=e267]: Procurement, deployment, and bilingual support covered.
+        - generic [ref=e268]:
+          - group [ref=e269]:
+            - generic "Is on-prem deployment supported?" [ref=e270] [cursor=pointer]
+          - group [ref=e271]:
+            - generic "How do we handle multi-site access?" [ref=e272] [cursor=pointer]
+          - group [ref=e273]:
+            - generic "What happens when a month is closed?" [ref=e274] [cursor=pointer]
+          - group [ref=e275]:
+            - generic "How quickly can we go live?" [ref=e276] [cursor=pointer]
+      - generic [ref=e278]:
+        - heading "Ready to move KPS off spreadsheets?" [level=2] [ref=e279]
+        - paragraph [ref=e280]: Book a demo or jump directly into the live KPS dashboard.
+        - generic [ref=e281]:
+          - link "Request a demo" [ref=e282] [cursor=pointer]:
+            - /url: mailto:demo@kps.app
+          - link "Log in" [ref=e283] [cursor=pointer]:
+            - /url: /login
+  - contentinfo [ref=e284]:
+    - generic [ref=e285]:
+      - generic [ref=e286]:
+        - paragraph [ref=e287]: KPS
+        - paragraph [ref=e288]: FELDA debt and deduction platform
+      - generic [ref=e289]:
+        - link "Features" [ref=e290] [cursor=pointer]:
+          - /url: "#features"
+        - link "Workflow" [ref=e291] [cursor=pointer]:
+          - /url: "#workflow"
+        - link "Rollout" [ref=e292] [cursor=pointer]:
+          - /url: "#pricing"
+        - link "FAQ" [ref=e293] [cursor=pointer]:
+          - /url: "#faq"
+      - paragraph [ref=e294]: Audit-first. Allocation-ready.

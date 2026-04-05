@@ -22,7 +22,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Bind custom login response to redirect site admins to their workshop
+        // Bind custom login response to redirect site-scoped users into KPS.
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
     }
 

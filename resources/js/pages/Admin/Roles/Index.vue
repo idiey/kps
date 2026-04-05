@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, router, Link } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
+import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Badge } from '@/components/ui/badge';
@@ -34,11 +34,9 @@ const props = defineProps<{
 const getRoleDisplayName = (roleName: string) => {
     const roleMap: Record<string, string> = {
         pentadbiran: 'Pentadbiran',
-        company_admin: 'Admin Company',
-        penyelia: 'Penyelia',
-        pemeriksa: 'Pemeriksa',
-        pelulus: 'Pelulus',
-        juruteknik: 'Juruteknik',
+        company_admin: 'HQ Admin',
+        site_admin: 'Site Admin',
+        staff: 'Site Staff',
     };
     return roleMap[roleName] || roleName;
 };
@@ -47,30 +45,10 @@ const getRoleBadgeVariant = (roleName: string) => {
     const variantMap: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
         pentadbiran: 'destructive',
         company_admin: 'secondary',
-        penyelia: 'default',
-        pemeriksa: 'secondary',
-        pelulus: 'default',
-        juruteknik: 'outline',
+        site_admin: 'default',
+        staff: 'outline',
     };
     return variantMap[roleName] || 'outline';
-};
-
-const toggleActivation = (role: Role) => {
-    if (role.is_system_role) {
-        alert('Cannot modify system roles');
-        return;
-    }
-
-    if (
-        confirm(
-            `Are you sure you want to ${role.is_active ? 'deactivate' : 'activate'} ${getRoleDisplayName(role.name)}?`,
-        )
-    ) {
-        const endpoint = role.is_active
-            ? `/admin/roles/${role.id}/deactivate`
-            : `/admin/roles/${role.id}/activate`;
-        router.post(endpoint);
-    }
 };
 
 const deleteRole = (role: Role) => {
@@ -102,7 +80,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 <template>
     <Head title="Role Management" />
 
-    <AppLayout :breadcrumbs="breadcrumbs">
+    <KpsShellLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6">
             <!-- Header -->
             <div class="flex items-center justify-between">
@@ -174,11 +152,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 </div>
                             </TableCell>
                             <TableCell>
-                                <button
-                                    @click="toggleActivation(role)"
-                                    class="inline-flex items-center gap-1 hover:opacity-70 transition-opacity"
-                                    :disabled="role.is_system_role"
-                                >
+                                <div class="inline-flex items-center gap-1">
                                     <CheckCircle
                                         v-if="role.is_active"
                                         class="h-4 w-4 text-green-600"
@@ -187,7 +161,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     <span class="text-sm">{{
                                         role.is_active ? 'Active' : 'Inactive'
                                     }}</span>
-                                </button>
+                                </div>
                             </TableCell>
                             <TableCell class="text-right">
                                 <div class="flex justify-end gap-2">
@@ -222,5 +196,5 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </Table>
             </div>
         </div>
-    </AppLayout>
+    </KpsShellLayout>
 </template>

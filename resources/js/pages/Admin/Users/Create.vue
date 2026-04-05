@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
+import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -44,13 +44,10 @@ const submit = () => {
 const getRoleDisplayName = (roleName: string) => {
     const roleMap: Record<string, string> = {
         pentadbiran: 'Pentadbiran',
-        company_admin: 'Admin Company',
-        penyelia: 'Penyelia',
-        pemeriksa: 'Pemeriksa',
-        pelulus: 'Pelulus',
-        juruteknik: 'Juruteknik',
+        company_admin: 'HQ Admin',
+        site_admin: 'Site Admin',
+        staff: 'Site Staff',
     };
-    return roleMap[roleName] || roleName;
     return roleMap[roleName] || roleName;
 };
 
@@ -64,7 +61,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 <template>
     <Head title="Create User" />
 
-    <AppLayout :breadcrumbs="breadcrumbs">
+    <KpsShellLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6">
         <!-- Header -->
         <div class="flex items-center gap-4">
@@ -192,5 +189,5 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
         </form>
     </div>
-    </AppLayout>
+    </KpsShellLayout>
 </template>

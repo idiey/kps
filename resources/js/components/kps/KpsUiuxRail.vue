@@ -20,9 +20,20 @@ interface NavItem {
 }
 
 const page = usePage<AppPageProps>();
+const props = withDefaults(
+    defineProps<{
+        withSitePanel?: boolean;
+    }>(),
+    {
+        withSitePanel: false,
+    },
+);
 
 const can = (permission: string) =>
     (page.props.auth?.permissions ?? []).includes(permission);
+
+const isExactUrlActive = (href: string) =>
+    page.url === href || page.url.startsWith(`${href}?`);
 
 const navItems = computed<NavItem[]>(() =>
     [
@@ -30,20 +41,20 @@ const navItems = computed<NavItem[]>(() =>
             title: 'Dashboard',
             href: '/kps/dashboard',
             icon: LayoutGrid,
-            active: page.url.startsWith('/kps/dashboard'),
+            active: isExactUrlActive('/kps/dashboard'),
         },
         {
             title: 'Analytics',
             href: '/kps/analytics',
             icon: BarChart3,
-            active: page.url.startsWith('/kps/analytics'),
+            active: isExactUrlActive('/kps/analytics'),
             show: can('kps.manage_sites'),
         },
         {
             title: 'Sites',
             href: '/kps/sites',
             icon: Warehouse,
-            active: page.url.startsWith('/kps/sites'),
+            active: isExactUrlActive('/kps/sites'),
             show: can('kps.manage_sites'),
         },
         {
@@ -116,7 +127,10 @@ const currentUserName = computed(() => page.props.auth?.user?.name ?? 'KPS User'
         </div>
     </div>
 
-    <aside class="fixed left-0 top-0 z-40 hidden h-screen w-[88px] flex-col items-center rounded-r-[32px] border-r border-[#f0dbd4] bg-[#171717] py-7 text-white shadow-[0_22px_70px_rgba(0,0,0,0.32)] lg:flex">
+    <aside
+        v-if="props.withSitePanel"
+        class="fixed left-0 top-0 z-40 hidden h-screen w-[88px] flex-col items-center rounded-r-[32px] border-r border-[#f0dbd4] bg-[#171717] py-7 text-white shadow-[0_22px_70px_rgba(0,0,0,0.32)] lg:flex"
+    >
         <Link
             href="/kps"
             class="mb-8 flex h-12 w-12 items-center justify-center rounded-[18px] bg-[#d84b27] text-base font-black text-white shadow-[0_10px_28px_rgba(216,75,39,0.35)]"
@@ -153,6 +167,59 @@ const currentUserName = computed(() => page.props.auth?.user?.name ?? 'KPS User'
             </div>
             <div class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/6 text-[10px] font-bold uppercase tracking-[0.24em] text-white/55">
                 HQ
+            </div>
+        </div>
+    </aside>
+
+    <aside
+        v-else
+        class="fixed left-0 top-0 z-40 hidden h-screen w-[280px] flex-col border-r border-[#f0dbd4] bg-[#171717] px-6 py-7 text-white shadow-[0_22px_70px_rgba(0,0,0,0.32)] lg:flex"
+    >
+        <Link
+            href="/kps"
+            class="flex items-center gap-3 rounded-[22px] border border-white/10 bg-white/5 px-4 py-4 shadow-[0_10px_28px_rgba(0,0,0,0.12)]"
+            aria-label="Open KPS dashboard"
+        >
+            <span class="flex h-12 w-12 items-center justify-center rounded-[18px] bg-[#d84b27] text-base font-black text-white shadow-[0_10px_28px_rgba(216,75,39,0.35)]">
+                K
+            </span>
+            <span class="min-w-0">
+                <span class="block text-sm font-semibold text-white">KPS Live</span>
+                <span class="block text-[11px] uppercase tracking-[0.24em] text-white/45">HQ shell</span>
+            </span>
+        </Link>
+
+        <nav class="mt-8 flex flex-1 flex-col gap-2">
+            <Link
+                v-for="item in navItems"
+                :key="item.href"
+                :href="item.href"
+                class="flex items-center gap-3 rounded-[22px] px-4 py-3 transition"
+                :class="item.active
+                    ? 'bg-white text-[#171717] shadow-[0_12px_30px_rgba(0,0,0,0.22)]'
+                    : 'text-white/72 hover:bg-white/8 hover:text-white'"
+                :aria-current="item.active ? 'page' : undefined"
+            >
+                <span
+                    class="flex h-11 w-11 items-center justify-center rounded-full"
+                    :class="item.active ? 'bg-[#171717] text-white' : 'bg-white/10 text-white/68'"
+                >
+                    <component :is="item.icon" class="h-5 w-5" />
+                </span>
+                <span class="min-w-0">
+                    <span class="block text-sm font-semibold">{{ item.title }}</span>
+                    <span class="block text-[11px] uppercase tracking-[0.24em] opacity-70">Live route</span>
+                </span>
+            </Link>
+        </nav>
+
+        <div class="mt-6 flex items-center gap-3 rounded-[22px] border border-white/10 bg-white/5 px-4 py-4">
+            <div class="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/8 text-xs font-bold text-white/88">
+                {{ currentUserInitials }}
+            </div>
+            <div class="min-w-0">
+                <p class="truncate text-sm font-semibold text-white">{{ currentUserName }}</p>
+                <p class="text-[11px] uppercase tracking-[0.24em] text-white/45">HQ shell</p>
             </div>
         </div>
     </aside>

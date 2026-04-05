@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Kps;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Kps\StorePenerokaRequest;
 use App\Http\Requests\Kps\UpdatePenerokaRequest;
+use App\Models\Kps\Debt;
 use App\Models\Kps\Peneroka;
 use App\Models\Kps\Site;
 use App\Services\Kps\SiteContextResolver;
@@ -22,14 +23,36 @@ class PenerokaController extends Controller
 
         $penerokas = Peneroka::query()
             ->where('site_id', $site->id)
+            ->withCount('debts')
+            ->withSum('debts as total_outstanding', 'balance')
             ->orderBy('name')
             ->paginate(15);
+
+        $summary = [
+            'total_peneroka' => Peneroka::query()
+                ->where('site_id', $site->id)
+                ->count(),
+            'with_ic_number' => Peneroka::query()
+                ->where('site_id', $site->id)
+                ->whereNotNull('ic_number')
+                ->where('ic_number', '!=', '')
+                ->count(),
+            'with_phone' => Peneroka::query()
+                ->where('site_id', $site->id)
+                ->whereNotNull('phone')
+                ->where('phone', '!=', '')
+                ->count(),
+            'outstanding_total' => (float) Debt::query()
+                ->whereHas('peneroka', fn ($query) => $query->where('site_id', $site->id))
+                ->sum('balance'),
+        ];
 
         $context = $resolver->resolve($request, $site);
 
         return Inertia::render('Kps/Peneroka/Index', [
             'site' => $site,
             'penerokas' => $penerokas,
+            'summary' => $summary,
             'siteRole' => $context['siteRole'],
         ]);
     }

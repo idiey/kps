@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Kps\SiteController::index
- * @see app/Http/Controllers/Kps/SiteController.php:20
+ * @see app/Http/Controllers/Kps/SiteController.php:18
  * @route '/kps/sites'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::index
- * @see app/Http/Controllers/Kps/SiteController.php:20
+ * @see app/Http/Controllers/Kps/SiteController.php:18
  * @route '/kps/sites'
  */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::index
- * @see app/Http/Controllers/Kps/SiteController.php:20
+ * @see app/Http/Controllers/Kps/SiteController.php:18
  * @route '/kps/sites'
  */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Kps\SiteController::index
- * @see app/Http/Controllers/Kps/SiteController.php:20
+ * @see app/Http/Controllers/Kps/SiteController.php:18
  * @route '/kps/sites'
  */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,7 +44,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Kps\SiteController::index
- * @see app/Http/Controllers/Kps/SiteController.php:20
+ * @see app/Http/Controllers/Kps/SiteController.php:18
  * @route '/kps/sites'
  */
     const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,7 +54,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Kps\SiteController::index
- * @see app/Http/Controllers/Kps/SiteController.php:20
+ * @see app/Http/Controllers/Kps/SiteController.php:18
  * @route '/kps/sites'
  */
         indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -63,7 +63,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Kps\SiteController::index
- * @see app/Http/Controllers/Kps/SiteController.php:20
+ * @see app/Http/Controllers/Kps/SiteController.php:18
  * @route '/kps/sites'
  */
         indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Kps\SiteController::create
- * @see app/Http/Controllers/Kps/SiteController.php:33
+ * @see app/Http/Controllers/Kps/SiteController.php:31
  * @route '/kps/sites/create'
  */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -94,7 +94,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::create
- * @see app/Http/Controllers/Kps/SiteController.php:33
+ * @see app/Http/Controllers/Kps/SiteController.php:31
  * @route '/kps/sites/create'
  */
 create.url = (options?: RouteQueryOptions) => {
@@ -103,7 +103,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::create
- * @see app/Http/Controllers/Kps/SiteController.php:33
+ * @see app/Http/Controllers/Kps/SiteController.php:31
  * @route '/kps/sites/create'
  */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -112,7 +112,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Kps\SiteController::create
- * @see app/Http/Controllers/Kps/SiteController.php:33
+ * @see app/Http/Controllers/Kps/SiteController.php:31
  * @route '/kps/sites/create'
  */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -122,7 +122,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Kps\SiteController::create
- * @see app/Http/Controllers/Kps/SiteController.php:33
+ * @see app/Http/Controllers/Kps/SiteController.php:31
  * @route '/kps/sites/create'
  */
     const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -132,7 +132,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Kps\SiteController::create
- * @see app/Http/Controllers/Kps/SiteController.php:33
+ * @see app/Http/Controllers/Kps/SiteController.php:31
  * @route '/kps/sites/create'
  */
         createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -141,7 +141,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Kps\SiteController::create
- * @see app/Http/Controllers/Kps/SiteController.php:33
+ * @see app/Http/Controllers/Kps/SiteController.php:31
  * @route '/kps/sites/create'
  */
         createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -157,7 +157,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     create.form = createForm
 /**
 * @see \App\Http\Controllers\Kps\SiteController::store
- * @see app/Http/Controllers/Kps/SiteController.php:40
+ * @see app/Http/Controllers/Kps/SiteController.php:38
  * @route '/kps/sites'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -172,7 +172,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::store
- * @see app/Http/Controllers/Kps/SiteController.php:40
+ * @see app/Http/Controllers/Kps/SiteController.php:38
  * @route '/kps/sites'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -181,7 +181,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::store
- * @see app/Http/Controllers/Kps/SiteController.php:40
+ * @see app/Http/Controllers/Kps/SiteController.php:38
  * @route '/kps/sites'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -191,7 +191,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Kps\SiteController::store
- * @see app/Http/Controllers/Kps/SiteController.php:40
+ * @see app/Http/Controllers/Kps/SiteController.php:38
  * @route '/kps/sites'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -201,7 +201,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Kps\SiteController::store
- * @see app/Http/Controllers/Kps/SiteController.php:40
+ * @see app/Http/Controllers/Kps/SiteController.php:38
  * @route '/kps/sites'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -212,7 +212,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\Kps\SiteController::show
- * @see app/Http/Controllers/Kps/SiteController.php:48
+ * @see app/Http/Controllers/Kps/SiteController.php:46
  * @route '/kps/sites/{site}'
  */
 export const show = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -227,7 +227,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::show
- * @see app/Http/Controllers/Kps/SiteController.php:48
+ * @see app/Http/Controllers/Kps/SiteController.php:46
  * @route '/kps/sites/{site}'
  */
 show.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -260,7 +260,7 @@ show.url = (args: { site: string | { id: string } } | [site: string | { id: stri
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::show
- * @see app/Http/Controllers/Kps/SiteController.php:48
+ * @see app/Http/Controllers/Kps/SiteController.php:46
  * @route '/kps/sites/{site}'
  */
 show.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -269,7 +269,7 @@ show.get = (args: { site: string | { id: string } } | [site: string | { id: stri
 })
 /**
 * @see \App\Http\Controllers\Kps\SiteController::show
- * @see app/Http/Controllers/Kps/SiteController.php:48
+ * @see app/Http/Controllers/Kps/SiteController.php:46
  * @route '/kps/sites/{site}'
  */
 show.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -279,7 +279,7 @@ show.head = (args: { site: string | { id: string } } | [site: string | { id: str
 
     /**
 * @see \App\Http\Controllers\Kps\SiteController::show
- * @see app/Http/Controllers/Kps/SiteController.php:48
+ * @see app/Http/Controllers/Kps/SiteController.php:46
  * @route '/kps/sites/{site}'
  */
     const showForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -289,7 +289,7 @@ show.head = (args: { site: string | { id: string } } | [site: string | { id: str
 
             /**
 * @see \App\Http\Controllers\Kps\SiteController::show
- * @see app/Http/Controllers/Kps/SiteController.php:48
+ * @see app/Http/Controllers/Kps/SiteController.php:46
  * @route '/kps/sites/{site}'
  */
         showForm.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -298,7 +298,7 @@ show.head = (args: { site: string | { id: string } } | [site: string | { id: str
         })
             /**
 * @see \App\Http\Controllers\Kps\SiteController::show
- * @see app/Http/Controllers/Kps/SiteController.php:48
+ * @see app/Http/Controllers/Kps/SiteController.php:46
  * @route '/kps/sites/{site}'
  */
         showForm.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -314,7 +314,7 @@ show.head = (args: { site: string | { id: string } } | [site: string | { id: str
     show.form = showForm
 /**
 * @see \App\Http\Controllers\Kps\SiteController::edit
- * @see app/Http/Controllers/Kps/SiteController.php:70
+ * @see app/Http/Controllers/Kps/SiteController.php:63
  * @route '/kps/sites/{site}/edit'
  */
 export const edit = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -329,7 +329,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::edit
- * @see app/Http/Controllers/Kps/SiteController.php:70
+ * @see app/Http/Controllers/Kps/SiteController.php:63
  * @route '/kps/sites/{site}/edit'
  */
 edit.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -362,7 +362,7 @@ edit.url = (args: { site: string | { id: string } } | [site: string | { id: stri
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::edit
- * @see app/Http/Controllers/Kps/SiteController.php:70
+ * @see app/Http/Controllers/Kps/SiteController.php:63
  * @route '/kps/sites/{site}/edit'
  */
 edit.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -371,7 +371,7 @@ edit.get = (args: { site: string | { id: string } } | [site: string | { id: stri
 })
 /**
 * @see \App\Http\Controllers\Kps\SiteController::edit
- * @see app/Http/Controllers/Kps/SiteController.php:70
+ * @see app/Http/Controllers/Kps/SiteController.php:63
  * @route '/kps/sites/{site}/edit'
  */
 edit.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -381,7 +381,7 @@ edit.head = (args: { site: string | { id: string } } | [site: string | { id: str
 
     /**
 * @see \App\Http\Controllers\Kps\SiteController::edit
- * @see app/Http/Controllers/Kps/SiteController.php:70
+ * @see app/Http/Controllers/Kps/SiteController.php:63
  * @route '/kps/sites/{site}/edit'
  */
     const editForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -391,7 +391,7 @@ edit.head = (args: { site: string | { id: string } } | [site: string | { id: str
 
             /**
 * @see \App\Http\Controllers\Kps\SiteController::edit
- * @see app/Http/Controllers/Kps/SiteController.php:70
+ * @see app/Http/Controllers/Kps/SiteController.php:63
  * @route '/kps/sites/{site}/edit'
  */
         editForm.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -400,7 +400,7 @@ edit.head = (args: { site: string | { id: string } } | [site: string | { id: str
         })
             /**
 * @see \App\Http\Controllers\Kps\SiteController::edit
- * @see app/Http/Controllers/Kps/SiteController.php:70
+ * @see app/Http/Controllers/Kps/SiteController.php:63
  * @route '/kps/sites/{site}/edit'
  */
         editForm.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -416,7 +416,7 @@ edit.head = (args: { site: string | { id: string } } | [site: string | { id: str
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\Kps\SiteController::update
- * @see app/Http/Controllers/Kps/SiteController.php:79
+ * @see app/Http/Controllers/Kps/SiteController.php:72
  * @route '/kps/sites/{site}'
  */
 export const update = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -431,7 +431,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::update
- * @see app/Http/Controllers/Kps/SiteController.php:79
+ * @see app/Http/Controllers/Kps/SiteController.php:72
  * @route '/kps/sites/{site}'
  */
 update.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -464,7 +464,7 @@ update.url = (args: { site: string | { id: string } } | [site: string | { id: st
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::update
- * @see app/Http/Controllers/Kps/SiteController.php:79
+ * @see app/Http/Controllers/Kps/SiteController.php:72
  * @route '/kps/sites/{site}'
  */
 update.put = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -473,7 +473,7 @@ update.put = (args: { site: string | { id: string } } | [site: string | { id: st
 })
 /**
 * @see \App\Http\Controllers\Kps\SiteController::update
- * @see app/Http/Controllers/Kps/SiteController.php:79
+ * @see app/Http/Controllers/Kps/SiteController.php:72
  * @route '/kps/sites/{site}'
  */
 update.patch = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -483,7 +483,7 @@ update.patch = (args: { site: string | { id: string } } | [site: string | { id: 
 
     /**
 * @see \App\Http\Controllers\Kps\SiteController::update
- * @see app/Http/Controllers/Kps/SiteController.php:79
+ * @see app/Http/Controllers/Kps/SiteController.php:72
  * @route '/kps/sites/{site}'
  */
     const updateForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -498,7 +498,7 @@ update.patch = (args: { site: string | { id: string } } | [site: string | { id: 
 
             /**
 * @see \App\Http\Controllers\Kps\SiteController::update
- * @see app/Http/Controllers/Kps/SiteController.php:79
+ * @see app/Http/Controllers/Kps/SiteController.php:72
  * @route '/kps/sites/{site}'
  */
         updateForm.put = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -512,7 +512,7 @@ update.patch = (args: { site: string | { id: string } } | [site: string | { id: 
         })
             /**
 * @see \App\Http\Controllers\Kps\SiteController::update
- * @see app/Http/Controllers/Kps/SiteController.php:79
+ * @see app/Http/Controllers/Kps/SiteController.php:72
  * @route '/kps/sites/{site}'
  */
         updateForm.patch = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -528,7 +528,7 @@ update.patch = (args: { site: string | { id: string } } | [site: string | { id: 
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Kps\SiteController::destroy
- * @see app/Http/Controllers/Kps/SiteController.php:87
+ * @see app/Http/Controllers/Kps/SiteController.php:80
  * @route '/kps/sites/{site}'
  */
 export const destroy = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -543,7 +543,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::destroy
- * @see app/Http/Controllers/Kps/SiteController.php:87
+ * @see app/Http/Controllers/Kps/SiteController.php:80
  * @route '/kps/sites/{site}'
  */
 destroy.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -576,7 +576,7 @@ destroy.url = (args: { site: string | { id: string } } | [site: string | { id: s
 
 /**
 * @see \App\Http\Controllers\Kps\SiteController::destroy
- * @see app/Http/Controllers/Kps/SiteController.php:87
+ * @see app/Http/Controllers/Kps/SiteController.php:80
  * @route '/kps/sites/{site}'
  */
 destroy.delete = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -586,7 +586,7 @@ destroy.delete = (args: { site: string | { id: string } } | [site: string | { id
 
     /**
 * @see \App\Http\Controllers\Kps\SiteController::destroy
- * @see app/Http/Controllers/Kps/SiteController.php:87
+ * @see app/Http/Controllers/Kps/SiteController.php:80
  * @route '/kps/sites/{site}'
  */
     const destroyForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -601,7 +601,7 @@ destroy.delete = (args: { site: string | { id: string } } | [site: string | { id
 
             /**
 * @see \App\Http\Controllers\Kps\SiteController::destroy
- * @see app/Http/Controllers/Kps/SiteController.php:87
+ * @see app/Http/Controllers/Kps/SiteController.php:80
  * @route '/kps/sites/{site}'
  */
         destroyForm.delete = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

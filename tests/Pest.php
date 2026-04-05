@@ -1,5 +1,16 @@
 <?php
 
+use Illuminate\Foundation\Vite;
+
+beforeAll(function () {
+    app()->bind(Vite::class, fn () => new class extends Vite {
+        public function __invoke($entrypoints, $buildDirectory = null): \Illuminate\Support\HtmlString
+        {
+            return new \Illuminate\Support\HtmlString('');
+        }
+    });
+});
+
 /*
 |--------------------------------------------------------------------------
 | Test Case

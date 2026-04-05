@@ -1,0 +1,278 @@
+- generic [ref=e621]:
+  - generic [ref=e624]:
+    - list [ref=e626]:
+      - listitem [ref=e627]:
+        - link "Site Workspace FELDA Sungai Tekam FELDA-ST" [ref=e628] [cursor=pointer]:
+          - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+          - generic [ref=e629]:
+            - generic [ref=e630]: Site Workspace
+            - generic [ref=e631]: FELDA Sungai Tekam
+            - generic [ref=e632]: FELDA-ST
+    - generic [ref=e634]:
+      - generic [ref=e635]: Site Navigation
+      - list [ref=e636]:
+        - listitem [ref=e637]:
+          - link "Site Dashboard" [ref=e638] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+            - img [ref=e640]
+            - generic [ref=e645]: Site Dashboard
+        - listitem [ref=e646]:
+          - link "Peneroka" [ref=e647] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka
+            - img [ref=e649]
+            - generic [ref=e654]: Peneroka
+        - listitem [ref=e655]:
+          - link "Hutang" [ref=e656] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang
+            - img [ref=e658]
+            - generic [ref=e661]: Hutang
+        - listitem [ref=e662]:
+          - link "Potongan Bulanan" [ref=e663] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/potongan
+            - img [ref=e665]
+            - generic [ref=e668]: Potongan Bulanan
+        - listitem [ref=e669]:
+          - link "Allocation Review" [ref=e670] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations
+            - img [ref=e672]
+            - generic [ref=e674]: Allocation Review
+        - listitem [ref=e675]:
+          - link "Reports" [ref=e676] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports
+            - img [ref=e678]
+            - generic [ref=e681]: Reports
+        - listitem [ref=e682]:
+          - link "Audit Trail" [ref=e683] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/audit-logs
+            - img [ref=e685]
+            - generic [ref=e689]: Audit Trail
+    - generic [ref=e690]:
+      - list [ref=e691]:
+        - listitem [ref=e692]:
+          - button "FA Fatimah Site Admin" [ref=e693]:
+            - generic [ref=e695]: FA
+            - generic [ref=e697]: Fatimah Site Admin
+            - img [ref=e698]
+      - generic [ref=e703]:
+        - text: Your Role
+        - paragraph [ref=e704]: site admin
+  - main [ref=e705]:
+    - generic [ref=e707]:
+      - generic [ref=e708]:
+        - button "Toggle Sidebar" [ref=e709]:
+          - img
+          - generic [ref=e710]: Toggle Sidebar
+        - generic [ref=e711]: KPS Live
+      - link "Preview Library" [ref=e712] [cursor=pointer]:
+        - /url: /kps/preview
+        - img
+        - generic [ref=e713]: Preview Library
+    - generic [ref=e714]:
+      - generic [ref=e715]:
+        - generic [ref=e716]:
+          - paragraph [ref=e717]: Site Workspace
+          - heading "Debt workspace" [level=1] [ref=e718]
+          - paragraph [ref=e719]: Manage hutang for FELDA Sungai Tekam with a stronger operational hierarchy and clearer allocation context.
+        - generic [ref=e720]:
+          - link "Back to Dashboard" [ref=e721] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+          - link "Add Hutang" [ref=e722] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/create
+      - generic [ref=e723]:
+        - generic [ref=e724]:
+          - paragraph [ref=e725]: Total Records
+          - paragraph [ref=e726]: "31"
+          - paragraph [ref=e727]: Debt records visible in the site portfolio.
+        - generic [ref=e728]:
+          - paragraph [ref=e729]: Due This Month
+          - paragraph [ref=e730]: "2"
+          - paragraph [ref=e731]: Scheduled debt items reaching their due date this month.
+        - generic [ref=e732]:
+          - paragraph [ref=e733]: Outstanding
+          - paragraph [ref=e734]: 21,409.00
+          - paragraph [ref=e735]: Total outstanding balance across the site portfolio.
+        - generic [ref=e736]:
+          - paragraph [ref=e737]: Highest Priority Open
+          - paragraph [ref=e738]: "1"
+          - paragraph [ref=e739]: Next recovery priority still carrying a balance.
+      - generic [ref=e740]:
+        - generic [ref=e741]:
+          - generic [ref=e742]:
+            - paragraph [ref=e743]: Debt Register
+            - heading "Allocation priority list" [level=2] [ref=e744]
+          - generic [ref=e745]: FELDA-ST
+        - table [ref=e748]:
+          - rowgroup [ref=e749]:
+            - row "Peneroka Priority Balance Due Date Actions" [ref=e750]:
+              - columnheader "Peneroka" [ref=e751]
+              - columnheader "Priority" [ref=e752]
+              - columnheader "Balance" [ref=e753]
+              - columnheader "Due Date" [ref=e754]
+              - columnheader "Actions" [ref=e755]
+          - rowgroup [ref=e756]:
+            - row "Aminah binti Ismail Pinjaman Kecemasan 1 0.00 2026-05-10 Edit" [ref=e757]:
+              - cell "Aminah binti Ismail Pinjaman Kecemasan" [ref=e758]:
+                - generic [ref=e759]:
+                  - paragraph [ref=e760]: Aminah binti Ismail
+                  - paragraph [ref=e761]: Pinjaman Kecemasan
+              - cell "1" [ref=e762]
+              - cell "0.00" [ref=e763]
+              - cell "2026-05-10" [ref=e764]
+              - cell "Edit" [ref=e765]:
+                - link "Edit" [ref=e766] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-a3dc-7363-b081-c36f7b753bc4/edit
+            - row "Noraini binti Ahmad Hutang Baja 1 878.00 - Edit" [ref=e767]:
+              - cell "Noraini binti Ahmad Hutang Baja" [ref=e768]:
+                - generic [ref=e769]:
+                  - paragraph [ref=e770]: Noraini binti Ahmad
+                  - paragraph [ref=e771]: Hutang Baja
+              - cell "1" [ref=e772]
+              - cell "878.00" [ref=e773]
+              - cell "-" [ref=e774]
+              - cell "Edit" [ref=e775]:
+                - link "Edit" [ref=e776] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-a021-71b1-a029-c78b244734c1/edit
+            - row "Kamal bin Yusof Pinjaman Koperasi 2023 1 481.00 - Edit" [ref=e777]:
+              - cell "Kamal bin Yusof Pinjaman Koperasi 2023" [ref=e778]:
+                - generic [ref=e779]:
+                  - paragraph [ref=e780]: Kamal bin Yusof
+                  - paragraph [ref=e781]: Pinjaman Koperasi 2023
+              - cell "1" [ref=e782]
+              - cell "481.00" [ref=e783]
+              - cell "-" [ref=e784]
+              - cell "Edit" [ref=e785]:
+                - link "Edit" [ref=e786] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-9f37-706b-8053-676759fdf54e/edit
+            - row "Zainab binti Rahman Pinjaman Kecemasan 1 257.00 - Edit" [ref=e787]:
+              - cell "Zainab binti Rahman Pinjaman Kecemasan" [ref=e788]:
+                - generic [ref=e789]:
+                  - paragraph [ref=e790]: Zainab binti Rahman
+                  - paragraph [ref=e791]: Pinjaman Kecemasan
+              - cell "1" [ref=e792]
+              - cell "257.00" [ref=e793]
+              - cell "-" [ref=e794]
+              - cell "Edit" [ref=e795]:
+                - link "Edit" [ref=e796] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-a204-7383-a91d-db0de1d1b569/edit
+            - row "Mohamed bin Salleh Pinjaman Koperasi 2023 2 0.00 2026-07-10 Edit" [ref=e797]:
+              - cell "Mohamed bin Salleh Pinjaman Koperasi 2023" [ref=e798]:
+                - generic [ref=e799]:
+                  - paragraph [ref=e800]: Mohamed bin Salleh
+                  - paragraph [ref=e801]: Pinjaman Koperasi 2023
+              - cell "2" [ref=e802]
+              - cell "0.00" [ref=e803]
+              - cell "2026-07-10" [ref=e804]
+              - cell "Edit" [ref=e805]:
+                - link "Edit" [ref=e806] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-a6af-739c-888c-cbc921729b90/edit
+            - row "Hassan bin Mohamed Pinjaman Koperasi 2023 2 597.00 2026-09-10 Edit" [ref=e807]:
+              - cell "Hassan bin Mohamed Pinjaman Koperasi 2023" [ref=e808]:
+                - generic [ref=e809]:
+                  - paragraph [ref=e810]: Hassan bin Mohamed
+                  - paragraph [ref=e811]: Pinjaman Koperasi 2023
+              - cell "2" [ref=e812]
+              - cell "597.00" [ref=e813]
+              - cell "2026-09-10" [ref=e814]
+              - cell "Edit" [ref=e815]:
+                - link "Edit" [ref=e816] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-a0fe-7393-9757-0c1b499dab9e/edit
+            - row "Ahmad bin Abdullah Pendahuluan Tunai 2 0.00 2026-12-10 Edit" [ref=e817]:
+              - cell "Ahmad bin Abdullah Pendahuluan Tunai" [ref=e818]:
+                - generic [ref=e819]:
+                  - paragraph [ref=e820]: Ahmad bin Abdullah
+                  - paragraph [ref=e821]: Pendahuluan Tunai
+              - cell "2" [ref=e822]
+              - cell "0.00" [ref=e823]
+              - cell "2026-12-10" [ref=e824]
+              - cell "Edit" [ref=e825]:
+                - link "Edit" [ref=e826] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-9c08-72ad-83ae-ae562d483fa1/edit
+            - row "Ali bin Hashim Pendahuluan Tunai 2 0.00 - Edit" [ref=e827]:
+              - cell "Ali bin Hashim Pendahuluan Tunai" [ref=e828]:
+                - generic [ref=e829]:
+                  - paragraph [ref=e830]: Ali bin Hashim
+                  - paragraph [ref=e831]: Pendahuluan Tunai
+              - cell "2" [ref=e832]
+              - cell "0.00" [ref=e833]
+              - cell "-" [ref=e834]
+              - cell "Edit" [ref=e835]:
+                - link "Edit" [ref=e836] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-a92e-718d-a307-32f1810749d8/edit
+            - row "Halimah binti Omar Hutang Racun Perosak 2 421.00 - Edit" [ref=e837]:
+              - cell "Halimah binti Omar Hutang Racun Perosak" [ref=e838]:
+                - generic [ref=e839]:
+                  - paragraph [ref=e840]: Halimah binti Omar
+                  - paragraph [ref=e841]: Hutang Racun Perosak
+              - cell "2" [ref=e842]
+              - cell "421.00" [ref=e843]
+              - cell "-" [ref=e844]
+              - cell "Edit" [ref=e845]:
+                - link "Edit" [ref=e846] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-a5cf-7323-9c9d-ddbe1dd9d866/edit
+            - row "Ibrahim bin Ali Hutang Baja 2 0.00 - Edit" [ref=e847]:
+              - cell "Ibrahim bin Ali Hutang Baja" [ref=e848]:
+                - generic [ref=e849]:
+                  - paragraph [ref=e850]: Ibrahim bin Ali
+                  - paragraph [ref=e851]: Hutang Baja
+              - cell "2" [ref=e852]
+              - cell "0.00" [ref=e853]
+              - cell "-" [ref=e854]
+              - cell "Edit" [ref=e855]:
+                - link "Edit" [ref=e856] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-a2df-7053-9aa4-151485cb778e/edit
+            - row "Razak bin Ibrahim Pinjaman Peralatan 2 0.00 - Edit" [ref=e857]:
+              - cell "Razak bin Ibrahim Pinjaman Peralatan" [ref=e858]:
+                - generic [ref=e859]:
+                  - paragraph [ref=e860]: Razak bin Ibrahim
+                  - paragraph [ref=e861]: Pinjaman Peralatan
+              - cell "2" [ref=e862]
+              - cell "0.00" [ref=e863]
+              - cell "-" [ref=e864]
+              - cell "Edit" [ref=e865]:
+                - link "Edit" [ref=e866] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-9dab-73f1-bdc6-bbf6ee630ac3/edit
+            - row "Siti binti Mahmud Pinjaman Kecemasan 2 0.00 - Edit" [ref=e867]:
+              - cell "Siti binti Mahmud Pinjaman Kecemasan" [ref=e868]:
+                - generic [ref=e869]:
+                  - paragraph [ref=e870]: Siti binti Mahmud
+                  - paragraph [ref=e871]: Pinjaman Kecemasan
+              - cell "2" [ref=e872]
+              - cell "0.00" [ref=e873]
+              - cell "-" [ref=e874]
+              - cell "Edit" [ref=e875]:
+                - link "Edit" [ref=e876] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-9e8f-73c8-9861-7e6ea5fa8b78/edit
+            - row "Kamal bin Yusof Pendahuluan Tunai 3 1,346.00 2026-04-10 Edit" [ref=e877]:
+              - cell "Kamal bin Yusof Pendahuluan Tunai" [ref=e878]:
+                - generic [ref=e879]:
+                  - paragraph [ref=e880]: Kamal bin Yusof
+                  - paragraph [ref=e881]: Pendahuluan Tunai
+              - cell "3" [ref=e882]
+              - cell "1,346.00" [ref=e883]
+              - cell "2026-04-10" [ref=e884]
+              - cell "Edit" [ref=e885]:
+                - link "Edit" [ref=e886] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-9f4b-7248-92c6-7bf0bf75bfda/edit
+            - row "Ibrahim bin Ali Hutang Racun Perosak 3 1,133.00 2026-07-10 Edit" [ref=e887]:
+              - cell "Ibrahim bin Ali Hutang Racun Perosak" [ref=e888]:
+                - generic [ref=e889]:
+                  - paragraph [ref=e890]: Ibrahim bin Ali
+                  - paragraph [ref=e891]: Hutang Racun Perosak
+              - cell "3" [ref=e892]
+              - cell "1,133.00" [ref=e893]
+              - cell "2026-07-10" [ref=e894]
+              - cell "Edit" [ref=e895]:
+                - link "Edit" [ref=e896] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-a2ef-7388-a675-42a63aca4c12/edit
+            - row "Zainab binti Rahman Hutang Baja 3 1,018.00 2026-11-10 Edit" [ref=e897]:
+              - cell "Zainab binti Rahman Hutang Baja" [ref=e898]:
+                - generic [ref=e899]:
+                  - paragraph [ref=e900]: Zainab binti Rahman
+                  - paragraph [ref=e901]: Hutang Baja
+              - cell "3" [ref=e902]
+              - cell "1,018.00" [ref=e903]
+              - cell "2026-11-10" [ref=e904]
+              - cell "Edit" [ref=e905]:
+                - link "Edit" [ref=e906] [cursor=pointer]:
+                  - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang/019c478b-a1db-725f-b52c-1007f357f277/edit
+  - generic "Notifications"

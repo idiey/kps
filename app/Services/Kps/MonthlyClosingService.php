@@ -16,7 +16,7 @@ class MonthlyClosingService
 
         $affected = MonthlyDeduction::query()
             ->where('site_id', $site->id)
-            ->where('month', $monthDate)
+            ->whereDate('month', $monthDate)
             ->update([
                 'is_closed' => true,
                 'closed_at' => now(),
@@ -43,7 +43,7 @@ class MonthlyClosingService
 
         return MonthlyDeduction::query()
             ->where('site_id', $site->id)
-            ->where('month', $monthDate)
+            ->whereDate('month', $monthDate)
             ->where('is_closed', true)
             ->exists();
     }

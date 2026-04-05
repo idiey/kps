@@ -56,7 +56,7 @@ class UserManagementController extends Controller
             ->paginate(15)
             ->withQueryString();
 
-        $roles = Role::orderBy('name')->get();
+        $roles = Role::where('is_active', true)->orderBy('name')->get();
 
         return Inertia::render('Admin/Users/Index', [
             'users' => $users,
@@ -70,7 +70,7 @@ class UserManagementController extends Controller
      */
     public function create()
     {
-        $roles = Role::orderBy('name')->get();
+        $roles = Role::where('is_active', true)->orderBy('name')->get();
 
         return Inertia::render('Admin/Users/Create', [
             'roles' => $roles,
@@ -115,7 +115,7 @@ class UserManagementController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Role::orderBy('name')->get();
+        $roles = Role::where('is_active', true)->orderBy('name')->get();
 
         return Inertia::render('Admin/Users/Edit', [
             'user' => $user->load('roles'),

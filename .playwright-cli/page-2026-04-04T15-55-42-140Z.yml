@@ -1,0 +1,111 @@
+- generic [ref=e221]:
+  - generic [ref=e224]:
+    - list [ref=e226]:
+      - listitem [ref=e227]:
+        - link "Site Workspace FELDA Sungai Tekam FELDA-ST" [ref=e228] [cursor=pointer]:
+          - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+          - generic [ref=e229]:
+            - generic [ref=e230]: Site Workspace
+            - generic [ref=e231]: FELDA Sungai Tekam
+            - generic [ref=e232]: FELDA-ST
+    - generic [ref=e234]:
+      - generic [ref=e235]: Site Navigation
+      - list [ref=e236]:
+        - listitem [ref=e237]:
+          - link "Site Dashboard" [ref=e238] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+            - img [ref=e240]
+            - generic [ref=e245]: Site Dashboard
+        - listitem [ref=e246]:
+          - link "Peneroka" [ref=e247] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka
+            - img [ref=e249]
+            - generic [ref=e254]: Peneroka
+        - listitem [ref=e255]:
+          - link "Hutang" [ref=e256] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang
+            - img [ref=e258]
+            - generic [ref=e261]: Hutang
+        - listitem [ref=e262]:
+          - link "Potongan Bulanan" [ref=e263] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/potongan
+            - img [ref=e265]
+            - generic [ref=e268]: Potongan Bulanan
+        - listitem [ref=e269]:
+          - link "Allocation Review" [ref=e270] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations
+            - img [ref=e272]
+            - generic [ref=e274]: Allocation Review
+        - listitem [ref=e275]:
+          - link "Reports" [ref=e276] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports
+            - img [ref=e278]
+            - generic [ref=e281]: Reports
+        - listitem [ref=e282]:
+          - link "Audit Trail" [ref=e283] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/audit-logs
+            - img [ref=e285]
+            - generic [ref=e289]: Audit Trail
+    - generic [ref=e290]:
+      - list [ref=e291]:
+        - listitem [ref=e292]:
+          - button "FA Fatimah Site Admin" [ref=e293]:
+            - generic [ref=e295]: FA
+            - generic [ref=e297]: Fatimah Site Admin
+            - img [ref=e298]
+      - generic [ref=e303]:
+        - text: Your Role
+        - paragraph [ref=e304]: site admin
+  - main [ref=e305]:
+    - generic [ref=e307]:
+      - generic [ref=e308]:
+        - button "Toggle Sidebar" [ref=e309]:
+          - img
+          - generic [ref=e310]: Toggle Sidebar
+        - generic [ref=e311]: KPS Live
+      - link "Preview Library" [ref=e312] [cursor=pointer]:
+        - /url: /kps/preview
+        - img
+        - generic [ref=e313]: Preview Library
+    - generic [ref=e314]:
+      - generic [ref=e315]:
+        - generic [ref=e316]:
+          - paragraph [ref=e317]: Site Audit
+          - heading "Audit Trail" [level=1] [ref=e318]
+          - paragraph [ref=e319]: Recent operational activity for FELDA Sungai Tekam with the same warm editorial presentation as the rest of the live site experience.
+        - link "Back to Site Dashboard" [ref=e321] [cursor=pointer]:
+          - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+      - generic [ref=e322]:
+        - generic [ref=e323]:
+          - heading "Log Entries" [level=3] [ref=e325]
+          - generic [ref=e327]: "1"
+        - generic [ref=e328]:
+          - heading "Latest Activity" [level=3] [ref=e330]
+          - generic [ref=e332]: 04 Apr 2026, 02:10 pm
+      - generic [ref=e333]:
+        - heading "Filter" [level=3] [ref=e335]
+        - generic [ref=e338]:
+          - generic [ref=e339]: Action
+          - combobox [ref=e340]:
+            - generic: All Actions
+            - img [ref=e341]
+      - generic [ref=e343]:
+        - heading "Audit Events" [level=3] [ref=e345]
+        - table [ref=e349]:
+          - rowgroup [ref=e350]:
+            - row "Timestamp Action User Target Metadata" [ref=e351]:
+              - columnheader "Timestamp" [ref=e352]
+              - columnheader "Action" [ref=e353]
+              - columnheader "User" [ref=e354]
+              - columnheader "Target" [ref=e355]
+              - columnheader "Metadata" [ref=e356]
+          - rowgroup [ref=e357]:
+            - row "04 Apr 2026, 02:10 pm Month Closed Fatimah Site Admin admin-st@felda.gov.my Site 019c478b-9138-70ba-953b-191d5ae70005 Month 2026-02-01 | Deductions closed 15" [ref=e358]:
+              - cell "04 Apr 2026, 02:10 pm" [ref=e359]
+              - cell "Month Closed" [ref=e360]
+              - cell "Fatimah Site Admin admin-st@felda.gov.my" [ref=e361]:
+                - generic [ref=e362]: Fatimah Site Admin
+                - generic [ref=e363]: admin-st@felda.gov.my
+              - cell "Site 019c478b-9138-70ba-953b-191d5ae70005" [ref=e364]
+              - cell "Month 2026-02-01 | Deductions closed 15" [ref=e365]
+  - generic "Notifications"

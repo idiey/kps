@@ -9,6 +9,7 @@ use App\Models\Kps\Debt;
 use App\Models\Kps\Peneroka;
 use App\Models\Kps\Site;
 use App\Services\Kps\SiteContextResolver;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -25,13 +26,36 @@ class DebtController extends Controller
             ->with('peneroka')
             ->whereHas('peneroka', fn ($q) => $q->where('site_id', $site->id))
             ->orderBy('priority')
+            ->orderByRaw('due_date IS NULL')
+            ->orderBy('due_date')
             ->paginate(15);
+
+        $summary = [
+            'total_debts' => Debt::query()
+                ->whereHas('peneroka', fn ($query) => $query->where('site_id', $site->id))
+                ->count(),
+            'outstanding_total' => (float) Debt::query()
+                ->whereHas('peneroka', fn ($query) => $query->where('site_id', $site->id))
+                ->sum('balance'),
+            'due_this_month' => Debt::query()
+                ->whereHas('peneroka', fn ($query) => $query->where('site_id', $site->id))
+                ->whereBetween('due_date', [
+                    Carbon::now()->startOfMonth()->toDateString(),
+                    Carbon::now()->endOfMonth()->toDateString(),
+                ])
+                ->count(),
+            'highest_priority_open' => Debt::query()
+                ->whereHas('peneroka', fn ($query) => $query->where('site_id', $site->id))
+                ->where('balance', '>', 0)
+                ->min('priority'),
+        ];
 
         $context = $resolver->resolve($request, $site);
 
         return Inertia::render('Kps/Hutang/Index', [
             'site' => $site,
             'debts' => $debts,
+            'summary' => $summary,
             'siteRole' => $context['siteRole'],
         ]);
     }

@@ -1,0 +1,74 @@
+- generic [ref=e5]:
+  - generic [ref=e6]:
+    - link "Logo Log in to your account" [ref=e7] [cursor=pointer]:
+      - /url: /
+      - img "Logo" [ref=e9]
+      - generic [ref=e10]: Log in to your account
+    - generic [ref=e11]:
+      - heading "Log in to your account" [level=1] [ref=e12]
+      - paragraph [ref=e13]: Enter your email and password below to log in
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - generic [ref=e17]: Email address
+        - textbox "Email address" [ref=e18]:
+          - /placeholder: email@example.com
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]: Password
+          - link "Forgot password?" [ref=e22] [cursor=pointer]:
+            - /url: /forgot-password
+        - textbox "Password" [ref=e23]
+      - generic [ref=e25]:
+        - checkbox "Remember me" [ref=e26]:
+          - checkbox [ref=e27]
+        - generic [ref=e28]: Remember me
+      - button "Log in" [ref=e29]
+    - generic [ref=e30]:
+      - text: Don't have an account?
+      - link "Sign up" [ref=e31] [cursor=pointer]:
+        - /url: /register
+  - group [ref=e33]:
+    - generic "Seeded Accounts (click to auto-login)" [ref=e34] [cursor=pointer]
+    - generic [ref=e35]:
+      - generic [ref=e36] [cursor=pointer]:
+        - generic [ref=e37]:
+          - generic [ref=e38]: Global Admin
+          - generic [ref=e39]: Pentadbiran
+        - generic [ref=e40]:
+          - generic [ref=e41]: "Email: global-admin@felda.gov.my"
+          - generic [ref=e42]: "Password: password"
+          - generic [ref=e43]: Full system access across KPS
+      - generic [ref=e44] [cursor=pointer]:
+        - generic [ref=e45]:
+          - generic [ref=e46]: Ahmad HQ Admin
+          - generic [ref=e47]: HQ Admin
+        - generic [ref=e48]:
+          - generic [ref=e49]: "Email: hq-admin@felda.gov.my"
+          - generic [ref=e50]: "Password: password"
+          - generic [ref=e51]: Manage all sites, month approvals, and KPS reporting
+      - generic [ref=e52] [cursor=pointer]:
+        - generic [ref=e53]:
+          - generic [ref=e54]: Fatimah Site Admin
+          - generic [ref=e55]: Site Admin
+        - generic [ref=e56]:
+          - generic [ref=e57]: "Email: admin-st@felda.gov.my"
+          - generic [ref=e58]: "Password: password"
+          - generic [ref=e59]: Site admin for FELDA Sungai Tekam - manage peneroka, hutang, and potongan
+      - generic [ref=e60] [cursor=pointer]:
+        - generic [ref=e61]:
+          - generic [ref=e62]: Razak Site Admin
+          - generic [ref=e63]: Site Admin
+        - generic [ref=e64]:
+          - generic [ref=e65]: "Email: admin-jk@felda.gov.my"
+          - generic [ref=e66]: "Password: password"
+          - generic [ref=e67]: Site admin for FELDA Jengka - manage peneroka, hutang, and potongan
+      - generic [ref=e68] [cursor=pointer]:
+        - generic [ref=e69]:
+          - generic [ref=e70]: Siti Staff
+          - generic [ref=e71]: Site Staff
+        - generic [ref=e72]:
+          - generic [ref=e73]: "Email: staff-st@felda.gov.my"
+          - generic [ref=e74]: "Password: password"
+          - generic [ref=e75]: Basic site access for FELDA Sungai Tekam
+      - generic [ref=e76]: Click any account card above to auto-login

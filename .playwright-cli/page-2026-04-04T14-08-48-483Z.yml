@@ -1,0 +1,234 @@
+- generic [ref=e665]:
+  - generic [ref=e668]:
+    - list [ref=e670]:
+      - listitem [ref=e671]:
+        - link "Site FELDA Sungai Tekam FELDA-ST" [ref=e672] [cursor=pointer]:
+          - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+          - generic [ref=e673]:
+            - generic [ref=e674]: Site
+            - generic [ref=e675]: FELDA Sungai Tekam
+            - generic [ref=e676]: FELDA-ST
+    - generic [ref=e678]:
+      - generic [ref=e679]: Site Navigation
+      - list [ref=e680]:
+        - listitem [ref=e681]:
+          - link "Site Dashboard" [ref=e682] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+            - img [ref=e684]
+            - generic [ref=e689]: Site Dashboard
+        - listitem [ref=e690]:
+          - link "Peneroka" [ref=e691] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka
+            - img [ref=e693]
+            - generic [ref=e698]: Peneroka
+        - listitem [ref=e699]:
+          - link "Hutang" [ref=e700] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang
+            - img [ref=e702]
+            - generic [ref=e705]: Hutang
+        - listitem [ref=e706]:
+          - link "Potongan Bulanan" [ref=e707] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/potongan
+            - img [ref=e709]
+            - generic [ref=e712]: Potongan Bulanan
+        - listitem [ref=e713]:
+          - link "Allocation Review" [ref=e714] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations
+            - img [ref=e716]
+            - generic [ref=e718]: Allocation Review
+        - listitem [ref=e719]:
+          - link "Reports" [ref=e720] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports
+            - img [ref=e722]
+            - generic [ref=e725]: Reports
+        - listitem [ref=e726]:
+          - link "Audit Trail" [ref=e727] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/audit-logs
+            - img [ref=e729]
+            - generic [ref=e733]: Audit Trail
+    - generic [ref=e734]:
+      - list [ref=e735]:
+        - listitem [ref=e736]:
+          - button "FA Fatimah Site Admin" [ref=e737]:
+            - generic [ref=e739]: FA
+            - generic [ref=e741]: Fatimah Site Admin
+            - img [ref=e742]
+      - generic [ref=e747]:
+        - text: Your Role
+        - paragraph [ref=e748]: site admin
+  - main [ref=e749]:
+    - button "Toggle Sidebar" [ref=e752]:
+      - img
+      - generic [ref=e753]: Toggle Sidebar
+    - generic [ref=e754]:
+      - generic [ref=e756]:
+        - heading "Allocation Review" [level=1] [ref=e757]
+        - paragraph [ref=e758]: Review allocations for FELDA Sungai Tekam
+      - generic [ref=e759]:
+        - generic [ref=e760]:
+          - generic [ref=e761]: Month
+          - textbox [ref=e762]
+        - button "Apply" [ref=e763]
+        - button "Close Month" [ref=e764]
+      - table [ref=e767]:
+        - rowgroup [ref=e768]:
+          - row "Month Peneroka Amount Allocations Unallocated Status Actions" [ref=e769]:
+            - columnheader "Month" [ref=e770]
+            - columnheader "Peneroka" [ref=e771]
+            - columnheader "Amount" [ref=e772]
+            - columnheader "Allocations" [ref=e773]
+            - columnheader "Unallocated" [ref=e774]
+            - columnheader "Status" [ref=e775]
+            - columnheader "Actions" [ref=e776]
+        - rowgroup [ref=e777]:
+          - row "2026-02-01T00:00:00.000000Z Ali bin Hashim 397.00 2 0.00 Open View" [ref=e778]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e779]
+            - cell "Ali bin Hashim" [ref=e780]
+            - cell "397.00" [ref=e781]
+            - cell "2" [ref=e782]
+            - cell "0.00" [ref=e783]
+            - cell "Open" [ref=e784]
+            - cell "View" [ref=e785]:
+              - link "View" [ref=e786] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-a9ee-729e-9b50-da97cfd138ab
+          - row "2026-02-01T00:00:00.000000Z Rohani binti Daud 444.00 1 0.00 Open View" [ref=e787]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e788]
+            - cell "Rohani binti Daud" [ref=e789]
+            - cell "444.00" [ref=e790]
+            - cell "1" [ref=e791]
+            - cell "0.00" [ref=e792]
+            - cell "Open" [ref=e793]
+            - cell "View" [ref=e794]:
+              - link "View" [ref=e795] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-a87e-7103-a35d-c452ba5dfb79
+          - row "2026-02-01T00:00:00.000000Z Mohamed bin Salleh 457.00 2 0.00 Open View" [ref=e796]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e797]
+            - cell "Mohamed bin Salleh" [ref=e798]
+            - cell "457.00" [ref=e799]
+            - cell "2" [ref=e800]
+            - cell "0.00" [ref=e801]
+            - cell "Open" [ref=e802]
+            - cell "View" [ref=e803]:
+              - link "View" [ref=e804] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-a76f-7133-86f0-41f726a8c738
+          - row "2026-02-01T00:00:00.000000Z Halimah binti Omar 327.00 1 0.00 Open View" [ref=e805]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e806]
+            - cell "Halimah binti Omar" [ref=e807]
+            - cell "327.00" [ref=e808]
+            - cell "1" [ref=e809]
+            - cell "0.00" [ref=e810]
+            - cell "Open" [ref=e811]
+            - cell "View" [ref=e812]:
+              - link "View" [ref=e813] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-a65f-72a7-a877-4a036b6f71e8
+          - row "2026-02-01T00:00:00.000000Z Yusof bin Hamid 267.00 1 0.00 Open View" [ref=e814]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e815]
+            - cell "Yusof bin Hamid" [ref=e816]
+            - cell "267.00" [ref=e817]
+            - cell "1" [ref=e818]
+            - cell "0.00" [ref=e819]
+            - cell "Open" [ref=e820]
+            - cell "View" [ref=e821]:
+              - link "View" [ref=e822] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-a582-7322-ae5e-bad92a31b491
+          - row "2026-02-01T00:00:00.000000Z Aminah binti Ismail 403.00 2 0.00 Open View" [ref=e823]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e824]
+            - cell "Aminah binti Ismail" [ref=e825]
+            - cell "403.00" [ref=e826]
+            - cell "2" [ref=e827]
+            - cell "0.00" [ref=e828]
+            - cell "Open" [ref=e829]
+            - cell "View" [ref=e830]:
+              - link "View" [ref=e831] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-a494-70ef-a29d-705d7bb43249
+          - row "2026-02-01T00:00:00.000000Z Ibrahim bin Ali 109.00 2 0.00 Open View" [ref=e832]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e833]
+            - cell "Ibrahim bin Ali" [ref=e834]
+            - cell "109.00" [ref=e835]
+            - cell "2" [ref=e836]
+            - cell "0.00" [ref=e837]
+            - cell "Open" [ref=e838]
+            - cell "View" [ref=e839]:
+              - link "View" [ref=e840] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-a36e-7045-a334-f04297a61f74
+          - row "2026-02-01T00:00:00.000000Z Zainab binti Rahman 482.00 1 0.00 Open View" [ref=e841]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e842]
+            - cell "Zainab binti Rahman" [ref=e843]
+            - cell "482.00" [ref=e844]
+            - cell "1" [ref=e845]
+            - cell "0.00" [ref=e846]
+            - cell "Open" [ref=e847]
+            - cell "View" [ref=e848]:
+              - link "View" [ref=e849] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-a285-70f1-8c61-4479322b1b94
+          - row "2026-02-01T00:00:00.000000Z Hassan bin Mohamed 301.00 1 0.00 Open View" [ref=e850]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e851]
+            - cell "Hassan bin Mohamed" [ref=e852]
+            - cell "301.00" [ref=e853]
+            - cell "1" [ref=e854]
+            - cell "0.00" [ref=e855]
+            - cell "Open" [ref=e856]
+            - cell "View" [ref=e857]:
+              - link "View" [ref=e858] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-a18f-734c-b2a6-f98bd7e0daf3
+          - row "2026-02-01T00:00:00.000000Z Noraini binti Ahmad 281.00 1 0.00 Open View" [ref=e859]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e860]
+            - cell "Noraini binti Ahmad" [ref=e861]
+            - cell "281.00" [ref=e862]
+            - cell "1" [ref=e863]
+            - cell "0.00" [ref=e864]
+            - cell "Open" [ref=e865]
+            - cell "View" [ref=e866]:
+              - link "View" [ref=e867] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-a0b3-722b-838e-d3e84055a791
+          - row "2026-02-01T00:00:00.000000Z Kamal bin Yusof 248.00 1 0.00 Open View" [ref=e868]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e869]
+            - cell "Kamal bin Yusof" [ref=e870]
+            - cell "248.00" [ref=e871]
+            - cell "1" [ref=e872]
+            - cell "0.00" [ref=e873]
+            - cell "Open" [ref=e874]
+            - cell "View" [ref=e875]:
+              - link "View" [ref=e876] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-9fd2-71ab-8cda-6c36df670668
+          - row "2026-02-01T00:00:00.000000Z Siti binti Mahmud 290.00 0 290.00 Open View" [ref=e877]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e878]
+            - cell "Siti binti Mahmud" [ref=e879]
+            - cell "290.00" [ref=e880]
+            - cell "0" [ref=e881]
+            - cell "290.00" [ref=e882]
+            - cell "Open" [ref=e883]
+            - cell "View" [ref=e884]:
+              - link "View" [ref=e885] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-9f04-716b-9aae-731ed134d289
+          - row "2026-02-01T00:00:00.000000Z Razak bin Ibrahim 111.00 1 72.00 Open View" [ref=e886]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e887]
+            - cell "Razak bin Ibrahim" [ref=e888]
+            - cell "111.00" [ref=e889]
+            - cell "1" [ref=e890]
+            - cell "72.00" [ref=e891]
+            - cell "Open" [ref=e892]
+            - cell "View" [ref=e893]:
+              - link "View" [ref=e894] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-9e3e-73c3-859a-35e7d5485267
+          - row "2026-02-01T00:00:00.000000Z Fatimah binti Hassan 340.00 0 340.00 Open View" [ref=e895]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e896]
+            - cell "Fatimah binti Hassan" [ref=e897]
+            - cell "340.00" [ref=e898]
+            - cell "0" [ref=e899]
+            - cell "340.00" [ref=e900]
+            - cell "Open" [ref=e901]
+            - cell "View" [ref=e902]:
+              - link "View" [ref=e903] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-9d78-71af-a7b5-4e1aa09506b6
+          - row "2026-02-01T00:00:00.000000Z Ahmad bin Abdullah 205.00 1 0.00 Open View" [ref=e904]:
+            - cell "2026-02-01T00:00:00.000000Z" [ref=e905]
+            - cell "Ahmad bin Abdullah" [ref=e906]
+            - cell "205.00" [ref=e907]
+            - cell "1" [ref=e908]
+            - cell "0.00" [ref=e909]
+            - cell "Open" [ref=e910]
+            - cell "View" [ref=e911]:
+              - link "View" [ref=e912] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations/019c478b-9caa-7384-9b77-ac3eba344fb2
+  - generic "Notifications"

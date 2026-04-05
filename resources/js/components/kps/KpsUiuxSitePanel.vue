@@ -41,6 +41,8 @@ const { hasPermission } = usePermission();
 const siteBaseUrl = computed(() =>
     props.site ? `/kps/sites/${props.site.id}` : '/kps/sites',
 );
+const isExactUrlActive = (href: string) =>
+    page.url === href || page.url.startsWith(`${href}?`);
 
 const navItems = computed<NavItem[]>(() => {
     if (!props.site) return [];
@@ -52,7 +54,7 @@ const navItems = computed<NavItem[]>(() => {
             title: 'Site Dashboard',
             href: baseUrl,
             icon: LayoutGrid,
-            active: page.url.startsWith(baseUrl),
+            active: isExactUrlActive(baseUrl),
         },
         {
             title: 'Peneroka',

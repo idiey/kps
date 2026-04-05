@@ -4,7 +4,7 @@
 
 **Purpose**: Provide AI agents with essential context, patterns, and guidelines  
 **Intended audience**: AI assistants (Antigravity, Copilot, etc.)  
-**Last updated**: 2026-02-10  
+**Last updated**: 2026-04-04  
 **Links**: [PRD](../02-architecture/01-prd.md) | [System Design](../02-architecture/02-system-design.md)
 
 ## Project Context
@@ -145,22 +145,23 @@ Multi-site cooperative system for managing FELDA peneroka debt and monthly poton
 
 | Role | Code | Can Do |
 |------|------|--------|
-| Admin Officer | `pentadbiran` | Manage KEW.PA-10, admin tasks |
-| Company Admin | `company_admin` | Manage sites, analytics |
-| Supervisor | `penyelia` | Approve reports, assign jobs |
-| Inspector | `pemeriksa` | Conduct inspections |
-| Approver | `pelulus` | Approve workflows |
-| Technician | `juruteknik` | Perform repairs |
-| Front Desk | `kaunter` | Job intake, customer service |
+| HQ Admin | `pentadbiran` | Full KPS oversight, user and role administration |
+| Company Admin | `company_admin` | Manage sites, analytics, and HQ configuration |
+| Site Admin | `site_admin` | Manage site-scoped KPS operations and month closing |
+| Site Staff | `staff` | Maintain peneroka, hutang, and potongan data |
 
 ### Key Files
 
 - **Routes**: `routes/kps.php`
-- **Migrations**: `database/migrations/2026_02_09_*`
-- **Controllers**: `app/Http/Controllers/Kps/`
-- **Models**: `app/Models/`
-- **Services**: `app/Services/` (to be verified)
+- **Migrations**: `database/migrations/2026_02_09_*` (7 migrations)
+- **Controllers**: `app/Http/Controllers/Kps/` (9 controllers)
+- **Models**: `app/Models/Kps/` (Site, Peneroka, Debt, MonthlyDeduction, DeductionAllocation, AuditLog) + `app/Models/User.php`
+- **Services**: `app/Services/Kps/` — AllocationService, MonthlyClosingService, SiteContextResolver
+- **Policies**: `app/Policies/` — KpsSitePolicy, PenerokaPolicy, DebtPolicy, MonthlyDeductionPolicy
+- **Requests**: `app/Http/Requests/Kps/` — Store/Update requests per entity
+- **Middleware**: `app/Http/Middleware/EnsureKpsSiteContext.php`
 - **Enums**: `app/Enums/UserRole.php`
+- **Frontend Pages**: `resources/js/Pages/Kps/` (20+ Vue pages)
 
 ### Key Tables
 
@@ -181,4 +182,4 @@ Multi-site cooperative system for managing FELDA peneroka debt and monthly poton
 
 ---
 
-**Last Updated**: 2026-02-10
+**Last Updated**: 2026-04-04

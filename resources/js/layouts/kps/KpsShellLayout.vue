@@ -30,7 +30,7 @@ const showRail = computed(() => isHq.value && !props.forceSiteOnly);
 const showSitePanel = computed(() => !!props.site);
 const contentOffsetClass = computed(() => {
     if (showRail.value && showSitePanel.value) return 'lg:ml-[408px]';
-    if (showRail.value) return 'lg:ml-[104px]';
+    if (showRail.value) return 'lg:ml-[280px]';
     if (showSitePanel.value) return 'lg:ml-[320px]';
     return '';
 });
@@ -89,7 +89,10 @@ onBeforeUnmount(() => {
         :style="shellThemeStyle"
         data-kps-uiux-shell="true"
     >
-        <KpsUiuxRail v-if="showRail" />
+        <KpsUiuxRail
+            v-if="showRail"
+            :with-site-panel="showSitePanel"
+        />
         <KpsUiuxSitePanel
             v-if="showSitePanel"
             :site="site"

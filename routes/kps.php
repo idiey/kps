@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Kps\AllocationReviewController;
+use App\Http\Controllers\Kps\AuditLogController;
 use App\Http\Controllers\Kps\AnalyticsController;
 use App\Http\Controllers\Kps\DashboardController;
 use App\Http\Controllers\Kps\DebtController;
@@ -59,6 +60,12 @@ Route::middleware(['auth', 'verified', EnsureKpsSiteContext::class])
 
             // Reports
             Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+            Route::get('reports/export/csv', [ReportController::class, 'exportSiteCsv'])->name('reports.export.csv');
             Route::get('reports/peneroka/{peneroka}', [ReportController::class, 'penerokaStatement'])->name('reports.statement');
+            Route::get('reports/peneroka/{peneroka}/export/csv', [ReportController::class, 'exportPenerokaStatementCsv'])->name('reports.statement.export.csv');
+            Route::get('reports/peneroka/{peneroka}/export/pdf', [ReportController::class, 'exportPenerokaStatementPdf'])->name('reports.statement.export.pdf');
+
+            // Audit Trail
+            Route::get('audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
         });
     });

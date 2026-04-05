@@ -21,7 +21,7 @@ class DashboardController extends Controller
             'sites' => Site::count(),
             'peneroka' => Peneroka::count(),
             'total_debt_balance' => Debt::sum('balance'),
-            'monthly_deductions' => MonthlyDeduction::where('month', now()->startOfMonth()->toDateString())->sum('amount'),
+            'monthly_deductions' => MonthlyDeduction::whereDate('month', now()->startOfMonth()->toDateString())->sum('amount'),
         ];
 
         return Inertia::render('Kps/Dashboard', [

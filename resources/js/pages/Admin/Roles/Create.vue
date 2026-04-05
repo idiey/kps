@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
+import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -54,43 +54,22 @@ const isPermissionSelected = (permissionId: number) => {
 // Group permissions by module
 const groupedPermissions = computed(() => {
     const groups: Record<string, Permission[]> = {
-        'Workshop Jobs': [],
-        'Customers': [],
-        'Users': [],
-        'Reports': [],
-        'Analytics': [],
-        'Notes': [],
-        'Approvals': [],
+        KPS: [],
+        Users: [],
         'Roles & Permissions': [],
-        'Assets': [],
-        'Inventory': [],
-        'Settings': [],
+        Other: [],
     };
 
     props.permissions.forEach((permission) => {
         const name = permission.name.toLowerCase();
-        if (name.includes('job')) {
-            groups['Workshop Jobs'].push(permission);
-        } else if (name.includes('customer')) {
-            groups['Customers'].push(permission);
+        if (name.startsWith('kps.')) {
+            groups.KPS.push(permission);
         } else if (name.includes('user')) {
-            groups['Users'].push(permission);
-        } else if (name.includes('report')) {
-            groups['Reports'].push(permission);
-        } else if (name.includes('analytics')) {
-            groups['Analytics'].push(permission);
-        } else if (name.includes('note')) {
-            groups['Notes'].push(permission);
-        } else if (name.includes('approve') || name.includes('reject') || name.includes('inspect')) {
-            groups['Approvals'].push(permission);
+            groups.Users.push(permission);
         } else if (name.includes('role') || name.includes('permission')) {
             groups['Roles & Permissions'].push(permission);
-        } else if (name.includes('asset')) {
-            groups['Assets'].push(permission);
-        } else if (name.includes('inventory') || name.includes('stock')) {
-            groups['Inventory'].push(permission);
-        } else if (name.includes('setting')) {
-            groups['Settings'].push(permission);
+        } else {
+            groups.Other.push(permission);
         }
     });
 
@@ -108,7 +87,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 <template>
     <Head title="Create New Role" />
 
-    <AppLayout :breadcrumbs="breadcrumbs">
+    <KpsShellLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6">
             <!-- Header -->
             <div class="flex items-center justify-between">
@@ -230,5 +209,5 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </div>
             </form>
         </div>
-    </AppLayout>
+    </KpsShellLayout>
 </template>

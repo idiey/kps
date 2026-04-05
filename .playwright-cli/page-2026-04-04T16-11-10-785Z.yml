@@ -1,0 +1,117 @@
+- generic [ref=e390]:
+  - generic [ref=e393]:
+    - list [ref=e395]:
+      - listitem [ref=e396]:
+        - link "Site Workspace FELDA Sungai Tekam FELDA-ST" [ref=e397] [cursor=pointer]:
+          - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+          - generic [ref=e398]:
+            - generic [ref=e399]: Site Workspace
+            - generic [ref=e400]: FELDA Sungai Tekam
+            - generic [ref=e401]: FELDA-ST
+    - generic [ref=e403]:
+      - generic [ref=e404]: Site Navigation
+      - list [ref=e405]:
+        - listitem [ref=e406]:
+          - link "Site Dashboard" [ref=e407] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+            - img [ref=e409]
+            - generic [ref=e414]: Site Dashboard
+        - listitem [ref=e415]:
+          - link "Peneroka" [ref=e416] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka
+            - img [ref=e418]
+            - generic [ref=e423]: Peneroka
+        - listitem [ref=e424]:
+          - link "Hutang" [ref=e425] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang
+            - img [ref=e427]
+            - generic [ref=e430]: Hutang
+        - listitem [ref=e431]:
+          - link "Potongan Bulanan" [ref=e432] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/potongan
+            - img [ref=e434]
+            - generic [ref=e437]: Potongan Bulanan
+        - listitem [ref=e438]:
+          - link "Allocation Review" [ref=e439] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations
+            - img [ref=e441]
+            - generic [ref=e443]: Allocation Review
+        - listitem [ref=e444]:
+          - link "Reports" [ref=e445] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports
+            - img [ref=e447]
+            - generic [ref=e450]: Reports
+        - listitem [ref=e451]:
+          - link "Audit Trail" [ref=e452] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/audit-logs
+            - img [ref=e454]
+            - generic [ref=e458]: Audit Trail
+    - generic [ref=e459]:
+      - list [ref=e460]:
+        - listitem [ref=e461]:
+          - button "FA Fatimah Site Admin" [ref=e462]:
+            - generic [ref=e464]: FA
+            - generic [ref=e466]: Fatimah Site Admin
+            - img [ref=e467]
+      - generic [ref=e472]:
+        - text: Your Role
+        - paragraph [ref=e473]: site admin
+  - main [ref=e474]:
+    - generic [ref=e476]:
+      - generic [ref=e477]:
+        - button "Toggle Sidebar" [ref=e478]:
+          - img
+          - generic [ref=e479]: Toggle Sidebar
+        - generic [ref=e480]: KPS Live
+      - link "Preview Library" [ref=e481] [cursor=pointer]:
+        - /url: /kps/preview
+        - img
+        - generic [ref=e482]: Preview Library
+    - generic [ref=e483]:
+      - generic [ref=e484]:
+        - generic [ref=e485]:
+          - paragraph [ref=e486]: Allocation Workspace
+          - heading "Allocation Review" [level=1] [ref=e487]
+          - paragraph [ref=e488]: Review live deduction allocations for FELDA Sungai Tekam. Each row reflects the waterfall results and whether the month is still open.
+        - button "Close Month" [ref=e490]
+      - generic [ref=e491]:
+        - generic [ref=e492]:
+          - paragraph [ref=e493]: Selected Month
+          - paragraph [ref=e494]: April 2026
+          - paragraph [ref=e495]: Allocation review is scoped to this month before closure.
+        - generic [ref=e496]:
+          - paragraph [ref=e497]: Total Amount
+          - paragraph [ref=e498]: "0.00"
+          - paragraph [ref=e499]: Gross deduction amount in the active review month.
+        - generic [ref=e500]:
+          - paragraph [ref=e501]: Unallocated
+          - paragraph [ref=e502]: "0.00"
+          - paragraph [ref=e503]: Balance waiting to be absorbed or reviewed.
+        - generic [ref=e504]:
+          - paragraph [ref=e505]: Open vs Closed
+          - paragraph [ref=e506]: 0 / 0
+          - paragraph [ref=e507]: Operational status for deductions in the active month review.
+      - generic [ref=e508]:
+        - generic [ref=e509]:
+          - generic [ref=e510]:
+            - paragraph [ref=e511]: Month Filter
+            - heading "Live allocation ledger" [level=2] [ref=e512]
+          - generic [ref=e513]:
+            - generic [ref=e514]:
+              - generic [ref=e515]: Month
+              - textbox [ref=e516]: 2026-04
+            - button "Apply" [ref=e517]
+        - table [ref=e520]:
+          - rowgroup [ref=e521]:
+            - row "Month Peneroka Amount Allocations Unallocated Status Actions" [ref=e522]:
+              - columnheader "Month" [ref=e523]
+              - columnheader "Peneroka" [ref=e524]
+              - columnheader "Amount" [ref=e525]
+              - columnheader "Allocations" [ref=e526]
+              - columnheader "Unallocated" [ref=e527]
+              - columnheader "Status" [ref=e528]
+              - columnheader "Actions" [ref=e529]
+          - rowgroup [ref=e530]:
+            - row "No allocations found." [ref=e531]:
+              - cell "No allocations found." [ref=e532]
+  - generic "Notifications"

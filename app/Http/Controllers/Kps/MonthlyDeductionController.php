@@ -25,23 +25,36 @@ class MonthlyDeductionController extends Controller
         $this->authorize('viewAny', MonthlyDeduction::class);
 
         $month = $request->get('month');
+        $monthDate = $month
+            ? Carbon::createFromFormat('Y-m', $month)->startOfMonth()->toDateString()
+            : Carbon::now()->startOfMonth()->toDateString();
+        $selectedMonth = Carbon::parse($monthDate)->format('Y-m');
         $query = MonthlyDeduction::query()
             ->with('peneroka')
             ->where('site_id', $site->id)
+            ->whereDate('month', $monthDate)
             ->orderByDesc('month');
 
-        if ($month) {
-            $query->where('month', Carbon::createFromFormat('Y-m', $month)->startOfMonth()->toDateString());
-        }
-
         $deductions = $query->paginate(15)->withQueryString();
+        $summaryQuery = MonthlyDeduction::query()
+            ->where('site_id', $site->id)
+            ->whereDate('month', $monthDate);
+
+        $summary = [
+            'deduction_count' => (clone $summaryQuery)->count(),
+            'total_amount' => (float) (clone $summaryQuery)->sum('amount'),
+            'total_unallocated' => (float) (clone $summaryQuery)->sum('unallocated_amount'),
+            'closed_count' => (clone $summaryQuery)->where('is_closed', true)->count(),
+        ];
 
         $context = $resolver->resolve($request, $site);
 
         return Inertia::render('Kps/Potongan/Index', [
             'site' => $site,
             'deductions' => $deductions,
-            'selectedMonth' => $month,
+            'selectedMonth' => $selectedMonth,
+            'monthLabel' => Carbon::parse($monthDate)->format('F Y'),
+            'summary' => $summary,
             'siteRole' => $context['siteRole'],
         ]);
     }
@@ -81,19 +94,30 @@ class MonthlyDeductionController extends Controller
             return back()->withErrors(['month' => 'Month is closed for this site.']);
         }
 
-        $deduction = MonthlyDeduction::updateOrCreate(
-            [
-                'peneroka_id' => $peneroka->id,
-                'month' => $monthDate,
-            ],
-            [
+        $deduction = MonthlyDeduction::query()
+            ->where('peneroka_id', $peneroka->id)
+            ->whereDate('month', $monthDate)
+            ->first();
+
+        if ($deduction) {
+            $deduction->fill([
                 'site_id' => $site->id,
                 'amount' => $data['amount'],
                 'unallocated_amount' => 0,
                 'is_closed' => false,
                 'closed_at' => null,
-            ]
-        );
+            ])->save();
+        } else {
+            $deduction = MonthlyDeduction::create([
+                'peneroka_id' => $peneroka->id,
+                'site_id' => $site->id,
+                'month' => $monthDate,
+                'amount' => $data['amount'],
+                'unallocated_amount' => 0,
+                'is_closed' => false,
+                'closed_at' => null,
+            ]);
+        }
 
         $allocationService->reallocate($deduction);
 
@@ -140,19 +164,30 @@ class MonthlyDeductionController extends Controller
                 continue;
             }
 
-            $deduction = MonthlyDeduction::updateOrCreate(
-                [
-                    'peneroka_id' => $peneroka->id,
-                    'month' => $monthDate,
-                ],
-                [
+            $deduction = MonthlyDeduction::query()
+                ->where('peneroka_id', $peneroka->id)
+                ->whereDate('month', $monthDate)
+                ->first();
+
+            if ($deduction) {
+                $deduction->fill([
                     'site_id' => $site->id,
                     'amount' => $entry['amount'],
                     'unallocated_amount' => 0,
                     'is_closed' => false,
                     'closed_at' => null,
-                ]
-            );
+                ])->save();
+            } else {
+                $deduction = MonthlyDeduction::create([
+                    'peneroka_id' => $peneroka->id,
+                    'site_id' => $site->id,
+                    'month' => $monthDate,
+                    'amount' => $entry['amount'],
+                    'unallocated_amount' => 0,
+                    'is_closed' => false,
+                    'closed_at' => null,
+                ]);
+            }
 
             $allocationService->reallocate($deduction);
         }

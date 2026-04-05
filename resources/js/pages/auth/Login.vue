@@ -30,7 +30,7 @@ const submit = () => {
     });
 };
 
-const autoLogin = (email: string, role: string) => {
+const autoLogin = (email: string) => {
     form.email = email;
     form.password = 'password';
     submit();
@@ -57,8 +57,8 @@ const autoLogin = (email: string, role: string) => {
                     <Label for="email">Email address</Label>
                     <Input
                         id="email"
-                        type="email"
                         v-model="form.email"
+                        type="email"
                         required
                         autofocus
                         :tabindex="1"
@@ -82,8 +82,8 @@ const autoLogin = (email: string, role: string) => {
                     </div>
                     <Input
                         id="password"
-                        type="password"
                         v-model="form.password"
+                        type="password"
                         required
                         :tabindex="2"
                         autocomplete="current-password"
@@ -94,11 +94,11 @@ const autoLogin = (email: string, role: string) => {
 
                 <div class="flex items-center justify-between">
                     <Label for="remember" class="flex items-center space-x-3">
-                        <Checkbox 
-                            id="remember" 
-                            name="remember" 
-                            v-model:checked="form.remember" 
-                            :tabindex="3" 
+                        <Checkbox
+                            id="remember"
+                            name="remember"
+                            v-model:checked="form.remember"
+                            :tabindex="3"
                         />
                         <span>Remember me</span>
                     </Label>
@@ -117,98 +117,97 @@ const autoLogin = (email: string, role: string) => {
             </div>
 
             <div
-                class="text-center text-sm text-muted-foreground"
                 v-if="canRegister"
+                class="text-center text-sm text-muted-foreground"
             >
                 Don't have an account?
                 <TextLink :href="register()" :tabindex="5">Sign up</TextLink>
             </div>
         </form>
 
-        <!-- Seeded Accounts (Development Only) -->
         <div class="mt-6 rounded-lg border border-dashed border-muted-foreground/30 bg-muted/30 p-4">
             <details class="group" open>
                 <summary class="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
-                    🧪 Seeded Accounts (Click to login)
+                    Seeded Accounts (click to auto-login)
                 </summary>
                 <div class="mt-4 space-y-3 text-xs">
-                    <div 
-                        @click="autoLogin('global-admin@felda.gov.my', 'Global Admin')"
-                        class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
+                    <div
+                        class="group/item cursor-pointer rounded-md border bg-background p-3 transition-colors hover:bg-muted/50"
+                        @click="autoLogin('global-admin@felda.gov.my')"
                     >
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">Global Admin</span>
-                            <span class="rounded-full bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 text-amber-700 dark:text-amber-300">Pentadbiran</span>
+                        <div class="mb-2 flex items-center justify-between">
+                            <span class="font-semibold transition-colors group-hover/item:text-primary">Global Admin</span>
+                            <span class="rounded-full bg-amber-100 px-2 py-0.5 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">Pentadbiran</span>
                         </div>
                         <div class="space-y-1 text-muted-foreground">
                             <div><span class="font-medium">Email:</span> global-admin@felda.gov.my</div>
                             <div><span class="font-medium">Password:</span> password</div>
-                            <div class="text-[10px] mt-2 text-muted-foreground/70">Full system access, manage everything</div>
+                            <div class="mt-2 text-[10px] text-muted-foreground/70">Full system access across KPS</div>
                         </div>
                     </div>
 
-                    <div 
-                        @click="autoLogin('hq-admin@felda.gov.my', 'HQ Admin')"
-                        class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
+                    <div
+                        class="group/item cursor-pointer rounded-md border bg-background p-3 transition-colors hover:bg-muted/50"
+                        @click="autoLogin('hq-admin@felda.gov.my')"
                     >
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">Ahmad HQ Admin</span>
-                            <span class="rounded-full bg-indigo-100 dark:bg-indigo-900/30 px-2 py-0.5 text-indigo-700 dark:text-indigo-300">Company Admin</span>
+                        <div class="mb-2 flex items-center justify-between">
+                            <span class="font-semibold transition-colors group-hover/item:text-primary">Ahmad HQ Admin</span>
+                            <span class="rounded-full bg-indigo-100 px-2 py-0.5 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300">HQ Admin</span>
                         </div>
                         <div class="space-y-1 text-muted-foreground">
                             <div><span class="font-medium">Email:</span> hq-admin@felda.gov.my</div>
                             <div><span class="font-medium">Password:</span> password</div>
-                            <div class="text-[10px] mt-2 text-muted-foreground/70">Manage all sites, users, reports, and KPS settings</div>
+                            <div class="mt-2 text-[10px] text-muted-foreground/70">Manage all sites, month approvals, and KPS reporting</div>
                         </div>
                     </div>
 
-                    <div 
-                        @click="autoLogin('admin-st@felda.gov.my', 'Site Admin ST')"
-                        class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
+                    <div
+                        class="group/item cursor-pointer rounded-md border bg-background p-3 transition-colors hover:bg-muted/50"
+                        @click="autoLogin('admin-st@felda.gov.my')"
                     >
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">Fatimah Site Admin</span>
-                            <span class="rounded-full bg-cyan-100 dark:bg-cyan-900/30 px-2 py-0.5 text-cyan-700 dark:text-cyan-300">Penyelia + Site Admin</span>
+                        <div class="mb-2 flex items-center justify-between">
+                            <span class="font-semibold transition-colors group-hover/item:text-primary">Fatimah Site Admin</span>
+                            <span class="rounded-full bg-cyan-100 px-2 py-0.5 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300">Site Admin</span>
                         </div>
                         <div class="space-y-1 text-muted-foreground">
                             <div><span class="font-medium">Email:</span> admin-st@felda.gov.my</div>
                             <div><span class="font-medium">Password:</span> password</div>
-                            <div class="text-[10px] mt-2 text-muted-foreground/70">Site admin for FELDA Sungai Tekam — manage peneroka, hutang, potongan</div>
+                            <div class="mt-2 text-[10px] text-muted-foreground/70">Site admin for FELDA Sungai Tekam - manage peneroka, hutang, and potongan</div>
                         </div>
                     </div>
 
-                    <div 
-                        @click="autoLogin('admin-jk@felda.gov.my', 'Site Admin JK')"
-                        class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
+                    <div
+                        class="group/item cursor-pointer rounded-md border bg-background p-3 transition-colors hover:bg-muted/50"
+                        @click="autoLogin('admin-jk@felda.gov.my')"
                     >
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">Razak Site Admin</span>
-                            <span class="rounded-full bg-cyan-100 dark:bg-cyan-900/30 px-2 py-0.5 text-cyan-700 dark:text-cyan-300">Penyelia + Site Admin</span>
+                        <div class="mb-2 flex items-center justify-between">
+                            <span class="font-semibold transition-colors group-hover/item:text-primary">Razak Site Admin</span>
+                            <span class="rounded-full bg-cyan-100 px-2 py-0.5 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300">Site Admin</span>
                         </div>
                         <div class="space-y-1 text-muted-foreground">
                             <div><span class="font-medium">Email:</span> admin-jk@felda.gov.my</div>
                             <div><span class="font-medium">Password:</span> password</div>
-                            <div class="text-[10px] mt-2 text-muted-foreground/70">Site admin for FELDA Jengka — manage peneroka, hutang, potongan</div>
+                            <div class="mt-2 text-[10px] text-muted-foreground/70">Site admin for FELDA Jengka - manage peneroka, hutang, and potongan</div>
                         </div>
                     </div>
 
-                    <div 
-                        @click="autoLogin('staff-st@felda.gov.my', 'Site Staff')"
-                        class="rounded-md border bg-background p-3 cursor-pointer hover:bg-muted/50 transition-colors group/item"
+                    <div
+                        class="group/item cursor-pointer rounded-md border bg-background p-3 transition-colors hover:bg-muted/50"
+                        @click="autoLogin('staff-st@felda.gov.my')"
                     >
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-semibold group-hover/item:text-primary transition-colors">Siti Staff</span>
-                            <span class="rounded-full bg-pink-100 dark:bg-pink-900/30 px-2 py-0.5 text-pink-700 dark:text-pink-300">Kaunter</span>
+                        <div class="mb-2 flex items-center justify-between">
+                            <span class="font-semibold transition-colors group-hover/item:text-primary">Siti Staff</span>
+                            <span class="rounded-full bg-pink-100 px-2 py-0.5 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300">Site Staff</span>
                         </div>
                         <div class="space-y-1 text-muted-foreground">
                             <div><span class="font-medium">Email:</span> staff-st@felda.gov.my</div>
                             <div><span class="font-medium">Password:</span> password</div>
-                            <div class="text-[10px] mt-2 text-muted-foreground/70">Front desk staff for FELDA Sungai Tekam — data entry, view KPS</div>
+                            <div class="mt-2 text-[10px] text-muted-foreground/70">Basic site access for FELDA Sungai Tekam</div>
                         </div>
                     </div>
 
-                    <div class="mt-3 pt-3 border-t text-[10px] text-muted-foreground/70">
-                        💡 Click on any account card above to auto-login
+                    <div class="mt-3 border-t pt-3 text-[10px] text-muted-foreground/70">
+                        Click any account card above to auto-login
                     </div>
                 </div>
             </details>

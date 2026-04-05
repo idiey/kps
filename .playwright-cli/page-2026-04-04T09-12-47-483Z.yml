@@ -1,0 +1,157 @@
+- generic [ref=e441]:
+  - generic [ref=e444]:
+    - list [ref=e446]:
+      - listitem [ref=e447]:
+        - link "Site FELDA Sungai Tekam FELDA-ST" [ref=e448] [cursor=pointer]:
+          - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+          - generic [ref=e449]:
+            - generic [ref=e450]: Site
+            - generic [ref=e451]: FELDA Sungai Tekam
+            - generic [ref=e452]: FELDA-ST
+    - generic [ref=e454]:
+      - generic [ref=e455]: Site Navigation
+      - list [ref=e456]:
+        - listitem [ref=e457]:
+          - link "Site Dashboard" [ref=e458] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+            - img [ref=e460]
+            - generic [ref=e465]: Site Dashboard
+        - listitem [ref=e466]:
+          - link "Peneroka" [ref=e467] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka
+            - img [ref=e469]
+            - generic [ref=e474]: Peneroka
+        - listitem [ref=e475]:
+          - link "Hutang" [ref=e476] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang
+            - img [ref=e478]
+            - generic [ref=e481]: Hutang
+        - listitem [ref=e482]:
+          - link "Potongan Bulanan" [ref=e483] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/potongan
+            - img [ref=e485]
+            - generic [ref=e488]: Potongan Bulanan
+        - listitem [ref=e489]:
+          - link "Allocation Review" [ref=e490] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations
+            - img [ref=e492]
+            - generic [ref=e494]: Allocation Review
+        - listitem [ref=e495]:
+          - link "Reports" [ref=e496] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports
+            - img [ref=e498]
+            - generic [ref=e501]: Reports
+    - generic [ref=e502]:
+      - list [ref=e503]:
+        - listitem [ref=e504]:
+          - button "FA Fatimah Site Admin" [ref=e505]:
+            - generic [ref=e507]: FA
+            - generic [ref=e509]: Fatimah Site Admin
+            - img [ref=e510]
+      - generic [ref=e515]:
+        - text: Your Role
+        - paragraph [ref=e516]: site admin
+  - main [ref=e517]:
+    - button "Toggle Sidebar" [ref=e520]:
+      - img
+      - generic [ref=e521]: Toggle Sidebar
+    - generic [ref=e522]:
+      - generic [ref=e523]:
+        - generic [ref=e524]:
+          - heading "Statement" [level=1] [ref=e525]
+          - paragraph [ref=e526]: Ahmad bin Abdullah
+        - generic [ref=e527]:
+          - link "Export CSV" [active] [ref=e528] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9bf6-73be-bb5a-e7c2dcfef7c4/export/csv
+          - link "Download PDF" [ref=e529] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9bf6-73be-bb5a-e7c2dcfef7c4/export/pdf
+          - link "Back to Reports" [ref=e530] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports
+      - generic [ref=e531]:
+        - generic [ref=e532]:
+          - heading "Debts" [level=3] [ref=e534]
+          - generic [ref=e536]: "2"
+        - generic [ref=e537]:
+          - heading "Outstanding" [level=3] [ref=e539]
+          - generic [ref=e541]: "260.00"
+        - generic [ref=e542]:
+          - heading "Total Deductions" [level=3] [ref=e544]
+          - generic [ref=e546]: "858.00"
+        - generic [ref=e547]:
+          - heading "Allocated" [level=3] [ref=e549]
+          - generic [ref=e551]: "858.00"
+        - generic [ref=e552]:
+          - heading "Unallocated" [level=3] [ref=e554]
+          - generic [ref=e556]: "0.00"
+      - generic [ref=e557]:
+        - heading "Peneroka Details" [level=3] [ref=e559]
+        - generic [ref=e560]:
+          - generic [ref=e561]: "IC: 650101-01-5678"
+          - generic [ref=e562]: "Phone: 014-107 5150"
+          - generic [ref=e563]: "Address: Lot 0, FELDA Sungai Tekam"
+      - generic [ref=e564]:
+        - heading "Hutang" [level=3] [ref=e566]
+        - table [ref=e570]:
+          - rowgroup [ref=e571]:
+            - row "Description Priority Balance Due Date" [ref=e572]:
+              - columnheader "Description" [ref=e573]
+              - columnheader "Priority" [ref=e574]
+              - columnheader "Balance" [ref=e575]
+              - columnheader "Due Date" [ref=e576]
+          - rowgroup [ref=e577]:
+            - row "Pendahuluan Tunai 2 0.00 2026-12-10T00:00:00.000000Z" [ref=e578]:
+              - cell "Pendahuluan Tunai" [ref=e579]
+              - cell "2" [ref=e580]
+              - cell "0.00" [ref=e581]
+              - cell "2026-12-10T00:00:00.000000Z" [ref=e582]
+            - row "Hutang Racun Perosak 5 260.00 2026-03-10T00:00:00.000000Z" [ref=e583]:
+              - cell "Hutang Racun Perosak" [ref=e584]
+              - cell "5" [ref=e585]
+              - cell "260.00" [ref=e586]
+              - cell "2026-03-10T00:00:00.000000Z" [ref=e587]
+      - generic [ref=e588]:
+        - heading "Monthly Deductions" [level=3] [ref=e590]
+        - generic [ref=e592]:
+          - generic [ref=e593]:
+            - generic [ref=e594]:
+              - generic [ref=e595]: 2026-02-01T00:00:00.000000Z
+              - generic [ref=e596]: "Amount: 205.00 | Unallocated: 0.00"
+            - table [ref=e599]:
+              - rowgroup [ref=e600]:
+                - row "Debt Allocated" [ref=e601]:
+                  - columnheader "Debt" [ref=e602]
+                  - columnheader "Allocated" [ref=e603]
+              - rowgroup [ref=e604]:
+                - row "Hutang Racun Perosak 205.00" [ref=e605]:
+                  - cell "Hutang Racun Perosak" [ref=e606]
+                  - cell "205.00" [ref=e607]
+          - generic [ref=e608]:
+            - generic [ref=e609]:
+              - generic [ref=e610]: 2026-01-01T00:00:00.000000Z
+              - generic [ref=e611]: "Amount: 247.00 | Unallocated: 0.00"
+            - table [ref=e614]:
+              - rowgroup [ref=e615]:
+                - row "Debt Allocated" [ref=e616]:
+                  - columnheader "Debt" [ref=e617]
+                  - columnheader "Allocated" [ref=e618]
+              - rowgroup [ref=e619]:
+                - row "Pendahuluan Tunai 154.00" [ref=e620]:
+                  - cell "Pendahuluan Tunai" [ref=e621]
+                  - cell "154.00" [ref=e622]
+                - row "Hutang Racun Perosak 93.00" [ref=e623]:
+                  - cell "Hutang Racun Perosak" [ref=e624]
+                  - cell "93.00" [ref=e625]
+          - generic [ref=e626]:
+            - generic [ref=e627]:
+              - generic [ref=e628]: 2025-12-01T00:00:00.000000Z
+              - generic [ref=e629]: "Amount: 406.00 | Unallocated: 0.00"
+            - table [ref=e632]:
+              - rowgroup [ref=e633]:
+                - row "Debt Allocated" [ref=e634]:
+                  - columnheader "Debt" [ref=e635]
+                  - columnheader "Allocated" [ref=e636]
+              - rowgroup [ref=e637]:
+                - row "Pendahuluan Tunai 406.00" [ref=e638]:
+                  - cell "Pendahuluan Tunai" [ref=e639]
+                  - cell "406.00" [ref=e640]
+  - generic "Notifications"

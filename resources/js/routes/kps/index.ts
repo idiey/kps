@@ -5,8 +5,9 @@ import hutang from './hutang'
 import potongan from './potongan'
 import allocations from './allocations'
 import reports from './reports'
+import auditLogs from './audit-logs'
 /**
- * @see routes/kps.php:18
+ * @see routes/kps.php:19
  * @route '/kps'
  */
 export const home = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -20,7 +21,7 @@ home.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/kps.php:18
+ * @see routes/kps.php:19
  * @route '/kps'
  */
 home.url = (options?: RouteQueryOptions) => {
@@ -28,7 +29,7 @@ home.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/kps.php:18
+ * @see routes/kps.php:19
  * @route '/kps'
  */
 home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -36,7 +37,7 @@ home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/kps.php:18
+ * @see routes/kps.php:19
  * @route '/kps'
  */
 home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +46,7 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/kps.php:18
+ * @see routes/kps.php:19
  * @route '/kps'
  */
     const homeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,7 +55,7 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/kps.php:18
+ * @see routes/kps.php:19
  * @route '/kps'
  */
         homeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -62,7 +63,7 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/kps.php:18
+ * @see routes/kps.php:19
  * @route '/kps'
  */
         homeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -156,7 +157,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     dashboard.form = dashboardForm
 /**
 * @see \App\Http\Controllers\Kps\AnalyticsController::analytics
- * @see app/Http/Controllers/Kps/AnalyticsController.php:15
+ * @see app/Http/Controllers/Kps/AnalyticsController.php:17
  * @route '/kps/analytics'
  */
 export const analytics = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -171,7 +172,7 @@ analytics.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\AnalyticsController::analytics
- * @see app/Http/Controllers/Kps/AnalyticsController.php:15
+ * @see app/Http/Controllers/Kps/AnalyticsController.php:17
  * @route '/kps/analytics'
  */
 analytics.url = (options?: RouteQueryOptions) => {
@@ -180,7 +181,7 @@ analytics.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Kps\AnalyticsController::analytics
- * @see app/Http/Controllers/Kps/AnalyticsController.php:15
+ * @see app/Http/Controllers/Kps/AnalyticsController.php:17
  * @route '/kps/analytics'
  */
 analytics.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -189,7 +190,7 @@ analytics.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Kps\AnalyticsController::analytics
- * @see app/Http/Controllers/Kps/AnalyticsController.php:15
+ * @see app/Http/Controllers/Kps/AnalyticsController.php:17
  * @route '/kps/analytics'
  */
 analytics.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -199,7 +200,7 @@ analytics.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Kps\AnalyticsController::analytics
- * @see app/Http/Controllers/Kps/AnalyticsController.php:15
+ * @see app/Http/Controllers/Kps/AnalyticsController.php:17
  * @route '/kps/analytics'
  */
     const analyticsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -209,7 +210,7 @@ analytics.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Kps\AnalyticsController::analytics
- * @see app/Http/Controllers/Kps/AnalyticsController.php:15
+ * @see app/Http/Controllers/Kps/AnalyticsController.php:17
  * @route '/kps/analytics'
  */
         analyticsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -218,7 +219,7 @@ analytics.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Kps\AnalyticsController::analytics
- * @see app/Http/Controllers/Kps/AnalyticsController.php:15
+ * @see app/Http/Controllers/Kps/AnalyticsController.php:17
  * @route '/kps/analytics'
  */
         analyticsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -242,6 +243,7 @@ hutang: Object.assign(hutang, hutang),
 potongan: Object.assign(potongan, potongan),
 allocations: Object.assign(allocations, allocations),
 reports: Object.assign(reports, reports),
+auditLogs: Object.assign(auditLogs, auditLogs),
 }
 
 export default kps

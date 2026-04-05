@@ -4,7 +4,7 @@
 
 **Purpose**: Multi-site cooperative system for managing FELDA peneroka debt and monthly potongan allocation  
 **Intended audience**: All stakeholders (HQ Admin, Site Staff, Developers, Product Owners)  
-**Last updated**: 2026-02-10  
+**Last updated**: 2026-04-04  
 **Links**: [PRD](../02-architecture/01-prd.md) | [System Design](../02-architecture/02-system-design.md)
 
 ## Problem Statement
@@ -73,4 +73,4 @@ KPS delivers a structured, auditable multi-site system with:
 
 ---
 
-**Last Updated**: 2026-02-10
+**Last Updated**: 2026-04-04

@@ -22,24 +22,37 @@ class AllocationReviewController extends Controller
         $this->authorize('viewAny', MonthlyDeduction::class);
 
         $month = $request->get('month');
+        $monthDate = $month
+            ? Carbon::createFromFormat('Y-m', $month)->startOfMonth()->toDateString()
+            : Carbon::now()->startOfMonth()->toDateString();
+        $selectedMonth = Carbon::parse($monthDate)->format('Y-m');
         $query = MonthlyDeduction::query()
             ->with('peneroka')
             ->withCount('allocations')
             ->where('site_id', $site->id)
+            ->whereDate('month', $monthDate)
             ->orderByDesc('month');
 
-        if ($month) {
-            $query->where('month', Carbon::createFromFormat('Y-m', $month)->startOfMonth()->toDateString());
-        }
-
         $deductions = $query->paginate(15)->withQueryString();
+        $summaryQuery = MonthlyDeduction::query()
+            ->where('site_id', $site->id)
+            ->whereDate('month', $monthDate);
+
+        $summary = [
+            'deduction_count' => (clone $summaryQuery)->count(),
+            'total_amount' => (float) (clone $summaryQuery)->sum('amount'),
+            'total_unallocated' => (float) (clone $summaryQuery)->sum('unallocated_amount'),
+            'closed_count' => (clone $summaryQuery)->where('is_closed', true)->count(),
+        ];
 
         $context = $resolver->resolve($request, $site);
 
         return Inertia::render('Kps/Allocations/Index', [
             'site' => $site,
             'deductions' => $deductions,
-            'selectedMonth' => $month,
+            'selectedMonth' => $selectedMonth,
+            'monthLabel' => Carbon::parse($monthDate)->format('F Y'),
+            'summary' => $summary,
             'siteRole' => $context['siteRole'],
         ]);
     }

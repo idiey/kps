@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::index
- * @see app/Http/Controllers/Kps/PenerokaController.php:18
+ * @see app/Http/Controllers/Kps/PenerokaController.php:19
  * @route '/kps/sites/{site}/peneroka'
  */
 export const index = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::index
- * @see app/Http/Controllers/Kps/PenerokaController.php:18
+ * @see app/Http/Controllers/Kps/PenerokaController.php:19
  * @route '/kps/sites/{site}/peneroka'
  */
 index.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ index.url = (args: { site: string | { id: string } } | [site: string | { id: str
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::index
- * @see app/Http/Controllers/Kps/PenerokaController.php:18
+ * @see app/Http/Controllers/Kps/PenerokaController.php:19
  * @route '/kps/sites/{site}/peneroka'
  */
 index.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -58,7 +58,7 @@ index.get = (args: { site: string | { id: string } } | [site: string | { id: str
 })
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::index
- * @see app/Http/Controllers/Kps/PenerokaController.php:18
+ * @see app/Http/Controllers/Kps/PenerokaController.php:19
  * @route '/kps/sites/{site}/peneroka'
  */
 index.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -68,7 +68,7 @@ index.head = (args: { site: string | { id: string } } | [site: string | { id: st
 
     /**
 * @see \App\Http\Controllers\Kps\PenerokaController::index
- * @see app/Http/Controllers/Kps/PenerokaController.php:18
+ * @see app/Http/Controllers/Kps/PenerokaController.php:19
  * @route '/kps/sites/{site}/peneroka'
  */
     const indexForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -78,7 +78,7 @@ index.head = (args: { site: string | { id: string } } | [site: string | { id: st
 
             /**
 * @see \App\Http\Controllers\Kps\PenerokaController::index
- * @see app/Http/Controllers/Kps/PenerokaController.php:18
+ * @see app/Http/Controllers/Kps/PenerokaController.php:19
  * @route '/kps/sites/{site}/peneroka'
  */
         indexForm.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -87,7 +87,7 @@ index.head = (args: { site: string | { id: string } } | [site: string | { id: st
         })
             /**
 * @see \App\Http\Controllers\Kps\PenerokaController::index
- * @see app/Http/Controllers/Kps/PenerokaController.php:18
+ * @see app/Http/Controllers/Kps/PenerokaController.php:19
  * @route '/kps/sites/{site}/peneroka'
  */
         indexForm.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -103,7 +103,7 @@ index.head = (args: { site: string | { id: string } } | [site: string | { id: st
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::create
- * @see app/Http/Controllers/Kps/PenerokaController.php:37
+ * @see app/Http/Controllers/Kps/PenerokaController.php:60
  * @route '/kps/sites/{site}/peneroka/create'
  */
 export const create = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -118,7 +118,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::create
- * @see app/Http/Controllers/Kps/PenerokaController.php:37
+ * @see app/Http/Controllers/Kps/PenerokaController.php:60
  * @route '/kps/sites/{site}/peneroka/create'
  */
 create.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -151,7 +151,7 @@ create.url = (args: { site: string | { id: string } } | [site: string | { id: st
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::create
- * @see app/Http/Controllers/Kps/PenerokaController.php:37
+ * @see app/Http/Controllers/Kps/PenerokaController.php:60
  * @route '/kps/sites/{site}/peneroka/create'
  */
 create.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -160,7 +160,7 @@ create.get = (args: { site: string | { id: string } } | [site: string | { id: st
 })
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::create
- * @see app/Http/Controllers/Kps/PenerokaController.php:37
+ * @see app/Http/Controllers/Kps/PenerokaController.php:60
  * @route '/kps/sites/{site}/peneroka/create'
  */
 create.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -170,7 +170,7 @@ create.head = (args: { site: string | { id: string } } | [site: string | { id: s
 
     /**
 * @see \App\Http\Controllers\Kps\PenerokaController::create
- * @see app/Http/Controllers/Kps/PenerokaController.php:37
+ * @see app/Http/Controllers/Kps/PenerokaController.php:60
  * @route '/kps/sites/{site}/peneroka/create'
  */
     const createForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -180,7 +180,7 @@ create.head = (args: { site: string | { id: string } } | [site: string | { id: s
 
             /**
 * @see \App\Http\Controllers\Kps\PenerokaController::create
- * @see app/Http/Controllers/Kps/PenerokaController.php:37
+ * @see app/Http/Controllers/Kps/PenerokaController.php:60
  * @route '/kps/sites/{site}/peneroka/create'
  */
         createForm.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -189,7 +189,7 @@ create.head = (args: { site: string | { id: string } } | [site: string | { id: s
         })
             /**
 * @see \App\Http\Controllers\Kps\PenerokaController::create
- * @see app/Http/Controllers/Kps/PenerokaController.php:37
+ * @see app/Http/Controllers/Kps/PenerokaController.php:60
  * @route '/kps/sites/{site}/peneroka/create'
  */
         createForm.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -205,7 +205,7 @@ create.head = (args: { site: string | { id: string } } | [site: string | { id: s
     create.form = createForm
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::store
- * @see app/Http/Controllers/Kps/PenerokaController.php:49
+ * @see app/Http/Controllers/Kps/PenerokaController.php:72
  * @route '/kps/sites/{site}/peneroka'
  */
 export const store = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -220,7 +220,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::store
- * @see app/Http/Controllers/Kps/PenerokaController.php:49
+ * @see app/Http/Controllers/Kps/PenerokaController.php:72
  * @route '/kps/sites/{site}/peneroka'
  */
 store.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -253,7 +253,7 @@ store.url = (args: { site: string | { id: string } } | [site: string | { id: str
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::store
- * @see app/Http/Controllers/Kps/PenerokaController.php:49
+ * @see app/Http/Controllers/Kps/PenerokaController.php:72
  * @route '/kps/sites/{site}/peneroka'
  */
 store.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -263,7 +263,7 @@ store.post = (args: { site: string | { id: string } } | [site: string | { id: st
 
     /**
 * @see \App\Http\Controllers\Kps\PenerokaController::store
- * @see app/Http/Controllers/Kps/PenerokaController.php:49
+ * @see app/Http/Controllers/Kps/PenerokaController.php:72
  * @route '/kps/sites/{site}/peneroka'
  */
     const storeForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -273,7 +273,7 @@ store.post = (args: { site: string | { id: string } } | [site: string | { id: st
 
             /**
 * @see \App\Http\Controllers\Kps\PenerokaController::store
- * @see app/Http/Controllers/Kps/PenerokaController.php:49
+ * @see app/Http/Controllers/Kps/PenerokaController.php:72
  * @route '/kps/sites/{site}/peneroka'
  */
         storeForm.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -284,7 +284,7 @@ store.post = (args: { site: string | { id: string } } | [site: string | { id: st
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::edit
- * @see app/Http/Controllers/Kps/PenerokaController.php:60
+ * @see app/Http/Controllers/Kps/PenerokaController.php:83
  * @route '/kps/sites/{site}/peneroka/{peneroka}/edit'
  */
 export const edit = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -299,7 +299,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::edit
- * @see app/Http/Controllers/Kps/PenerokaController.php:60
+ * @see app/Http/Controllers/Kps/PenerokaController.php:83
  * @route '/kps/sites/{site}/peneroka/{peneroka}/edit'
  */
 edit.url = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -329,7 +329,7 @@ edit.url = (args: { site: string | { id: string }, peneroka: string | { id: stri
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::edit
- * @see app/Http/Controllers/Kps/PenerokaController.php:60
+ * @see app/Http/Controllers/Kps/PenerokaController.php:83
  * @route '/kps/sites/{site}/peneroka/{peneroka}/edit'
  */
 edit.get = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -338,7 +338,7 @@ edit.get = (args: { site: string | { id: string }, peneroka: string | { id: stri
 })
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::edit
- * @see app/Http/Controllers/Kps/PenerokaController.php:60
+ * @see app/Http/Controllers/Kps/PenerokaController.php:83
  * @route '/kps/sites/{site}/peneroka/{peneroka}/edit'
  */
 edit.head = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -348,7 +348,7 @@ edit.head = (args: { site: string | { id: string }, peneroka: string | { id: str
 
     /**
 * @see \App\Http\Controllers\Kps\PenerokaController::edit
- * @see app/Http/Controllers/Kps/PenerokaController.php:60
+ * @see app/Http/Controllers/Kps/PenerokaController.php:83
  * @route '/kps/sites/{site}/peneroka/{peneroka}/edit'
  */
     const editForm = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -358,7 +358,7 @@ edit.head = (args: { site: string | { id: string }, peneroka: string | { id: str
 
             /**
 * @see \App\Http\Controllers\Kps\PenerokaController::edit
- * @see app/Http/Controllers/Kps/PenerokaController.php:60
+ * @see app/Http/Controllers/Kps/PenerokaController.php:83
  * @route '/kps/sites/{site}/peneroka/{peneroka}/edit'
  */
         editForm.get = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -367,7 +367,7 @@ edit.head = (args: { site: string | { id: string }, peneroka: string | { id: str
         })
             /**
 * @see \App\Http\Controllers\Kps\PenerokaController::edit
- * @see app/Http/Controllers/Kps/PenerokaController.php:60
+ * @see app/Http/Controllers/Kps/PenerokaController.php:83
  * @route '/kps/sites/{site}/peneroka/{peneroka}/edit'
  */
         editForm.head = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -383,7 +383,7 @@ edit.head = (args: { site: string | { id: string }, peneroka: string | { id: str
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::update
- * @see app/Http/Controllers/Kps/PenerokaController.php:77
+ * @see app/Http/Controllers/Kps/PenerokaController.php:100
  * @route '/kps/sites/{site}/peneroka/{peneroka}'
  */
 export const update = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -398,7 +398,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::update
- * @see app/Http/Controllers/Kps/PenerokaController.php:77
+ * @see app/Http/Controllers/Kps/PenerokaController.php:100
  * @route '/kps/sites/{site}/peneroka/{peneroka}'
  */
 update.url = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -428,7 +428,7 @@ update.url = (args: { site: string | { id: string }, peneroka: string | { id: st
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::update
- * @see app/Http/Controllers/Kps/PenerokaController.php:77
+ * @see app/Http/Controllers/Kps/PenerokaController.php:100
  * @route '/kps/sites/{site}/peneroka/{peneroka}'
  */
 update.put = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -438,7 +438,7 @@ update.put = (args: { site: string | { id: string }, peneroka: string | { id: st
 
     /**
 * @see \App\Http\Controllers\Kps\PenerokaController::update
- * @see app/Http/Controllers/Kps/PenerokaController.php:77
+ * @see app/Http/Controllers/Kps/PenerokaController.php:100
  * @route '/kps/sites/{site}/peneroka/{peneroka}'
  */
     const updateForm = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -453,7 +453,7 @@ update.put = (args: { site: string | { id: string }, peneroka: string | { id: st
 
             /**
 * @see \App\Http\Controllers\Kps\PenerokaController::update
- * @see app/Http/Controllers/Kps/PenerokaController.php:77
+ * @see app/Http/Controllers/Kps/PenerokaController.php:100
  * @route '/kps/sites/{site}/peneroka/{peneroka}'
  */
         updateForm.put = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -469,7 +469,7 @@ update.put = (args: { site: string | { id: string }, peneroka: string | { id: st
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::destroy
- * @see app/Http/Controllers/Kps/PenerokaController.php:92
+ * @see app/Http/Controllers/Kps/PenerokaController.php:115
  * @route '/kps/sites/{site}/peneroka/{peneroka}'
  */
 export const destroy = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -484,7 +484,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::destroy
- * @see app/Http/Controllers/Kps/PenerokaController.php:92
+ * @see app/Http/Controllers/Kps/PenerokaController.php:115
  * @route '/kps/sites/{site}/peneroka/{peneroka}'
  */
 destroy.url = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -514,7 +514,7 @@ destroy.url = (args: { site: string | { id: string }, peneroka: string | { id: s
 
 /**
 * @see \App\Http\Controllers\Kps\PenerokaController::destroy
- * @see app/Http/Controllers/Kps/PenerokaController.php:92
+ * @see app/Http/Controllers/Kps/PenerokaController.php:115
  * @route '/kps/sites/{site}/peneroka/{peneroka}'
  */
 destroy.delete = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -524,7 +524,7 @@ destroy.delete = (args: { site: string | { id: string }, peneroka: string | { id
 
     /**
 * @see \App\Http\Controllers\Kps\PenerokaController::destroy
- * @see app/Http/Controllers/Kps/PenerokaController.php:92
+ * @see app/Http/Controllers/Kps/PenerokaController.php:115
  * @route '/kps/sites/{site}/peneroka/{peneroka}'
  */
     const destroyForm = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -539,7 +539,7 @@ destroy.delete = (args: { site: string | { id: string }, peneroka: string | { id
 
             /**
 * @see \App\Http\Controllers\Kps\PenerokaController::destroy
- * @see app/Http/Controllers/Kps/PenerokaController.php:92
+ * @see app/Http/Controllers/Kps/PenerokaController.php:115
  * @route '/kps/sites/{site}/peneroka/{peneroka}'
  */
         destroyForm.delete = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

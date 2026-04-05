@@ -4,7 +4,7 @@
 
 **Purpose**: Track important decisions and their context for future reference  
 **Intended audience**: Development team, architects, product owners  
-**Last updated**: 2026-02-10  
+**Last updated**: 2026-04-04  
 **Links**: [Decisions](../02-architecture/04-decisions.md) | [PRD](../02-architecture/01-prd.md)
 
 ## Decision Format
@@ -15,6 +15,40 @@ Each entry includes:
 - **Rationale**: Why this approach was chosen
 - **Alternatives**: What other options were considered
 - **Impact**: How this affects the system
+
+---
+
+## 2026-04-04: Service-Driven Business Logic
+
+**Decision**: Encapsulate all allocation, closing, and context resolution logic in dedicated service classes, not controllers.
+
+**Rationale**:
+- Testable in isolation without HTTP context
+- Reusable across controllers and CLI commands
+- Clear separation of concerns
+
+**Alternatives**:
+- Fat controllers (rejected: untestable, duplicated logic)
+
+**Impact**:
+- `AllocationService` — waterfall engine with atomic transactions and lock-for-update
+- `MonthlyClosingService` — month closing with audit trail
+- `SiteContextResolver` — multi-tenant context resolution
+
+---
+
+## 2026-04-04: JSON Metadata on Audit Logs
+
+**Decision**: Store action-specific context in `kps_audit_logs.metadata` as JSON instead of dedicated columns.
+
+**Rationale**:
+- Flexible — each action type can store different context without schema changes
+- Rich audit trail without schema sprawl
+
+**Alternatives**:
+- Separate columns per action type (rejected: schema bloat)
+
+**Impact**: `metadata` cast to array in AuditLog model; each action stores relevant keys (e.g., month, deductions_closed)
 
 ---
 
@@ -199,4 +233,4 @@ Use this template for new decisions:
 
 ---
 
-**Last Updated**: 2026-02-10
+**Last Updated**: 2026-04-04

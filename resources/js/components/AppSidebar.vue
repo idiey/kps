@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import CustomerController from '@/actions/App/Http/Controllers/CustomerController';
-import DashboardController from '@/actions/App/Http/Controllers/DashboardController';
-import JobController from '@/actions/App/Http/Controllers/JobController';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -16,23 +13,10 @@ import {
     type SidebarProps,
 } from '@/components/ui/sidebar';
 import { usePermission } from '@/composables/usePermission';
-
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import {
-    BarChart3,
-    Briefcase,
-    ClipboardCheck,
-    LayoutGrid,
-    ListChecks,
-    Package,
-    Settings,
-    Shield,
-    TrendingUp,
-    Users,
-    Warehouse,
-} from 'lucide-vue-next';
+import { LayoutGrid, Settings, Shield, Users, Warehouse } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 
@@ -46,94 +30,53 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { hasPermission } = usePermission();
 
-// All navigation items - items WITHOUT permission are shown to all users
-// Only add permission when you want to restrict access
 const allNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: dashboard(),
+        href: '/kps/dashboard',
         icon: LayoutGrid,
-        // No permission = shown to all
+        permission: 'kps.view',
     },
-    {
-        title: 'Analytics',
-        href: '/analytics',
-        icon: TrendingUp,
-        // No permission = shown to all
-    },    
     {
         title: 'Sites',
-        href: '/admin/workshops',
+        href: '/kps/sites',
         icon: Warehouse,
-        // permission: 'admin.access',
+        permission: 'kps.manage_sites',
     },
-    // Administration with nested children - only admin.access permission required
     {
-        title: 'Administration',
-        href: '/admin',
+        title: 'User Management',
+        href: '/admin/users',
+        icon: Users,
+        permission: 'view-users',
+    },
+    {
+        title: 'Role Management',
+        href: '/admin/roles',
+        icon: Shield,
+        permission: 'view-roles',
+    },
+    {
+        title: 'Profile Settings',
+        href: '/settings/profile',
         icon: Settings,
-        permission: 'admin.access', // Only this parent needs permission
-        children: [
-            {
-                title: 'User Management',
-                href: '/admin/users',
-                icon: Users,
-                // No permission on children = shown if parent is accessible
-            },
-            {
-                title: 'Role Management',
-                href: '/admin/roles',
-                icon: Shield,
-            },
-            {
-                title: 'Reports',
-                href: '/admin/reports',
-                icon: BarChart3,
-            },
-            {
-                title: 'Assets',
-                href: '/admin/assets',
-                icon: Package,
-            },
-            {
-                title: 'Part Inventory',
-                href: '/admin/inventory',
-                icon: Warehouse,
-            },
-            {
-                title: 'System Settings',
-                href: '/admin/settings',
-                icon: Settings,
-            },
-        ],
     },
 ];
 
-/**
- * Filter nav items by permission recursively.
- * Items WITHOUT permission are shown to all users.
- * Items with children are kept if any child is accessible.
- */
 const filterByPermission = (items: NavItem[]): NavItem[] => {
     return items
         .map((item) => {
-            // Clone the item to avoid mutating the original
             const clonedItem = { ...item };
-            
-            // Recursively filter children
+
             if (clonedItem.children && clonedItem.children.length > 0) {
                 clonedItem.children = filterByPermission(clonedItem.children);
             }
-            
+
             return clonedItem;
         })
         .filter((item) => {
-            // Check permission (items WITHOUT permission are shown to everyone)
             const hasAccess = !item.permission || hasPermission(item.permission);
-            
-            // Keep parent if it has accessible children, even if parent permission fails
             const hasAccessibleChildren = item.children && item.children.length > 0;
-            
+
             return hasAccess || hasAccessibleChildren;
         });
 };
@@ -156,11 +99,12 @@ const navItems = computed(() => filterByPermission(allNavItems));
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain :items="navItems" />
+            <NavMain :items="navItems" label="Navigation" />
         </SidebarContent>
 
         <SidebarFooter>
             <NavUser />
+            <NavFooter />
         </SidebarFooter>
     </Sidebar>
     <slot />

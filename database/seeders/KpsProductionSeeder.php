@@ -10,7 +10,7 @@ use App\Models\Kps\Site;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class KpsProductionSeeder extends Seeder
 {
@@ -21,18 +21,18 @@ class KpsProductionSeeder extends Seeder
     {
         $this->command->info('Starting KPS Production Data Seeding...');
 
-        // 1. Create Users
         $this->createUsers();
+        $this->normalizeAssignedUserRoles();
+        $this->removeUnusedRoles();
 
-        // 2. Get sites
         $sites = Site::all();
 
         if ($sites->isEmpty()) {
             $this->command->error('No sites found. Please run KpsSiteSeeder first.');
+
             return;
         }
 
-        // 3. Create Penerokas, Debts, and Deductions for each site
         foreach ($sites as $site) {
             $this->command->info("Processing site: {$site->name}");
             $this->createPenerokasForSite($site);
@@ -43,7 +43,6 @@ class KpsProductionSeeder extends Seeder
 
     protected function createUsers(): void
     {
-        // Global Admin (pentadbiran role)
         $globalAdmin = User::firstOrCreate(
             ['email' => 'global-admin@felda.gov.my'],
             [
@@ -51,13 +50,9 @@ class KpsProductionSeeder extends Seeder
                 'password' => Hash::make('password'),
             ]
         );
-
-        if (!$globalAdmin->hasRole('pentadbiran')) {
-            $globalAdmin->assignRole('pentadbiran');
-        }
+        $globalAdmin->syncRoles(['pentadbiran']);
         $this->command->info('  - Created Global Admin');
 
-        // HQ Admin (company_admin role)
         $hqAdmin = User::firstOrCreate(
             ['email' => 'hq-admin@felda.gov.my'],
             [
@@ -65,13 +60,9 @@ class KpsProductionSeeder extends Seeder
                 'password' => Hash::make('password'),
             ]
         );
-        
-        if (!$hqAdmin->hasRole('company_admin')) {
-            $hqAdmin->assignRole('company_admin');
-        }
-        $this->command->info('  ✓ Created HQ Admin');
+        $hqAdmin->syncRoles(['company_admin']);
+        $this->command->info('  - Created HQ Admin');
 
-        // Site Admin 1 (penyelia role + site_admin pivot)
         $siteAdmin1 = User::firstOrCreate(
             ['email' => 'admin-st@felda.gov.my'],
             [
@@ -79,18 +70,14 @@ class KpsProductionSeeder extends Seeder
                 'password' => Hash::make('password'),
             ]
         );
-        if (!$siteAdmin1->hasRole('penyelia')) {
-            $siteAdmin1->assignRole('penyelia');
-        }
+        $siteAdmin1->syncRoles(['site_admin']);
 
-        // Assign to FELDA Sungai Tekam
         $site1 = Site::where('code', 'FELDA-ST')->first();
         if ($site1) {
             $site1->assignUser($siteAdmin1->id, 'site_admin');
-            $this->command->info('  ✓ Created Site Admin 1 (FELDA Sungai Tekam)');
+            $this->command->info('  - Created Site Admin 1 (FELDA Sungai Tekam)');
         }
 
-        // Site Admin 2 (penyelia role + site_admin pivot)
         $siteAdmin2 = User::firstOrCreate(
             ['email' => 'admin-jk@felda.gov.my'],
             [
@@ -98,18 +85,14 @@ class KpsProductionSeeder extends Seeder
                 'password' => Hash::make('password'),
             ]
         );
-        if (!$siteAdmin2->hasRole('penyelia')) {
-            $siteAdmin2->assignRole('penyelia');
-        }
+        $siteAdmin2->syncRoles(['site_admin']);
 
-        // Assign to FELDA Jengka
         $site2 = Site::where('code', 'FELDA-JK')->first();
         if ($site2) {
             $site2->assignUser($siteAdmin2->id, 'site_admin');
-            $this->command->info('  ✓ Created Site Admin 2 (FELDA Jengka)');
+            $this->command->info('  - Created Site Admin 2 (FELDA Jengka)');
         }
 
-        // Site Staff (kaunter role)
         $siteStaff = User::firstOrCreate(
             ['email' => 'staff-st@felda.gov.my'],
             [
@@ -117,15 +100,44 @@ class KpsProductionSeeder extends Seeder
                 'password' => Hash::make('password'),
             ]
         );
-        if (!$siteStaff->hasRole('kaunter')) {
-            $siteStaff->assignRole('kaunter');
-        }
+        $siteStaff->syncRoles(['staff']);
 
-        // Assign to FELDA Sungai Tekam
         if ($site1) {
             $site1->assignUser($siteStaff->id, 'staff');
-            $this->command->info('  ✓ Created Site Staff (FELDA Sungai Tekam)');
+            $this->command->info('  - Created Site Staff (FELDA Sungai Tekam)');
         }
+    }
+
+    protected function normalizeAssignedUserRoles(): void
+    {
+        $users = User::with('kpsSites')->get();
+
+        foreach ($users as $user) {
+            if ($user->hasRole(['pentadbiran', 'company_admin'])) {
+                continue;
+            }
+
+            if ($user->kpsSites->contains(fn (Site $site) => $site->pivot?->role === 'site_admin')) {
+                $user->syncRoles(['site_admin']);
+
+                continue;
+            }
+
+            if ($user->kpsSites->isNotEmpty()) {
+                $user->syncRoles(['staff']);
+            }
+        }
+    }
+
+    protected function removeUnusedRoles(): void
+    {
+        Role::query()
+            ->whereDoesntHave('users')
+            ->whereDoesntHave('permissions')
+            ->get()
+            ->each(function (Role $role): void {
+                $role->delete();
+            });
     }
 
     protected function createPenerokasForSite(Site $site): void
@@ -157,14 +169,11 @@ class KpsProductionSeeder extends Seeder
                 'address' => "Lot {$index}, {$site->name}",
             ]);
 
-            // Create 1-3 debts per peneroka
             $this->createDebtsForPeneroka($peneroka);
-
-            // Create monthly deductions for last 3 months
             $this->createMonthlyDeductionsForPeneroka($peneroka, $site);
         }
 
-        $this->command->info("  ✓ Created 15 penerokas with debts and deductions");
+        $this->command->info('  - Created 15 penerokas with debts and deductions');
     }
 
     protected function createDebtsForPeneroka(Peneroka $peneroka): void
@@ -184,7 +193,6 @@ class KpsProductionSeeder extends Seeder
             $balance = rand(100, $originalAmount);
             $priority = rand(1, 5);
 
-            // 50% chance of having a due date
             $dueDate = rand(0, 1) ? now()->addMonths(rand(1, 12))->format('Y-m-d') : null;
 
             Debt::create([
@@ -200,12 +208,10 @@ class KpsProductionSeeder extends Seeder
 
     protected function createMonthlyDeductionsForPeneroka(Peneroka $peneroka, Site $site): void
     {
-        // Create deductions for last 3 months
         for ($i = 2; $i >= 0; $i--) {
             $month = now()->subMonths($i)->startOfMonth();
             $deductionAmount = rand(100, 500);
 
-            // Month 2 (oldest) is closed, others are open
             $isClosed = $i === 2;
             $closedAt = $isClosed ? $month->copy()->addDays(5) : null;
 
@@ -214,19 +220,17 @@ class KpsProductionSeeder extends Seeder
                 'site_id' => $site->id,
                 'month' => $month->format('Y-m-d'),
                 'amount' => $deductionAmount,
-                'unallocated_amount' => 0, // Will be calculated after allocations
+                'unallocated_amount' => 0,
                 'is_closed' => $isClosed,
                 'closed_at' => $closedAt,
             ]);
 
-            // Create allocations following waterfall algorithm
             $this->createAllocationsForDeduction($monthlyDeduction, $peneroka);
         }
     }
 
     protected function createAllocationsForDeduction(MonthlyDeduction $monthlyDeduction, Peneroka $peneroka): void
     {
-        // Get debts ordered by waterfall algorithm: priority ASC, due_date ASC (null last), created_at ASC
         $debts = $peneroka->debts()
             ->where('balance', '>', 0)
             ->orderBy('priority', 'asc')
@@ -241,7 +245,6 @@ class KpsProductionSeeder extends Seeder
                 break;
             }
 
-            // Allocate up to the debt balance or remaining amount
             $allocationAmount = min($debt->balance, $remainingAmount);
 
             DeductionAllocation::create([
@@ -250,14 +253,12 @@ class KpsProductionSeeder extends Seeder
                 'amount' => $allocationAmount,
             ]);
 
-            // Update debt balance
             $debt->balance -= $allocationAmount;
             $debt->save();
 
             $remainingAmount -= $allocationAmount;
         }
 
-        // Update unallocated amount
         $monthlyDeduction->unallocated_amount = $remainingAmount;
         $monthlyDeduction->save();
     }

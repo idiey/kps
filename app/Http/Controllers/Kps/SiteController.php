@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Kps;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Kps\StoreSiteRequest;
 use App\Http\Requests\Kps\UpdateSiteRequest;
-use App\Models\Kps\Debt;
-use App\Models\Kps\MonthlyDeduction;
-use App\Models\Kps\Peneroka;
 use App\Models\Kps\Site;
+use App\Services\Kps\SiteExperienceService;
 use App\Services\Kps\SiteContextResolver;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -45,25 +43,20 @@ class SiteController extends Controller
             ->with('success', 'Site created successfully.');
     }
 
-    public function show(Request $request, Site $site, SiteContextResolver $resolver): Response
+    public function show(
+        Request $request,
+        Site $site,
+        SiteContextResolver $resolver,
+        SiteExperienceService $siteExperience
+    ): Response
     {
         $this->authorize('view', $site);
-
-        $stats = [
-            'peneroka' => Peneroka::where('site_id', $site->id)->count(),
-            'debts' => Debt::whereHas('peneroka', fn ($q) => $q->where('site_id', $site->id))->count(),
-            'total_debt_balance' => Debt::whereHas('peneroka', fn ($q) => $q->where('site_id', $site->id))->sum('balance'),
-            'monthly_deductions' => MonthlyDeduction::where('site_id', $site->id)
-                ->where('month', now()->startOfMonth()->toDateString())
-                ->sum('amount'),
-        ];
-
         $context = $resolver->resolve($request, $site);
 
         return Inertia::render('Kps/Sites/Show', [
             'site' => $site,
-            'stats' => $stats,
             'siteRole' => $context['siteRole'],
+            ...$siteExperience->siteDashboardPayload($site),
         ]);
     }
 

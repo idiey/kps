@@ -1,0 +1,307 @@
+- generic [ref=e320]:
+  - generic [ref=e323]:
+    - list [ref=e325]:
+      - listitem [ref=e326]:
+        - link "Site Workspace FELDA Sungai Tekam FELDA-ST" [ref=e327] [cursor=pointer]:
+          - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+          - generic [ref=e328]:
+            - generic [ref=e329]: Site Workspace
+            - generic [ref=e330]: FELDA Sungai Tekam
+            - generic [ref=e331]: FELDA-ST
+    - generic [ref=e333]:
+      - generic [ref=e334]: Site Navigation
+      - list [ref=e335]:
+        - listitem [ref=e336]:
+          - link "Site Dashboard" [ref=e337] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+            - img [ref=e339]
+            - generic [ref=e344]: Site Dashboard
+        - listitem [ref=e345]:
+          - link "Peneroka" [ref=e346] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka
+            - img [ref=e348]
+            - generic [ref=e353]: Peneroka
+        - listitem [ref=e354]:
+          - link "Hutang" [ref=e355] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang
+            - img [ref=e357]
+            - generic [ref=e360]: Hutang
+        - listitem [ref=e361]:
+          - link "Potongan Bulanan" [ref=e362] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/potongan
+            - img [ref=e364]
+            - generic [ref=e367]: Potongan Bulanan
+        - listitem [ref=e368]:
+          - link "Allocation Review" [ref=e369] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations
+            - img [ref=e371]
+            - generic [ref=e373]: Allocation Review
+        - listitem [ref=e374]:
+          - link "Reports" [ref=e375] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports
+            - img [ref=e377]
+            - generic [ref=e380]: Reports
+        - listitem [ref=e381]:
+          - link "Audit Trail" [ref=e382] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/audit-logs
+            - img [ref=e384]
+            - generic [ref=e388]: Audit Trail
+    - generic [ref=e389]:
+      - list [ref=e390]:
+        - listitem [ref=e391]:
+          - button "FA Fatimah Site Admin" [ref=e392]:
+            - generic [ref=e394]: FA
+            - generic [ref=e396]: Fatimah Site Admin
+            - img [ref=e397]
+      - generic [ref=e402]:
+        - text: Your Role
+        - paragraph [ref=e403]: site admin
+  - main [ref=e404]:
+    - generic [ref=e406]:
+      - generic [ref=e407]:
+        - button "Toggle Sidebar" [ref=e408]:
+          - img
+          - generic [ref=e409]: Toggle Sidebar
+        - generic [ref=e410]: KPS Live
+      - link "Preview Library" [ref=e411] [cursor=pointer]:
+        - /url: /kps/preview
+        - img
+        - generic [ref=e412]: Preview Library
+    - generic [ref=e413]:
+      - generic [ref=e414]:
+        - generic [ref=e415]:
+          - paragraph [ref=e416]: Site Workspace
+          - heading "Peneroka registry" [level=1] [ref=e417]
+          - paragraph [ref=e418]: Manage beneficiary records for FELDA Sungai Tekam with the same warm operational language used across the site workspace.
+        - generic [ref=e419]:
+          - link "Back to Dashboard" [ref=e420] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+          - link "Add Peneroka" [ref=e421] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/create
+      - generic [ref=e422]:
+        - generic [ref=e423]:
+          - paragraph [ref=e424]: Total Records
+          - paragraph [ref=e425]: "15"
+          - paragraph [ref=e426]: Peneroka assigned to FELDA-ST.
+        - generic [ref=e427]:
+          - paragraph [ref=e428]: On This Page
+          - paragraph [ref=e429]: "15"
+          - paragraph [ref=e430]: Current records visible in the table below.
+        - generic [ref=e431]:
+          - paragraph [ref=e432]: Contact Coverage
+          - paragraph [ref=e433]: 100%
+          - paragraph [ref=e434]: Records with phone numbers captured.
+        - generic [ref=e435]:
+          - paragraph [ref=e436]: Outstanding
+          - paragraph [ref=e437]: 21,409.00
+          - paragraph [ref=e438]: Open debt balance carried by this site registry.
+      - generic [ref=e439]:
+        - generic [ref=e440]:
+          - generic [ref=e441]:
+            - paragraph [ref=e442]: Master Data
+            - heading "Operational registry" [level=2] [ref=e443]
+          - generic [ref=e444]: FELDA Sungai Tekam
+        - table [ref=e447]:
+          - rowgroup [ref=e448]:
+            - row "Name IC Number Phone Actions" [ref=e449]:
+              - columnheader "Name" [ref=e450]
+              - columnheader "IC Number" [ref=e451]
+              - columnheader "Phone" [ref=e452]
+              - columnheader "Actions" [ref=e453]
+          - rowgroup [ref=e454]:
+            - row "Ahmad bin Abdullah Lot 0, FELDA Sungai Tekam 650101-01-5678 014-107 5150 Edit Statement" [ref=e455]:
+              - cell "Ahmad bin Abdullah Lot 0, FELDA Sungai Tekam" [ref=e456]:
+                - generic [ref=e457]:
+                  - paragraph [ref=e458]: Ahmad bin Abdullah
+                  - paragraph [ref=e459]: Lot 0, FELDA Sungai Tekam
+              - cell "650101-01-5678" [ref=e460]
+              - cell "014-107 5150" [ref=e461]
+              - cell "Edit Statement" [ref=e462]:
+                - generic [ref=e463]:
+                  - link "Edit" [ref=e464] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-9bf6-73be-bb5a-e7c2dcfef7c4/edit
+                  - link "Statement" [ref=e465] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9bf6-73be-bb5a-e7c2dcfef7c4
+            - row "Ali bin Hashim Lot 14, FELDA Sungai Tekam 650925-15-5678 018-830 9794 Edit Statement" [ref=e466]:
+              - cell "Ali bin Hashim Lot 14, FELDA Sungai Tekam" [ref=e467]:
+                - generic [ref=e468]:
+                  - paragraph [ref=e469]: Ali bin Hashim
+                  - paragraph [ref=e470]: Lot 14, FELDA Sungai Tekam
+              - cell "650925-15-5678" [ref=e471]
+              - cell "018-830 9794" [ref=e472]
+              - cell "Edit Statement" [ref=e473]:
+                - generic [ref=e474]:
+                  - link "Edit" [ref=e475] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-a8bf-7389-89db-2175cd3d4a7c/edit
+                  - link "Statement" [ref=e476] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a8bf-7389-89db-2175cd3d4a7c
+            - row "Aminah binti Ismail Lot 9, FELDA Sungai Tekam 671130-10-4567 015-225 1797 Edit Statement" [ref=e477]:
+              - cell "Aminah binti Ismail Lot 9, FELDA Sungai Tekam" [ref=e478]:
+                - generic [ref=e479]:
+                  - paragraph [ref=e480]: Aminah binti Ismail
+                  - paragraph [ref=e481]: Lot 9, FELDA Sungai Tekam
+              - cell "671130-10-4567" [ref=e482]
+              - cell "015-225 1797" [ref=e483]
+              - cell "Edit Statement" [ref=e484]:
+                - generic [ref=e485]:
+                  - link "Edit" [ref=e486] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-a3cc-723c-a77e-9c0b5ddb0db7/edit
+                  - link "Statement" [ref=e487] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a3cc-723c-a77e-9c0b5ddb0db7
+            - row "Fatimah binti Hassan Lot 1, FELDA Sungai Tekam 700215-02-1234 013-237 9283 Edit Statement" [ref=e488]:
+              - cell "Fatimah binti Hassan Lot 1, FELDA Sungai Tekam" [ref=e489]:
+                - generic [ref=e490]:
+                  - paragraph [ref=e491]: Fatimah binti Hassan
+                  - paragraph [ref=e492]: Lot 1, FELDA Sungai Tekam
+              - cell "700215-02-1234" [ref=e493]
+              - cell "013-237 9283" [ref=e494]
+              - cell "Edit Statement" [ref=e495]:
+                - generic [ref=e496]:
+                  - link "Edit" [ref=e497] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-9ced-71c6-9ce5-a5580c6cd5ac/edit
+                  - link "Statement" [ref=e498] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9ced-71c6-9ce5-a5580c6cd5ac
+            - row "Halimah binti Omar Lot 11, FELDA Sungai Tekam 740515-12-2345 011-179 3703 Edit Statement" [ref=e499]:
+              - cell "Halimah binti Omar Lot 11, FELDA Sungai Tekam" [ref=e500]:
+                - generic [ref=e501]:
+                  - paragraph [ref=e502]: Halimah binti Omar
+                  - paragraph [ref=e503]: Lot 11, FELDA Sungai Tekam
+              - cell "740515-12-2345" [ref=e504]
+              - cell "011-179 3703" [ref=e505]
+              - cell "Edit Statement" [ref=e506]:
+                - generic [ref=e507]:
+                  - link "Edit" [ref=e508] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-a5bb-70c0-8e85-cf2568131819/edit
+                  - link "Statement" [ref=e509] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a5bb-70c0-8e85-cf2568131819
+            - row "Hassan bin Mohamed Lot 6, FELDA Sungai Tekam 710412-07-6789 016-463 9584 Edit Statement" [ref=e510]:
+              - cell "Hassan bin Mohamed Lot 6, FELDA Sungai Tekam" [ref=e511]:
+                - generic [ref=e512]:
+                  - paragraph [ref=e513]: Hassan bin Mohamed
+                  - paragraph [ref=e514]: Lot 6, FELDA Sungai Tekam
+              - cell "710412-07-6789" [ref=e515]
+              - cell "016-463 9584" [ref=e516]
+              - cell "Edit Statement" [ref=e517]:
+                - generic [ref=e518]:
+                  - link "Edit" [ref=e519] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-a0e9-73d8-886f-e69c072c9c7b/edit
+                  - link "Statement" [ref=e520] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a0e9-73d8-886f-e69c072c9c7b
+            - row "Ibrahim bin Ali Lot 8, FELDA Sungai Tekam 730620-09-7890 015-129 4640 Edit Statement" [ref=e521]:
+              - cell "Ibrahim bin Ali Lot 8, FELDA Sungai Tekam" [ref=e522]:
+                - generic [ref=e523]:
+                  - paragraph [ref=e524]: Ibrahim bin Ali
+                  - paragraph [ref=e525]: Lot 8, FELDA Sungai Tekam
+              - cell "730620-09-7890" [ref=e526]
+              - cell "015-129 4640" [ref=e527]
+              - cell "Edit Statement" [ref=e528]:
+                - generic [ref=e529]:
+                  - link "Edit" [ref=e530] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-a2bb-73e9-bd90-d82015f93d2f/edit
+                  - link "Statement" [ref=e531] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a2bb-73e9-bd90-d82015f93d2f
+            - row "Kamal bin Yusof Lot 4, FELDA Sungai Tekam 640305-05-8765 019-984 4264 Edit Statement" [ref=e532]:
+              - cell "Kamal bin Yusof Lot 4, FELDA Sungai Tekam" [ref=e533]:
+                - generic [ref=e534]:
+                  - paragraph [ref=e535]: Kamal bin Yusof
+                  - paragraph [ref=e536]: Lot 4, FELDA Sungai Tekam
+              - cell "640305-05-8765" [ref=e537]
+              - cell "019-984 4264" [ref=e538]
+              - cell "Edit Statement" [ref=e539]:
+                - generic [ref=e540]:
+                  - link "Edit" [ref=e541] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-9f28-721b-b739-5122414950f1/edit
+                  - link "Statement" [ref=e542] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9f28-721b-b739-5122414950f1
+            - row "Mohamed bin Salleh Lot 12, FELDA Sungai Tekam 680820-13-6789 019-688 3869 Edit Statement" [ref=e543]:
+              - cell "Mohamed bin Salleh Lot 12, FELDA Sungai Tekam" [ref=e544]:
+                - generic [ref=e545]:
+                  - paragraph [ref=e546]: Mohamed bin Salleh
+                  - paragraph [ref=e547]: Lot 12, FELDA Sungai Tekam
+              - cell "680820-13-6789" [ref=e548]
+              - cell "019-688 3869" [ref=e549]
+              - cell "Edit Statement" [ref=e550]:
+                - generic [ref=e551]:
+                  - link "Edit" [ref=e552] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-a69f-707f-9688-2270ebf60ec6/edit
+                  - link "Statement" [ref=e553] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a69f-707f-9688-2270ebf60ec6
+            - row "Noraini binti Ahmad Lot 5, FELDA Sungai Tekam 690925-06-2345 018-125 3225 Edit Statement" [ref=e554]:
+              - cell "Noraini binti Ahmad Lot 5, FELDA Sungai Tekam" [ref=e555]:
+                - generic [ref=e556]:
+                  - paragraph [ref=e557]: Noraini binti Ahmad
+                  - paragraph [ref=e558]: Lot 5, FELDA Sungai Tekam
+              - cell "690925-06-2345" [ref=e559]
+              - cell "018-125 3225" [ref=e560]
+              - cell "Edit Statement" [ref=e561]:
+                - generic [ref=e562]:
+                  - link "Edit" [ref=e563] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-a00e-7308-ba88-b39b01757ef1/edit
+                  - link "Statement" [ref=e564] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a00e-7308-ba88-b39b01757ef1
+            - row "Razak bin Ibrahim Lot 2, FELDA Sungai Tekam 680520-03-9876 019-881 7301 Edit Statement" [ref=e565]:
+              - cell "Razak bin Ibrahim Lot 2, FELDA Sungai Tekam" [ref=e566]:
+                - generic [ref=e567]:
+                  - paragraph [ref=e568]: Razak bin Ibrahim
+                  - paragraph [ref=e569]: Lot 2, FELDA Sungai Tekam
+              - cell "680520-03-9876" [ref=e570]
+              - cell "019-881 7301" [ref=e571]
+              - cell "Edit Statement" [ref=e572]:
+                - generic [ref=e573]:
+                  - link "Edit" [ref=e574] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-9d9b-73f3-a6ca-74caa07f281c/edit
+                  - link "Statement" [ref=e575] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9d9b-73f3-a6ca-74caa07f281c
+            - row "Rohani binti Daud Lot 13, FELDA Sungai Tekam 720110-14-1234 012-625 7114 Edit Statement" [ref=e576]:
+              - cell "Rohani binti Daud Lot 13, FELDA Sungai Tekam" [ref=e577]:
+                - generic [ref=e578]:
+                  - paragraph [ref=e579]: Rohani binti Daud
+                  - paragraph [ref=e580]: Lot 13, FELDA Sungai Tekam
+              - cell "720110-14-1234" [ref=e581]
+              - cell "012-625 7114" [ref=e582]
+              - cell "Edit Statement" [ref=e583]:
+                - generic [ref=e584]:
+                  - link "Edit" [ref=e585] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-a7c4-714b-8433-8db25df1c1da/edit
+                  - link "Statement" [ref=e586] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a7c4-714b-8433-8db25df1c1da
+            - row "Siti binti Mahmud Lot 3, FELDA Sungai Tekam 720810-04-5432 013-130 6033 Edit Statement" [ref=e587]:
+              - cell "Siti binti Mahmud Lot 3, FELDA Sungai Tekam" [ref=e588]:
+                - generic [ref=e589]:
+                  - paragraph [ref=e590]: Siti binti Mahmud
+                  - paragraph [ref=e591]: Lot 3, FELDA Sungai Tekam
+              - cell "720810-04-5432" [ref=e592]
+              - cell "013-130 6033" [ref=e593]
+              - cell "Edit Statement" [ref=e594]:
+                - generic [ref=e595]:
+                  - link "Edit" [ref=e596] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-9e7e-73cc-b3c4-e3537dc7a0fb/edit
+                  - link "Statement" [ref=e597] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9e7e-73cc-b3c4-e3537dc7a0fb
+            - row "Yusof bin Hamid Lot 10, FELDA Sungai Tekam 690205-11-8901 019-254 4953 Edit Statement" [ref=e598]:
+              - cell "Yusof bin Hamid Lot 10, FELDA Sungai Tekam" [ref=e599]:
+                - generic [ref=e600]:
+                  - paragraph [ref=e601]: Yusof bin Hamid
+                  - paragraph [ref=e602]: Lot 10, FELDA Sungai Tekam
+              - cell "690205-11-8901" [ref=e603]
+              - cell "019-254 4953" [ref=e604]
+              - cell "Edit Statement" [ref=e605]:
+                - generic [ref=e606]:
+                  - link "Edit" [ref=e607] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-a4f2-734b-9acb-f6266db184c4/edit
+                  - link "Statement" [ref=e608] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a4f2-734b-9acb-f6266db184c4
+            - row "Zainab binti Rahman Lot 7, FELDA Sungai Tekam 660718-08-3456 011-270 4700 Edit Statement" [ref=e609]:
+              - cell "Zainab binti Rahman Lot 7, FELDA Sungai Tekam" [ref=e610]:
+                - generic [ref=e611]:
+                  - paragraph [ref=e612]: Zainab binti Rahman
+                  - paragraph [ref=e613]: Lot 7, FELDA Sungai Tekam
+              - cell "660718-08-3456" [ref=e614]
+              - cell "011-270 4700" [ref=e615]
+              - cell "Edit Statement" [ref=e616]:
+                - generic [ref=e617]:
+                  - link "Edit" [ref=e618] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka/019c478b-a1c6-7343-8c4c-d63fecba099c/edit
+                  - link "Statement" [ref=e619] [cursor=pointer]:
+                    - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a1c6-7343-8c4c-d63fecba099c
+  - generic "Notifications"

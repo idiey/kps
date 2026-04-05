@@ -49,7 +49,14 @@ test('site user can view their site dashboard', function () {
     $this->actingAs($this->siteUser)
         ->get("/kps/sites/{$this->site->id}")
         ->assertOk()
-        ->assertInertia(fn ($page) => $page->where('site.id', $this->site->id));
+        ->assertInertia(fn ($page) => $page
+            ->where('site.id', $this->site->id)
+            ->has('monthLabel')
+            ->has('stats')
+            ->has('monthlyTrend')
+            ->has('topPeneroka')
+            ->has('recentActivity')
+        );
 });
 
 test('site user cannot view other site dashboard', function () {

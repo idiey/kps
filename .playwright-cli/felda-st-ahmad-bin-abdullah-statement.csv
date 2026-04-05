@@ -1,0 +1,24 @@
+﻿"KPS Peneroka Statement"
+Site,"FELDA Sungai Tekam"
+Peneroka,"Ahmad bin Abdullah"
+"IC Number",650101-01-5678
+Phone,"014-107 5150"
+Address,"Lot 0, FELDA Sungai Tekam"
+
+Summary
+"Debt Count",2
+"Outstanding Balance",260.00
+"Total Deductions",858.00
+"Allocated Total",858.00
+"Unallocated Total",0.00
+
+Debts
+Description,Priority,"Original Amount",Balance,"Due Date"
+"Pendahuluan Tunai",2,2280.00,0.00,2026-12-10
+"Hutang Racun Perosak",5,894.00,260.00,2026-03-10
+
+"Monthly Deductions"
+Month,Amount,Allocated,Unallocated,Status,Allocations
+2026-02-01,205.00,205.00,0.00,Open,"Hutang Racun Perosak: 205.00"
+2026-01-01,247.00,247.00,0.00,Open,"Pendahuluan Tunai: 154.00; Hutang Racun Perosak: 93.00"
+2025-12-01,406.00,406.00,0.00,Closed,"Pendahuluan Tunai: 406.00"

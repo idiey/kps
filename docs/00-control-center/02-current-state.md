@@ -1,103 +1,85 @@
 # Current State: KPS
 
-> Snapshot of current implementation status and active work.
+> Snapshot of the live KPS application and what still needs hardening.
 
-**Purpose**: Track what's implemented, what's in progress, and what's next  
-**Intended audience**: Development team, product owners  
-**Last updated**: 2026-02-10  
-**Links**: [PRD](../02-architecture/01-prd.md) | [Audit Findings](../AUDIT_FINDINGS.md)
+**Purpose**: Track the real implementation status of the KPS codebase  
+**Intended audience**: Developers, product owners, implementers  
+**Last updated**: 2026-04-04  
+**Links**: [PRD](../02-architecture/01-prd.md) | [System Design](../02-architecture/02-system-design.md)
+
+## Current Assessment
+
+The source migration is complete. The active application is now KPS, with a Laravel backend, Vue 3 + Inertia frontend, and KPS-specific routes, permissions, and seed data.
+
+The core product is usable as a late-MVP / stabilization build. The main business flows are present, but analytics, exports, and documentation still need depth before the system should be treated as fully hardened production software.
 
 ## Implementation Status
 
-### ✅ Completed (Production Ready)
+### Completed
 
-#### Database Layer
-- ✅ All 7 KPS tables migrated (`sites`, `penerokas`, `debts`, `monthly_deductions`, `deduction_allocations`, `kps_site_user`, `kps_audit_logs`)
-- ✅ Foreign key relationships established
-- ✅ Indexes for performance optimization
+- KPS-only navigation and route surface
+- HQ and site-scoped views
+- Site management
+- Peneroka management
+- Hutang management
+- Monthly potongan entry
+- Allocation waterfall processing
+- Month closing and audit logging
+- Admin user management
+- Admin role management
+- KPS-only seeding and role normalization
 
-#### API Layer
-- ✅ 8 route groups implemented
-- ✅ 7 controllers functional (Dashboard, Analytics, Site, Peneroka, Debt, MonthlyDeduction, AllocationReview, Report)
-- ✅ Middleware: `EnsureKpsSiteContext`
-- ✅ Authentication and authorization
+### Current Roles
 
-#### User Management
-- ✅ 7 user roles defined in `UserRole` enum
-- ✅ Role-based permissions
-- ✅ Site-user pivot table for multi-site access
+- `pentadbiran`
+- `company_admin`
+- `site_admin`
+- `staff`
 
-#### UI/UX
-- ✅ Dual sidebar system (HQ + Site)
-- ✅ Site context switching
-- ✅ Role-based navigation
+### Active Modules
 
-#### Documentation
-- ✅ Reorganized to antigravity-docs standards
-- ✅ PRD and System Design complete
-- ✅ Glossary and Decisions documented
-- ✅ Zero linting errors
-- ✅ 100% code synchronization
+- Dashboard
+- Analytics
+- Sites
+- Peneroka
+- Hutang
+- Potongan Bulanan
+- Allocation Review
+- Reports
+- User Management
+- Role Management
 
-### 🔄 In Progress
+### In Progress
 
-#### Documentation
-- 🔄 Development guide (environment setup, testing, code style)
-- 🔄 Deployment guide (config, procedures, rollback)
-- 🔄 User guide (role-based workflows, tutorials)
+- Broader feature tests for the KPS workflows
+- Reporting and export depth
+- Developer and deployment documentation
+- End-user guidance
+- Analytics expansion beyond summary metrics
 
-#### Verification
-- 🔄 Service implementation verification (AllocationService, SiteContextResolver, MonthlyClosingService)
+### Not Yet Fully Covered
 
-### 📋 Planned (Not Started)
+- CSV/PDF export flows for reports
+- Audit log review UI
+- Deeper operational analytics
+- Comprehensive browser and feature coverage
 
-#### Documentation
-- 📋 API examples (request/response samples)
-- 📋 Testing documentation (unit, feature, browser)
+## Recent Delivery Notes
 
-#### Features
-- 📋 Advanced reporting and analytics
-- 📋 Bulk operations optimization
-- 📋 Export functionality
+- The codebase now routes through KPS-specific controllers and pages.
+- The frontend uses Vue 3 with Inertia.
+- Site access is controlled through permissions and site assignment.
+- The seeders now provision only the KPS roles and sample data needed by the active app.
 
-## Recent Changes (Last 7 Days)
+## Known Gaps
 
-- **2026-02-10**: Completed comprehensive documentation audit
-- **2026-02-10**: Reorganized all documentation to antigravity-docs standards
-- **2026-02-09**: Implemented all KPS database migrations
-- **2026-02-07**: Implemented dual sidebar system
-- **2026-02-07**: Added site admin role and permissions
-
-## Active Branches
-
-- `main`: Production-ready code
-- Development work merged directly to main
-
-## Known Issues
-
-None currently blocking development.
-
-## Next Sprint Goals
-
-1. Create development guide for developer onboarding
-2. Create deployment guide for production readiness
-3. Begin user guide creation for end-user training
-4. Verify service implementations match documentation
-
-## Metrics
-
-| Metric | Current | Target | Status |
-|--------|---------|--------|--------|
-| Documentation Completeness | 73% | 90% | 🔄 |
-| Code Coverage | TBD | 80% | 📋 |
-| API Endpoints | 20+ | 20+ | ✅ |
-| Database Tables | 7 | 7 | ✅ |
+- The report surface is functional but still basic.
+- The documentation set had placeholder pages and is being filled in.
+- Internal status docs may still lag the implementation until this refresh is fully merged.
 
 ## Related Documents
 
-- [Audit Findings](../AUDIT_FINDINGS.md)
 - [System Design](../02-architecture/02-system-design.md)
-
----
-
-**Last Updated**: 2026-02-10
+- [Development](../03-development/README.md)
+- [Deployment](../04-deployment/README.md)
+- [User Guide](../05-user-guide/README.md)

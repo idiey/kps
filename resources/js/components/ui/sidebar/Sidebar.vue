@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { SidebarProps } from "."
+import type { HTMLAttributes } from "vue"
 import { cn } from "@/lib/utils"
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import SheetDescription from '@/components/ui/sheet/SheetDescription.vue'
 import SheetHeader from '@/components/ui/sheet/SheetHeader.vue'
 import SheetTitle from '@/components/ui/sheet/SheetTitle.vue'
 import { SIDEBAR_WIDTH_MOBILE, useSidebar } from "./utils"
+import { computed, useAttrs } from "vue"
 
 defineOptions({
   inheritAttrs: false,
@@ -17,7 +19,20 @@ const props = withDefaults(defineProps<SidebarProps>(), {
   collapsible: "offcanvas",
 })
 
+const attrs = useAttrs()
 const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+
+const mobileSheetAttrs = computed(() => {
+  const { style: _style, ...rest } = attrs as Record<string, unknown>
+  return rest
+})
+
+const mobileSheetStyle = computed(() => [
+  attrs.style as HTMLAttributes["style"],
+  {
+    "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+  },
+])
 </script>
 
 <template>
@@ -30,16 +45,15 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
     <slot />
   </div>
 
-  <Sheet v-else-if="isMobile" :open="openMobile" v-bind="$attrs" @update:open="setOpenMobile">
+  <Sheet v-else-if="isMobile" :open="openMobile" @update:open="setOpenMobile">
     <SheetContent
       data-sidebar="sidebar"
       data-slot="sidebar"
       data-mobile="true"
       :side="side"
-      class="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
-      :style="{
-        '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
-      }"
+      v-bind="mobileSheetAttrs"
+      :class="cn('bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden', props.class)"
+      :style="mobileSheetStyle"
     >
       <SheetHeader class="sr-only">
         <SheetTitle>Sidebar</SheetTitle>

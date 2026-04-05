@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::store
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:121
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:145
  * @route '/kps/sites/{site}/potongan/bulk'
  */
 export const store = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::store
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:121
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:145
  * @route '/kps/sites/{site}/potongan/bulk'
  */
 store.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ store.url = (args: { site: string | { id: string } } | [site: string | { id: str
 
 /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::store
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:121
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:145
  * @route '/kps/sites/{site}/potongan/bulk'
  */
 store.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ store.post = (args: { site: string | { id: string } } | [site: string | { id: st
 
     /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::store
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:121
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:145
  * @route '/kps/sites/{site}/potongan/bulk'
  */
     const storeForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ store.post = (args: { site: string | { id: string } } | [site: string | { id: st
 
             /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::store
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:121
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:145
  * @route '/kps/sites/{site}/potongan/bulk'
  */
         storeForm.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

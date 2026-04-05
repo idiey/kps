@@ -8,7 +8,7 @@ export interface Auth {
     isGlobalAdmin: boolean;
     isCompanyAdmin: boolean;
     isSiteAdminOnly: boolean;
-    assignedSites: string[]; // IDs
+    assignedSites: string[];
     siteAdminSite?: { id: string; name: string; code: string } | null;
 }
 
@@ -22,7 +22,7 @@ export interface NavItem {
     href: NonNullable<InertiaLinkProps['href']>;
     icon?: LucideIcon;
     isActive?: boolean;
-    roles?: string[]; // Simplified to string array as UserRole enum is removed
+    roles?: string[];
     permission?: string;
     children?: NavItem[];
 }
@@ -50,9 +50,6 @@ export interface User {
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;
-
-// KPS Types
-
 export type KpsSiteRole = 'site_admin' | 'staff';
 
 export interface KpsSite {
@@ -78,6 +75,10 @@ export interface KpsPeneroka {
     ic_number?: string | null;
     phone?: string | null;
     address?: string | null;
+    debts_count?: number;
+    total_outstanding?: number | null;
+    current_month_deduction_total?: number | null;
+    latest_deduction_month?: string | null;
     created_at: string;
     updated_at: string;
     deleted_at?: string | null;
@@ -123,6 +124,20 @@ export interface KpsDeductionAllocation {
     debt?: KpsDebt;
 }
 
+export interface KpsAuditLog {
+    id: string;
+    site_id: string;
+    user_id?: number | null;
+    action: string;
+    auditable_type: string;
+    auditable_id: string;
+    metadata?: Record<string, string | number | boolean | null> | null;
+    created_at: string;
+    updated_at: string;
+    user?: Pick<User, 'id' | 'name' | 'email'> | null;
+    auditable_label?: string;
+}
+
 export interface PaginationMeta {
     current_page: number;
     from: number;
@@ -144,113 +159,4 @@ export interface PaginatedResponse<T> {
     data: T[];
     links: PaginationLinks;
     meta: PaginationMeta;
-}
-
-// Site/Workshop Types
-
-export type SiteRole = 'site_admin' | 'supervisor' | 'technician' | 'staff';
-
-export interface Company {
-    id: string;
-    name: string;
-    subdomain?: string;
-    tier: 'free' | 'professional' | 'enterprise';
-    is_active: boolean;
-    created_at: string;
-    updated_at: string;
-}
-
-export interface Workshop {
-    id: string;
-    company_id?: string;
-    name: string;
-    code: string;
-    address?: string;
-    phone?: string;
-    email?: string;
-    operating_hours?: Record<string, { open: string; close: string }>;
-    is_active: boolean;
-    created_at: string;
-    updated_at: string;
-    deleted_at?: string | null;
-
-    // Relationships
-    company?: Company;
-    assigned_users?: (User & { pivot?: { role: SiteRole } })[];
-}
-
-export interface SiteContext {
-    site: Workshop | null;
-    siteRole: SiteRole | null;
-    isSiteSelected: boolean;
-    isSiteAdmin: boolean;
-    isSupervisor: boolean;
-}
-
-// KPS Types
-
-export type KpsSiteRole = 'site_admin' | 'staff';
-
-export interface KpsSite {
-    id: string;
-    name: string;
-    code: string;
-    address?: string;
-    phone?: string;
-    email?: string;
-    is_active: boolean;
-    created_at: string;
-    updated_at: string;
-    deleted_at?: string | null;
-}
-
-export interface KpsPeneroka {
-    id: string;
-    site_id: string;
-    name: string;
-    ic_number?: string | null;
-    phone?: string | null;
-    address?: string | null;
-    created_at: string;
-    updated_at: string;
-    deleted_at?: string | null;
-}
-
-export interface KpsDebt {
-    id: string;
-    peneroka_id: string;
-    priority: number;
-    balance: number;
-    original_amount: number;
-    due_date?: string | null;
-    description?: string | null;
-    created_at: string;
-    updated_at: string;
-    deleted_at?: string | null;
-    peneroka?: KpsPeneroka;
-}
-
-export interface KpsMonthlyDeduction {
-    id: string;
-    peneroka_id: string;
-    site_id: string;
-    month: string;
-    amount: number;
-    unallocated_amount: number;
-    is_closed: boolean;
-    closed_at?: string | null;
-    created_at: string;
-    updated_at: string;
-    peneroka?: KpsPeneroka;
-    allocations?: KpsDeductionAllocation[];
-}
-
-export interface KpsDeductionAllocation {
-    id: string;
-    monthly_deduction_id: string;
-    debt_id: string;
-    amount: number;
-    created_at: string;
-    updated_at: string;
-    debt?: KpsDebt;
 }

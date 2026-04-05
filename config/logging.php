@@ -132,15 +132,6 @@ return [
             'replace_placeholders' => true,
         ],
 
-        'workshop-jobs' => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/workshop-jobs.log'),
-            'level' => env('LOG_LEVEL', 'info'),
-            'days' => 14,
-            'permission' => 0664,
-            'replace_placeholders' => true,
-        ],
-
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],

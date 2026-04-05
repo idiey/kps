@@ -4,7 +4,7 @@
 
 **Purpose**: Track all incoming requests and their resolution  
 **Intended audience**: Development team, project managers  
-**Last updated**: 2026-02-10  
+**Last updated**: 2026-04-04  
 **Links**: [Current State](02-current-state.md) | [Decisions](04-decisions.md)
 
 ## Log Format
@@ -15,6 +15,24 @@ Each entry includes:
 - **Status**: Completed, In Progress, Blocked, Cancelled
 - **Outcome**: What was delivered or decided
 - **References**: Links to related work
+
+---
+
+## 2026-04-04: Codebase Analysis & Control Center Refresh
+
+**Request**: Analyse full KPS codebase and update all stale control center docs
+
+**Status**: ✅ Completed
+
+**Outcome**:
+- Full codebase snapshot: 9 controllers, 6 models, 3 services, 7 migrations, 20+ Vue pages confirmed
+- Services verified: AllocationService, MonthlyClosingService, SiteContextResolver
+- Export confirmed working: CSV + PDF via ReportController
+- Updated: 01-project-brief, 04-decisions, 05-ai-agent-brief, 06-intake, Brain Index
+
+**References**:
+- [Current State](02-current-state.md)
+- [AI Agent Brief](05-ai-agent-brief.md)
 
 ---
 
@@ -160,15 +178,15 @@ Each entry includes:
 
 ### Medium Priority
 
-- [ ] Verify service implementations (AllocationService, SiteContextResolver, MonthlyClosingService)
+- [x] Verify service implementations (AllocationService, SiteContextResolver, MonthlyClosingService) — ✅ confirmed 2026-04-04
 - [ ] Add API examples to System Design
 - [ ] Create testing documentation
 
 ### Low Priority
 
-- [ ] Add advanced reporting features
-- [ ] Optimize bulk operations
-- [ ] Add export functionality
+- [x] Add export functionality — ✅ CSV + PDF implemented (ReportController)
+- [ ] Add audit log review UI (AuditLogController exists, UI may need depth)
+- [ ] Deeper operational analytics
 
 ---
 
@@ -196,4 +214,4 @@ Use this template for new intake entries:
 
 ---
 
-**Last Updated**: 2026-02-10
+**Last Updated**: 2026-04-04

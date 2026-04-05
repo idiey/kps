@@ -1,0 +1,236 @@
+- generic [ref=e190]:
+  - generic [ref=e193]:
+    - list [ref=e195]:
+      - listitem [ref=e196]:
+        - link "Site FELDA Sungai Tekam FELDA-ST" [ref=e197] [cursor=pointer]:
+          - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+          - generic [ref=e198]:
+            - generic [ref=e199]: Site
+            - generic [ref=e200]: FELDA Sungai Tekam
+            - generic [ref=e201]: FELDA-ST
+    - generic [ref=e203]:
+      - generic [ref=e204]: Site Navigation
+      - list [ref=e205]:
+        - listitem [ref=e206]:
+          - link "Site Dashboard" [ref=e207] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005
+            - img [ref=e209]
+            - generic [ref=e214]: Site Dashboard
+        - listitem [ref=e215]:
+          - link "Peneroka" [ref=e216] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/peneroka
+            - img [ref=e218]
+            - generic [ref=e223]: Peneroka
+        - listitem [ref=e224]:
+          - link "Hutang" [ref=e225] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/hutang
+            - img [ref=e227]
+            - generic [ref=e230]: Hutang
+        - listitem [ref=e231]:
+          - link "Potongan Bulanan" [ref=e232] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/potongan
+            - img [ref=e234]
+            - generic [ref=e237]: Potongan Bulanan
+        - listitem [ref=e238]:
+          - link "Allocation Review" [ref=e239] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/allocations
+            - img [ref=e241]
+            - generic [ref=e243]: Allocation Review
+        - listitem [ref=e244]:
+          - link "Reports" [ref=e245] [cursor=pointer]:
+            - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports
+            - img [ref=e247]
+            - generic [ref=e250]: Reports
+    - generic [ref=e251]:
+      - list [ref=e252]:
+        - listitem [ref=e253]:
+          - button "FA Fatimah Site Admin" [ref=e254]:
+            - generic [ref=e256]: FA
+            - generic [ref=e258]: Fatimah Site Admin
+            - img [ref=e259]
+      - generic [ref=e264]:
+        - text: Your Role
+        - paragraph [ref=e265]: site admin
+  - main [ref=e266]:
+    - button "Toggle Sidebar" [ref=e269]:
+      - img
+      - generic [ref=e270]: Toggle Sidebar
+    - generic [ref=e271]:
+      - generic [ref=e272]:
+        - generic [ref=e273]:
+          - heading "Reports" [level=1] [ref=e274]
+          - paragraph [ref=e275]: Statements and exportable site reporting for FELDA Sungai Tekam
+        - link "Export Site CSV" [active] [ref=e276] [cursor=pointer]:
+          - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/export/csv
+      - generic [ref=e277]:
+        - generic [ref=e278]:
+          - heading "Peneroka" [level=3] [ref=e280]
+          - generic [ref=e282]: "15"
+        - generic [ref=e283]:
+          - heading "Outstanding" [level=3] [ref=e285]
+          - generic [ref=e287]: 21,409.00
+        - generic [ref=e288]:
+          - heading "Potongan (2026-04-01)" [level=3] [ref=e290]
+          - generic [ref=e292]: "0.00"
+      - table [ref=e295]:
+        - rowgroup [ref=e296]:
+          - row "Name IC Number Debts Outstanding This Month Latest Deduction Statement" [ref=e297]:
+            - columnheader "Name" [ref=e298]
+            - columnheader "IC Number" [ref=e299]
+            - columnheader "Debts" [ref=e300]
+            - columnheader "Outstanding" [ref=e301]
+            - columnheader "This Month" [ref=e302]
+            - columnheader "Latest Deduction" [ref=e303]
+            - columnheader "Statement" [ref=e304]
+        - rowgroup [ref=e305]:
+          - row "Ahmad bin Abdullah 650101-01-5678 2 260.00 0.00 2026-02-01 View Statement" [ref=e306]:
+            - cell "Ahmad bin Abdullah" [ref=e307]
+            - cell "650101-01-5678" [ref=e308]
+            - cell "2" [ref=e309]
+            - cell "260.00" [ref=e310]
+            - cell "0.00" [ref=e311]
+            - cell "2026-02-01" [ref=e312]
+            - cell "View Statement" [ref=e313]:
+              - link "View Statement" [ref=e314] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9bf6-73be-bb5a-e7c2dcfef7c4
+          - row "Ali bin Hashim 650925-15-5678 2 78.00 0.00 2026-02-01 View Statement" [ref=e315]:
+            - cell "Ali bin Hashim" [ref=e316]
+            - cell "650925-15-5678" [ref=e317]
+            - cell "2" [ref=e318]
+            - cell "78.00" [ref=e319]
+            - cell "0.00" [ref=e320]
+            - cell "2026-02-01" [ref=e321]
+            - cell "View Statement" [ref=e322]:
+              - link "View Statement" [ref=e323] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a8bf-7389-89db-2175cd3d4a7c
+          - row "Aminah binti Ismail 671130-10-4567 3 2,033.00 0.00 2026-02-01 View Statement" [ref=e324]:
+            - cell "Aminah binti Ismail" [ref=e325]
+            - cell "671130-10-4567" [ref=e326]
+            - cell "3" [ref=e327]
+            - cell "2,033.00" [ref=e328]
+            - cell "0.00" [ref=e329]
+            - cell "2026-02-01" [ref=e330]
+            - cell "View Statement" [ref=e331]:
+              - link "View Statement" [ref=e332] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a3cc-723c-a77e-9c0b5ddb0db7
+          - row "Fatimah binti Hassan 700215-02-1234 1 0.00 0.00 2026-02-01 View Statement" [ref=e333]:
+            - cell "Fatimah binti Hassan" [ref=e334]
+            - cell "700215-02-1234" [ref=e335]
+            - cell "1" [ref=e336]
+            - cell "0.00" [ref=e337]
+            - cell "0.00" [ref=e338]
+            - cell "2026-02-01" [ref=e339]
+            - cell "View Statement" [ref=e340]:
+              - link "View Statement" [ref=e341] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9ced-71c6-9ce5-a5580c6cd5ac
+          - row "Halimah binti Omar 740515-12-2345 2 1,003.00 0.00 2026-02-01 View Statement" [ref=e342]:
+            - cell "Halimah binti Omar" [ref=e343]
+            - cell "740515-12-2345" [ref=e344]
+            - cell "2" [ref=e345]
+            - cell "1,003.00" [ref=e346]
+            - cell "0.00" [ref=e347]
+            - cell "2026-02-01" [ref=e348]
+            - cell "View Statement" [ref=e349]:
+              - link "View Statement" [ref=e350] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a5bb-70c0-8e85-cf2568131819
+          - row "Hassan bin Mohamed 710412-07-6789 2 1,920.00 0.00 2026-02-01 View Statement" [ref=e351]:
+            - cell "Hassan bin Mohamed" [ref=e352]
+            - cell "710412-07-6789" [ref=e353]
+            - cell "2" [ref=e354]
+            - cell "1,920.00" [ref=e355]
+            - cell "0.00" [ref=e356]
+            - cell "2026-02-01" [ref=e357]
+            - cell "View Statement" [ref=e358]:
+              - link "View Statement" [ref=e359] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a0e9-73d8-886f-e69c072c9c7b
+          - row "Ibrahim bin Ali 730620-09-7890 3 4,619.00 0.00 2026-02-01 View Statement" [ref=e360]:
+            - cell "Ibrahim bin Ali" [ref=e361]
+            - cell "730620-09-7890" [ref=e362]
+            - cell "3" [ref=e363]
+            - cell "4,619.00" [ref=e364]
+            - cell "0.00" [ref=e365]
+            - cell "2026-02-01" [ref=e366]
+            - cell "View Statement" [ref=e367]:
+              - link "View Statement" [ref=e368] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a2bb-73e9-bd90-d82015f93d2f
+          - row "Kamal bin Yusof 640305-05-8765 2 1,827.00 0.00 2026-02-01 View Statement" [ref=e369]:
+            - cell "Kamal bin Yusof" [ref=e370]
+            - cell "640305-05-8765" [ref=e371]
+            - cell "2" [ref=e372]
+            - cell "1,827.00" [ref=e373]
+            - cell "0.00" [ref=e374]
+            - cell "2026-02-01" [ref=e375]
+            - cell "View Statement" [ref=e376]:
+              - link "View Statement" [ref=e377] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9f28-721b-b739-5122414950f1
+          - row "Mohamed bin Salleh 680820-13-6789 3 1,080.00 0.00 2026-02-01 View Statement" [ref=e378]:
+            - cell "Mohamed bin Salleh" [ref=e379]
+            - cell "680820-13-6789" [ref=e380]
+            - cell "3" [ref=e381]
+            - cell "1,080.00" [ref=e382]
+            - cell "0.00" [ref=e383]
+            - cell "2026-02-01" [ref=e384]
+            - cell "View Statement" [ref=e385]:
+              - link "View Statement" [ref=e386] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a69f-707f-9688-2270ebf60ec6
+          - row "Noraini binti Ahmad 690925-06-2345 2 2,616.00 0.00 2026-02-01 View Statement" [ref=e387]:
+            - cell "Noraini binti Ahmad" [ref=e388]
+            - cell "690925-06-2345" [ref=e389]
+            - cell "2" [ref=e390]
+            - cell "2,616.00" [ref=e391]
+            - cell "0.00" [ref=e392]
+            - cell "2026-02-01" [ref=e393]
+            - cell "View Statement" [ref=e394]:
+              - link "View Statement" [ref=e395] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a00e-7308-ba88-b39b01757ef1
+          - row "Razak bin Ibrahim 680520-03-9876 1 0.00 0.00 2026-02-01 View Statement" [ref=e396]:
+            - cell "Razak bin Ibrahim" [ref=e397]
+            - cell "680520-03-9876" [ref=e398]
+            - cell "1" [ref=e399]
+            - cell "0.00" [ref=e400]
+            - cell "0.00" [ref=e401]
+            - cell "2026-02-01" [ref=e402]
+            - cell "View Statement" [ref=e403]:
+              - link "View Statement" [ref=e404] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9d9b-73f3-a6ca-74caa07f281c
+          - row "Rohani binti Daud 720110-14-1234 3 3,180.00 0.00 2026-02-01 View Statement" [ref=e405]:
+            - cell "Rohani binti Daud" [ref=e406]
+            - cell "720110-14-1234" [ref=e407]
+            - cell "3" [ref=e408]
+            - cell "3,180.00" [ref=e409]
+            - cell "0.00" [ref=e410]
+            - cell "2026-02-01" [ref=e411]
+            - cell "View Statement" [ref=e412]:
+              - link "View Statement" [ref=e413] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a7c4-714b-8433-8db25df1c1da
+          - row "Siti binti Mahmud 720810-04-5432 1 0.00 0.00 2026-02-01 View Statement" [ref=e414]:
+            - cell "Siti binti Mahmud" [ref=e415]
+            - cell "720810-04-5432" [ref=e416]
+            - cell "1" [ref=e417]
+            - cell "0.00" [ref=e418]
+            - cell "0.00" [ref=e419]
+            - cell "2026-02-01" [ref=e420]
+            - cell "View Statement" [ref=e421]:
+              - link "View Statement" [ref=e422] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-9e7e-73cc-b3c4-e3537dc7a0fb
+          - row "Yusof bin Hamid 690205-11-8901 1 200.00 0.00 2026-02-01 View Statement" [ref=e423]:
+            - cell "Yusof bin Hamid" [ref=e424]
+            - cell "690205-11-8901" [ref=e425]
+            - cell "1" [ref=e426]
+            - cell "200.00" [ref=e427]
+            - cell "0.00" [ref=e428]
+            - cell "2026-02-01" [ref=e429]
+            - cell "View Statement" [ref=e430]:
+              - link "View Statement" [ref=e431] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a4f2-734b-9acb-f6266db184c4
+          - row "Zainab binti Rahman 660718-08-3456 3 2,593.00 0.00 2026-02-01 View Statement" [ref=e432]:
+            - cell "Zainab binti Rahman" [ref=e433]
+            - cell "660718-08-3456" [ref=e434]
+            - cell "3" [ref=e435]
+            - cell "2,593.00" [ref=e436]
+            - cell "0.00" [ref=e437]
+            - cell "2026-02-01" [ref=e438]
+            - cell "View Statement" [ref=e439]:
+              - link "View Statement" [ref=e440] [cursor=pointer]:
+                - /url: /kps/sites/019c478b-9138-70ba-953b-191d5ae70005/reports/peneroka/019c478b-a1c6-7343-8c4c-d63fecba099c
+  - generic "Notifications"

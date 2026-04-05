@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Kps\Site;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -56,66 +57,37 @@ class User extends Authenticatable
     }
 
     /**
-     * Get KPS sites this user is assigned to.
+     * Get the KPS sites this user is assigned to.
      */
-    public function kpsSites()
+    public function kpsSites(): BelongsToMany
     {
-        return $this->belongsToMany(\App\Models\Kps\Site::class, 'kps_site_user')
+        return $this->belongsToMany(Site::class, 'kps_site_user')
             ->withPivot('role')
             ->withTimestamps();
     }
 
     /**
-     * Get KPS sites this user is assigned to.
-     */
-    public function kpsSites()
-    {
-        return $this->belongsToMany(\App\Models\Kps\Site::class, 'kps_site_user')
-            ->withPivot('role')
-            ->withTimestamps();
-    }
-
-    /**
-     * Get the first workshop this user is assigned to (any role).
-     */
-    public function getFirstKpsSite(): ?\App\Models\Kps\Site
-    {
-        return $this->kpsSites()->first();
-    }
-
-    /**
-<<<<<<< HEAD
-     * Check if user is only assigned to KPS sites (no HQ permissions).
-=======
      * Get the first KPS site this user is assigned to.
      */
-    public function getFirstKpsSite(): ?\App\Models\Kps\Site
+    public function getFirstKpsSite(): ?Site
     {
         return $this->kpsSites()->first();
     }
 
     /**
-     * Check if user is an HQ-level user (has company_id set).
->>>>>>> e6e3153e1e76b0a43ae8b77b9f041c9c43ca0dba
+     * Check if the user has HQ-wide access.
      */
-    public function isKpsSiteOnly(): bool
+    public function isGlobalAdmin(): bool
     {
-        if ($this->hasRole(['pentadbiran', 'company_admin'])) {
-            return false;
-        }
-
-        return $this->kpsSites()->exists();
+        return $this->hasRole('pentadbiran');
     }
 
     /**
-     * Check if user is only assigned to KPS sites (no HQ permissions).
+     * Check if the user is scoped only to KPS sites.
      */
     public function isKpsSiteOnly(): bool
     {
-        if ($this->hasRole(['pentadbiran', 'company_admin'])) {
-            return false;
-        }
-
-        return $this->kpsSites()->exists();
+        return ! $this->hasRole(['pentadbiran', 'company_admin'])
+            && $this->kpsSites()->exists();
     }
 }

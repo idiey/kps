@@ -103,7 +103,7 @@ index.head = (args: { site: string | { id: string } } | [site: string | { id: st
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::show
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:47
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:60
  * @route '/kps/sites/{site}/allocations/{deduction}'
  */
 export const show = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -118,7 +118,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::show
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:47
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:60
  * @route '/kps/sites/{site}/allocations/{deduction}'
  */
 show.url = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -148,7 +148,7 @@ show.url = (args: { site: string | { id: string }, deduction: string | { id: str
 
 /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::show
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:47
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:60
  * @route '/kps/sites/{site}/allocations/{deduction}'
  */
 show.get = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -157,7 +157,7 @@ show.get = (args: { site: string | { id: string }, deduction: string | { id: str
 })
 /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::show
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:47
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:60
  * @route '/kps/sites/{site}/allocations/{deduction}'
  */
 show.head = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -167,7 +167,7 @@ show.head = (args: { site: string | { id: string }, deduction: string | { id: st
 
     /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::show
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:47
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:60
  * @route '/kps/sites/{site}/allocations/{deduction}'
  */
     const showForm = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -177,7 +177,7 @@ show.head = (args: { site: string | { id: string }, deduction: string | { id: st
 
             /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::show
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:47
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:60
  * @route '/kps/sites/{site}/allocations/{deduction}'
  */
         showForm.get = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -186,7 +186,7 @@ show.head = (args: { site: string | { id: string }, deduction: string | { id: st
         })
             /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::show
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:47
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:60
  * @route '/kps/sites/{site}/allocations/{deduction}'
  */
         showForm.head = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -202,7 +202,7 @@ show.head = (args: { site: string | { id: string }, deduction: string | { id: st
     show.form = showForm
 /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::reallocate
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:66
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:79
  * @route '/kps/sites/{site}/allocations/{deduction}/reallocate'
  */
 export const reallocate = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -217,7 +217,7 @@ reallocate.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::reallocate
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:66
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:79
  * @route '/kps/sites/{site}/allocations/{deduction}/reallocate'
  */
 reallocate.url = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -247,7 +247,7 @@ reallocate.url = (args: { site: string | { id: string }, deduction: string | { i
 
 /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::reallocate
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:66
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:79
  * @route '/kps/sites/{site}/allocations/{deduction}/reallocate'
  */
 reallocate.post = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -257,7 +257,7 @@ reallocate.post = (args: { site: string | { id: string }, deduction: string | { 
 
     /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::reallocate
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:66
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:79
  * @route '/kps/sites/{site}/allocations/{deduction}/reallocate'
  */
     const reallocateForm = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -267,7 +267,7 @@ reallocate.post = (args: { site: string | { id: string }, deduction: string | { 
 
             /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::reallocate
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:66
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:79
  * @route '/kps/sites/{site}/allocations/{deduction}/reallocate'
  */
         reallocateForm.post = (args: { site: string | { id: string }, deduction: string | { id: string } } | [site: string | { id: string }, deduction: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -278,7 +278,7 @@ reallocate.post = (args: { site: string | { id: string }, deduction: string | { 
     reallocate.form = reallocateForm
 /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::closeMonth
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:87
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:100
  * @route '/kps/sites/{site}/allocations/close-month'
  */
 export const closeMonth = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -293,7 +293,7 @@ closeMonth.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::closeMonth
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:87
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:100
  * @route '/kps/sites/{site}/allocations/close-month'
  */
 closeMonth.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -326,7 +326,7 @@ closeMonth.url = (args: { site: string | { id: string } } | [site: string | { id
 
 /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::closeMonth
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:87
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:100
  * @route '/kps/sites/{site}/allocations/close-month'
  */
 closeMonth.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -336,7 +336,7 @@ closeMonth.post = (args: { site: string | { id: string } } | [site: string | { i
 
     /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::closeMonth
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:87
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:100
  * @route '/kps/sites/{site}/allocations/close-month'
  */
     const closeMonthForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -346,7 +346,7 @@ closeMonth.post = (args: { site: string | { id: string } } | [site: string | { i
 
             /**
 * @see \App\Http\Controllers\Kps\AllocationReviewController::closeMonth
- * @see app/Http/Controllers/Kps/AllocationReviewController.php:87
+ * @see app/Http/Controllers/Kps/AllocationReviewController.php:100
  * @route '/kps/sites/{site}/allocations/close-month'
  */
         closeMonthForm.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

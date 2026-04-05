@@ -24,7 +24,7 @@ None.
 | Data isolation | KPS tables are owned by the module and do not depend on non-KPS domain tables. | ARCH-KPS |
 | Access control | HQ access is permission-based (`kps.manage_sites`); site access uses `kps_site_user`. | ARCH-KPS |
 | Layout split | Use KpsShellLayout for HQ and SiteShellLayout for site users. | ARCH-KPS |
-| Workshop removal | All Workshop-related code removed (2026-02-10). Application now focuses solely on KPS domain. | Refactoring |
+| Legacy cleanup | Legacy non-KPS modules were removed so the repository now tracks only the KPS domain. | Refactoring |
 
 ## Examples
 

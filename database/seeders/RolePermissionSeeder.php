@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Kps\Site;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -13,82 +15,18 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Create permissions
         $permissions = [
-            // Admin access (sidebar/navigation)
-            'admin.access',
-
-            // Workshop Job permissions
-            'view-jobs',
-            'create-jobs',
-            'edit-jobs',
-            'delete-jobs',
-            'assign-jobs',
-            'update-job-status',
-
-            // Customer permissions
-            'view-customers',
-            'create-customers',
-            'edit-customers',
-            'delete-customers',
-
-            // User management permissions
             'view-users',
             'create-users',
             'edit-users',
             'delete-users',
-
-            // Report permissions
-            'view-reports',
-            'generate-reports',
-            'export-reports',
-
-            // Analytics permissions
-            'view-analytics',
-            'export-analytics',
-
-            // Note permissions
-            'view-notes',
-            'create-notes',
-            'edit-notes',
-            'delete-notes',
-            'view-private-notes',
-
-            // Approval permissions
-            'approve-jobs',
-            'reject-jobs',
-            'inspect-jobs',
-
-            // Role & Permission management (Admin only)
             'view-roles',
             'create-roles',
             'edit-roles',
             'delete-roles',
             'assign-permissions',
-
-            // Asset management (Admin only)
-            'view-assets',
-            'create-assets',
-            'edit-assets',
-            'delete-assets',
-            'track-asset-condition',
-
-            // Parts Inventory management (Admin only)
-            'view-inventory',
-            'create-inventory',
-            'edit-inventory',
-            'delete-inventory',
-            'adjust-stock',
-            'view-stock-movements',
-
-            // System Settings (Admin only)
-            'view-settings',
-            'edit-settings',
-
-            // KPS permissions
             'kps.view',
             'kps.manage_sites',
             'kps.manage_peneroka',
@@ -98,122 +36,111 @@ class RolePermissionSeeder extends Seeder
             'kps.approve_month',
         ];
 
+        Permission::query()
+            ->whereNotIn('name', $permissions)
+            ->get()
+            ->each(function (Permission $permission): void {
+                $permission->roles()->detach();
+                $permission->delete();
+            });
+
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
+            Permission::firstOrCreate([
+                'name' => $permission,
+                'guard_name' => 'web',
+            ]);
         }
 
-        // Create roles and assign permissions
+        $roleDefinitions = [
+            'pentadbiran' => [
+                'description' => 'Global KPS administration',
+                'color' => 'red',
+                'is_system_role' => true,
+                'is_active' => true,
+                'permissions' => $permissions,
+            ],
+            'company_admin' => [
+                'description' => 'HQ operations oversight for all KPS sites',
+                'color' => 'blue',
+                'is_system_role' => true,
+                'is_active' => true,
+                'permissions' => [
+                    'kps.view',
+                    'kps.manage_sites',
+                    'kps.view_reports',
+                    'kps.approve_month',
+                ],
+            ],
+            'site_admin' => [
+                'description' => 'Site-level KPS administration',
+                'color' => 'cyan',
+                'is_system_role' => true,
+                'is_active' => true,
+                'permissions' => [
+                    'kps.view',
+                    'kps.manage_peneroka',
+                    'kps.manage_hutang',
+                    'kps.manage_potongan',
+                    'kps.view_reports',
+                    'kps.approve_month',
+                ],
+            ],
+            'staff' => [
+                'description' => 'Basic KPS site access',
+                'color' => 'slate',
+                'is_system_role' => true,
+                'is_active' => true,
+                'permissions' => [
+                    'kps.view',
+                ],
+            ],
+        ];
 
-        // Admin - Full access
-        $admin = Role::firstOrCreate(['name' => 'pentadbiran']);
-        $admin->givePermissionTo(Permission::all());
+        foreach ($roleDefinitions as $name => $definition) {
+            $role = Role::updateOrCreate(
+                ['name' => $name, 'guard_name' => 'web'],
+                [
+                    'description' => $definition['description'],
+                    'color' => $definition['color'],
+                    'is_system_role' => $definition['is_system_role'],
+                    'is_active' => $definition['is_active'],
+                ],
+            );
 
-        // Company Admin - Site management + analytics only (no job/customer creation)
-        $companyAdmin = Role::firstOrCreate(['name' => 'company_admin']);
-        $companyAdmin->givePermissionTo([
-            'admin.access',
-            // Admin modules shown in AppSidebar
-            'view-users',
-            'create-users',
-            'edit-users',
-            'view-roles',
-            'view-reports',
-            'generate-reports',
-            'export-reports',
-            'view-assets',
-            'view-inventory',
-            'view-stock-movements',
-            'view-settings',
-            // Analytics module
-            'view-analytics',
-            'export-analytics',
-            // KPS HQ permissions
-            'kps.view',
-            'kps.manage_sites',
-            'kps.view_reports',
-            'kps.approve_month',
-        ]);
+            $role->syncPermissions($definition['permissions']);
+        }
 
-        // Supervisor - Can manage jobs and assign work
-        $supervisor = Role::firstOrCreate(['name' => 'penyelia']);
-        $supervisor->givePermissionTo([
-            'view-jobs',
-            'create-jobs',
-            'edit-jobs',
-            'assign-jobs',
-            'update-job-status',
-            'view-customers',
-            'create-customers',
-            'edit-customers',
-            'view-notes',
-            'create-notes',
-            'edit-notes',
-            'view-private-notes',
-            'view-reports',
-            'generate-reports',
-            'view-analytics',
-            // KPS site permissions
-            'kps.view',
-            'kps.manage_peneroka',
-            'kps.manage_hutang',
-            'kps.manage_potongan',
-            'kps.view_reports',
-        ]);
+        $this->normalizeAssignedUserRoles();
 
-        // Technician - Can work on assigned jobs
-        $technician = Role::firstOrCreate(['name' => 'juruteknik']);
-        $technician->givePermissionTo([
-            'view-jobs',
-            'update-job-status',
-            'view-customers',
-            'view-notes',
-            'create-notes',
-            'edit-notes',
-        ]);
-
-        // Inspector - Can inspect and verify work
-        $inspector = Role::firstOrCreate(['name' => 'pemeriksa']);
-        $inspector->givePermissionTo([
-            'view-jobs',
-            'inspect-jobs',
-            'view-customers',
-            'view-notes',
-            'create-notes',
-            'view-private-notes',
-            'view-reports',
-            'view-analytics',
-        ]);
-
-        // Approver - Can approve/reject jobs
-        $approver = Role::firstOrCreate(['name' => 'pelulus']);
-        $approver->givePermissionTo([
-            'view-jobs',
-            'approve-jobs',
-            'reject-jobs',
-            'view-customers',
-            'view-notes',
-            'view-private-notes',
-            'view-reports',
-            'generate-reports',
-            'export-reports',
-            'view-analytics',
-        ]);
-
-        // Front Desk - Can create jobs and manage customers (walk-in service)
-        $frontdesk = Role::firstOrCreate(['name' => 'kaunter']);
-        $frontdesk->givePermissionTo([
-            'view-jobs',
-            'create-jobs',
-            'edit-jobs',
-            'view-customers',
-            'create-customers',
-            'edit-customers',
-            'view-notes',
-            'create-notes',
-            // KPS minimal access
-            'kps.view',
-        ]);
+        Role::query()
+            ->whereDoesntHave('users')
+            ->whereDoesntHave('permissions')
+            ->get()
+            ->each(function (Role $role): void {
+                $role->delete();
+            });
 
         $this->command->info('Roles and permissions seeded successfully!');
+    }
+
+    protected function normalizeAssignedUserRoles(): void
+    {
+        $users = User::with('kpsSites')->get();
+
+        foreach ($users as $user) {
+            if ($user->hasRole(['pentadbiran', 'company_admin'])) {
+                continue;
+            }
+
+            if ($user->kpsSites->contains(fn (Site $site) => $site->pivot?->role === 'site_admin')) {
+                $user->syncRoles(['site_admin']);
+
+                continue;
+            }
+
+            if ($user->kpsSites->isNotEmpty()) {
+                $user->syncRoles(['staff']);
+            }
+        }
     }
 }
