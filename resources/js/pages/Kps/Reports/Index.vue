@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
+import { Input } from '@/components/ui/input';
+import { useServerTable } from '@/composables/useServerTable';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import type { KpsPeneroka, KpsSite, KpsSiteRole } from '@/types';
 
@@ -24,6 +26,20 @@ interface SiteActivityItem {
     summary: string;
 }
 
+interface PaginatedPenerokas {
+    data: KpsPeneroka[];
+    meta?: {
+        current_page?: number;
+        last_page?: number;
+        per_page?: number;
+        total?: number;
+    };
+    current_page?: number;
+    last_page?: number;
+    per_page?: number;
+    total?: number;
+}
+
 const props = defineProps<{
     site: KpsSite;
     siteRole?: KpsSiteRole | null;
@@ -34,12 +50,55 @@ const props = defineProps<{
         outstanding_total: number;
         current_month_deductions: number;
     };
-    penerokas: KpsPeneroka[];
+    penerokas: PaginatedPenerokas;
     priorityMix: SitePriorityMix[];
     recentActivity: SiteActivityItem[];
+    filters: {
+        search?: string;
+        sort_by?: string;
+        sort_dir?: 'asc' | 'desc';
+    };
 }>();
 
-const query = ref('');
+const { globalFilter, sorting, goToPage } = useServerTable(
+    `/kps/sites/${props.site.id}/reports`,
+    props.filters,
+);
+
+const sortByModel = computed({
+    get: () => sorting.value[0]?.id ?? '',
+    set: (column: string) => {
+        if (!column) {
+            sorting.value = [];
+            return;
+        }
+
+        const current = sorting.value[0];
+        sorting.value = [
+            {
+                id: column,
+                desc: current?.desc ?? (props.filters.sort_dir === 'desc'),
+            },
+        ];
+    },
+});
+
+const sortDirModel = computed({
+    get: () => (sorting.value[0]?.desc ? 'desc' : 'asc'),
+    set: (direction: 'asc' | 'desc') => {
+        const currentColumn = sorting.value[0]?.id;
+        if (!currentColumn) {
+            return;
+        }
+
+        sorting.value = [
+            {
+                id: currentColumn,
+                desc: direction === 'desc',
+            },
+        ];
+    },
+});
 
 const formatMoney = (value?: number | null) =>
     new Intl.NumberFormat('en-MY', {
@@ -64,25 +123,33 @@ const formatMonth = (value?: string | null) => {
     }).format(date);
 };
 
-const filteredPenerokas = computed(() => {
-    const needle = query.value.trim().toLowerCase();
-
-    if (!needle) {
-        return props.penerokas;
-    }
-
-    return props.penerokas.filter((peneroka) =>
-        [peneroka.name, peneroka.ic_number, peneroka.phone]
-            .filter(Boolean)
-            .some((value) => String(value).toLowerCase().includes(needle)),
-    );
-});
-
 const averageOutstanding = computed(() =>
     props.summary.peneroka_count > 0
         ? props.summary.outstanding_total / props.summary.peneroka_count
         : 0,
 );
+
+const tableColumns = [
+    { accessorKey: 'name', header: 'Peneroka' },
+    { accessorKey: 'ic_number', header: 'Identity' },
+    { accessorKey: 'debts_count', header: 'Debts' },
+    { accessorKey: 'total_outstanding', header: 'Outstanding' },
+    { accessorKey: 'current_month_deduction_total', header: 'This Month' },
+    { accessorKey: 'latest_deduction_month', header: 'Latest Deduction' },
+    { id: 'actions', header: 'Action' },
+];
+
+const paginationMeta = computed(() => {
+    const source = props.penerokas;
+    const meta = source.meta ?? source;
+
+    return {
+        currentPage: Number(meta.current_page ?? 1),
+        lastPage: Number(meta.last_page ?? 1),
+        perPage: Number(meta.per_page ?? 20),
+        total: Number(meta.total ?? source.data.length),
+    };
+});
 </script>
 
 <template>
@@ -149,72 +216,113 @@ const averageOutstanding = computed(() =>
                 <div class="flex flex-col gap-4 border-b border-[#f0dfd8] px-7 py-6 lg:flex-row lg:items-center lg:justify-between">
                     <div class="flex flex-wrap items-center gap-3 text-xs font-semibold text-[#6d5952]">
                         <span class="rounded-full bg-[#f7f1ee] px-4 py-2">Month {{ currentMonth }}</span>
-                        <span class="rounded-full bg-[#f7f1ee] px-4 py-2">{{ filteredPenerokas.length }} rows shown</span>
+                        <span class="rounded-full bg-[#f7f1ee] px-4 py-2">{{ penerokas.data.length }} rows shown</span>
                         <span class="rounded-full bg-[#f7f1ee] px-4 py-2">Statements + CSV export</span>
                     </div>
 
-                    <label class="relative block w-full max-w-sm">
-                        <input
-                            v-model="query"
+                    <div class="flex w-full flex-col gap-3 lg:w-auto lg:flex-row">
+                        <Input
+                            v-model="globalFilter"
                             type="text"
                             placeholder="Find peneroka, IC, or phone..."
-                            class="w-full rounded-full border border-[#ead6ce] bg-[#f7f1ee] px-4 py-3 text-sm text-[#6d5952] outline-none"
+                            class="w-full lg:w-[280px]"
                         />
-                    </label>
+                        <select
+                            v-model="sortByModel"
+                            class="h-10 rounded-full border border-[#ead6ce] bg-[#f7f1ee] px-4 text-sm text-[#6d5952] outline-none"
+                        >
+                            <option value="">Default Sort</option>
+                            <option value="name">Name</option>
+                            <option value="total_outstanding">Outstanding</option>
+                            <option value="current_month_deduction_total">This Month</option>
+                        </select>
+                        <select
+                            v-model="sortDirModel"
+                            :disabled="!sortByModel"
+                            class="h-10 rounded-full border border-[#ead6ce] bg-[#f7f1ee] px-4 text-sm text-[#6d5952] outline-none disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                            <option value="asc">Asc</option>
+                            <option value="desc">Desc</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="min-w-full text-left">
-                        <thead class="bg-[#fbf6f3]">
-                            <tr>
-                                <th class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Peneroka</th>
-                                <th class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Identity</th>
-                                <th class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Debts</th>
-                                <th class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Outstanding</th>
-                                <th class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">This Month</th>
-                                <th class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Latest Deduction</th>
-                                <th class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73] text-right">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                v-for="peneroka in filteredPenerokas"
-                                :key="peneroka.id"
-                                class="border-t border-[#f2e3dc] text-sm text-[#3a302d]"
-                            >
-                                <td class="px-7 py-5">
-                                    <div>
-                                        <p class="font-semibold text-[#1b1b1b]">{{ peneroka.name }}</p>
-                                        <p class="text-xs text-[#8d7167]">{{ peneroka.phone || 'No phone registered' }}</p>
-                                    </div>
-                                </td>
-                                <td class="px-7 py-5 text-[#6d5952]">{{ peneroka.ic_number || '-' }}</td>
-                                <td class="px-7 py-5">
-                                    <span class="rounded-full bg-[#fff1ec] px-3 py-1 text-[11px] font-bold text-[#b64a2b]">
-                                        {{ peneroka.debts_count || 0 }}
-                                    </span>
-                                </td>
-                                <td class="px-7 py-5 font-semibold text-[#1b1b1b]">{{ formatMoney(peneroka.total_outstanding) }}</td>
-                                <td class="px-7 py-5 text-[#6d5952]">{{ formatMoney(peneroka.current_month_deduction_total) }}</td>
-                                <td class="px-7 py-5 text-[#6d5952]">{{ formatMonth(peneroka.latest_deduction_month) }}</td>
-                                <td class="px-7 py-5 text-right">
-                                    <Link
-                                        :href="`/kps/sites/${site.id}/reports/peneroka/${peneroka.id}`"
-                                        class="inline-flex rounded-full border border-[#e2c9c0] px-4 py-2 text-xs font-semibold text-[#6d5952]"
-                                    >
-                                        Statement
-                                    </Link>
-                                </td>
-                            </tr>
-                            <tr v-if="filteredPenerokas.length === 0">
-                                <td colspan="7" class="px-7 py-10 text-center text-sm text-[#8d7167]">
-                                    No peneroka records match the current filter.
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="overflow-x-auto px-2 py-3">
+                    <UTable
+                        v-model:sorting="sorting"
+                        :data="penerokas.data"
+                        :columns="tableColumns"
+                        :sorting-options="{ manualSorting: true }"
+                        empty="No peneroka records match the current filter."
+                        class="min-w-full"
+                    >
+                        <template #name-cell="{ row }">
+                            <div>
+                                <p class="font-semibold text-[#1b1b1b]">{{ row.original.name }}</p>
+                                <p class="text-xs text-[#8d7167]">{{ row.original.phone || 'No phone registered' }}</p>
+                            </div>
+                        </template>
+
+                        <template #ic_number-cell="{ row }">
+                            <span class="text-[#6d5952]">{{ row.original.ic_number || '-' }}</span>
+                        </template>
+
+                        <template #debts_count-cell="{ row }">
+                            <span class="rounded-full bg-[#fff1ec] px-3 py-1 text-[11px] font-bold text-[#b64a2b]">
+                                {{ row.original.debts_count || 0 }}
+                            </span>
+                        </template>
+
+                        <template #total_outstanding-cell="{ row }">
+                            <span class="font-semibold text-[#1b1b1b]">{{ formatMoney(row.original.total_outstanding) }}</span>
+                        </template>
+
+                        <template #current_month_deduction_total-cell="{ row }">
+                            <span class="text-[#6d5952]">{{ formatMoney(row.original.current_month_deduction_total) }}</span>
+                        </template>
+
+                        <template #latest_deduction_month-cell="{ row }">
+                            <span class="text-[#6d5952]">{{ formatMonth(row.original.latest_deduction_month) }}</span>
+                        </template>
+
+                        <template #actions-cell="{ row }">
+                            <div class="text-right">
+                                <Link
+                                    :href="`/kps/sites/${site.id}/reports/peneroka/${row.original.id}`"
+                                    class="inline-flex rounded-full border border-[#e2c9c0] px-4 py-2 text-xs font-semibold text-[#6d5952]"
+                                >
+                                    Statement
+                                </Link>
+                            </div>
+                        </template>
+                    </UTable>
                 </div>
             </section>
+
+            <div
+                v-if="paginationMeta.lastPage > 1"
+                class="rounded-[28px] border border-[#efdcd5] bg-white/90 px-5 py-4 shadow-[0_12px_30px_rgba(157,80,53,0.06)]"
+            >
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <p class="text-sm text-[#6d5952]">
+                        Showing
+                        {{ (paginationMeta.currentPage - 1) * paginationMeta.perPage + 1 }}
+                        to
+                        {{ Math.min(paginationMeta.currentPage * paginationMeta.perPage, paginationMeta.total) }}
+                        of
+                        {{ paginationMeta.total }}
+                        entries
+                    </p>
+                    <UPagination
+                        :page="paginationMeta.currentPage"
+                        :items-per-page="paginationMeta.perPage"
+                        :total="paginationMeta.total"
+                        :sibling-count="1"
+                        show-edges
+                        @update:page="goToPage"
+                    />
+                </div>
+            </div>
 
             <section class="grid gap-6 xl:grid-cols-[1.05fr,0.95fr]">
                 <div class="rounded-[34px] border border-[#efdcd5] bg-white/88 p-7 shadow-[0_16px_46px_rgba(157,80,53,0.08)]">
@@ -275,7 +383,7 @@ const averageOutstanding = computed(() =>
                             <div class="flex items-start justify-between gap-4">
                                 <div>
                                     <p class="text-sm font-semibold text-[#1b1b1b]">{{ item.action_label }}</p>
-                                    <p class="mt-1 text-xs text-[#8d7167]">{{ item.actor_name }} · {{ item.created_at }}</p>
+                                    <p class="mt-1 text-xs text-[#8d7167]">{{ item.actor_name }} - {{ item.created_at }}</p>
                                 </div>
                                 <span class="rounded-full bg-[#fff1ec] px-3 py-1 text-[11px] font-bold text-[#b64a2b]">{{ item.site_code || site.code }}</span>
                             </div>

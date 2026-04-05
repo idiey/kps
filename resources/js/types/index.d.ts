@@ -62,6 +62,7 @@ export interface KpsSite {
     phone?: string;
     email?: string;
     is_active: boolean;
+    hutang_weightage_pct?: number;
     created_at: string;
     updated_at: string;
     updated_by?: number;
@@ -91,6 +92,7 @@ export interface KpsDebt {
     priority: number;
     balance: number;
     original_amount: number;
+    monthly_potongan_limit?: number | null;
     due_date?: string | null;
     description?: string | null;
     created_at: string;

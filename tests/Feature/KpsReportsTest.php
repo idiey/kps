@@ -63,8 +63,8 @@ test('site users need report permission to open the report index', function () {
         ->get("/kps/sites/{$this->site->id}/reports")
         ->assertOk()
         ->assertInertia(fn ($page) => $page
-            ->has('penerokas')
-            ->where('penerokas.0.id', $this->peneroka->id)
+            ->has('penerokas.data')
+            ->where('penerokas.data.0.id', $this->peneroka->id)
             ->has('monthLabel')
             ->has('priorityMix')
             ->where('priorityMix.0.priority', 1)

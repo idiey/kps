@@ -26,14 +26,26 @@ class AllocationReviewController extends Controller
             ? Carbon::createFromFormat('Y-m', $month)->startOfMonth()->toDateString()
             : Carbon::now()->startOfMonth()->toDateString();
         $selectedMonth = Carbon::parse($monthDate)->format('Y-m');
+        $search  = $request->string('search')->trim()->toString();
+        $status  = in_array($request->get('status'), ['open', 'closed']) ? $request->get('status') : 'all';
+        $sortBy  = in_array($request->get('sort_by'), ['amount', 'unallocated_amount']) ? $request->get('sort_by') : null;
+        $sortDir = $request->get('sort_dir') === 'asc' ? 'asc' : 'desc';
+
         $query = MonthlyDeduction::query()
             ->with('peneroka')
             ->withCount('allocations')
             ->where('site_id', $site->id)
             ->whereDate('month', $monthDate)
-            ->orderByDesc('month');
+            ->when($search !== '', fn ($q) =>
+                $q->whereHas('peneroka', fn ($p) => $p->where('name', 'like', "%{$search}%"))
+            )
+            ->when($status === 'open',   fn ($q) => $q->where('is_closed', false))
+            ->when($status === 'closed', fn ($q) => $q->where('is_closed', true))
+            ->when($sortBy !== null, fn ($q) => $q->orderBy($sortBy, $sortDir))
+            ->when($sortBy === null, fn ($q) => $q->orderByDesc('month'));
 
         $deductions = $query->paginate(15)->withQueryString();
+
         $summaryQuery = MonthlyDeduction::query()
             ->where('site_id', $site->id)
             ->whereDate('month', $monthDate);
@@ -54,6 +66,7 @@ class AllocationReviewController extends Controller
             'monthLabel' => Carbon::parse($monthDate)->format('F Y'),
             'summary' => $summary,
             'siteRole' => $context['siteRole'],
+            'filters' => ['search' => $search, 'status' => $status, 'sort_by' => $sortBy ?? '', 'sort_dir' => $sortDir, 'month' => $selectedMonth],
         ]);
     }
 

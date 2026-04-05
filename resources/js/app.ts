@@ -1,9 +1,11 @@
 import '../css/app.css';
 
+import ui from '@nuxt/ui/vue-plugin';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
-import { createApp, h } from 'vue';
+import { createApp, defineComponent, h } from 'vue';
+import UApp from '@nuxt/ui/components/App.vue';
 import { initializeTheme } from './composables/useAppearance';
 
 const appName = import.meta.env.VITE_APP_NAME || 'KPS';
@@ -16,8 +18,12 @@ createInertiaApp({
             import.meta.glob<DefineComponent>('./pages/**/*.vue'),
         ),
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
+        const RootApp = defineComponent({
+            render: () => h(UApp, {}, { default: () => h(App, props) }),
+        });
+        createApp(RootApp)
             .use(plugin)
+            .use(ui)
             .mount(el);
     },
     progress: {
@@ -25,5 +31,4 @@ createInertiaApp({
     },
 });
 
-// This will set light / dark mode on page load...
 initializeTheme();

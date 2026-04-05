@@ -7,6 +7,7 @@ use App\Http\Controllers\Kps\DashboardController;
 use App\Http\Controllers\Kps\DebtController;
 use App\Http\Controllers\Kps\MonthlyDeductionController;
 use App\Http\Controllers\Kps\PenerokaController;
+use App\Http\Controllers\Kps\ProfileController;
 use App\Http\Controllers\Kps\ReportController;
 use App\Http\Controllers\Kps\SiteController;
 use App\Http\Middleware\EnsureKpsSiteContext;
@@ -24,6 +25,11 @@ Route::middleware(['auth', 'verified', EnsureKpsSiteContext::class])
 
         Route::get('analytics', [AnalyticsController::class, 'index'])
             ->name('analytics');
+
+        Route::get('profile', [ProfileController::class, 'edit'])
+            ->name('profile.edit');
+        Route::patch('profile', [ProfileController::class, 'update'])
+            ->name('profile.update');
 
         Route::resource('sites', SiteController::class);
 
@@ -51,6 +57,8 @@ Route::middleware(['auth', 'verified', EnsureKpsSiteContext::class])
             Route::post('potongan', [MonthlyDeductionController::class, 'store'])->name('potongan.store');
             Route::get('potongan/bulk', [MonthlyDeductionController::class, 'createBulk'])->name('potongan.bulk');
             Route::post('potongan/bulk', [MonthlyDeductionController::class, 'storeBulk'])->name('potongan.bulk.store');
+            Route::get('potongan/bulk/template', [MonthlyDeductionController::class, 'downloadBulkTemplate'])->name('potongan.bulk.template');
+            Route::post('potongan/bulk/upload', [MonthlyDeductionController::class, 'uploadBulkExcel'])->name('potongan.bulk.upload');
 
             // Allocation Review
             Route::get('allocations', [AllocationReviewController::class, 'index'])->name('allocations.index');

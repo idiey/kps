@@ -117,6 +117,24 @@ class SiteExperienceService
         ];
     }
 
+    public function siteReportsPaginated(Site $site, string $monthDate, string $search, string $sortBy, string $sortDir, int $perPage = 20): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        $query = $this->siteReportQuery($site, $monthDate);
+
+        if ($search !== '') {
+            $query->where(fn (Builder $q) =>
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('ic_number', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%")
+            );
+        }
+
+        $allowed = ['name', 'total_outstanding', 'current_month_deduction_total'];
+        $query->orderBy(in_array($sortBy, $allowed) ? $sortBy : 'name', $sortDir === 'desc' ? 'desc' : 'asc');
+
+        return $query->paginate($perPage)->withQueryString();
+    }
+
     public function siteReportQuery(Site $site, string $currentMonth): Builder
     {
         return Peneroka::query()

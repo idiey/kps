@@ -25,6 +25,7 @@ class UpdateSiteRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
             'is_active' => ['boolean'],
+            'hutang_weightage_pct' => ['nullable', 'numeric', 'min:0', 'max:100'],
         ];
     }
 }

@@ -22,41 +22,42 @@ class DebtController extends Controller
         $this->authorize('view', $site);
         $this->authorize('viewAny', Debt::class);
 
+        $search  = $request->string('search')->trim()->toString();
+        $status  = in_array($request->get('status'), ['open', 'paid']) ? $request->get('status') : 'all';
+        $sortBy  = in_array($request->get('sort_by'), ['priority', 'balance', 'due_date']) ? $request->get('sort_by') : 'priority';
+        $sortDir = $request->get('sort_dir') === 'desc' ? 'desc' : 'asc';
+
         $debts = Debt::query()
             ->with('peneroka')
             ->whereHas('peneroka', fn ($q) => $q->where('site_id', $site->id))
-            ->orderBy('priority')
-            ->orderByRaw('due_date IS NULL')
-            ->orderBy('due_date')
-            ->paginate(15);
+            ->when($search !== '', fn ($q) => $q->where(fn ($i) =>
+                $i->whereHas('peneroka', fn ($p) => $p->where('name', 'like', "%{$search}%"))
+                  ->orWhere('description', 'like', "%{$search}%")
+            ))
+            ->when($status === 'open',  fn ($q) => $q->where('balance', '>', 0))
+            ->when($status === 'paid',  fn ($q) => $q->where('balance', '<=', 0))
+            ->when($sortBy === 'due_date',
+                fn ($q) => $q->orderByRaw('due_date IS NULL')->orderBy('due_date', $sortDir),
+                fn ($q) => $q->orderBy($sortBy, $sortDir)
+            )
+            ->paginate(15)
+            ->withQueryString();
 
         $summary = [
-            'total_debts' => Debt::query()
-                ->whereHas('peneroka', fn ($query) => $query->where('site_id', $site->id))
-                ->count(),
-            'outstanding_total' => (float) Debt::query()
-                ->whereHas('peneroka', fn ($query) => $query->where('site_id', $site->id))
-                ->sum('balance'),
-            'due_this_month' => Debt::query()
-                ->whereHas('peneroka', fn ($query) => $query->where('site_id', $site->id))
-                ->whereBetween('due_date', [
-                    Carbon::now()->startOfMonth()->toDateString(),
-                    Carbon::now()->endOfMonth()->toDateString(),
-                ])
-                ->count(),
-            'highest_priority_open' => Debt::query()
-                ->whereHas('peneroka', fn ($query) => $query->where('site_id', $site->id))
-                ->where('balance', '>', 0)
-                ->min('priority'),
+            'total_debts'           => Debt::query()->whereHas('peneroka', fn ($q) => $q->where('site_id', $site->id))->count(),
+            'outstanding_total'     => (float) Debt::query()->whereHas('peneroka', fn ($q) => $q->where('site_id', $site->id))->sum('balance'),
+            'due_this_month'        => Debt::query()->whereHas('peneroka', fn ($q) => $q->where('site_id', $site->id))->whereBetween('due_date', [Carbon::now()->startOfMonth()->toDateString(), Carbon::now()->endOfMonth()->toDateString()])->count(),
+            'highest_priority_open' => Debt::query()->whereHas('peneroka', fn ($q) => $q->where('site_id', $site->id))->where('balance', '>', 0)->min('priority'),
         ];
 
         $context = $resolver->resolve($request, $site);
 
         return Inertia::render('Kps/Hutang/Index', [
-            'site' => $site,
-            'debts' => $debts,
-            'summary' => $summary,
+            'site'     => $site,
+            'debts'    => $debts,
+            'summary'  => $summary,
             'siteRole' => $context['siteRole'],
+            'filters'  => ['search' => $search, 'status' => $status, 'sort_by' => $sortBy, 'sort_dir' => $sortDir],
         ]);
     }
 

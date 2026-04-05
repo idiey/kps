@@ -21,15 +21,18 @@ class AuditLogController extends Controller
         }
 
         $selectedAction = $request->string('action')->toString();
+        $search = $request->string('search')->trim()->toString();
 
         $logsQuery = AuditLog::query()
             ->where('site_id', $site->id)
             ->with('user:id,name,email')
+            ->when($selectedAction !== '' && $selectedAction !== 'all', fn ($q) => $q->where('action', $selectedAction))
+            ->when($search !== '', fn ($q) =>
+                $q->whereHas('user', fn ($u) =>
+                    $u->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")
+                )
+            )
             ->latest();
-
-        if ($selectedAction !== '' && $selectedAction !== 'all') {
-            $logsQuery->where('action', $selectedAction);
-        }
 
         $auditLogs = $logsQuery
             ->paginate(20)
@@ -70,6 +73,7 @@ class AuditLogController extends Controller
             'availableActions' => $availableActions,
             'filters' => [
                 'action' => $selectedAction !== '' ? $selectedAction : 'all',
+                'search' => $search,
             ],
         ]);
     }

@@ -105,7 +105,7 @@ index.head = (args: { site: string | { id: string } } | [site: string | { id: st
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Kps\ReportController::statement
- * @see app/Http/Controllers/Kps/ReportController.php:95
+ * @see app/Http/Controllers/Kps/ReportController.php:118
  * @route '/kps/sites/{site}/reports/peneroka/{peneroka}'
  */
 export const statement = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -120,7 +120,7 @@ statement.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\ReportController::statement
- * @see app/Http/Controllers/Kps/ReportController.php:95
+ * @see app/Http/Controllers/Kps/ReportController.php:118
  * @route '/kps/sites/{site}/reports/peneroka/{peneroka}'
  */
 statement.url = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -150,7 +150,7 @@ statement.url = (args: { site: string | { id: string }, peneroka: string | { id:
 
 /**
 * @see \App\Http\Controllers\Kps\ReportController::statement
- * @see app/Http/Controllers/Kps/ReportController.php:95
+ * @see app/Http/Controllers/Kps/ReportController.php:118
  * @route '/kps/sites/{site}/reports/peneroka/{peneroka}'
  */
 statement.get = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -159,7 +159,7 @@ statement.get = (args: { site: string | { id: string }, peneroka: string | { id:
 })
 /**
 * @see \App\Http\Controllers\Kps\ReportController::statement
- * @see app/Http/Controllers/Kps/ReportController.php:95
+ * @see app/Http/Controllers/Kps/ReportController.php:118
  * @route '/kps/sites/{site}/reports/peneroka/{peneroka}'
  */
 statement.head = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -169,7 +169,7 @@ statement.head = (args: { site: string | { id: string }, peneroka: string | { id
 
     /**
 * @see \App\Http\Controllers\Kps\ReportController::statement
- * @see app/Http/Controllers/Kps/ReportController.php:95
+ * @see app/Http/Controllers/Kps/ReportController.php:118
  * @route '/kps/sites/{site}/reports/peneroka/{peneroka}'
  */
     const statementForm = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -179,7 +179,7 @@ statement.head = (args: { site: string | { id: string }, peneroka: string | { id
 
             /**
 * @see \App\Http\Controllers\Kps\ReportController::statement
- * @see app/Http/Controllers/Kps/ReportController.php:95
+ * @see app/Http/Controllers/Kps/ReportController.php:118
  * @route '/kps/sites/{site}/reports/peneroka/{peneroka}'
  */
         statementForm.get = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -188,7 +188,7 @@ statement.head = (args: { site: string | { id: string }, peneroka: string | { id
         })
             /**
 * @see \App\Http\Controllers\Kps\ReportController::statement
- * @see app/Http/Controllers/Kps/ReportController.php:95
+ * @see app/Http/Controllers/Kps/ReportController.php:118
  * @route '/kps/sites/{site}/reports/peneroka/{peneroka}'
  */
         statementForm.head = (args: { site: string | { id: string }, peneroka: string | { id: string } } | [site: string | { id: string }, peneroka: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

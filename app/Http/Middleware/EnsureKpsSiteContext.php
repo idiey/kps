@@ -20,8 +20,10 @@ class EnsureKpsSiteContext
         $isAdmin = $user->hasRole(['pentadbiran', 'company_admin']);
         $routeSite = $request->route('site');
 
+        $isKpsProfileRoute = $request->routeIs('kps.profile.*');
+
         // Non-global admins should be redirected to their assigned site (if any).
-        if (!$routeSite && !$isAdmin) {
+        if (!$routeSite && !$isAdmin && !$isKpsProfileRoute) {
             $site = $user->getFirstKpsSite();
             if ($site) {
                 return redirect()->route('kps.sites.show', $site->id);

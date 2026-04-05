@@ -1,5 +1,6 @@
 import DashboardController from './DashboardController'
 import AnalyticsController from './AnalyticsController'
+import ProfileController from './ProfileController'
 import SiteController from './SiteController'
 import PenerokaController from './PenerokaController'
 import DebtController from './DebtController'
@@ -10,6 +11,7 @@ import AuditLogController from './AuditLogController'
 const Kps = {
     DashboardController: Object.assign(DashboardController, DashboardController),
 AnalyticsController: Object.assign(AnalyticsController, AnalyticsController),
+ProfileController: Object.assign(ProfileController, ProfileController),
 SiteController: Object.assign(SiteController, SiteController),
 PenerokaController: Object.assign(PenerokaController, PenerokaController),
 DebtController: Object.assign(DebtController, DebtController),

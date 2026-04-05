@@ -172,6 +172,8 @@ Each entry includes:
 
 ### High Priority
 
+- [ ] Priority hutang should have its own focused management surface (CRUD, dashboards, and allocation context). Record the data that defines each priority hutang (scope, balances, statuses) in this Intake Log so this document stays the canonical reference before we begin implementation.
+- [ ] Hutang peneroka is static every month; introduce a canonical table (and supporting UI) to store the per-peneroka debt data so it can be referenced each period without re-entry. Document the persistence requirements and management interface in Intake so the dev team knows the table schema and screens are required before implementation.
 - [ ] Create development guide (environment setup, testing, code style)
 - [ ] Create deployment guide (config, procedures, rollback)
 - [ ] Create user guide (role-based workflows, tutorials)

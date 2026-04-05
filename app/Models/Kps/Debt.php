@@ -17,6 +17,7 @@ class Debt extends Model
         'priority',
         'balance',
         'original_amount',
+        'monthly_potongan_limit',
         'due_date',
         'description',
     ];
@@ -24,6 +25,7 @@ class Debt extends Model
     protected function casts(): array
     {
         return [
+            'monthly_potongan_limit' => 'float',
             'due_date' => 'date',
         ];
     }

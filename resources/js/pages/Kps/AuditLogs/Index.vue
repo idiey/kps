@@ -1,27 +1,26 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { Head, Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
+import { Input } from '@/components/ui/input';
+import { useServerTable } from '@/composables/useServerTable';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import type { KpsAuditLog, KpsSite, KpsSiteRole } from '@/types';
 
 interface PaginatedAuditLogs {
     data: KpsAuditLog[];
-    current_page: number;
-    last_page: number;
-    per_page: number;
-    total: number;
+    meta?: {
+        current_page?: number;
+        last_page?: number;
+        per_page?: number;
+        total?: number;
+    };
+    current_page?: number;
+    last_page?: number;
+    per_page?: number;
+    total?: number;
 }
 
 const props = defineProps<{
@@ -31,23 +30,19 @@ const props = defineProps<{
     availableActions: string[];
     filters: {
         action?: string;
+        search?: string;
     };
 }>();
 
-const selectedAction = ref(props.filters.action || 'all');
+const { globalFilter, extraFilters, setFilter, goToPage } = useServerTable(
+    `/kps/sites/${props.site.id}/audit-logs`,
+    props.filters,
+);
 
-const applyFilters = () => {
-    router.get(
-        `/kps/sites/${props.site.id}/audit-logs`,
-        {
-            action: selectedAction.value === 'all' ? undefined : selectedAction.value,
-        },
-        {
-            preserveState: true,
-            preserveScroll: true,
-        },
-    );
-};
+const selectedAction = computed({
+    get: () => extraFilters.value.action ?? 'all',
+    set: (action: string) => setFilter('action', action === 'all' ? undefined : action),
+});
 
 const formatAction = (action: string) =>
     action
@@ -93,6 +88,26 @@ const latestActivity = computed(() =>
         ? formatDateTime(props.auditLogs.data[0].created_at)
         : 'No activity recorded',
 );
+
+const tableColumns = [
+    { accessorKey: 'created_at', header: 'Timestamp' },
+    { accessorKey: 'action', header: 'Action' },
+    { accessorKey: 'user', header: 'User' },
+    { accessorKey: 'target', header: 'Target' },
+    { accessorKey: 'metadata', header: 'Metadata' },
+];
+
+const paginationMeta = computed(() => {
+    const source = props.auditLogs;
+    const meta = source.meta ?? source;
+
+    return {
+        currentPage: Number(meta.current_page ?? 1),
+        lastPage: Number(meta.last_page ?? 1),
+        perPage: Number(meta.per_page ?? 20),
+        total: Number(meta.total ?? source.data.length),
+    };
+});
 </script>
 
 <template>
@@ -126,7 +141,7 @@ const latestActivity = computed(() =>
                         <CardTitle class="text-xs font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Log Entries</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div class="text-4xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">{{ auditLogs.total }}</div>
+                        <div class="text-4xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">{{ paginationMeta.total }}</div>
                     </CardContent>
                 </Card>
                 <Card class="border-[#efdcd5] bg-white/90 shadow-[0_16px_40px_rgba(157,80,53,0.08)]">
@@ -144,25 +159,26 @@ const latestActivity = computed(() =>
                     <CardTitle class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#b47b67]">Filter</CardTitle>
                 </CardHeader>
                 <CardContent class="pt-5">
-                    <div class="flex flex-wrap items-end gap-4">
-                        <div class="grid gap-2">
-                            <label class="text-xs font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Action</label>
-                            <Select v-model="selectedAction" @update:model-value="applyFilters">
-                                <SelectTrigger class="w-[220px] rounded-full border-[#ead6ce] bg-[#fbf6f3] text-[#1b1b1b]">
-                                    <SelectValue placeholder="Filter by action" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="all">All Actions</SelectItem>
-                                    <SelectItem
-                                        v-for="action in availableActions"
-                                        :key="action"
-                                        :value="action"
-                                    >
-                                        {{ formatAction(action) }}
-                                    </SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
+                    <div class="flex flex-col gap-3 lg:flex-row">
+                        <Input
+                            v-model="globalFilter"
+                            type="text"
+                            placeholder="Search by user name or email..."
+                            class="w-full lg:w-[320px]"
+                        />
+                        <select
+                            v-model="selectedAction"
+                            class="h-10 rounded-full border border-[#ead6ce] bg-[#fbf6f3] px-4 text-sm text-[#1b1b1b] outline-none"
+                        >
+                            <option value="all">All Actions</option>
+                            <option
+                                v-for="action in availableActions"
+                                :key="action"
+                                :value="action"
+                            >
+                                {{ formatAction(action) }}
+                            </option>
+                        </select>
                     </div>
                 </CardContent>
             </Card>
@@ -172,68 +188,62 @@ const latestActivity = computed(() =>
                     <CardTitle class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#b47b67]">Audit Events</CardTitle>
                 </CardHeader>
                 <CardContent class="p-0">
-                    <div class="overflow-x-auto">
-                        <Table>
-                            <TableHeader class="bg-[#fbf6f3]">
-                                <TableRow class="border-b border-[#f0dfd8]">
-                                    <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Timestamp</TableHead>
-                                    <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Action</TableHead>
-                                    <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">User</TableHead>
-                                    <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Target</TableHead>
-                                    <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Metadata</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                <TableRow v-if="auditLogs.data.length === 0" class="border-t border-[#f2e3dc]">
-                                    <TableCell colspan="5" class="px-7 py-10 text-center text-sm text-[#8d7167]">
-                                        No audit logs found.
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow
-                                    v-for="log in auditLogs.data"
-                                    :key="log.id"
-                                    class="border-t border-[#f2e3dc] text-sm text-[#3a302d] hover:bg-[#fff8f3]"
-                                >
-                                    <TableCell class="px-7 py-5 text-[#6d5952]">{{ formatDateTime(log.created_at) }}</TableCell>
-                                    <TableCell class="px-7 py-5 font-semibold text-[#1b1b1b]">{{ formatAction(log.action) }}</TableCell>
-                                    <TableCell class="px-7 py-5">
-                                        <div class="font-semibold text-[#1b1b1b]">{{ log.user?.name || 'System' }}</div>
-                                        <div class="text-xs text-[#8d7167]">{{ log.user?.email || '-' }}</div>
-                                    </TableCell>
-                                    <TableCell class="px-7 py-5 text-[#6d5952]">{{ log.auditable_label }} {{ log.auditable_id }}</TableCell>
-                                    <TableCell class="px-7 py-5 text-sm text-[#6d5952]">{{ formatMetadata(log) }}</TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
+                    <div class="overflow-x-auto px-2 py-3">
+                        <UTable
+                            :data="auditLogs.data"
+                            :columns="tableColumns"
+                            empty="No audit logs found."
+                            class="min-w-full"
+                        >
+                            <template #created_at-cell="{ row }">
+                                <span class="text-[#6d5952]">{{ formatDateTime(row.original.created_at) }}</span>
+                            </template>
+
+                            <template #action-cell="{ row }">
+                                <span class="font-semibold text-[#1b1b1b]">{{ formatAction(row.original.action) }}</span>
+                            </template>
+
+                            <template #user-cell="{ row }">
+                                <div>
+                                    <div class="font-semibold text-[#1b1b1b]">{{ row.original.user?.name || 'System' }}</div>
+                                    <div class="text-xs text-[#8d7167]">{{ row.original.user?.email || '-' }}</div>
+                                </div>
+                            </template>
+
+                            <template #target-cell="{ row }">
+                                <span class="text-[#6d5952]">{{ row.original.auditable_label }} {{ row.original.auditable_id }}</span>
+                            </template>
+
+                            <template #metadata-cell="{ row }">
+                                <span class="text-sm text-[#6d5952]">{{ formatMetadata(row.original) }}</span>
+                            </template>
+                        </UTable>
                     </div>
                 </CardContent>
             </Card>
 
-            <div v-if="auditLogs.last_page > 1" class="flex flex-col gap-3 rounded-[28px] border border-[#efdcd5] bg-white/90 px-5 py-4 shadow-[0_12px_30px_rgba(157,80,53,0.06)] sm:flex-row sm:items-center sm:justify-between">
-                <p class="text-sm text-[#6d5952]">
-                    Showing {{ (auditLogs.current_page - 1) * auditLogs.per_page + 1 }} to
-                    {{ Math.min(auditLogs.current_page * auditLogs.per_page, auditLogs.total) }} of
-                    {{ auditLogs.total }} entries
-                </p>
-                <div class="flex gap-2">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        class="rounded-full border-[#e1cbc2] bg-white text-[#6d5952] hover:border-[#c77d62] hover:text-[#1b1b1b]"
-                        :disabled="auditLogs.current_page === 1"
-                        @click="router.get(`/kps/sites/${site.id}/audit-logs?page=${auditLogs.current_page - 1}`)"
-                    >
-                        Previous
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        class="rounded-full border-[#e1cbc2] bg-white text-[#6d5952] hover:border-[#c77d62] hover:text-[#1b1b1b]"
-                        :disabled="auditLogs.current_page === auditLogs.last_page"
-                        @click="router.get(`/kps/sites/${site.id}/audit-logs?page=${auditLogs.current_page + 1}`)"
-                    >
-                        Next
-                    </Button>
+            <div
+                v-if="paginationMeta.lastPage > 1"
+                class="rounded-[28px] border border-[#efdcd5] bg-white/90 px-5 py-4 shadow-[0_12px_30px_rgba(157,80,53,0.06)]"
+            >
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <p class="text-sm text-[#6d5952]">
+                        Showing
+                        {{ (paginationMeta.currentPage - 1) * paginationMeta.perPage + 1 }}
+                        to
+                        {{ Math.min(paginationMeta.currentPage * paginationMeta.perPage, paginationMeta.total) }}
+                        of
+                        {{ paginationMeta.total }}
+                        entries
+                    </p>
+                    <UPagination
+                        :page="paginationMeta.currentPage"
+                        :items-per-page="paginationMeta.perPage"
+                        :total="paginationMeta.total"
+                        :sibling-count="1"
+                        show-edges
+                        @update:page="goToPage"
+                    />
                 </div>
             </div>
         </div>

@@ -30,10 +30,33 @@ class ReportController extends Controller
         $this->authorizeReportAccess($request, $site);
         $context = $resolver->resolve($request, $site);
 
+        $search  = $request->string('search')->trim()->toString();
+        $sortBy  = $request->get('sort_by', 'name');
+        $sortDir = $request->get('sort_dir') === 'desc' ? 'desc' : 'asc';
+
+        $month     = $siteExperience->currentMonth();
+        $monthDate = $month->toDateString();
+
+        $penerokas = $siteExperience->siteReportsPaginated($site, $monthDate, $search, $sortBy, $sortDir);
+
+        $payload = $siteExperience->siteReportsPayload($site);
+
+        $summary = [
+            'peneroka_count'           => \App\Models\Kps\Peneroka::query()->where('site_id', $site->id)->count(),
+            'outstanding_total'        => (float) \App\Models\Kps\Debt::query()->whereHas('peneroka', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where('site_id', $site->id))->sum('balance'),
+            'current_month_deductions' => (float) \App\Models\Kps\MonthlyDeduction::query()->where('site_id', $site->id)->whereDate('month', $monthDate)->sum('amount'),
+        ];
+
         return Inertia::render('Kps/Reports/Index', [
-            'site' => $site,
-            'siteRole' => $context['siteRole'],
-            ...$siteExperience->siteReportsPayload($site),
+            'site'           => $site,
+            'siteRole'       => $context['siteRole'],
+            'penerokas'      => $penerokas,
+            'summary'        => $summary,
+            'priorityMix'    => $payload['priorityMix'] ?? [],
+            'recentActivity' => $payload['recentActivity'] ?? [],
+            'currentMonth'   => $monthDate,
+            'monthLabel'     => $month->format('F Y'),
+            'filters'        => ['search' => $search, 'sort_by' => $sortBy, 'sort_dir' => $sortDir],
         ]);
     }
 

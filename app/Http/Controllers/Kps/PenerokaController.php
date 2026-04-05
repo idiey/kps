@@ -21,39 +21,38 @@ class PenerokaController extends Controller
         $this->authorize('view', $site);
         $this->authorize('viewAny', Peneroka::class);
 
+        $search  = $request->string('search')->trim()->toString();
+        $sortBy  = in_array($request->get('sort_by'), ['name', 'ic_number']) ? $request->get('sort_by') : 'name';
+        $sortDir = $request->get('sort_dir') === 'desc' ? 'desc' : 'asc';
+
         $penerokas = Peneroka::query()
             ->where('site_id', $site->id)
             ->withCount('debts')
             ->withSum('debts as total_outstanding', 'balance')
-            ->orderBy('name')
-            ->paginate(15);
+            ->when($search !== '', fn ($q) => $q->where(fn ($i) =>
+                $i->where('name', 'like', "%{$search}%")
+                  ->orWhere('ic_number', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%")
+            ))
+            ->orderBy($sortBy, $sortDir)
+            ->paginate(15)
+            ->withQueryString();
 
         $summary = [
-            'total_peneroka' => Peneroka::query()
-                ->where('site_id', $site->id)
-                ->count(),
-            'with_ic_number' => Peneroka::query()
-                ->where('site_id', $site->id)
-                ->whereNotNull('ic_number')
-                ->where('ic_number', '!=', '')
-                ->count(),
-            'with_phone' => Peneroka::query()
-                ->where('site_id', $site->id)
-                ->whereNotNull('phone')
-                ->where('phone', '!=', '')
-                ->count(),
-            'outstanding_total' => (float) Debt::query()
-                ->whereHas('peneroka', fn ($query) => $query->where('site_id', $site->id))
-                ->sum('balance'),
+            'total_peneroka'  => Peneroka::query()->where('site_id', $site->id)->count(),
+            'with_ic_number'  => Peneroka::query()->where('site_id', $site->id)->whereNotNull('ic_number')->where('ic_number', '!=', '')->count(),
+            'with_phone'      => Peneroka::query()->where('site_id', $site->id)->whereNotNull('phone')->where('phone', '!=', '')->count(),
+            'outstanding_total' => (float) Debt::query()->whereHas('peneroka', fn ($q) => $q->where('site_id', $site->id))->sum('balance'),
         ];
 
         $context = $resolver->resolve($request, $site);
 
         return Inertia::render('Kps/Peneroka/Index', [
-            'site' => $site,
+            'site'      => $site,
             'penerokas' => $penerokas,
-            'summary' => $summary,
-            'siteRole' => $context['siteRole'],
+            'summary'   => $summary,
+            'siteRole'  => $context['siteRole'],
+            'filters'   => ['search' => $search, 'sort_by' => $sortBy, 'sort_dir' => $sortDir],
         ]);
     }
 

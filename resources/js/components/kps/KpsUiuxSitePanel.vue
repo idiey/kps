@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import type { KpsSite, KpsSiteRole } from '@/types';
+import UserMenuContent from '@/components/UserMenuContent.vue';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import type { AppPageProps, KpsSite, KpsSiteRole } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import {
     BarChart3,
+    ChevronsUpDown,
     ClipboardList,
     FileText,
     History,
@@ -36,7 +43,7 @@ const props = withDefaults(
     },
 );
 
-const page = usePage();
+const page = usePage<AppPageProps>();
 const { hasPermission } = usePermission();
 const siteBaseUrl = computed(() =>
     props.site ? `/kps/sites/${props.site.id}` : '/kps/sites',
@@ -115,6 +122,19 @@ const siteRoleLabel = computed(() =>
 const siteStatusLabel = computed(() =>
     props.site?.is_active ? 'Active site' : 'Paused site',
 );
+
+const currentUser = computed(() => page.props.auth?.user);
+const currentUserName = computed(() => page.props.auth?.user?.name ?? 'KPS User');
+const currentUserInitials = computed(() => {
+    const name = currentUserName.value;
+
+    return name
+        .split(' ')
+        .map((part) => part.charAt(0))
+        .join('')
+        .slice(0, 2)
+        .toUpperCase();
+});
 </script>
 
 <template>
@@ -164,12 +184,35 @@ const siteStatusLabel = computed(() =>
                     <span>{{ item.title }}</span>
                 </Link>
             </div>
+
+            <DropdownMenu v-if="currentUser">
+                <DropdownMenuTrigger as-child>
+                    <button
+                        type="button"
+                        class="mt-4 inline-flex w-full items-center justify-between rounded-full border border-[#e6d1c8] bg-white px-4 py-2 text-left text-xs font-semibold text-[#3a2f2b] transition hover:bg-[#fff7f3]"
+                    >
+                        <span class="inline-flex items-center gap-2">
+                            <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#171717] text-[10px] font-black text-white">
+                                {{ currentUserInitials }}
+                            </span>
+                            <span class="truncate">{{ currentUserName }}</span>
+                        </span>
+                        <ChevronsUpDown class="h-4 w-4 text-[#8f6f63]" />
+                    </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                    align="end"
+                    class="w-56 rounded-xl border border-[#e7d5ce] bg-[#fffaf7] text-[#2d241f] shadow-[0_20px_45px_rgba(68,34,20,0.18)]"
+                >
+                    <UserMenuContent :user="currentUser" settings-href="/kps/profile" />
+                </DropdownMenuContent>
+            </DropdownMenu>
         </div>
     </div>
 
     <aside
         v-if="props.site"
-        class="fixed top-0 z-30 hidden h-screen w-[320px] flex-col border-r border-[#ead6ce] bg-[rgba(247,241,238,0.86)] px-6 py-8 text-[#1b1b1b] backdrop-blur-2xl lg:flex"
+        class="fixed top-0 z-30 hidden h-screen w-[320px] flex-col overflow-hidden border-r border-[#ead6ce] bg-[rgba(247,241,238,0.86)] px-6 py-8 text-[#1b1b1b] backdrop-blur-2xl lg:flex"
         :class="props.withRail ? 'left-[88px]' : 'left-0'"
     >
         <div class="rounded-[28px] border border-[#f0dbd4] bg-white/88 p-5 shadow-[0_18px_50px_rgba(157,80,53,0.08)]">
@@ -197,9 +240,9 @@ const siteStatusLabel = computed(() =>
             </div>
         </div>
 
-        <div class="mt-7">
+        <div class="mt-7 flex min-h-0 flex-1 flex-col">
             <p class="mb-3 text-[11px] font-bold uppercase tracking-[0.28em] text-[#ad7d70]">Workspace</p>
-            <div class="space-y-2">
+            <div class="scrollbar-hide min-h-0 space-y-2 overflow-y-auto pr-1">
                 <Link
                     v-for="item in navItems"
                     :key="item.href"
@@ -232,5 +275,28 @@ const siteStatusLabel = computed(() =>
                 </Link>
             </div>
         </div>
+
+        <DropdownMenu v-if="currentUser">
+            <DropdownMenuTrigger as-child>
+                <button
+                    type="button"
+                    class="mt-6 inline-flex items-center justify-between rounded-[18px] border border-[#ead6ce] bg-white/85 px-4 py-3 text-left text-sm font-semibold text-[#3a2f2b] transition hover:bg-white"
+                >
+                    <span class="inline-flex items-center gap-3 min-w-0">
+                        <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#171717] text-xs font-black text-white">
+                            {{ currentUserInitials }}
+                        </span>
+                        <span class="truncate">{{ currentUserName }}</span>
+                    </span>
+                    <ChevronsUpDown class="h-4 w-4 text-[#8f6f63]" />
+                </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+                align="end"
+                class="w-56 rounded-xl border border-[#e7d5ce] bg-[#fffaf7] text-[#2d241f] shadow-[0_20px_45px_rgba(68,34,20,0.18)]"
+            >
+                <UserMenuContent :user="currentUser" settings-href="/kps/profile" />
+            </DropdownMenuContent>
+        </DropdownMenu>
     </aside>
 </template>

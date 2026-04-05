@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import { Head, Link, router, usePage } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
-import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
+import { useServerTable } from '@/composables/useServerTable';
+import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import type { AppPageProps, KpsMonthlyDeduction, KpsSite, KpsSiteRole } from '@/types';
 
 interface PaginatedDeductions {
     data: KpsMonthlyDeduction[];
-    links: any[];
-    meta: any;
+    meta?: {
+        current_page?: number;
+        last_page?: number;
+        per_page?: number;
+        total?: number;
+    };
+    current_page?: number;
+    last_page?: number;
+    per_page?: number;
+    total?: number;
 }
 
 const props = defineProps<{
@@ -33,9 +34,65 @@ const props = defineProps<{
         total_unallocated: number;
         closed_count: number;
     };
+    filters: {
+        search?: string;
+        status?: 'all' | 'open' | 'closed';
+        sort_by?: string;
+        sort_dir?: 'asc' | 'desc';
+        month?: string;
+    };
 }>();
 
-const month = ref(props.selectedMonth || '');
+const { globalFilter, sorting, extraFilters, setFilter, goToPage } = useServerTable(
+    `/kps/sites/${props.site.id}/potongan`,
+    props.filters,
+);
+
+const month = ref(extraFilters.value.month ?? props.selectedMonth ?? '');
+
+const applyMonthFilter = () => {
+    setFilter('month', month.value || undefined);
+};
+
+const statusModel = computed({
+    get: () => extraFilters.value.status ?? 'all',
+    set: (status: string) => setFilter('status', status === 'all' ? undefined : status),
+});
+
+const sortByModel = computed({
+    get: () => sorting.value[0]?.id ?? '',
+    set: (column: string) => {
+        if (!column) {
+            sorting.value = [];
+            return;
+        }
+
+        const current = sorting.value[0];
+        sorting.value = [
+            {
+                id: column,
+                desc: current?.desc ?? (props.filters.sort_dir === 'desc'),
+            },
+        ];
+    },
+});
+
+const sortDirModel = computed({
+    get: () => (sorting.value[0]?.desc ? 'desc' : 'asc'),
+    set: (direction: 'asc' | 'desc') => {
+        const currentColumn = sorting.value[0]?.id;
+        if (!currentColumn) {
+            return;
+        }
+
+        sorting.value = [
+            {
+                id: currentColumn,
+                desc: direction === 'desc',
+            },
+        ];
+    },
+});
 
 const formatMoney = (value?: number | null) =>
     new Intl.NumberFormat('en-MY', {
@@ -55,9 +112,26 @@ const openCount = computed(() => Math.max(props.summary.deduction_count - props.
 const page = usePage<AppPageProps>();
 const canManagePotongan = computed(() => (page.props.auth?.permissions ?? []).includes('kps.manage_potongan'));
 
-const applyFilter = () => {
-    router.get(`/kps/sites/${props.site.id}/potongan`, { month: month.value }, { preserveState: true, preserveScroll: true });
-};
+const tableColumns = [
+    { accessorKey: 'month', header: 'Month' },
+    { accessorKey: 'peneroka', header: 'Peneroka' },
+    { accessorKey: 'amount', header: 'Amount' },
+    { accessorKey: 'unallocated_amount', header: 'Unallocated' },
+    { accessorKey: 'is_closed', header: 'Status' },
+    { id: 'actions', header: 'Actions' },
+];
+
+const paginationMeta = computed(() => {
+    const source = props.deductions;
+    const meta = source.meta ?? source;
+
+    return {
+        currentPage: Number(meta.current_page ?? 1),
+        lastPage: Number(meta.last_page ?? 1),
+        perPage: Number(meta.per_page ?? 15),
+        total: Number(meta.total ?? source.data.length),
+    };
+});
 </script>
 
 <template>
@@ -123,70 +197,127 @@ const applyFilter = () => {
             </section>
 
             <section class="rounded-[36px] border border-[#efdcd5] bg-white/92 shadow-[0_18px_50px_rgba(157,80,53,0.08)]">
-                <div class="flex flex-col gap-4 border-b border-[#f0dfd8] px-7 py-6 md:flex-row md:items-center md:justify-between">
-                    <div>
-                        <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#b47b67]">Month Filter</p>
-                        <h2 class="mt-2 text-2xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">Live deduction ledger</h2>
-                    </div>
-                    <div class="flex items-end gap-3">
-                        <div class="grid gap-2">
-                            <label class="text-xs font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Filter by Month</label>
-                            <Input type="month" v-model="month" class="w-[220px]" />
+                <div class="flex flex-col gap-4 border-b border-[#f0dfd8] px-7 py-6">
+                    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                        <div>
+                            <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#b47b67]">Month Filter</p>
+                            <h2 class="mt-2 text-2xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">Live deduction ledger</h2>
                         </div>
-                        <Button class="bg-[#171717] text-white hover:bg-[#0f0f0f]" @click="applyFilter">Apply</Button>
+                        <div class="flex items-end gap-3">
+                            <div class="grid gap-2">
+                                <label class="text-xs font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Filter by Month</label>
+                                <Input type="month" v-model="month" class="w-[220px]" />
+                            </div>
+                            <Button class="bg-[#171717] text-white hover:bg-[#0f0f0f]" @click="applyMonthFilter">Apply</Button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-3 lg:flex-row">
+                        <Input
+                            v-model="globalFilter"
+                            type="text"
+                            placeholder="Search peneroka name..."
+                            class="w-full lg:w-[280px]"
+                        />
+                        <select
+                            v-model="statusModel"
+                            class="h-10 rounded-full border border-[#ead6ce] bg-[#f7f1ee] px-4 text-sm text-[#6d5952] outline-none"
+                        >
+                            <option value="all">All Status</option>
+                            <option value="open">Open</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                        <select
+                            v-model="sortByModel"
+                            class="h-10 rounded-full border border-[#ead6ce] bg-[#f7f1ee] px-4 text-sm text-[#6d5952] outline-none"
+                        >
+                            <option value="">Default Sort</option>
+                            <option value="amount">Amount</option>
+                            <option value="peneroka_name">Peneroka Name</option>
+                        </select>
+                        <select
+                            v-model="sortDirModel"
+                            :disabled="!sortByModel"
+                            class="h-10 rounded-full border border-[#ead6ce] bg-[#f7f1ee] px-4 text-sm text-[#6d5952] outline-none disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                            <option value="asc">Asc</option>
+                            <option value="desc">Desc</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <Table>
-                        <TableHeader>
-                            <TableRow class="bg-[#fbf6f3]">
-                                <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Month</TableHead>
-                                <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Peneroka</TableHead>
-                                <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Amount</TableHead>
-                                <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Unallocated</TableHead>
-                                <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Status</TableHead>
-                                <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73] text-right">Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            <TableRow v-if="deductions.data.length === 0">
-                                <TableCell colspan="6" class="px-7 py-10 text-center text-sm text-[#8d7167]">
-                                    No deductions found.
-                                </TableCell>
-                            </TableRow>
-                            <TableRow
-                                v-for="deduction in deductions.data"
-                                :key="deduction.id"
-                                class="border-t border-[#f2e3dc] text-[#3a302d] hover:bg-[#fff8f4]"
+                <div class="overflow-x-auto px-2 py-3">
+                    <UTable
+                        v-model:sorting="sorting"
+                        :data="deductions.data"
+                        :columns="tableColumns"
+                        :sorting-options="{ manualSorting: true }"
+                        empty="No deductions found."
+                        class="min-w-full"
+                    >
+                        <template #month-cell="{ row }">
+                            <span class="font-semibold text-[#1b1b1b]">{{ formatMonth(row.original.month) }}</span>
+                        </template>
+
+                        <template #peneroka-cell="{ row }">
+                            <div>
+                                <p class="font-semibold text-[#1b1b1b]">{{ row.original.peneroka?.name }}</p>
+                                <p class="text-xs text-[#8d7167]">{{ row.original.peneroka?.phone || 'No phone registered' }}</p>
+                            </div>
+                        </template>
+
+                        <template #amount-cell="{ row }">
+                            <span class="font-semibold text-[#1b1b1b]">{{ formatMoney(row.original.amount) }}</span>
+                        </template>
+
+                        <template #unallocated_amount-cell="{ row }">
+                            <span class="text-[#6d5952]">{{ formatMoney(row.original.unallocated_amount) }}</span>
+                        </template>
+
+                        <template #is_closed-cell="{ row }">
+                            <span
+                                class="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em]"
+                                :class="row.original.is_closed ? 'bg-[#171717] text-white' : 'bg-[#ebfff3] text-[#18754d]'"
                             >
-                                <TableCell class="px-7 py-5 font-semibold text-[#1b1b1b]">{{ formatMonth(deduction.month) }}</TableCell>
-                                <TableCell class="px-7 py-5">
-                                    <div>
-                                        <p class="font-semibold text-[#1b1b1b]">{{ deduction.peneroka?.name }}</p>
-                                        <p class="text-xs text-[#8d7167]">{{ deduction.peneroka?.phone || 'No phone registered' }}</p>
-                                    </div>
-                                </TableCell>
-                                <TableCell class="px-7 py-5 font-semibold text-[#1b1b1b]">{{ formatMoney(deduction.amount) }}</TableCell>
-                                <TableCell class="px-7 py-5 text-[#6d5952]">{{ formatMoney(deduction.unallocated_amount) }}</TableCell>
-                                <TableCell class="px-7 py-5">
-                                    <span
-                                        class="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em]"
-                                        :class="deduction.is_closed ? 'bg-[#171717] text-white' : 'bg-[#ebfff3] text-[#18754d]'"
-                                    >
-                                        {{ deduction.is_closed ? 'Closed' : 'Open' }}
-                                    </span>
-                                </TableCell>
-                                <TableCell class="px-7 py-5 text-right">
-                                    <Button variant="outline" size="sm" as-child class="rounded-full border-[#e2c9c0]">
-                                        <Link :href="`/kps/sites/${site.id}/allocations/${deduction.id}`">View</Link>
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
+                                {{ row.original.is_closed ? 'Closed' : 'Open' }}
+                            </span>
+                        </template>
+
+                        <template #actions-cell="{ row }">
+                            <div class="text-right">
+                                <Button variant="outline" size="sm" as-child class="rounded-full border-[#e2c9c0]">
+                                    <Link :href="`/kps/sites/${site.id}/allocations/${row.original.id}`">View</Link>
+                                </Button>
+                            </div>
+                        </template>
+                    </UTable>
                 </div>
             </section>
+
+            <div
+                v-if="paginationMeta.lastPage > 1"
+                class="rounded-[28px] border border-[#efdcd5] bg-white/90 px-5 py-4 shadow-[0_12px_30px_rgba(157,80,53,0.06)]"
+            >
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <p class="text-sm text-[#6d5952]">
+                        Showing
+                        {{ (paginationMeta.currentPage - 1) * paginationMeta.perPage + 1 }}
+                        to
+                        {{ Math.min(paginationMeta.currentPage * paginationMeta.perPage, paginationMeta.total) }}
+                        of
+                        {{ paginationMeta.total }}
+                        entries
+                    </p>
+                    <UPagination
+                        :page="paginationMeta.currentPage"
+                        :items-per-page="paginationMeta.perPage"
+                        :total="paginationMeta.total"
+                        :sibling-count="1"
+                        show-edges
+                        @update:page="goToPage"
+                    />
+                </div>
+            </div>
         </div>
     </KpsShellLayout>
 </template>

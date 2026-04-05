@@ -71,3 +71,38 @@ test('HQ dashboard does not include site context', function () {
         ->assertOk()
         ->assertInertia(fn ($page) => $page->missing('site'));
 });
+
+test('HQ user can update hutang weightage percentage for a site', function () {
+    $this->actingAs($this->hqUser)
+        ->put("/kps/sites/{$this->site->id}", [
+            'name' => $this->site->name,
+            'code' => $this->site->code,
+            'address' => $this->site->address,
+            'phone' => $this->site->phone,
+            'email' => $this->site->email,
+            'is_active' => $this->site->is_active,
+            'hutang_weightage_pct' => 35,
+        ])
+        ->assertRedirect('/kps/sites');
+
+    expect((float) $this->site->fresh()->hutang_weightage_pct)->toBe(35.0);
+});
+
+test('site user can access KPS profile settings page', function () {
+    $this->actingAs($this->siteUser)
+        ->get('/kps/profile')
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page->component('Kps/Profile'));
+});
+
+test('KPS profile update stays in KPS shell', function () {
+    $this->actingAs($this->siteUser)
+        ->patch('/kps/profile', [
+            'name' => 'Updated Site User',
+            'email' => 'updated-site-user@example.com',
+        ])
+        ->assertRedirect('/kps/profile');
+
+    expect($this->siteUser->fresh()->name)->toBe('Updated Site User');
+    expect($this->siteUser->fresh()->email)->toBe('updated-site-user@example.com');
+});

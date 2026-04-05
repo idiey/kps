@@ -1,4 +1,5 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
+import profile from './profile'
 import sites from './sites'
 import peneroka from './peneroka'
 import hutang from './hutang'
@@ -7,7 +8,7 @@ import allocations from './allocations'
 import reports from './reports'
 import auditLogs from './audit-logs'
 /**
- * @see routes/kps.php:19
+ * @see routes/kps.php:20
  * @route '/kps'
  */
 export const home = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -21,7 +22,7 @@ home.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/kps.php:19
+ * @see routes/kps.php:20
  * @route '/kps'
  */
 home.url = (options?: RouteQueryOptions) => {
@@ -29,7 +30,7 @@ home.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/kps.php:19
+ * @see routes/kps.php:20
  * @route '/kps'
  */
 home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -37,7 +38,7 @@ home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/kps.php:19
+ * @see routes/kps.php:20
  * @route '/kps'
  */
 home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -46,7 +47,7 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/kps.php:19
+ * @see routes/kps.php:20
  * @route '/kps'
  */
     const homeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +56,7 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/kps.php:19
+ * @see routes/kps.php:20
  * @route '/kps'
  */
         homeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -63,7 +64,7 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/kps.php:19
+ * @see routes/kps.php:20
  * @route '/kps'
  */
         homeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -237,6 +238,7 @@ const kps = {
     home: Object.assign(home, home),
 dashboard: Object.assign(dashboard, dashboard),
 analytics: Object.assign(analytics, analytics),
+profile: Object.assign(profile, profile),
 sites: Object.assign(sites, sites),
 peneroka: Object.assign(peneroka, peneroka),
 hutang: Object.assign(hutang, hutang),

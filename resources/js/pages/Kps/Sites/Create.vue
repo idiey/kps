@@ -14,6 +14,7 @@ const form = useForm({
     phone: '',
     email: '',
     is_active: true,
+    hutang_weightage_pct: 100,
 });
 
 const submit = () => {
@@ -51,6 +52,12 @@ const submit = () => {
                 <div class="grid gap-2">
                     <Label for="email">Email</Label>
                     <Input id="email" v-model="form.email" type="email" />
+                </div>
+                <div class="grid gap-2">
+                    <Label for="hutang_weightage_pct">Hutang Weightage (%)</Label>
+                    <Input id="hutang_weightage_pct" v-model="form.hutang_weightage_pct" type="number" min="0" max="100" step="0.01" />
+                    <p class="text-xs text-muted-foreground">Maximum percentage of a potongan amount that can be auto-allocated to hutang.</p>
+                    <p v-if="form.errors.hutang_weightage_pct" class="text-sm text-red-600">{{ form.errors.hutang_weightage_pct }}</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <Checkbox id="is_active" v-model:checked="form.is_active" />

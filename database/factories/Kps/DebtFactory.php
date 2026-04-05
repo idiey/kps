@@ -22,6 +22,7 @@ class DebtFactory extends Factory
             'priority' => random_int(1, 3),
             'balance' => $amount,
             'original_amount' => $amount,
+            'monthly_potongan_limit' => null,
             'due_date' => now()->addDays(random_int(1, 30))->toDateString(),
             'description' => 'Hutang peneroka',
         ];

@@ -17,6 +17,7 @@ None.
 | Two-sidebar UX | HQ users always see the main sidebar; site sidebar appears on site selection; site users see only the site sidebar by default. | PRD-KPS |
 | Multi-site scoping | All site data is scoped by the active site context; HQ can switch context from the Sites list. | PRD-KPS |
 | Allocation ordering | Allocation waterfall uses priority ASC, due_date ASC (null last), then created_at ASC. | PRD-KPS, ARCH-KPS |
+| Weightage + monthly debt cap | Monthly hutang allocation per peneroka must not exceed `dividend x site weightage%`, and each hutang allocation is additionally capped by that hutang's monthly potongan limit before moving to next priority. | Product requirement (2026-04-05) |
 | Unallocated handling | Overpayments are stored in `unallocated_amount`. | PRD-KPS, ARCH-KPS |
 | Monthly closing | Closing locks a site month from edits and is audit logged. | PRD-KPS, ARCH-KPS |
 | Route scoping | Use `/kps/sites/{site}/...` for site routes. | ARCH-KPS |
@@ -42,4 +43,4 @@ Not applicable.
 
 ---
 
-**Last Updated**: 2026-02-10
+**Last Updated**: 2026-04-05

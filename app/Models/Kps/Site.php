@@ -21,12 +21,14 @@ class Site extends Model
         'phone',
         'email',
         'is_active',
+        'hutang_weightage_pct',
     ];
 
     protected function casts(): array
     {
         return [
             'is_active' => 'boolean',
+            'hutang_weightage_pct' => 'float',
         ];
     }
 

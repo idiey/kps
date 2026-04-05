@@ -22,6 +22,7 @@ class SiteFactory extends Factory
             'phone' => '01' . random_int(10000000, 99999999),
             'email' => 'site-' . Str::lower(Str::random(4)) . '@kps.local',
             'is_active' => true,
+            'hutang_weightage_pct' => 100,
         ];
     }
 }

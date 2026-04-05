@@ -18,6 +18,7 @@ const props = defineProps<{
 const form = useForm({
     priority: props.debt.priority,
     balance: props.debt.balance,
+    monthly_potongan_limit: props.debt.monthly_potongan_limit ?? '',
     due_date: props.debt.due_date || '',
     description: props.debt.description || '',
 });
@@ -75,6 +76,13 @@ const submit = () => {
                                     <Input id="balance" type="number" v-model="form.balance" min="0" step="0.01" class="rounded-2xl border-[#e6d1c7] bg-[#fffaf8] px-4 py-3" />
                                     <InputError :message="form.errors.balance" />
                                 </div>
+                            </div>
+
+                            <div class="grid gap-2">
+                                <Label for="monthly_potongan_limit" class="text-sm font-semibold text-[#2a2422]">Monthly Potongan Limit</Label>
+                                <Input id="monthly_potongan_limit" type="number" v-model="form.monthly_potongan_limit" min="0" step="0.01" placeholder="Leave empty for no limit" class="rounded-2xl border-[#e6d1c7] bg-[#fffaf8] px-4 py-3" />
+                                <InputError :message="form.errors.monthly_potongan_limit" />
+                                <p class="text-xs text-[#8d7167]">Maximum amount allocated to this hutang per month before moving to next priority.</p>
                             </div>
 
                             <div class="grid gap-2 md:grid-cols-2">

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Kps\ReportController::csv
- * @see app/Http/Controllers/Kps/ReportController.php:40
+ * @see app/Http/Controllers/Kps/ReportController.php:63
  * @route '/kps/sites/{site}/reports/export/csv'
  */
 export const csv = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ csv.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\ReportController::csv
- * @see app/Http/Controllers/Kps/ReportController.php:40
+ * @see app/Http/Controllers/Kps/ReportController.php:63
  * @route '/kps/sites/{site}/reports/export/csv'
  */
 csv.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ csv.url = (args: { site: string | { id: string } } | [site: string | { id: strin
 
 /**
 * @see \App\Http\Controllers\Kps\ReportController::csv
- * @see app/Http/Controllers/Kps/ReportController.php:40
+ * @see app/Http/Controllers/Kps/ReportController.php:63
  * @route '/kps/sites/{site}/reports/export/csv'
  */
 csv.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -58,7 +58,7 @@ csv.get = (args: { site: string | { id: string } } | [site: string | { id: strin
 })
 /**
 * @see \App\Http\Controllers\Kps\ReportController::csv
- * @see app/Http/Controllers/Kps/ReportController.php:40
+ * @see app/Http/Controllers/Kps/ReportController.php:63
  * @route '/kps/sites/{site}/reports/export/csv'
  */
 csv.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -68,7 +68,7 @@ csv.head = (args: { site: string | { id: string } } | [site: string | { id: stri
 
     /**
 * @see \App\Http\Controllers\Kps\ReportController::csv
- * @see app/Http/Controllers/Kps/ReportController.php:40
+ * @see app/Http/Controllers/Kps/ReportController.php:63
  * @route '/kps/sites/{site}/reports/export/csv'
  */
     const csvForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -78,7 +78,7 @@ csv.head = (args: { site: string | { id: string } } | [site: string | { id: stri
 
             /**
 * @see \App\Http\Controllers\Kps\ReportController::csv
- * @see app/Http/Controllers/Kps/ReportController.php:40
+ * @see app/Http/Controllers/Kps/ReportController.php:63
  * @route '/kps/sites/{site}/reports/export/csv'
  */
         csvForm.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -87,7 +87,7 @@ csv.head = (args: { site: string | { id: string } } | [site: string | { id: stri
         })
             /**
 * @see \App\Http\Controllers\Kps\ReportController::csv
- * @see app/Http/Controllers/Kps/ReportController.php:40
+ * @see app/Http/Controllers/Kps/ReportController.php:63
  * @route '/kps/sites/{site}/reports/export/csv'
  */
         csvForm.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

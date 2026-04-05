@@ -18,6 +18,7 @@ class UpdateDebtRequest extends FormRequest
         return [
             'priority' => ['required', 'integer', 'min:1'],
             'balance' => ['required', 'numeric', 'min:0'],
+            'monthly_potongan_limit' => ['nullable', 'numeric', 'min:0'],
             'due_date' => ['nullable', 'date'],
             'description' => ['nullable', 'string', 'max:255'],
         ];

@@ -103,7 +103,7 @@ index.head = (args: { site: string | { id: string } } | [site: string | { id: st
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Kps\DebtController::create
- * @see app/Http/Controllers/Kps/DebtController.php:63
+ * @see app/Http/Controllers/Kps/DebtController.php:64
  * @route '/kps/sites/{site}/hutang/create'
  */
 export const create = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -118,7 +118,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\DebtController::create
- * @see app/Http/Controllers/Kps/DebtController.php:63
+ * @see app/Http/Controllers/Kps/DebtController.php:64
  * @route '/kps/sites/{site}/hutang/create'
  */
 create.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -151,7 +151,7 @@ create.url = (args: { site: string | { id: string } } | [site: string | { id: st
 
 /**
 * @see \App\Http\Controllers\Kps\DebtController::create
- * @see app/Http/Controllers/Kps/DebtController.php:63
+ * @see app/Http/Controllers/Kps/DebtController.php:64
  * @route '/kps/sites/{site}/hutang/create'
  */
 create.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -160,7 +160,7 @@ create.get = (args: { site: string | { id: string } } | [site: string | { id: st
 })
 /**
 * @see \App\Http\Controllers\Kps\DebtController::create
- * @see app/Http/Controllers/Kps/DebtController.php:63
+ * @see app/Http/Controllers/Kps/DebtController.php:64
  * @route '/kps/sites/{site}/hutang/create'
  */
 create.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -170,7 +170,7 @@ create.head = (args: { site: string | { id: string } } | [site: string | { id: s
 
     /**
 * @see \App\Http\Controllers\Kps\DebtController::create
- * @see app/Http/Controllers/Kps/DebtController.php:63
+ * @see app/Http/Controllers/Kps/DebtController.php:64
  * @route '/kps/sites/{site}/hutang/create'
  */
     const createForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -180,7 +180,7 @@ create.head = (args: { site: string | { id: string } } | [site: string | { id: s
 
             /**
 * @see \App\Http\Controllers\Kps\DebtController::create
- * @see app/Http/Controllers/Kps/DebtController.php:63
+ * @see app/Http/Controllers/Kps/DebtController.php:64
  * @route '/kps/sites/{site}/hutang/create'
  */
         createForm.get = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -189,7 +189,7 @@ create.head = (args: { site: string | { id: string } } | [site: string | { id: s
         })
             /**
 * @see \App\Http\Controllers\Kps\DebtController::create
- * @see app/Http/Controllers/Kps/DebtController.php:63
+ * @see app/Http/Controllers/Kps/DebtController.php:64
  * @route '/kps/sites/{site}/hutang/create'
  */
         createForm.head = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -205,7 +205,7 @@ create.head = (args: { site: string | { id: string } } | [site: string | { id: s
     create.form = createForm
 /**
 * @see \App\Http\Controllers\Kps\DebtController::store
- * @see app/Http/Controllers/Kps/DebtController.php:80
+ * @see app/Http/Controllers/Kps/DebtController.php:81
  * @route '/kps/sites/{site}/hutang'
  */
 export const store = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -220,7 +220,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\DebtController::store
- * @see app/Http/Controllers/Kps/DebtController.php:80
+ * @see app/Http/Controllers/Kps/DebtController.php:81
  * @route '/kps/sites/{site}/hutang'
  */
 store.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -253,7 +253,7 @@ store.url = (args: { site: string | { id: string } } | [site: string | { id: str
 
 /**
 * @see \App\Http\Controllers\Kps\DebtController::store
- * @see app/Http/Controllers/Kps/DebtController.php:80
+ * @see app/Http/Controllers/Kps/DebtController.php:81
  * @route '/kps/sites/{site}/hutang'
  */
 store.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -263,7 +263,7 @@ store.post = (args: { site: string | { id: string } } | [site: string | { id: st
 
     /**
 * @see \App\Http\Controllers\Kps\DebtController::store
- * @see app/Http/Controllers/Kps/DebtController.php:80
+ * @see app/Http/Controllers/Kps/DebtController.php:81
  * @route '/kps/sites/{site}/hutang'
  */
     const storeForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -273,7 +273,7 @@ store.post = (args: { site: string | { id: string } } | [site: string | { id: st
 
             /**
 * @see \App\Http\Controllers\Kps\DebtController::store
- * @see app/Http/Controllers/Kps/DebtController.php:80
+ * @see app/Http/Controllers/Kps/DebtController.php:81
  * @route '/kps/sites/{site}/hutang'
  */
         storeForm.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -284,7 +284,7 @@ store.post = (args: { site: string | { id: string } } | [site: string | { id: st
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\Kps\DebtController::edit
- * @see app/Http/Controllers/Kps/DebtController.php:96
+ * @see app/Http/Controllers/Kps/DebtController.php:97
  * @route '/kps/sites/{site}/hutang/{debt}/edit'
  */
 export const edit = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -299,7 +299,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\DebtController::edit
- * @see app/Http/Controllers/Kps/DebtController.php:96
+ * @see app/Http/Controllers/Kps/DebtController.php:97
  * @route '/kps/sites/{site}/hutang/{debt}/edit'
  */
 edit.url = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -329,7 +329,7 @@ edit.url = (args: { site: string | { id: string }, debt: string | { id: string }
 
 /**
 * @see \App\Http\Controllers\Kps\DebtController::edit
- * @see app/Http/Controllers/Kps/DebtController.php:96
+ * @see app/Http/Controllers/Kps/DebtController.php:97
  * @route '/kps/sites/{site}/hutang/{debt}/edit'
  */
 edit.get = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -338,7 +338,7 @@ edit.get = (args: { site: string | { id: string }, debt: string | { id: string }
 })
 /**
 * @see \App\Http\Controllers\Kps\DebtController::edit
- * @see app/Http/Controllers/Kps/DebtController.php:96
+ * @see app/Http/Controllers/Kps/DebtController.php:97
  * @route '/kps/sites/{site}/hutang/{debt}/edit'
  */
 edit.head = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -348,7 +348,7 @@ edit.head = (args: { site: string | { id: string }, debt: string | { id: string 
 
     /**
 * @see \App\Http\Controllers\Kps\DebtController::edit
- * @see app/Http/Controllers/Kps/DebtController.php:96
+ * @see app/Http/Controllers/Kps/DebtController.php:97
  * @route '/kps/sites/{site}/hutang/{debt}/edit'
  */
     const editForm = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -358,7 +358,7 @@ edit.head = (args: { site: string | { id: string }, debt: string | { id: string 
 
             /**
 * @see \App\Http\Controllers\Kps\DebtController::edit
- * @see app/Http/Controllers/Kps/DebtController.php:96
+ * @see app/Http/Controllers/Kps/DebtController.php:97
  * @route '/kps/sites/{site}/hutang/{debt}/edit'
  */
         editForm.get = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -367,7 +367,7 @@ edit.head = (args: { site: string | { id: string }, debt: string | { id: string 
         })
             /**
 * @see \App\Http\Controllers\Kps\DebtController::edit
- * @see app/Http/Controllers/Kps/DebtController.php:96
+ * @see app/Http/Controllers/Kps/DebtController.php:97
  * @route '/kps/sites/{site}/hutang/{debt}/edit'
  */
         editForm.head = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -383,7 +383,7 @@ edit.head = (args: { site: string | { id: string }, debt: string | { id: string 
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\Kps\DebtController::update
- * @see app/Http/Controllers/Kps/DebtController.php:113
+ * @see app/Http/Controllers/Kps/DebtController.php:114
  * @route '/kps/sites/{site}/hutang/{debt}'
  */
 export const update = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -398,7 +398,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\DebtController::update
- * @see app/Http/Controllers/Kps/DebtController.php:113
+ * @see app/Http/Controllers/Kps/DebtController.php:114
  * @route '/kps/sites/{site}/hutang/{debt}'
  */
 update.url = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -428,7 +428,7 @@ update.url = (args: { site: string | { id: string }, debt: string | { id: string
 
 /**
 * @see \App\Http\Controllers\Kps\DebtController::update
- * @see app/Http/Controllers/Kps/DebtController.php:113
+ * @see app/Http/Controllers/Kps/DebtController.php:114
  * @route '/kps/sites/{site}/hutang/{debt}'
  */
 update.put = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -438,7 +438,7 @@ update.put = (args: { site: string | { id: string }, debt: string | { id: string
 
     /**
 * @see \App\Http\Controllers\Kps\DebtController::update
- * @see app/Http/Controllers/Kps/DebtController.php:113
+ * @see app/Http/Controllers/Kps/DebtController.php:114
  * @route '/kps/sites/{site}/hutang/{debt}'
  */
     const updateForm = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -453,7 +453,7 @@ update.put = (args: { site: string | { id: string }, debt: string | { id: string
 
             /**
 * @see \App\Http\Controllers\Kps\DebtController::update
- * @see app/Http/Controllers/Kps/DebtController.php:113
+ * @see app/Http/Controllers/Kps/DebtController.php:114
  * @route '/kps/sites/{site}/hutang/{debt}'
  */
         updateForm.put = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -469,7 +469,7 @@ update.put = (args: { site: string | { id: string }, debt: string | { id: string
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Kps\DebtController::destroy
- * @see app/Http/Controllers/Kps/DebtController.php:127
+ * @see app/Http/Controllers/Kps/DebtController.php:128
  * @route '/kps/sites/{site}/hutang/{debt}'
  */
 export const destroy = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -484,7 +484,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\DebtController::destroy
- * @see app/Http/Controllers/Kps/DebtController.php:127
+ * @see app/Http/Controllers/Kps/DebtController.php:128
  * @route '/kps/sites/{site}/hutang/{debt}'
  */
 destroy.url = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions) => {
@@ -514,7 +514,7 @@ destroy.url = (args: { site: string | { id: string }, debt: string | { id: strin
 
 /**
 * @see \App\Http\Controllers\Kps\DebtController::destroy
- * @see app/Http/Controllers/Kps/DebtController.php:127
+ * @see app/Http/Controllers/Kps/DebtController.php:128
  * @route '/kps/sites/{site}/hutang/{debt}'
  */
 destroy.delete = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -524,7 +524,7 @@ destroy.delete = (args: { site: string | { id: string }, debt: string | { id: st
 
     /**
 * @see \App\Http\Controllers\Kps\DebtController::destroy
- * @see app/Http/Controllers/Kps/DebtController.php:127
+ * @see app/Http/Controllers/Kps/DebtController.php:128
  * @route '/kps/sites/{site}/hutang/{debt}'
  */
     const destroyForm = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -539,7 +539,7 @@ destroy.delete = (args: { site: string | { id: string }, debt: string | { id: st
 
             /**
 * @see \App\Http\Controllers\Kps\DebtController::destroy
- * @see app/Http/Controllers/Kps/DebtController.php:127
+ * @see app/Http/Controllers/Kps/DebtController.php:128
  * @route '/kps/sites/{site}/hutang/{debt}'
  */
         destroyForm.delete = (args: { site: string | { id: string }, debt: string | { id: string } } | [site: string | { id: string }, debt: string | { id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

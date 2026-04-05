@@ -30,7 +30,8 @@
       "Bash(php artisan config:clear:*)",
       "Bash(php artisan view:clear:*)",
       "Bash(php artisan db:seed:*)",
-      "WebFetch(domain:ui.nuxt.com)"
+      "WebFetch(domain:ui.nuxt.com)",
+      "Bash(node:*)"
     ]
   }
 }

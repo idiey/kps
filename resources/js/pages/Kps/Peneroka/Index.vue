@@ -2,30 +2,24 @@
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
-import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import { Button } from '@/components/ui/button';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
+import { Input } from '@/components/ui/input';
+import { useServerTable } from '@/composables/useServerTable';
+import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import type { AppPageProps, KpsPeneroka, KpsSite, KpsSiteRole } from '@/types';
-
-interface PaginationMeta {
-    current_page?: number;
-    last_page?: number;
-    from?: number;
-    to?: number;
-    total?: number;
-}
 
 interface PaginatedPeneroka {
     data: KpsPeneroka[];
-    links: any[];
-    meta: PaginationMeta;
+    meta?: {
+        current_page?: number;
+        last_page?: number;
+        per_page?: number;
+        total?: number;
+    };
+    current_page?: number;
+    last_page?: number;
+    per_page?: number;
+    total?: number;
 }
 
 const props = defineProps<{
@@ -38,7 +32,52 @@ const props = defineProps<{
         with_phone: number;
         outstanding_total: number;
     };
+    filters: {
+        search?: string;
+        sort_by?: string;
+        sort_dir?: 'asc' | 'desc';
+    };
 }>();
+
+const { globalFilter, sorting, goToPage } = useServerTable(
+    `/kps/sites/${props.site.id}/peneroka`,
+    props.filters,
+);
+
+const sortByModel = computed({
+    get: () => sorting.value[0]?.id ?? '',
+    set: (column: string) => {
+        if (!column) {
+            sorting.value = [];
+            return;
+        }
+
+        const current = sorting.value[0];
+        sorting.value = [
+            {
+                id: column,
+                desc: current?.desc ?? (props.filters.sort_dir === 'desc'),
+            },
+        ];
+    },
+});
+
+const sortDirModel = computed({
+    get: () => (sorting.value[0]?.desc ? 'desc' : 'asc'),
+    set: (direction: 'asc' | 'desc') => {
+        const currentColumn = sorting.value[0]?.id;
+        if (!currentColumn) {
+            return;
+        }
+
+        sorting.value = [
+            {
+                id: currentColumn,
+                desc: direction === 'desc',
+            },
+        ];
+    },
+});
 
 const formatNumber = (value?: number | null) =>
     new Intl.NumberFormat('en-MY', {
@@ -62,6 +101,25 @@ const formatMoney = (value?: number | null) =>
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
     }).format(Number(value ?? 0));
+
+const tableColumns = [
+    { accessorKey: 'name', header: 'Name' },
+    { accessorKey: 'ic_number', header: 'IC Number' },
+    { accessorKey: 'phone', header: 'Phone' },
+    { id: 'actions', header: 'Actions' },
+];
+
+const paginationMeta = computed(() => {
+    const source = props.penerokas;
+    const meta = source.meta ?? source;
+
+    return {
+        currentPage: Number(meta.current_page ?? 1),
+        lastPage: Number(meta.last_page ?? 1),
+        perPage: Number(meta.per_page ?? 15),
+        total: Number(meta.total ?? source.data.length),
+    };
+});
 </script>
 
 <template>
@@ -126,72 +184,117 @@ const formatMoney = (value?: number | null) =>
             </section>
 
             <section class="overflow-hidden rounded-[36px] border border-[#efdcd5] bg-white/92 shadow-[0_18px_50px_rgba(157,80,53,0.08)]">
-                <div class="flex flex-col gap-3 border-b border-[#f0dfd8] px-7 py-6 md:flex-row md:items-center md:justify-between">
-                    <div>
-                        <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#b47b67]">Master Data</p>
-                        <h2 class="mt-2 text-2xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">Operational registry</h2>
+                <div class="flex flex-col gap-3 border-b border-[#f0dfd8] px-7 py-6">
+                    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                        <div>
+                            <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#b47b67]">Master Data</p>
+                            <h2 class="mt-2 text-2xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">Operational registry</h2>
+                        </div>
+                        <span class="rounded-full bg-[#f7f1ee] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8d7167]">
+                            {{ site.name }}
+                        </span>
                     </div>
-                    <span class="rounded-full bg-[#f7f1ee] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8d7167]">
-                        {{ site.name }}
-                    </span>
+
+                    <div class="flex flex-col gap-3 lg:flex-row">
+                        <Input
+                            v-model="globalFilter"
+                            type="text"
+                            placeholder="Search name, IC, or phone..."
+                            class="w-full lg:w-[280px]"
+                        />
+                        <select
+                            v-model="sortByModel"
+                            class="h-10 rounded-full border border-[#ead6ce] bg-[#f7f1ee] px-4 text-sm text-[#6d5952] outline-none"
+                        >
+                            <option value="">Default Sort</option>
+                            <option value="name">Name</option>
+                            <option value="ic_number">IC Number</option>
+                        </select>
+                        <select
+                            v-model="sortDirModel"
+                            :disabled="!sortByModel"
+                            class="h-10 rounded-full border border-[#ead6ce] bg-[#f7f1ee] px-4 text-sm text-[#6d5952] outline-none disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                            <option value="asc">Asc</option>
+                            <option value="desc">Desc</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <Table>
-                        <TableHeader>
-                            <TableRow class="border-[#f1dfd8] bg-[#fbf6f3] hover:bg-[#fbf6f3]">
-                                <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Name</TableHead>
-                                <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">IC Number</TableHead>
-                                <TableHead class="px-7 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Phone</TableHead>
-                                <TableHead class="px-7 py-4 text-right text-[11px] font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            <TableRow v-if="penerokas.data.length === 0">
-                                <TableCell colspan="4" class="px-7 py-10 text-center text-sm text-[#8d7167]">
-                                    No peneroka found for this site.
-                                </TableCell>
-                            </TableRow>
-                            <TableRow
-                                v-for="p in penerokas.data"
-                                :key="p.id"
-                                class="border-[#f2e3dc] text-[#3a302d] transition hover:bg-[#fff8f3]"
-                            >
-                                <TableCell class="px-7 py-5">
-                                    <div class="space-y-1">
-                                        <p class="font-semibold text-[#1b1b1b]">{{ p.name }}</p>
-                                        <p class="text-xs text-[#8d7167]">{{ p.address || 'No address captured' }}</p>
-                                    </div>
-                                </TableCell>
-                                <TableCell class="px-7 py-5 text-[#6d5952]">{{ p.ic_number || '-' }}</TableCell>
-                                <TableCell class="px-7 py-5 text-[#6d5952]">{{ p.phone || '-' }}</TableCell>
-                                <TableCell class="px-7 py-5 text-right">
-                                    <div class="flex justify-end gap-2">
-                                        <Button
-                                            v-if="canManagePeneroka"
-                                            variant="ghost"
-                                            size="sm"
-                                            as-child
-                                            class="rounded-full text-[#6d5952] hover:bg-[#fff1ec] hover:text-[#1b1b1b]"
-                                        >
-                                            <Link :href="`/kps/sites/${site.id}/peneroka/${p.id}/edit`">Edit</Link>
-                                        </Button>
-                                        <Button
-                                            v-if="canViewReports"
-                                            variant="outline"
-                                            size="sm"
-                                            as-child
-                                            class="rounded-full border-[#e2c9c0] text-[#6d5952] hover:border-[#c77d62] hover:text-[#1b1b1b]"
-                                        >
-                                            <Link :href="`/kps/sites/${site.id}/reports/peneroka/${p.id}`">Statement</Link>
-                                        </Button>
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
+                <div class="overflow-x-auto px-2 py-3">
+                    <UTable
+                        v-model:sorting="sorting"
+                        :data="penerokas.data"
+                        :columns="tableColumns"
+                        :sorting-options="{ manualSorting: true }"
+                        empty="No peneroka found for this site."
+                        class="min-w-full"
+                    >
+                        <template #name-cell="{ row }">
+                            <div class="space-y-1">
+                                <p class="font-semibold text-[#1b1b1b]">{{ row.original.name }}</p>
+                                <p class="text-xs text-[#8d7167]">{{ row.original.address || 'No address captured' }}</p>
+                            </div>
+                        </template>
+
+                        <template #ic_number-cell="{ row }">
+                            <span class="text-[#6d5952]">{{ row.original.ic_number || '-' }}</span>
+                        </template>
+
+                        <template #phone-cell="{ row }">
+                            <span class="text-[#6d5952]">{{ row.original.phone || '-' }}</span>
+                        </template>
+
+                        <template #actions-cell="{ row }">
+                            <div class="flex justify-end gap-2">
+                                <Button
+                                    v-if="canManagePeneroka"
+                                    variant="ghost"
+                                    size="sm"
+                                    as-child
+                                    class="rounded-full text-[#6d5952] hover:bg-[#fff1ec] hover:text-[#1b1b1b]"
+                                >
+                                    <Link :href="`/kps/sites/${site.id}/peneroka/${row.original.id}/edit`">Edit</Link>
+                                </Button>
+                                <Button
+                                    v-if="canViewReports"
+                                    variant="outline"
+                                    size="sm"
+                                    as-child
+                                    class="rounded-full border-[#e2c9c0] text-[#6d5952] hover:border-[#c77d62] hover:text-[#1b1b1b]"
+                                >
+                                    <Link :href="`/kps/sites/${site.id}/reports/peneroka/${row.original.id}`">Statement</Link>
+                                </Button>
+                            </div>
+                        </template>
+                    </UTable>
                 </div>
             </section>
+
+            <div
+                v-if="paginationMeta.lastPage > 1"
+                class="rounded-[28px] border border-[#efdcd5] bg-white/90 px-5 py-4 shadow-[0_12px_30px_rgba(157,80,53,0.06)]"
+            >
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <p class="text-sm text-[#6d5952]">
+                        Showing
+                        {{ (paginationMeta.currentPage - 1) * paginationMeta.perPage + 1 }}
+                        to
+                        {{ Math.min(paginationMeta.currentPage * paginationMeta.perPage, paginationMeta.total) }}
+                        of
+                        {{ paginationMeta.total }}
+                        entries
+                    </p>
+                    <UPagination
+                        :page="paginationMeta.currentPage"
+                        :items-per-page="paginationMeta.perPage"
+                        :total="paginationMeta.total"
+                        :sibling-count="1"
+                        show-edges
+                        @update:page="goToPage"
+                    />
+                </div>
+            </div>
         </div>
     </KpsShellLayout>
 </template>

@@ -158,3 +158,71 @@ test('closed months reject new reallocation attempts', function () {
         ->post("/kps/sites/{$this->site->id}/allocations/{$deduction->id}/reallocate")
         ->assertSessionHasErrors('month');
 });
+
+test('allocation respects site hutang weightage cap', function () {
+    $this->site->update([
+        'hutang_weightage_pct' => 40,
+    ]);
+
+    $deduction = MonthlyDeduction::factory()->create([
+        'site_id' => $this->site->id,
+        'peneroka_id' => $this->peneroka->id,
+        'month' => $this->month->toDateString(),
+        'amount' => 100,
+        'unallocated_amount' => 0,
+        'is_closed' => false,
+    ]);
+
+    app(AllocationService::class)->allocate($deduction);
+
+    $deduction->refresh();
+
+    expect((float) $deduction->allocations()->sum('amount'))->toBe(40.0);
+    expect((float) $deduction->unallocated_amount)->toBe(60.0);
+    expect((float) $this->debtOne->fresh()->balance)->toBe(20.0);
+    expect((float) $this->debtTwo->fresh()->balance)->toBe(80.0);
+});
+
+test('allocation applies debt monthly potongan limit within weightage cap by priority', function () {
+    $this->site->update([
+        'hutang_weightage_pct' => 60,
+    ]);
+
+    $this->debtOne->update([
+        'priority' => 1,
+        'balance' => 1000,
+        'monthly_potongan_limit' => 100,
+    ]);
+
+    $this->debtTwo->update([
+        'priority' => 2,
+        'balance' => 100000,
+        'monthly_potongan_limit' => 200,
+    ]);
+
+    $deduction = MonthlyDeduction::factory()->create([
+        'site_id' => $this->site->id,
+        'peneroka_id' => $this->peneroka->id,
+        'month' => $this->month->toDateString(),
+        'amount' => 200,
+        'unallocated_amount' => 0,
+        'is_closed' => false,
+    ]);
+
+    app(AllocationService::class)->allocate($deduction);
+
+    $deduction->refresh();
+
+    $allocations = $deduction->allocations()
+        ->with('debt')
+        ->orderBy('created_at')
+        ->get();
+
+    expect($allocations)->toHaveCount(2);
+    expect((float) $allocations[0]->amount)->toBe(100.0);
+    expect((float) $allocations[1]->amount)->toBe(20.0);
+    expect((float) $deduction->unallocated_amount)->toBe(80.0);
+
+    expect((float) $this->debtOne->fresh()->balance)->toBe(900.0);
+    expect((float) $this->debtTwo->fresh()->balance)->toBe(99980.0);
+});

@@ -15,7 +15,13 @@ class AllocationService
     public function allocate(MonthlyDeduction $deduction): array
     {
         return DB::transaction(function () use ($deduction) {
-            $remaining = $deduction->amount;
+            $deduction->loadMissing('site');
+            $weightage = (float) ($deduction->site?->hutang_weightage_pct ?? 100);
+            $weightage = min(100, max(0, $weightage));
+
+            $allocationBudget = round(((float) $deduction->amount * $weightage) / 100, 2);
+            $remainingBudget = $allocationBudget;
+            $allocatedAmount = 0.0;
             $allocations = [];
 
             $debts = Debt::query()
@@ -29,11 +35,15 @@ class AllocationService
                 ->get();
 
             foreach ($debts as $debt) {
-                if ($remaining <= 0) {
+                if ($remainingBudget <= 0) {
                     break;
                 }
 
-                $payable = min($remaining, $debt->balance);
+                $debtLimit = $debt->monthly_potongan_limit === null
+                    ? $remainingBudget
+                    : min($remainingBudget, (float) $debt->monthly_potongan_limit);
+
+                $payable = round(min($debtLimit, (float) $debt->balance), 2);
                 if ($payable <= 0) {
                     continue;
                 }
@@ -47,11 +57,12 @@ class AllocationService
                 $debt->balance = $debt->balance - $payable;
                 $debt->save();
 
-                $remaining -= $payable;
+                $remainingBudget = round($remainingBudget - $payable, 2);
+                $allocatedAmount = round($allocatedAmount + $payable, 2);
                 $allocations[] = $allocation;
             }
 
-            $deduction->unallocated_amount = max(0, $remaining);
+            $deduction->unallocated_amount = round(max(0, (float) $deduction->amount - $allocatedAmount), 2);
             $deduction->save();
 
             return $allocations;
