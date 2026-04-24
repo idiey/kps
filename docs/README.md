@@ -35,6 +35,17 @@ None.
 
 - **[Control Center](00-control-center/README.md)** - Project memory hub and AI agent context
 
+### AI Command Sync
+
+- Source workflows are authored in `.agent/workflows/*.md`.
+- Codex slash-command mirror lives in `.codex/commands/*.md`.
+- After workflow changes, sync with:
+
+```powershell
+New-Item -ItemType Directory -Force .codex\commands | Out-Null
+Copy-Item .agent\workflows\*.md .codex\commands\ -Force
+```
+
 ### Additional References
 
 - [Documentation Index](master-index.md)
@@ -57,4 +68,4 @@ Not applicable.
 
 ---
 
-**Last Updated**: 2026-02-10
+**Last Updated**: 2026-04-07

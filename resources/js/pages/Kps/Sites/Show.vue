@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import { useLocale } from '@/composables/useLocale';
+import AutoFitText from '@/components/AutoFitText.vue';
 
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import type { KpsSite, KpsSiteRole } from '@/types';
@@ -64,10 +66,11 @@ const maxOutstanding = computed(() => Math.max(...props.topPeneroka.map((penerok
 
 const barHeight = (value: number) => `${Math.max(18, (value / maxTrendAmount.value) * 210)}px`;
 const exposureWidth = (value: number) => `${Math.max(12, (value / maxOutstanding.value) * 100)}%`;
+const { t } = useLocale();
 </script>
 
 <template>
-    <Head :title="`Site: ${site.name}`" />
+    <Head :title="`${t('nav.sites', 'Site')}: ${site.name}`" />
 
     <KpsShellLayout :site="site" :site-role="siteRole">
         <div class="space-y-6 px-4 pb-8 lg:px-8">
@@ -95,7 +98,7 @@ const exposureWidth = (value: number) => `${Math.max(12, (value / maxOutstanding
                         :href="`/kps/sites/${site.id}/allocations`"
                         class="inline-flex items-center rounded-full bg-gradient-to-br from-[#d6522d] to-[#bc3f1d] px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(214,82,45,0.28)] transition hover:translate-y-[-1px]"
                     >
-                        Allocation Review
+                        Agihan Semakan
                     </Link>
                     <Link
                         href="/kps/sites"
@@ -109,29 +112,35 @@ const exposureWidth = (value: number) => `${Math.max(12, (value / maxOutstanding
             <section class="grid gap-4 xl:grid-cols-4">
                 <div class="rounded-[30px] border border-[#efdcd5] bg-white/88 p-6 shadow-[0_16px_40px_rgba(157,80,53,0.08)]">
                     <p class="text-xs font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Peneroka</p>
-                    <p class="mt-4 text-4xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">{{ stats.peneroka_count }}</p>
+                    <div class="mt-4">
+                        <AutoFitText :text="stats.peneroka_count" :min-size="20" :max-size="40" />
+                    </div>
                     <p class="mt-4 text-sm text-[#6d5952]">Assigned to {{ site.code }} in the current working set.</p>
                 </div>
 
                 <div class="rounded-[30px] border border-[#efdcd5] bg-white/88 p-6 shadow-[0_16px_40px_rgba(157,80,53,0.08)]">
                     <p class="text-xs font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Active Debts</p>
-                    <p class="mt-4 text-4xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">{{ stats.active_debt_count }}</p>
+                    <div class="mt-4">
+                        <AutoFitText :text="stats.active_debt_count" :min-size="20" :max-size="40" />
+                    </div>
                     <p class="mt-4 text-sm text-[#6d5952]">Open balances still requiring site follow-up.</p>
                 </div>
 
                 <div class="rounded-[30px] border border-[#efdcd5] bg-white/88 p-6 shadow-[0_16px_40px_rgba(157,80,53,0.08)]">
                     <p class="text-xs font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Outstanding</p>
-                    <p class="mt-4 text-4xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">{{ formatMoney(stats.outstanding) }}</p>
+                    <div class="mt-4">
+                        <AutoFitText :text="formatMoney(stats.outstanding)" :min-size="20" :max-size="40" />
+                    </div>
                     <p class="mt-4 text-sm text-[#6d5952]">Live exposure across all hutang records linked to this site.</p>
                 </div>
 
                 <div class="rounded-[30px] border border-[#efdcd5] bg-white/88 p-6 shadow-[0_16px_40px_rgba(157,80,53,0.08)]">
                     <p class="text-xs font-bold uppercase tracking-[0.24em] text-[#9b7d73]">{{ monthLabel }}</p>
-                    <div class="mt-4 flex items-end gap-3">
-                        <p class="text-4xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">{{ formatMoney(stats.current_month_deductions) }}</p>
+                    <div class="mt-4 flex min-w-0 items-end gap-3">
+                        <AutoFitText class="min-w-0 flex-1" :text="formatMoney(stats.current_month_deductions)" :min-size="20" :max-size="40" />
                         <span class="rounded-full bg-[#ebfff3] px-2.5 py-1 text-[11px] font-bold text-[#18754d]">{{ stats.allocation_rate.toFixed(1) }}%</span>
                     </div>
-                    <p class="mt-4 text-sm text-[#6d5952]">Allocation effectiveness for the current month.</p>
+                    <p class="mt-4 text-sm text-[#6d5952]">Keberkesanan agihan untuk bulan semasa.</p>
                 </div>
             </section>
 

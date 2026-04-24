@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
+import { useLocale } from '@/composables/useLocale';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -31,6 +32,7 @@ const props = defineProps<{
     permissions: Permission[];
     rolePermissionIds: number[];
 }>();
+const { t } = useLocale();
 
 const form = useForm({
     name: props.role.name,
@@ -86,21 +88,21 @@ const groupedPermissions = computed(() => {
 });
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Dashboard', href: dashboard().url },
-    { title: 'Roles', href: '/admin/roles' },
-    { title: 'Edit Role', href: `/admin/roles/${props.role.id}/edit` },
+    { title: t('nav.dashboard', 'Dashboard'), href: dashboard().url },
+    { title: t('admin.roles', 'Roles'), href: '/admin/roles' },
+    { title: t('admin.edit_role', 'Edit Role'), href: `/admin/roles/${props.role.id}/edit` },
 ];
 </script>
 
 <template>
-    <Head :title="`Edit Role: ${role.name}`" />
+    <Head :title="`${t('admin.edit_role', 'Edit Role')}: ${role.name}`" />
 
     <KpsShellLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6">
             <!-- Header -->
             <div class="flex items-center justify-between">
                 <div>
-                    <h2 class="text-2xl font-bold tracking-tight">Edit Role</h2>
+                    <h2 class="text-2xl font-bold tracking-tight">{{ t('admin.edit_role', 'Edit Role') }}</h2>
                     <p class="text-muted-foreground">Update role details and permissions</p>
                 </div>
                 <Button variant="outline" @click="router.visit('/admin/roles')">
@@ -229,11 +231,11 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <!-- Actions -->
                 <div class="flex justify-end gap-3">
                     <Button type="button" variant="outline" @click="router.visit('/admin/roles')">
-                        Cancel
+                        {{ t('common.cancel', 'Cancel') }}
                     </Button>
                     <Button type="submit" :disabled="form.processing">
                         <Save class="mr-2 h-4 w-4" />
-                        {{ form.processing ? 'Saving...' : 'Save Changes' }}
+                        {{ form.processing ? t('auth.updating', 'Saving...') : t('common.save', 'Save Changes') }}
                     </Button>
                 </div>
             </form>

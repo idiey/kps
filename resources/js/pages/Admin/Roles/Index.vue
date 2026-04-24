@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, router, Link } from '@inertiajs/vue3';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
+import { useLocale } from '@/composables/useLocale';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Badge } from '@/components/ui/badge';
@@ -30,6 +31,7 @@ interface Role {
 const props = defineProps<{
     roles: Role[];
 }>();
+const { t } = useLocale();
 
 const getRoleDisplayName = (roleName: string) => {
     const roleMap: Record<string, string> = {
@@ -72,21 +74,21 @@ const deleteRole = (role: Role) => {
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Dashboard', href: dashboard().url },
-    { title: 'Roles', href: '/admin/roles' },
+    { title: t('nav.dashboard', 'Dashboard'), href: dashboard().url },
+    { title: t('admin.roles', 'Roles'), href: '/admin/roles' },
 ];
 </script>
 
 <template>
-    <Head title="Role Management" />
+    <Head :title="t('admin.role_management', 'Role Management')" />
 
     <KpsShellLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6">
             <!-- Header -->
             <div class="flex items-center justify-between">
                 <div>
-                    <h2 class="text-2xl font-bold tracking-tight">Role Management</h2>
-                    <p class="text-muted-foreground">Manage system roles and permissions</p>
+                    <h2 class="text-2xl font-bold tracking-tight">{{ t('admin.role_management', 'Role Management') }}</h2>
+                    <p class="text-muted-foreground">{{ t('admin.role_management_desc', 'Manage system roles and permissions') }}</p>
                 </div>
                 <div class="flex gap-2">
                     <Button variant="outline" as-child>
@@ -98,7 +100,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <Button as-child>
                         <Link href="/admin/roles/create">
                             <Plus class="mr-2 h-4 w-4" />
-                            Add Role
+                            {{ t('admin.create_role', 'Add Role') }}
                         </Link>
                     </Button>
                 </div>
@@ -159,7 +161,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     />
                                     <XCircle v-else class="h-4 w-4 text-red-600" />
                                     <span class="text-sm">{{
-                                        role.is_active ? 'Active' : 'Inactive'
+                                        role.is_active ? t('admin.active', 'Active') : t('admin.inactive', 'Inactive')
                                     }}</span>
                                 </div>
                             </TableCell>

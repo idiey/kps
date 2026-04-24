@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\RoleManagementController;
 use App\Http\Controllers\Admin\UserManagementController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -11,6 +12,16 @@ Route::get('/', function () {
         'canRegister' => Features::enabled(Features::registration()),
     ]);
 })->name('home');
+
+Route::post('/locale', function (Request $request) {
+    $data = $request->validate([
+        'locale' => ['required', 'in:ms,en'],
+    ]);
+
+    $request->session()->put('locale', $data['locale']);
+
+    return back();
+})->name('locale.update');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard

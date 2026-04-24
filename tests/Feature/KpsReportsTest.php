@@ -25,16 +25,24 @@ beforeEach(function () {
     $this->debt = Debt::factory()->create([
         'peneroka_id' => $this->peneroka->id,
         'priority' => 1,
-        'balance' => 125,
-        'original_amount' => 125,
+        'balance' => 75,
+        'original_amount' => 75,
         'due_date' => Carbon::parse('2026-04-20')->toDateString(),
         'description' => 'Hutang Baja',
+    ]);
+    Debt::factory()->create([
+        'peneroka_id' => $this->peneroka->id,
+        'priority' => 2,
+        'balance' => 50,
+        'original_amount' => 50,
+        'due_date' => Carbon::parse('2026-04-25')->toDateString(),
+        'description' => 'Hutang Benih',
     ]);
     $this->deduction = MonthlyDeduction::factory()->create([
         'site_id' => $this->site->id,
         'peneroka_id' => $this->peneroka->id,
         'month' => Carbon::parse('2026-04-01')->toDateString(),
-        'amount' => 75,
+        'amount' => 100,
         'unallocated_amount' => 0,
         'is_closed' => false,
     ]);
@@ -93,7 +101,11 @@ test('report readers can export site and statement reports', function () {
 
     expect($siteCsv->streamedContent())->toContain('KPS Site Report')
         ->toContain($this->peneroka->name)
-        ->toContain($this->site->name);
+        ->toContain($this->site->name)
+        ->toContain('Hutang Baja')
+        ->toContain('Hutang Benih')
+        ->toContain('75.00')
+        ->toContain('25.00');
 
     $statementCsv = $this->actingAs($this->reportReader)
         ->get("/kps/sites/{$this->site->id}/reports/peneroka/{$this->peneroka->id}/export/csv");

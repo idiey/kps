@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { useLocale } from '@/composables/useLocale';
 
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import InputError from '@/components/InputError.vue';
@@ -28,10 +29,12 @@ const form = useForm({
 const submit = () => {
     form.post(`/kps/sites/${props.site.id}/hutang`);
 };
+
+const { t } = useLocale();
 </script>
 
 <template>
-    <Head title="Create Hutang" />
+    <Head :title="t('kps.hutang.create', 'Create Hutang')" />
 
     <KpsShellLayout :site="site" :site-role="siteRole">
         <div class="space-y-6 px-4 pb-8 lg:px-8">
@@ -41,7 +44,7 @@ const submit = () => {
                         Site Workspace
                     </p>
                     <h1 class="mt-3 text-4xl font-black tracking-[-0.04em] text-[#1b1b1b] md:text-5xl" style="font-family: Manrope, Inter, sans-serif;">
-                        Add hutang
+                        {{ t('kps.hutang.add', 'Add hutang') }}
                     </h1>
                     <p class="mt-4 max-w-2xl text-base leading-7 text-[#65534d] md:text-lg">
                         Create a new debt record for {{ site.name }} and assign its recovery priority.
@@ -53,7 +56,7 @@ const submit = () => {
                         :href="`/kps/sites/${site.id}/hutang`"
                         class="inline-flex items-center rounded-full border border-[#e1cbc2] bg-white px-6 py-3 text-sm font-semibold text-[#6d5952] shadow-[0_10px_30px_rgba(157,80,53,0.06)] transition hover:border-[#c77d62] hover:text-[#1b1b1b]"
                     >
-                        Back to Debts
+                        {{ t('kps.hutang.back', 'Back to Debts') }}
                     </Link>
                 </div>
             </section>
@@ -61,7 +64,7 @@ const submit = () => {
             <div class="grid gap-6 lg:grid-cols-[1.4fr,0.9fr]">
                 <Card class="rounded-[34px] border-[#efdcd5] bg-white/92 shadow-[0_18px_50px_rgba(157,80,53,0.08)]">
                     <CardHeader class="border-b border-[#f0dfd8] pb-6">
-                        <CardTitle class="text-xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">Debt details</CardTitle>
+                        <CardTitle class="text-xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">{{ t('kps.hutang.details', 'Debt details') }}</CardTitle>
                         <p class="text-sm text-[#7f675f]">Enter the core recovery data. Priority controls the waterfall order.</p>
                     </CardHeader>
 
@@ -121,10 +124,10 @@ const submit = () => {
                                     :disabled="form.processing"
                                     class="rounded-full bg-gradient-to-br from-[#d6522d] to-[#bc3f1d] px-6 py-3 text-white shadow-[0_16px_32px_rgba(214,82,45,0.28)] hover:translate-y-[-1px]"
                                 >
-                                    Create Hutang
+                                    {{ t('kps.hutang.create', 'Create Hutang') }}
                                 </Button>
                                 <Button variant="outline" as-child class="rounded-full border-[#e2c9c0] text-[#6d5952] hover:border-[#c77d62] hover:text-[#1b1b1b]">
-                                    <Link :href="`/kps/sites/${site.id}/hutang`">Cancel</Link>
+                                    <Link :href="`/kps/sites/${site.id}/hutang`">{{ t('common.cancel', 'Cancel') }}</Link>
                                 </Button>
                             </div>
                         </form>

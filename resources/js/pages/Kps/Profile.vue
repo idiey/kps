@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
+import { useLocale } from '@/composables/useLocale';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -28,37 +29,39 @@ const submit = () => {
         preserveScroll: true,
     });
 };
+
+const { t } = useLocale();
 </script>
 
 <template>
-    <Head title="Profile settings" />
+    <Head :title="t('settings.profile_title', 'Profile settings')" />
 
     <KpsShellLayout>
         <div class="mx-auto max-w-3xl space-y-6 pt-2">
             <section class="rounded-[28px] border border-[#f0dbd4] bg-white/90 p-6 shadow-[0_18px_50px_rgba(157,80,53,0.08)]">
                 <div class="mb-6">
-                    <h1 class="text-xl font-black text-[#1b1b1b]">Profile settings</h1>
+                    <h1 class="text-xl font-black text-[#1b1b1b]">{{ t('settings.profile_title', 'Profile settings') }}</h1>
                     <p class="mt-1 text-sm text-[#65534d]">
-                        Update your account information inside KPS workspace.
+                        {{ t('kps.profile.desc', 'Update your account information inside KPS workspace.') }}
                     </p>
                 </div>
 
                 <form class="space-y-5" @submit.prevent="submit">
                     <div class="grid gap-2">
-                        <Label for="name" class="text-[#2d241f]">Name</Label>
+                        <Label for="name" class="text-[#2d241f]">{{ t('auth.name', 'Name') }}</Label>
                         <Input
                             id="name"
                             v-model="form.name"
                             required
                             autocomplete="name"
                             class="border-[#ead6ce] bg-white text-[#2d241f]"
-                            placeholder="Full name"
+                            :placeholder="t('auth.full_name', 'Full name')"
                         />
                         <InputError :message="form.errors.name" />
                     </div>
 
                     <div class="grid gap-2">
-                        <Label for="email" class="text-[#2d241f]">Email address</Label>
+                        <Label for="email" class="text-[#2d241f]">{{ t('auth.email', 'Email address') }}</Label>
                         <Input
                             id="email"
                             v-model="form.email"
@@ -66,28 +69,28 @@ const submit = () => {
                             required
                             autocomplete="username"
                             class="border-[#ead6ce] bg-white text-[#2d241f]"
-                            placeholder="Email address"
+                            :placeholder="t('auth.email', 'Email address')"
                         />
                         <InputError :message="form.errors.email" />
                     </div>
 
                     <div v-if="props.mustVerifyEmail && !user.email_verified_at" class="rounded-xl border border-[#f5d9ce] bg-[#fff6f1] px-4 py-3">
                         <p class="text-sm text-[#7c4d3e]">
-                            Your email address is unverified.
+                            {{ t('settings.email_unverified', 'Your email address is unverified.') }}
                             <Link
                                 :href="send()"
                                 method="post"
                                 as="button"
                                 class="font-semibold underline underline-offset-2"
                             >
-                                Resend verification email
+                                {{ t('settings.resend_verification', 'Resend verification email') }}
                             </Link>
                         </p>
                         <p
                             v-if="props.status === 'verification-link-sent'"
                             class="mt-2 text-sm font-semibold text-[#1f7a45]"
                         >
-                            A new verification link has been sent.
+                            {{ t('auth.verify.sent', 'A new verification link has been sent.') }}
                         </p>
                     </div>
 
@@ -98,10 +101,10 @@ const submit = () => {
                             :disabled="form.processing"
                             data-test="update-profile-button"
                         >
-                            Save
+                            {{ t('common.save', 'Save') }}
                         </Button>
                         <p v-if="form.recentlySuccessful" class="text-sm font-medium text-[#1f7a45]">
-                            Saved.
+                            {{ t('common.saved', 'Saved.') }}
                         </p>
                     </div>
                 </form>
@@ -109,4 +112,3 @@ const submit = () => {
         </div>
     </KpsShellLayout>
 </template>
-

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+import { useLocale } from '@/composables/useLocale';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -124,7 +125,7 @@ const tableColumns = [
     { accessorKey: 'month', header: 'Month' },
     { accessorKey: 'peneroka', header: 'Peneroka' },
     { accessorKey: 'amount', header: 'Amount' },
-    { accessorKey: 'allocations_count', header: 'Allocations' },
+    { accessorKey: 'allocations_count', header: 'Agihan' },
     { accessorKey: 'unallocated_amount', header: 'Unallocated' },
     { accessorKey: 'is_closed', header: 'Status' },
     { id: 'actions', header: 'Actions' },
@@ -141,23 +142,24 @@ const paginationMeta = computed(() => {
         total: Number(meta.total ?? source.data.length),
     };
 });
+const { t } = useLocale();
 </script>
 
 <template>
-    <Head :title="`Allocations - ${site.name}`" />
+    <Head :title="`${t('kps.allocations', 'Allocations')} - ${site.name}`" />
 
     <KpsShellLayout :site="site" :site-role="siteRole">
         <div class="space-y-6 px-4 pb-8 lg:px-8">
             <section class="flex flex-col gap-5 2xl:flex-row 2xl:items-end 2xl:justify-between">
                 <div class="max-w-3xl">
                     <p class="text-[11px] font-bold uppercase tracking-[0.32em] text-[#b7654b]">
-                        Allocation Workspace
+                        Ruang Kerja Agihan
                     </p>
                     <h1 class="mt-3 text-4xl font-black tracking-[-0.04em] text-[#1b1b1b] md:text-5xl" style="font-family: Manrope, Inter, sans-serif;">
-                        Allocation Review
+                        Agihan Semakan
                     </h1>
                     <p class="mt-4 max-w-2xl text-base leading-7 text-[#65534d] md:text-lg">
-                        Review live deduction allocations for {{ site.name }}. Each row reflects the waterfall results and whether the month is still open.
+                        Semak agihan potongan semasa untuk {{ site.name }}. Setiap baris mencerminkan keputusan waterfall dan sama ada bulan masih terbuka.
                     </p>
                 </div>
 
@@ -177,7 +179,7 @@ const paginationMeta = computed(() => {
                 <div class="rounded-[30px] border border-[#efdcd5] bg-white/88 p-6 shadow-[0_16px_40px_rgba(157,80,53,0.08)]">
                     <p class="text-xs font-bold uppercase tracking-[0.24em] text-[#9b7d73]">Selected Month</p>
                     <p class="mt-4 text-4xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">{{ monthLabel }}</p>
-                    <p class="mt-4 text-sm text-[#6d5952]">Allocation review is scoped to this month before closure.</p>
+                    <p class="mt-4 text-sm text-[#6d5952]">Agihan semakan dihadkan kepada bulan ini sebelum ditutup.</p>
                 </div>
 
                 <div class="rounded-[30px] border border-[#efdcd5] bg-white/88 p-6 shadow-[0_16px_40px_rgba(157,80,53,0.08)]">

@@ -1,5 +1,6 @@
 ﻿<script setup lang="ts">
 import { dashboard, login, register } from '@/routes';
+import { useLocale } from '@/composables/useLocale';
 import { Head, Link } from '@inertiajs/vue3';
 
 withDefaults(
@@ -10,10 +11,12 @@ withDefaults(
         canRegister: true,
     },
 );
+
+const { t } = useLocale();
 </script>
 
 <template>
-    <Head title="KPS">
+    <Head :title="t('welcome.title', 'KPS')">
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link

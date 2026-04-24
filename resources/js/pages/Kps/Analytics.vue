@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { Head } from '@inertiajs/vue3';
+import { useLocale } from '@/composables/useLocale';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -89,6 +90,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const { t } = useLocale();
 
 const trendMaxAmount = computed(() => Math.max(...props.monthlyTrend.map((item) => item.amount), 1));
 const siteMaxOutstanding = computed(() => Math.max(...props.sitePerformance.map((item) => item.outstanding), 1));
@@ -127,16 +129,16 @@ const efficiencyVariant = (rate: number): 'default' | 'secondary' | 'outline' =>
 </script>
 
 <template>
-    <Head title="KPS Analytics" />
+    <Head :title="t('kps.analytics.title', 'KPS Analytics')" />
 
     <KpsShellLayout>
         <div class="space-y-6">
             <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                    <h1 class="text-2xl font-semibold">KPS Analytics</h1>
-                    <p class="text-muted-foreground">Current month: {{ monthLabel }}</p>
+                    <h1 class="text-2xl font-semibold">{{ t('kps.analytics.title', 'KPS Analytics') }}</h1>
+                    <p class="text-muted-foreground">{{ t('kps.current_month', 'Current month:') }} {{ monthLabel }}</p>
                 </div>
-                <Badge variant="outline" class="w-fit">Data snapshot: {{ month }}</Badge>
+                <Badge variant="outline" class="w-fit">{{ t('kps.data_snapshot', 'Data snapshot:') }} {{ month }}</Badge>
             </div>
 
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -192,7 +194,7 @@ const efficiencyVariant = (rate: number): 'default' | 'secondary' | 'outline' =>
 
                 <Card>
                     <CardHeader>
-                        <CardDescription>Allocation Efficiency</CardDescription>
+                        <CardDescription>Kecekapan Agihan</CardDescription>
                         <CardTitle class="text-3xl tabular-nums">{{ formatRate(overview.allocation_rate) }}</CardTitle>
                     </CardHeader>
                     <CardContent class="text-sm text-muted-foreground">

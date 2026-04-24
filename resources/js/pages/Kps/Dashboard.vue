@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useLocale } from '@/composables/useLocale';
 
 interface Props {
     stats: {
@@ -13,22 +14,23 @@ interface Props {
 }
 
 defineProps<Props>();
+const { t } = useLocale();
 </script>
 
 <template>
-    <Head title="KPS Dashboard" />
+    <Head :title="t('kps.dashboard.title', 'KPS Dashboard')" />
 
     <KpsShellLayout>
         <div class="space-y-6">
             <div>
-                <h1 class="text-2xl font-semibold">KPS HQ Dashboard</h1>
-                <p class="text-muted-foreground">Overview across all sites.</p>
+                <h1 class="text-2xl font-semibold">{{ t('kps.dashboard.hq', 'KPS HQ Dashboard') }}</h1>
+                <p class="text-muted-foreground">{{ t('kps.dashboard.overview', 'Overview across all sites.') }}</p>
             </div>
 
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Sites</CardTitle>
+                        <CardTitle>{{ t('nav.sites', 'Sites') }}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div class="text-3xl font-semibold">{{ stats.sites }}</div>
@@ -36,7 +38,7 @@ defineProps<Props>();
                 </Card>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Peneroka</CardTitle>
+                        <CardTitle>{{ t('kps.peneroka', 'Peneroka') }}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div class="text-3xl font-semibold">{{ stats.peneroka }}</div>
@@ -44,7 +46,7 @@ defineProps<Props>();
                 </Card>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Total Outstanding</CardTitle>
+                        <CardTitle>{{ t('kps.total_outstanding', 'Total Outstanding') }}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div class="text-3xl font-semibold">{{ stats.total_debt_balance }}</div>
@@ -52,7 +54,7 @@ defineProps<Props>();
                 </Card>
                 <Card>
                     <CardHeader>
-                        <CardTitle>This Month Deductions</CardTitle>
+                        <CardTitle>{{ t('kps.this_month_deductions', 'This Month Deductions') }}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div class="text-3xl font-semibold">{{ stats.monthly_deductions }}</div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, router, Link } from '@inertiajs/vue3';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
+import { useLocale } from '@/composables/useLocale';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { computed, ref } from 'vue';
@@ -56,6 +57,7 @@ const props = defineProps<{
         active?: string;
     };
 }>();
+const { t } = useLocale();
 
 const search = ref(props.filters.search || '');
 const selectedRole = ref(props.filters.role || 'all');
@@ -110,26 +112,26 @@ const getRoleDisplayName = (roleName: string) => {
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Dashboard', href: dashboard().url },
-    { title: 'Users', href: '/admin/users' },
+    { title: t('nav.dashboard', 'Dashboard'), href: dashboard().url },
+    { title: t('admin.users', 'Users'), href: '/admin/users' },
 ];
 </script>
 
 <template>
-    <Head title="User Management" />
+    <Head :title="t('admin.user_management', 'User Management')" />
 
     <KpsShellLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6">
         <!-- Header -->
         <div class="flex items-center justify-between">
             <div>
-                <h2 class="text-2xl font-bold tracking-tight">User Management</h2>
-                <p class="text-muted-foreground">Manage system users and their roles</p>
+                <h2 class="text-2xl font-bold tracking-tight">{{ t('admin.user_management', 'User Management') }}</h2>
+                <p class="text-muted-foreground">{{ t('admin.user_management_desc', 'Manage system users and their roles') }}</p>
             </div>
             <Button as-child>
                 <Link href="/admin/users/create">
                     <Plus class="mr-2 h-4 w-4" />
-                    Add User
+                    {{ t('admin.add_user', 'Add User') }}
                 </Link>
             </Button>
         </div>
@@ -139,7 +141,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             <div class="flex-1">
                 <Input
                     v-model="search"
-                    placeholder="Search by name or email..."
+                    :placeholder="t('admin.search_name_email', 'Search by name or email...')"
                     @keyup.enter="applyFilters"
                 >
                     <template #prefix>
@@ -149,10 +151,10 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
             <Select v-model="selectedRole" @update:model-value="applyFilters">
                 <SelectTrigger class="w-[180px]">
-                    <SelectValue placeholder="Filter by role" />
+                    <SelectValue :placeholder="t('admin.filter_role', 'Filter by role')" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="all">All Roles</SelectItem>
+                    <SelectItem value="all">{{ t('admin.all_roles', 'All Roles') }}</SelectItem>
                     <SelectItem v-for="role in roles" :key="role.id" :value="role.name">
                         {{ getRoleDisplayName(role.name) }}
                     </SelectItem>
@@ -160,15 +162,15 @@ const breadcrumbs: BreadcrumbItem[] = [
             </Select>
             <Select v-model="selectedStatus" @update:model-value="applyFilters">
                 <SelectTrigger class="w-[180px]">
-                    <SelectValue placeholder="Filter by status" />
+                    <SelectValue :placeholder="t('admin.filter_status', 'Filter by status')" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="true">Active</SelectItem>
-                    <SelectItem value="false">Inactive</SelectItem>
+                    <SelectItem value="all">{{ t('admin.all_status', 'All Status') }}</SelectItem>
+                    <SelectItem value="true">{{ t('admin.active', 'Active') }}</SelectItem>
+                    <SelectItem value="false">{{ t('admin.inactive', 'Inactive') }}</SelectItem>
                 </SelectContent>
             </Select>
-            <Button variant="outline" @click="clearFilters">Clear</Button>
+            <Button variant="outline" @click="clearFilters">{{ t('common.clear', 'Clear') }}</Button>
         </div>
 
         <!-- Users Table -->
@@ -176,18 +178,18 @@ const breadcrumbs: BreadcrumbItem[] = [
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Email</TableHead>
+                        <TableHead>{{ t('auth.name', 'Name') }}</TableHead>
+                        <TableHead>{{ t('auth.email', 'Email') }}</TableHead>
                         <TableHead>Role</TableHead>
-                        <TableHead>Department</TableHead>
+                        <TableHead>{{ t('admin.department', 'Department') }}</TableHead>
                         <TableHead>Status</TableHead>
-                        <TableHead class="text-right">Actions</TableHead>
+                        <TableHead class="text-right">{{ t('admin.actions', 'Actions') }}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     <TableRow v-if="users.data.length === 0">
                         <TableCell colspan="6" class="text-center text-muted-foreground">
-                            No users found
+                            {{ t('admin.no_users', 'No users found') }}
                         </TableCell>
                     </TableRow>
                     <TableRow v-for="user in users.data" :key="user.id">
@@ -209,7 +211,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     class="h-4 w-4 text-green-600"
                                 />
                                 <XCircle v-else class="h-4 w-4 text-red-600" />
-                                <span class="text-sm">{{ user.active ? 'Active' : 'Inactive' }}</span>
+                                <span class="text-sm">{{ user.active ? t('admin.active', 'Active') : t('admin.inactive', 'Inactive') }}</span>
                             </button>
                         </TableCell>
                         <TableCell class="text-right">
@@ -247,7 +249,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                     :disabled="users.current_page === 1"
                     @click="router.get(`/admin/users?page=${users.current_page - 1}`)"
                 >
-                    Previous
+                    {{ t('common.previous', 'Previous') }}
                 </Button>
                 <Button
                     variant="outline"
@@ -255,7 +257,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                     :disabled="users.current_page === users.last_page"
                     @click="router.get(`/admin/users?page=${users.current_page + 1}`)"
                 >
-                    Next
+                    {{ t('common.next', 'Next') }}
                 </Button>
             </div>
         </div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
+import { useLocale } from '@/composables/useLocale';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -24,6 +25,7 @@ interface Role {
 const props = defineProps<{
     roles: Role[];
 }>();
+const { t } = useLocale();
 
 const form = useForm({
     name: '',
@@ -52,14 +54,14 @@ const getRoleDisplayName = (roleName: string) => {
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Dashboard', href: dashboard().url },
-    { title: 'Users', href: '/admin/users' },
-    { title: 'Create User', href: '/admin/users/create' },
+    { title: t('nav.dashboard', 'Dashboard'), href: dashboard().url },
+    { title: t('admin.users', 'Users'), href: '/admin/users' },
+    { title: t('admin.create_user', 'Create User'), href: '/admin/users/create' },
 ];
 </script>
 
 <template>
-    <Head title="Create User" />
+    <Head :title="t('admin.create_user', 'Create User')" />
 
     <KpsShellLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6">
@@ -69,8 +71,8 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <ArrowLeft class="h-5 w-5" />
             </Button>
             <div>
-                <h2 class="text-2xl font-bold tracking-tight">Create User</h2>
-                <p class="text-muted-foreground">Add a new user to the system</p>
+                <h2 class="text-2xl font-bold tracking-tight">{{ t('admin.create_user', 'Create User') }}</h2>
+                <p class="text-muted-foreground">{{ t('admin.add_user', 'Add a new user to the system') }}</p>
             </div>
         </div>
 
@@ -78,7 +80,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         <form @submit.prevent="submit" class="max-w-2xl space-y-6">
             <!-- Name -->
             <div class="space-y-2">
-                <Label for="name">Name *</Label>
+                <Label for="name">{{ t('auth.name', 'Name') }} *</Label>
                 <Input
                     id="name"
                     v-model="form.name"
@@ -93,7 +95,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
             <!-- Email -->
             <div class="space-y-2">
-                <Label for="email">Email *</Label>
+                <Label for="email">{{ t('auth.email', 'Email') }} *</Label>
                 <Input
                     id="email"
                     v-model="form.email"
@@ -108,7 +110,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
             <!-- Password -->
             <div class="space-y-2">
-                <Label for="password">Password *</Label>
+                <Label for="password">{{ t('auth.password', 'Password') }} *</Label>
                 <Input
                     id="password"
                     v-model="form.password"
@@ -123,7 +125,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
             <!-- Password Confirmation -->
             <div class="space-y-2">
-                <Label for="password_confirmation">Confirm Password *</Label>
+                <Label for="password_confirmation">{{ t('auth.confirm_password', 'Confirm Password') }} *</Label>
                 <Input
                     id="password_confirmation"
                     v-model="form.password_confirmation"
@@ -171,20 +173,20 @@ const breadcrumbs: BreadcrumbItem[] = [
             <!-- Active Status -->
             <div class="flex items-center space-x-2">
                 <Checkbox id="active" v-model:checked="form.active" />
-                <Label for="active" class="cursor-pointer">User is active</Label>
+                <Label for="active" class="cursor-pointer">{{ t('admin.active', 'User is active') }}</Label>
             </div>
 
             <!-- Actions -->
             <div class="flex gap-4">
                 <Button type="submit" :disabled="form.processing">
-                    {{ form.processing ? 'Creating...' : 'Create User' }}
+                    {{ form.processing ? t('auth.creating', 'Creating...') : t('admin.create_user', 'Create User') }}
                 </Button>
                 <Button
                     type="button"
                     variant="outline"
                     @click="router.visit('/admin/users')"
                 >
-                    Cancel
+                    {{ t('common.cancel', 'Cancel') }}
                 </Button>
             </div>
         </form>

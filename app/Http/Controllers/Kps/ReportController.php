@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Kps;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kps\Debt;
+use App\Models\Kps\DeductionAllocation;
 use App\Models\Kps\MonthlyDeduction;
 use App\Models\Kps\Peneroka;
 use App\Models\Kps\Site;
@@ -71,6 +72,20 @@ class ReportController extends Controller
         $currentMonth = $siteExperience->currentMonth()->toDateString();
         $penerokas = $siteExperience->siteReportQuery($site, $currentMonth)
             ->get(['id', 'site_id', 'name', 'ic_number', 'phone']);
+        $debtDescriptions = $this->siteDebtDescriptions($site);
+        $allocationsByPeneroka = DeductionAllocation::query()
+            ->join('monthly_deductions', 'deduction_allocations.monthly_deduction_id', '=', 'monthly_deductions.id')
+            ->join('debts', 'deduction_allocations.debt_id', '=', 'debts.id')
+            ->where('monthly_deductions.site_id', $site->id)
+            ->whereDate('monthly_deductions.month', $currentMonth)
+            ->selectRaw('monthly_deductions.peneroka_id as peneroka_id, TRIM(debts.description) as debt_description, SUM(deduction_allocations.amount) as total_cut')
+            ->groupBy('monthly_deductions.peneroka_id')
+            ->groupByRaw('TRIM(debts.description)')
+            ->get()
+            ->groupBy('peneroka_id')
+            ->map(fn ($rows) => $rows
+                ->mapWithKeys(fn ($row) => [(string) $row->debt_description => (float) $row->total_cut])
+            );
 
         $filename = sprintf(
             '%s-site-report-%s.csv',
@@ -78,7 +93,7 @@ class ReportController extends Controller
             now()->format('Ymd-His')
         );
 
-        return response()->streamDownload(function () use ($site, $currentMonth, $penerokas) {
+        return response()->streamDownload(function () use ($site, $currentMonth, $penerokas, $debtDescriptions, $allocationsByPeneroka) {
             $handle = fopen('php://output', 'wb');
             fwrite($handle, "\xEF\xBB\xBF");
 
@@ -95,9 +110,15 @@ class ReportController extends Controller
                 'Total Outstanding',
                 'Current Month Deduction',
                 'Latest Deduction Month',
+                ...$debtDescriptions->all(),
             ]);
 
             foreach ($penerokas as $peneroka) {
+                $allocationByDescription = $allocationsByPeneroka->get($peneroka->id, collect());
+                $debtColumns = $debtDescriptions
+                    ->map(fn (string $description) => number_format((float) ($allocationByDescription->get($description, 0.0)), 2, '.', ''))
+                    ->all();
+
                 fputcsv($handle, [
                     $peneroka->name,
                     $peneroka->ic_number ?: '',
@@ -106,6 +127,7 @@ class ReportController extends Controller
                     number_format((float) ($peneroka->total_outstanding ?? 0), 2, '.', ''),
                     number_format((float) ($peneroka->current_month_deduction_total ?? 0), 2, '.', ''),
                     $peneroka->latest_deduction_month ?: '',
+                    ...$debtColumns,
                 ]);
             }
 
@@ -260,5 +282,20 @@ class ReportController extends Controller
             'deductions' => $deductions,
             'summary' => $summary,
         ];
+    }
+
+    private function siteDebtDescriptions(Site $site): \Illuminate\Support\Collection
+    {
+        return Debt::query()
+            ->join('penerokas', 'debts.peneroka_id', '=', 'penerokas.id')
+            ->where('penerokas.site_id', $site->id)
+            ->whereNotNull('debts.description')
+            ->whereRaw("TRIM(debts.description) != ''")
+            ->selectRaw('TRIM(debts.description) as description, MIN(debts.priority) as min_priority')
+            ->groupByRaw('TRIM(debts.description)')
+            ->orderBy('min_priority')
+            ->orderBy('description')
+            ->pluck('description')
+            ->values();
     }
 }

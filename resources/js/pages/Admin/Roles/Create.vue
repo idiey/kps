@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
+import { useLocale } from '@/composables/useLocale';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -20,6 +21,7 @@ interface Permission {
 const props = defineProps<{
     permissions: Permission[];
 }>();
+const { t } = useLocale();
 
 const form = useForm({
     name: '',
@@ -78,21 +80,21 @@ const groupedPermissions = computed(() => {
 });
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Dashboard', href: dashboard().url },
-    { title: 'Roles', href: '/admin/roles' },
-    { title: 'Create Role', href: '/admin/roles/create' },
+    { title: t('nav.dashboard', 'Dashboard'), href: dashboard().url },
+    { title: t('admin.roles', 'Roles'), href: '/admin/roles' },
+    { title: t('admin.create_role', 'Create Role'), href: '/admin/roles/create' },
 ];
 </script>
 
 <template>
-    <Head title="Create New Role" />
+    <Head :title="t('admin.create_role', 'Create New Role')" />
 
     <KpsShellLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6">
             <!-- Header -->
             <div class="flex items-center justify-between">
                 <div>
-                    <h2 class="text-2xl font-bold tracking-tight">Create New Role</h2>
+                    <h2 class="text-2xl font-bold tracking-tight">{{ t('admin.create_role', 'Create New Role') }}</h2>
                     <p class="text-muted-foreground">Define a new role with specific permissions</p>
                 </div>
                 <Button variant="outline" @click="router.visit('/admin/roles')">
@@ -200,11 +202,11 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <!-- Actions -->
                 <div class="flex justify-end gap-3">
                     <Button type="button" variant="outline" @click="router.visit('/admin/roles')">
-                        Cancel
+                        {{ t('common.cancel', 'Cancel') }}
                     </Button>
                     <Button type="submit" :disabled="form.processing">
                         <Plus class="mr-2 h-4 w-4" />
-                        {{ form.processing ? 'Creating...' : 'Create Role' }}
+                        {{ form.processing ? t('auth.creating', 'Creating...') : t('admin.create_role', 'Create Role') }}
                     </Button>
                 </div>
             </form>

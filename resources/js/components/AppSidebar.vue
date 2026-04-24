@@ -13,6 +13,7 @@ import {
     type SidebarProps,
 } from '@/components/ui/sidebar';
 import { usePermission } from '@/composables/usePermission';
+import { useLocale } from '@/composables/useLocale';
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
@@ -29,38 +30,39 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { hasPermission } = usePermission();
+const { t } = useLocale();
 
-const allNavItems: NavItem[] = [
+const allNavItems = computed<NavItem[]>(() => [
     {
-        title: 'Dashboard',
+        title: t('nav.dashboard', 'Dashboard'),
         href: '/kps/dashboard',
         icon: LayoutGrid,
         permission: 'kps.view',
     },
     {
-        title: 'Sites',
+        title: t('nav.sites', 'Sites'),
         href: '/kps/sites',
         icon: Warehouse,
         permission: 'kps.manage_sites',
     },
     {
-        title: 'User Management',
+        title: t('nav.user_management', 'User Management'),
         href: '/admin/users',
         icon: Users,
         permission: 'view-users',
     },
     {
-        title: 'Role Management',
+        title: t('nav.role_management', 'Role Management'),
         href: '/admin/roles',
         icon: Shield,
         permission: 'view-roles',
     },
     {
-        title: 'Profile Settings',
+        title: t('nav.profile_settings', 'Profile Settings'),
         href: '/settings/profile',
         icon: Settings,
     },
-];
+]);
 
 const filterByPermission = (items: NavItem[]): NavItem[] => {
     return items
@@ -81,7 +83,7 @@ const filterByPermission = (items: NavItem[]): NavItem[] => {
         });
 };
 
-const navItems = computed(() => filterByPermission(allNavItems));
+const navItems = computed(() => filterByPermission(allNavItems.value));
 </script>
 
 <template>
@@ -99,7 +101,7 @@ const navItems = computed(() => filterByPermission(allNavItems));
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain :items="navItems" label="Navigation" />
+            <NavMain :items="navItems" :label="t('nav.navigation', 'Navigation')" />
         </SidebarContent>
 
         <SidebarFooter>

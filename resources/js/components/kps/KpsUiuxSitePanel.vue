@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import UserMenuContent from '@/components/UserMenuContent.vue';
+import { useLocale } from '@/composables/useLocale';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -44,6 +45,7 @@ const props = withDefaults(
 );
 
 const page = usePage<AppPageProps>();
+const { t } = useLocale();
 const { hasPermission } = usePermission();
 const siteBaseUrl = computed(() =>
     props.site ? `/kps/sites/${props.site.id}` : '/kps/sites',
@@ -58,7 +60,7 @@ const navItems = computed<NavItem[]>(() => {
 
     return [
         {
-            title: 'Site Dashboard',
+            title: t('site.dashboard', 'Site Dashboard'),
             href: baseUrl,
             icon: LayoutGrid,
             active: isExactUrlActive(baseUrl),
@@ -85,28 +87,28 @@ const navItems = computed<NavItem[]>(() => {
             permission: 'kps.manage_potongan',
         },
         {
-            title: 'Allocation Review',
+            title: 'Agihan Semakan',
             href: `${baseUrl}/allocations`,
             icon: BarChart3,
             active: page.url.startsWith(`${baseUrl}/allocations`),
             permission: 'kps.manage_potongan',
         },
         {
-            title: 'Reports',
+            title: t('site.reports', 'Reports'),
             href: `${baseUrl}/reports`,
             icon: FileText,
             active: page.url.startsWith(`${baseUrl}/reports`),
             permission: 'kps.view_reports',
         },
         {
-            title: 'Audit Trail',
+            title: t('site.audit_trail', 'Audit Trail'),
             href: `${baseUrl}/audit-logs`,
             icon: History,
             active: page.url.startsWith(`${baseUrl}/audit-logs`),
             permission: 'kps.approve_month',
         },
         {
-            title: 'Site Settings',
+            title: t('site.settings', 'Site Settings'),
             href: `${baseUrl}/edit`,
             icon: Settings,
             active: page.url.startsWith(`${baseUrl}/edit`),
@@ -120,7 +122,7 @@ const siteRoleLabel = computed(() =>
 );
 
 const siteStatusLabel = computed(() =>
-    props.site?.is_active ? 'Active site' : 'Paused site',
+    props.site?.is_active ? t('site.active', 'Active site') : t('site.paused', 'Paused site'),
 );
 
 const currentUser = computed(() => page.props.auth?.user);
@@ -148,7 +150,7 @@ const currentUserInitials = computed(() => {
                     :href="siteBaseUrl"
                     class="min-w-0"
                 >
-                    <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#b7654b]">Site workspace</p>
+                    <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#b7654b]">{{ t('site.workspace', 'Site workspace') }}</p>
                     <h2 class="mt-1 truncate text-lg font-black text-[#1b1b1b]">
                         {{ props.site.name }}
                     </h2>
@@ -218,7 +220,7 @@ const currentUserInitials = computed(() => {
         <div class="rounded-[28px] border border-[#f0dbd4] bg-white/88 p-5 shadow-[0_18px_50px_rgba(157,80,53,0.08)]">
             <div class="flex items-start justify-between gap-4">
                 <div class="min-w-0">
-                    <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#b7654b]">Site workspace</p>
+                    <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#b7654b]">{{ t('site.workspace', 'Site workspace') }}</p>
                     <Link
                         :href="siteBaseUrl"
                         class="mt-2 block"
@@ -241,7 +243,7 @@ const currentUserInitials = computed(() => {
         </div>
 
         <div class="mt-7 flex min-h-0 flex-1 flex-col">
-            <p class="mb-3 text-[11px] font-bold uppercase tracking-[0.28em] text-[#ad7d70]">Workspace</p>
+            <p class="mb-3 text-[11px] font-bold uppercase tracking-[0.28em] text-[#ad7d70]">{{ t('site.workspace_short', 'Workspace') }}</p>
             <div class="scrollbar-hide min-h-0 space-y-2 overflow-y-auto pr-1">
                 <Link
                     v-for="item in navItems"
@@ -268,7 +270,7 @@ const currentUserInitials = computed(() => {
                                 class="block text-[11px] uppercase tracking-[0.24em]"
                                 :class="item.active ? 'text-white/55' : 'text-[#91756e]'"
                             >
-                                Live route
+                                <!-- Live route -->
                             </span>
                         </span>
                     </span>
@@ -276,7 +278,7 @@ const currentUserInitials = computed(() => {
             </div>
         </div>
 
-        <DropdownMenu v-if="currentUser">
+        <!-- <DropdownMenu v-if="currentUser">
             <DropdownMenuTrigger as-child>
                 <button
                     type="button"
@@ -297,6 +299,6 @@ const currentUserInitials = computed(() => {
             >
                 <UserMenuContent :user="currentUser" settings-href="/kps/profile" />
             </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> -->
     </aside>
 </template>

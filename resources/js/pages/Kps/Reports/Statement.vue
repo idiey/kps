@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
+import { useLocale } from '@/composables/useLocale';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,6 +20,7 @@ defineProps<{
         unallocated_total: number;
     };
 }>();
+const { t } = useLocale();
 
 const formatNumber = (value?: number | null) =>
     new Intl.NumberFormat('en-MY', {
@@ -61,7 +63,7 @@ const formatMonth = (value?: string | null) => {
 </script>
 
 <template>
-    <Head :title="`Statement - ${peneroka.name}`" />
+    <Head :title="`${t('kps.statement', 'Statement')} - ${peneroka.name}`" />
 
     <KpsShellLayout :site="site" :site-role="siteRole">
         <div class="space-y-6 px-4 pb-8 lg:px-8">

@@ -13,19 +13,16 @@ class SiteBulkTemplateExport implements FromCollection, WithHeadings, ShouldAuto
 {
     public function __construct(
         private readonly Site $site,
-        private readonly string $monthDate
+        private readonly string $language = 'ms'
     ) {}
 
     public function headings(): array
     {
-        return [
-            'peneroka_name',
-            'ic_number',
-            'phone',
-            'address',
-            'total_hutang',
-            'current_month_dividend',
-        ];
+        if ($this->language === 'en') {
+            return ['No.', 'Peneroka Name', 'IC Number', 'Salary'];
+        }
+
+        return ['Bil', 'NAMA PENEROKA', 'No. IC', 'Gaji'];
     }
 
     public function collection(): Collection
@@ -34,27 +31,15 @@ class SiteBulkTemplateExport implements FromCollection, WithHeadings, ShouldAuto
 
         $penerokas = Peneroka::query()
             ->where('site_id', $this->site->id)
-            ->with([
-                'debts' => fn ($query) => $query
-                    ->orderBy('priority')
-                    ->orderBy('description'),
-                'monthlyDeductions' => fn ($query) => $query
-                    ->whereDate('month', $this->monthDate),
-            ])
             ->orderBy('name')
             ->get();
 
-        foreach ($penerokas as $peneroka) {
-            $totalHutang = round((float) $peneroka->debts->sum('balance'), 2);
-            $currentMonthDividend = round((float) $peneroka->monthlyDeductions->sum('amount'), 2);
-
+        foreach ($penerokas->values() as $index => $peneroka) {
             $rows->push([
+                $index + 1,
                 $peneroka->name,
                 $peneroka->ic_number,
-                $peneroka->phone,
-                $peneroka->address,
-                $totalHutang,
-                $currentMonthDividend,
+                '',
             ]);
         }
 

@@ -1,37 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(markdownlint:*)",
-      "Bash(php artisan:*)",
-      "Bash(command -v:*)",
-      "Bash(where:*)",
-      "Bash(/c/Users/zuraidiismail/.config/herd/bin/php.bat artisan:*)",
-      "Bash(/c/Users/zuraidiismail/.config/herd/bin/php.bat:*)",
-      "Bash(composer require:*)",
-      "Bash(cat:*)",
-      "Bash(/c/Users/zuraidiismail/.config/herd/bin/composer.bat require spatie/laravel-permission)",
-      "Bash(herd php:*)",
-      "Bash(npm run build:*)",
-      "Bash(find:*)",
-      "Bash(grep:*)",
-      "Bash(while read dir)",
-      "Bash(do:*)",
-      "Bash(done)",
-      "Bash(for component in alert badge button card checkbox dialog input label select table textarea)",
-      "Bash(if [ -d \"resources/js/components/ui/$component\" ])",
-      "Bash(then)",
-      "Bash(echo:*)",
-      "Bash(else)",
-      "Bash(fi)",
-      "Bash(npx shadcn-vue@latest add:*)",
-      "Bash(npm install:*)",
-      "Bash(./artisan make:migration:*)",
-      "Bash(ls:*)",
-      "Bash(php artisan config:clear:*)",
-      "Bash(php artisan view:clear:*)",
-      "Bash(php artisan db:seed:*)",
-      "WebFetch(domain:ui.nuxt.com)",
-      "Bash(node:*)"
+      "Bash",
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Agent"
     ]
   }
 }

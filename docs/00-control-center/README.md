@@ -3,7 +3,7 @@
 > Central memory hub for the KPS project.
 
 **Purpose**: Provide quick access to all Control Center documents  
-**Last Updated**: 2026-04-04
+**Last Updated**: 2026-04-07
 
 ## Overview
 
@@ -47,7 +47,7 @@ The Control Center is a memory hub that maintains essential project context, dec
 
 ## Workflows
 
-Use these workflows to interact with Control Center:
+Use these slash workflows to interact with Control Center from Claude or Codex:
 
 - `/cc` or `/control-center` - General Control Center access
 - `/cc-summary` - Generate quick summary
@@ -56,6 +56,18 @@ Use these workflows to interact with Control Center:
 - `/cc-validate` - Check freshness
 - `/cc-intake` - Log a new request
 - `/cc-route` - Route information to appropriate file
+
+## Command Source of Truth and Sync
+
+- Source of truth (authoring): `.agent/workflows/*.md`
+- Codex command mirror: `.codex/commands/*.md`
+
+When workflows are added or changed, sync them to Codex:
+
+```powershell
+New-Item -ItemType Directory -Force .codex\commands | Out-Null
+Copy-Item .agent\workflows\*.md .codex\commands\ -Force
+```
 
 ## Maintenance
 
@@ -74,4 +86,4 @@ The Control Center should be updated:
 
 ---
 
-**Last Updated**: 2026-04-04
+**Last Updated**: 2026-04-07

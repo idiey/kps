@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+import { useLocale } from '@/composables/useLocale';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -132,10 +133,12 @@ const paginationMeta = computed(() => {
         total: Number(meta.total ?? source.data.length),
     };
 });
+
+const { t } = useLocale();
 </script>
 
 <template>
-    <Head :title="`Potongan - ${site.name}`" />
+    <Head :title="`${t('kps.potongan', 'Potongan')} - ${site.name}`" />
 
     <KpsShellLayout :site="site" :site-role="siteRole">
         <div class="space-y-6 px-4 pb-8 lg:px-8">

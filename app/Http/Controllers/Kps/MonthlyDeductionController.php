@@ -225,11 +225,13 @@ class MonthlyDeductionController extends Controller
 
         $validated = $request->validate([
             'month' => ['nullable', 'date_format:Y-m'],
+            'lang' => ['nullable', 'in:ms,en'],
         ]);
 
         $month = isset($validated['month'])
             ? Carbon::createFromFormat('Y-m', $validated['month'])->startOfMonth()
             : Carbon::now()->startOfMonth();
+        $language = $validated['lang'] ?? 'ms';
 
         $filename = sprintf(
             '%s-site-bulk-template-%s.xlsx',
@@ -238,7 +240,7 @@ class MonthlyDeductionController extends Controller
         );
 
         return Excel::download(
-            new SiteBulkTemplateExport($site, $month->toDateString()),
+            new SiteBulkTemplateExport($site, $language),
             $filename
         );
     }
@@ -265,33 +267,21 @@ class MonthlyDeductionController extends Controller
             return back()->withErrors(['file' => 'Uploaded Excel is empty.']);
         }
 
-        $requiredColumns = collect([
-            'peneroka_name',
-            'ic_number',
-            'phone',
-            'address',
-            'total_hutang',
-            'current_month_dividend',
-        ]);
-
         $firstRow = $import->rows->first();
         $presentColumns = $firstRow instanceof Collection
             ? collect($firstRow->keys())
             : collect(array_keys((array) $firstRow));
-
-        $missingColumns = $requiredColumns->diff($presentColumns);
-
-        if ($missingColumns->isNotEmpty()) {
-            return back()->withErrors([
-                'file' => 'Template columns are missing: '.$missingColumns->implode(', '),
-            ]);
+        $columnMap = $this->resolveBulkImportColumnMap($presentColumns);
+        if ($columnMap === null) {
+            return back()->withErrors(['file' => 'Template columns are missing or unsupported language.']);
         }
 
         $result = $this->processBulkUploadRows(
             $site,
             $import->rows,
             $month->toDateString(),
-            $allocationService
+            $allocationService,
+            $columnMap
         );
 
         return redirect()->route('kps.potongan.index', $site->id)
@@ -310,7 +300,8 @@ class MonthlyDeductionController extends Controller
         Site $site,
         Collection $rows,
         string $monthDate,
-        AllocationService $allocationService
+        AllocationService $allocationService,
+        array $columnMap
     ): array {
         $processedRows = 0;
         $updatedPeneroka = 0;
@@ -323,10 +314,8 @@ class MonthlyDeductionController extends Controller
                 continue;
             }
 
-            $name = $this->normalizeString($rowData->get('peneroka_name'));
-            $icNumber = $this->normalizeString($rowData->get('ic_number'));
-            $phone = $this->normalizeString($rowData->get('phone'));
-            $address = $this->normalizeString($rowData->get('address'));
+            $name = $this->normalizeString($rowData->get($columnMap['name']));
+            $icNumber = $this->normalizeString($rowData->get($columnMap['ic']));
 
             if ($name === null && $icNumber === null) {
                 continue;
@@ -351,18 +340,12 @@ class MonthlyDeductionController extends Controller
             if ($icNumber !== null) {
                 $peneroka->ic_number = $icNumber;
             }
-            if ($phone !== null) {
-                $peneroka->phone = $phone;
-            }
-            if ($address !== null) {
-                $peneroka->address = $address;
-            }
             $peneroka->save();
 
             $updatedPeneroka++;
             $processedRows++;
 
-            $currentMonthDividend = $this->normalizeAmount($rowData->get('current_month_dividend'));
+            $currentMonthDividend = $this->normalizeAmount($rowData->get($columnMap['salary']));
             if ($currentMonthDividend !== null) {
                 $deductionsByPeneroka[$peneroka->id] = $currentMonthDividend;
             }
@@ -409,22 +392,44 @@ class MonthlyDeductionController extends Controller
 
     private function isBulkRowEmpty(Collection $row): bool
     {
-        $keys = [
-            'peneroka_name',
-            'ic_number',
-            'phone',
-            'address',
-            'current_month_dividend',
-        ];
-
-        foreach ($keys as $key) {
-            $value = $row->get($key);
+        foreach ($row as $value) {
             if ($value !== null && trim((string) $value) !== '') {
                 return false;
             }
         }
 
         return true;
+    }
+
+    private function resolveBulkImportColumnMap(Collection $presentColumns): ?array
+    {
+        $columns = $presentColumns->values()->all();
+
+        $find = function (array $candidates) use ($columns): ?string {
+            foreach ($candidates as $candidate) {
+                if (in_array($candidate, $columns, true)) {
+                    return $candidate;
+                }
+            }
+
+            return null;
+        };
+
+        $no = $find(['bil', 'no']);
+        $name = $find(['nama_peneroka', 'peneroka_name']);
+        $ic = $find(['no_ic', 'ic_number']);
+        $salary = $find(['gaji', 'salary', 'current_month_dividend']);
+
+        if ($no === null || $name === null || $ic === null || $salary === null) {
+            return null;
+        }
+
+        return [
+            'no' => $no,
+            'name' => $name,
+            'ic' => $ic,
+            'salary' => $salary,
+        ];
     }
 
     private function normalizeString(mixed $value): ?string

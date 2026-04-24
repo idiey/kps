@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import UserMenuContent from '@/components/UserMenuContent.vue';
+import { useLocale } from '@/composables/useLocale';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -27,6 +28,7 @@ interface NavItem {
 }
 
 const page = usePage<AppPageProps>();
+const { t } = useLocale();
 const props = withDefaults(
     defineProps<{
         withSitePanel?: boolean;
@@ -45,34 +47,34 @@ const isExactUrlActive = (href: string) =>
 const navItems = computed<NavItem[]>(() =>
     [
         {
-            title: 'Dashboard',
+            title: t('nav.dashboard', 'Dashboard'),
             href: '/kps/dashboard',
             icon: LayoutGrid,
             active: isExactUrlActive('/kps/dashboard'),
         },
         {
-            title: 'Analytics',
+            title: t('nav.analytics', 'Analytics'),
             href: '/kps/analytics',
             icon: BarChart3,
             active: isExactUrlActive('/kps/analytics'),
             show: can('kps.manage_sites'),
         },
         {
-            title: 'Sites',
+            title: t('nav.sites', 'Sites'),
             href: '/kps/sites',
             icon: Warehouse,
             active: isExactUrlActive('/kps/sites'),
             show: can('kps.manage_sites'),
         },
         {
-            title: 'Users',
+            title: t('nav.users', 'Users'),
             href: '/admin/users',
             icon: Users,
             active: page.url.startsWith('/admin/users'),
             show: can('view-users'),
         },
         {
-            title: 'Roles',
+            title: t('nav.roles', 'Roles'),
             href: '/admin/roles',
             icon: Shield,
             active: page.url.startsWith('/admin/roles'),
@@ -109,7 +111,7 @@ const currentUser = computed(() => page.props.auth?.user);
                         K
                     </Link>
                     <div>
-                        <p class="text-sm font-semibold text-[#1b1b1b]">KPS Live</p>
+                        <p class="text-sm font-semibold text-[#1b1b1b]">{{ t('kps.live', 'KPS Live') }}</p>
                         <p class="text-[11px] uppercase tracking-[0.28em] text-[#b7654b]">HQ rail</p>
                     </div>
                 </div>
@@ -220,8 +222,8 @@ const currentUser = computed(() => page.props.auth?.user);
                 K
             </span>
             <span class="min-w-0">
-                <span class="block text-sm font-semibold text-white">KPS Live</span>
-                <span class="block text-[11px] uppercase tracking-[0.24em] text-white/45">HQ shell</span>
+                <span class="block text-sm font-semibold text-white">{{ t('kps.live', 'KPS Live') }}</span>
+                <span class="block text-[11px] uppercase tracking-[0.24em] text-white/45">{{ t('kps.hq_shell', 'HQ shell') }}</span>
             </span>
         </Link>
 
@@ -260,7 +262,7 @@ const currentUser = computed(() => page.props.auth?.user);
                     </div>
                     <div class="min-w-0 flex-1">
                         <p class="truncate text-sm font-semibold text-white">{{ currentUserName }}</p>
-                        <p class="text-[11px] uppercase tracking-[0.24em] text-white/45">HQ shell</p>
+                        <p class="text-[11px] uppercase tracking-[0.24em] text-white/45">{{ t('kps.hq_shell', 'HQ shell') }}</p>
                     </div>
                     <ChevronsUpDown class="h-4 w-4 text-white/70" />
                 </button>

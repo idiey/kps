@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, router, Link } from '@inertiajs/vue3';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
+import { useLocale } from '@/composables/useLocale';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Badge } from '@/components/ui/badge';
@@ -41,6 +42,7 @@ interface Role {
 const props = defineProps<{
     role: Role;
 }>();
+const { t } = useLocale();
 
 const getRoleDisplayName = (roleName: string) => {
     const roleMap: Record<string, string> = {
@@ -53,8 +55,8 @@ const getRoleDisplayName = (roleName: string) => {
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Dashboard', href: dashboard().url },
-    { title: 'Roles', href: '/admin/roles' },
+    { title: t('nav.dashboard', 'Dashboard'), href: dashboard().url },
+    { title: t('admin.roles', 'Roles'), href: '/admin/roles' },
     { title: getRoleDisplayName(props.role.name), href: `/admin/roles/${props.role.id}` },
 ];
 </script>
@@ -87,12 +89,12 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <div class="flex gap-2">
                     <Button variant="outline" @click="router.visit('/admin/roles')">
                         <ArrowLeft class="mr-2 h-4 w-4" />
-                        Back to Roles
+                        {{ t('admin.roles', 'Back to Roles') }}
                     </Button>
                     <Button v-if="!role.is_system_role" as-child>
                         <Link :href="`/admin/roles/${role.id}/edit`">
                             <Edit class="mr-2 h-4 w-4" />
-                            Edit Role
+                            {{ t('admin.edit_role', 'Edit Role') }}
                         </Link>
                     </Button>
                 </div>

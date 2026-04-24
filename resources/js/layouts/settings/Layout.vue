@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Heading from '@/components/Heading.vue';
+import { useLocale } from '@/composables/useLocale';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { toUrl, urlIsActive } from '@/lib/utils';
@@ -10,21 +11,23 @@ import { edit as editPassword } from '@/routes/user-password';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 
+const { t } = useLocale();
+
 const sidebarNavItems: NavItem[] = [
     {
-        title: 'Profile',
+        title: t('settings.profile', 'Profile'),
         href: editProfile(),
     },
     {
-        title: 'Password',
+        title: t('settings.password', 'Password'),
         href: editPassword(),
     },
     {
-        title: 'Two-Factor Auth',
+        title: t('settings.two_factor', 'Two-Factor Auth'),
         href: show(),
     },
     {
-        title: 'Appearance',
+        title: t('settings.appearance', 'Appearance'),
         href: editAppearance(),
     },
 ];
@@ -35,8 +38,8 @@ const currentPath = typeof window !== undefined ? window.location.pathname : '';
 <template>
     <div class="px-4 py-6">
         <Heading
-            title="Settings"
-            description="Manage your profile and account settings"
+            :title="t('settings.title', 'Settings')"
+            :description="t('settings.description', 'Manage your profile and account settings')"
         />
 
         <div class="flex flex-col lg:flex-row lg:space-x-12">

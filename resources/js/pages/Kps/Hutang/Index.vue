@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import { useLocale } from '@/composables/useLocale';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -127,10 +128,12 @@ const paginationMeta = computed(() => {
         total: Number(meta.total ?? source.data.length),
     };
 });
+
+const { t } = useLocale();
 </script>
 
 <template>
-    <Head :title="`Hutang - ${site.name}`" />
+    <Head :title="`${t('kps.hutang', 'Hutang')} - ${site.name}`" />
 
     <KpsShellLayout :site="site" :site-role="siteRole">
         <div class="space-y-6 px-4 pb-8 lg:px-8">
@@ -195,7 +198,7 @@ const paginationMeta = computed(() => {
                     <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                         <div>
                             <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#b47b67]">Debt Register</p>
-                            <h2 class="mt-2 text-2xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">Allocation priority list</h2>
+                            <h2 class="mt-2 text-2xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">Senarai keutamaan agihan</h2>
                         </div>
                         <span class="rounded-full bg-[#f7f1ee] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8d7167]">
                             {{ site.code }}

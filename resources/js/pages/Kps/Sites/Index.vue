@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
+import { useLocale } from '@/composables/useLocale';
 import { Button } from '@/components/ui/button';
 import {
     Table,
@@ -23,20 +24,21 @@ interface Props {
 }
 
 defineProps<Props>();
+const { t } = useLocale();
 </script>
 
 <template>
-    <Head title="KPS Sites" />
+    <Head :title="t('kps.sites.title', 'KPS Sites')" />
 
     <KpsShellLayout>
         <div class="space-y-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-2xl font-semibold">Sites</h1>
-                    <p class="text-muted-foreground">Manage KPS sites</p>
+                    <h1 class="text-2xl font-semibold">{{ t('nav.sites', 'Sites') }}</h1>
+                    <p class="text-muted-foreground">{{ t('kps.sites.manage', 'Manage KPS sites') }}</p>
                 </div>
                 <Button as-child>
-                    <Link href="/kps/sites/create">Add Site</Link>
+                    <Link href="/kps/sites/create">{{ t('kps.sites.add', 'Add Site') }}</Link>
                 </Button>
             </div>
 
@@ -44,29 +46,29 @@ defineProps<Props>();
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Name</TableHead>
-                            <TableHead>Code</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead class="text-right">Actions</TableHead>
+                            <TableHead>{{ t('auth.name', 'Name') }}</TableHead>
+                            <TableHead>{{ t('kps.code', 'Code') }}</TableHead>
+                            <TableHead>{{ t('kps.status', 'Status') }}</TableHead>
+                            <TableHead class="text-right">{{ t('admin.actions', 'Actions') }}</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         <TableRow v-if="sites.data.length === 0">
                             <TableCell colspan="4" class="text-center text-muted-foreground">
-                                No sites found.
+                                {{ t('kps.sites.none', 'No sites found.') }}
                             </TableCell>
                         </TableRow>
                         <TableRow v-for="site in sites.data" :key="site.id">
                             <TableCell class="font-medium">{{ site.name }}</TableCell>
                             <TableCell>{{ site.code }}</TableCell>
-                            <TableCell>{{ site.is_active ? 'Active' : 'Inactive' }}</TableCell>
+                            <TableCell>{{ site.is_active ? t('admin.active', 'Active') : t('admin.inactive', 'Inactive') }}</TableCell>
                             <TableCell class="text-right">
                                 <div class="flex justify-end gap-2">
                                     <Button variant="outline" size="sm" as-child>
-                                        <Link :href="`/kps/sites/${site.id}`">View</Link>
+                                        <Link :href="`/kps/sites/${site.id}`">{{ t('common.view', 'View') }}</Link>
                                     </Button>
                                     <Button variant="ghost" size="sm" as-child>
-                                        <Link :href="`/kps/sites/${site.id}/edit`">Edit</Link>
+                                        <Link :href="`/kps/sites/${site.id}/edit`">{{ t('common.edit', 'Edit') }}</Link>
                                     </Button>
                                 </div>
                             </TableCell>

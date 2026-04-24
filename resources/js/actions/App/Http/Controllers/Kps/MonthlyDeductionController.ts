@@ -567,7 +567,7 @@ downloadBulkTemplate.head = (args: { site: string | { id: string } } | [site: st
     downloadBulkTemplate.form = downloadBulkTemplateForm
 /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::uploadBulkExcel
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:246
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:248
  * @route '/kps/sites/{site}/potongan/bulk/upload'
  */
 export const uploadBulkExcel = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -582,7 +582,7 @@ uploadBulkExcel.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::uploadBulkExcel
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:246
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:248
  * @route '/kps/sites/{site}/potongan/bulk/upload'
  */
 uploadBulkExcel.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -615,7 +615,7 @@ uploadBulkExcel.url = (args: { site: string | { id: string } } | [site: string |
 
 /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::uploadBulkExcel
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:246
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:248
  * @route '/kps/sites/{site}/potongan/bulk/upload'
  */
 uploadBulkExcel.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -625,7 +625,7 @@ uploadBulkExcel.post = (args: { site: string | { id: string } } | [site: string 
 
     /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::uploadBulkExcel
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:246
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:248
  * @route '/kps/sites/{site}/potongan/bulk/upload'
  */
     const uploadBulkExcelForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -635,7 +635,7 @@ uploadBulkExcel.post = (args: { site: string | { id: string } } | [site: string 
 
             /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::uploadBulkExcel
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:246
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:248
  * @route '/kps/sites/{site}/potongan/bulk/upload'
  */
         uploadBulkExcelForm.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

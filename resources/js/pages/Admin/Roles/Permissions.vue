@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
+import { useLocale } from '@/composables/useLocale';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -38,6 +39,7 @@ const props = defineProps<{
     permissions: Permission[];
     matrix: Record<number, MatrixItem>;
 }>();
+const { t } = useLocale();
 
 // Initialize matrix state from props
 const matrixState = ref<Record<number, Record<number, boolean>>>({});
@@ -118,8 +120,8 @@ const submit = () => {
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Dashboard', href: dashboard().url },
-    { title: 'Roles', href: '/admin/roles' },
+    { title: t('nav.dashboard', 'Dashboard'), href: dashboard().url },
+    { title: t('admin.roles', 'Roles'), href: '/admin/roles' },
     { title: 'Permission Matrix', href: '/admin/roles-permissions' },
 ];
 </script>
@@ -139,7 +141,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </div>
                 <Button variant="outline" @click="router.visit('/admin/roles')">
                     <ArrowLeft class="mr-2 h-4 w-4" />
-                    Back to Roles
+                    {{ t('admin.roles', 'Back to Roles') }}
                 </Button>
             </div>
 
@@ -208,11 +210,11 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <!-- Actions -->
                 <div class="flex justify-end gap-3 mt-6">
                     <Button type="button" variant="outline" @click="router.visit('/admin/roles')">
-                        Cancel
+                        {{ t('common.cancel', 'Cancel') }}
                     </Button>
                     <Button type="submit" :disabled="form.processing">
                         <Save class="mr-2 h-4 w-4" />
-                        {{ form.processing ? 'Saving...' : 'Save Changes' }}
+                        {{ form.processing ? t('auth.updating', 'Saving...') : t('common.save', 'Save Changes') }}
                     </Button>
                 </div>
             </form>

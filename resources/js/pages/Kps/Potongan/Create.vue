@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { useLocale } from '@/composables/useLocale';
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,10 +26,11 @@ const submit = () => {
 };
 
 const errorFor = (field: keyof typeof form.errors) => form.errors[field];
+const { t } = useLocale();
 </script>
 
 <template>
-    <Head title="Create Potongan" />
+    <Head :title="t('kps.potongan.create', 'Create Potongan')" />
 
     <KpsShellLayout :site="site" :site-role="siteRole">
         <div class="space-y-6 px-4 pb-8 lg:px-8">
@@ -38,7 +40,7 @@ const errorFor = (field: keyof typeof form.errors) => form.errors[field];
                         Deduction Entry
                     </p>
                     <h1 class="mt-3 text-4xl font-black tracking-[-0.04em] text-[#1b1b1b] md:text-5xl" style="font-family: Manrope, Inter, sans-serif;">
-                        Create Potongan
+                        {{ t('kps.potongan.create', 'Create Potongan') }}
                     </h1>
                     <p class="mt-4 max-w-2xl text-base leading-7 text-[#65534d] md:text-lg">
                         Add a monthly deduction for {{ site.name }}. The deduction will immediately enter the allocation workflow after saving.
@@ -50,13 +52,13 @@ const errorFor = (field: keyof typeof form.errors) => form.errors[field];
                         :href="`/kps/sites/${site.id}/potongan/bulk`"
                         class="inline-flex items-center rounded-full border border-[#e1cbc2] bg-white px-6 py-3 text-sm font-semibold text-[#6d5952] shadow-[0_10px_30px_rgba(157,80,53,0.06)] transition hover:border-[#c77d62] hover:text-[#1b1b1b]"
                     >
-                        Bulk Entry
+                        {{ t('kps.potongan.bulk_entry', 'Bulk Entry') }}
                     </Link>
                     <Link
                         :href="`/kps/sites/${site.id}/potongan`"
                         class="inline-flex items-center rounded-full bg-gradient-to-br from-[#d6522d] to-[#bc3f1d] px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(214,82,45,0.28)] transition hover:translate-y-[-1px]"
                     >
-                        Back to Ledger
+                        {{ t('kps.potongan.back_ledger', 'Back to Ledger') }}
                     </Link>
                 </div>
             </section>
@@ -112,10 +114,10 @@ const errorFor = (field: keyof typeof form.errors) => form.errors[field];
                                 :disabled="form.processing"
                                 class="rounded-full bg-[#171717] px-6 text-white hover:bg-[#0f0f0f]"
                             >
-                                Save Potongan
+                                    {{ t('kps.potongan.save', 'Save Potongan') }}
                             </Button>
                             <Button variant="outline" as-child class="rounded-full border-[#e2c9c0]">
-                                <Link :href="`/kps/sites/${site.id}/potongan`">Cancel</Link>
+                                <Link :href="`/kps/sites/${site.id}/potongan`">{{ t('common.cancel', 'Cancel') }}</Link>
                             </Button>
                         </div>
                     </div>
@@ -126,8 +128,8 @@ const errorFor = (field: keyof typeof form.errors) => form.errors[field];
                     <h2 class="mt-2 text-2xl font-black text-[#1b1b1b]" style="font-family: Manrope, Inter, sans-serif;">What happens next</h2>
                     <div class="mt-6 space-y-4 text-sm leading-7 text-[#65534d]">
                         <p>1. The deduction is saved for the selected site and month.</p>
-                        <p>2. Allocation service distributes the amount by debt priority.</p>
-                        <p>3. Any unallocated amount stays visible in the live allocation review.</p>
+                        <p>2. Servis agihan mengagihkan jumlah mengikut keutamaan hutang.</p>
+                        <p>3. Sebarang jumlah tidak diagih kekal kelihatan dalam agihan semakan semasa.</p>
                     </div>
                 </aside>
             </section>

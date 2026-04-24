@@ -42,6 +42,8 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
+            'locale' => app()->getLocale(),
+            'locales' => ['ms', 'en'],
             'auth' => [
                 'user' => $request->user()?->load('roles'),
                 'permissions' => $request->user()?->getAllPermissions()->pluck('name')->toArray() ?? [],

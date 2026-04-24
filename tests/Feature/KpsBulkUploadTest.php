@@ -33,12 +33,10 @@ function createBulkWorkbook(array $rows): string
     $sheet = $spreadsheet->getActiveSheet();
 
     $headers = [
-        'peneroka_name',
-        'ic_number',
-        'phone',
-        'address',
-        'total_hutang',
-        'current_month_dividend',
+        'Bil',
+        'NAMA PENEROKA',
+        'No. IC',
+        'Gaji',
     ];
 
     $sheet->fromArray($headers, null, 'A1');
@@ -94,12 +92,15 @@ test('admin can download excel template with current site data', function () {
     $spreadsheet = IOFactory::load($downloadPath);
     $sheet = $spreadsheet->getActiveSheet();
 
-    expect($sheet->getCell('A1')->getValue())->toBe('peneroka_name');
-    expect($sheet->getCell('F1')->getValue())->toBe('current_month_dividend');
+    expect($sheet->getCell('A1')->getValue())->toBe('Bil');
+    expect($sheet->getCell('B1')->getValue())->toBe('NAMA PENEROKA');
+    expect($sheet->getCell('C1')->getValue())->toBe('No. IC');
+    expect($sheet->getCell('D1')->getValue())->toBe('Gaji');
 
-    expect($sheet->getCell('A2')->getValue())->toBe('Ali Bakar');
-    expect((float) $sheet->getCell('E2')->getCalculatedValue())->toBe(200.0);
-    expect((float) $sheet->getCell('F2')->getCalculatedValue())->toBe(150.0);
+    expect((float) $sheet->getCell('A2')->getCalculatedValue())->toBe(1.0);
+    expect($sheet->getCell('B2')->getValue())->toBe('Ali Bakar');
+    expect((string) $sheet->getCell('C2')->getValue())->toBe('900101101111');
+    expect((string) $sheet->getCell('D2')->getValue())->toBe('');
 });
 
 test('admin can upload excel and bulk upsert site data', function () {
@@ -111,8 +112,8 @@ test('admin can upload excel and bulk upsert site data', function () {
     ]);
 
     $xlsxPath = createBulkWorkbook([
-        ['Siti Baru', '880202102222', '0199999999', 'Alamat Baru', 320, 90],
-        ['Ahmad', '850303103333', '0188888888', 'Jalan Sawit', 75, 40],
+        [1, 'Siti Baru', '880202102222', 90],
+        [2, 'Ahmad', '850303103333', 40],
     ]);
 
     $uploaded = new UploadedFile(
@@ -133,8 +134,6 @@ test('admin can upload excel and bulk upsert site data', function () {
     $existing->refresh();
 
     expect($existing->name)->toBe('Siti Baru');
-    expect($existing->phone)->toBe('0199999999');
-    expect($existing->address)->toBe('Alamat Baru');
 
     $newPeneroka = Peneroka::query()
         ->where('site_id', $this->site->id)
@@ -172,7 +171,7 @@ test('non admin cannot download template or upload bulk excel', function () {
         ->assertForbidden();
 
     $xlsxPath = createBulkWorkbook([
-        ['Ali', '900101101111', '0123', 'Alamat', 0, 10],
+        [1, 'Ali', '900101101111', 10],
     ]);
 
     $uploaded = new UploadedFile(

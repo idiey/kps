@@ -6,6 +6,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import { useLocale } from '@/composables/useLocale';
 import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
 import type { User } from '@/types';
@@ -24,6 +25,7 @@ const handleLogout = () => {
 
 const props = defineProps<Props>();
 const settingsHref = computed(() => props.settingsHref ?? edit().url);
+const { t } = useLocale();
 </script>
 
 <template>
@@ -40,7 +42,7 @@ const settingsHref = computed(() => props.settingsHref ?? edit().url);
         >
             <Link class="block w-full text-left text-[#2d241f]" :href="settingsHref" prefetch as="button">
                 <Settings class="mr-2 h-4 w-4" />
-                Settings
+                {{ t('menu.settings', 'Settings') }}
             </Link>
         </DropdownMenuItem>
     </DropdownMenuGroup>
@@ -57,7 +59,7 @@ const settingsHref = computed(() => props.settingsHref ?? edit().url);
             data-test="logout-button"
         >
             <LogOut class="mr-2 h-4 w-4" />
-            Log out
+            {{ t('menu.logout', 'Log out') }}
         </Link>
     </DropdownMenuItem>
 </template>

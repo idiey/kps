@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import { useLocale } from '@/composables/useLocale';
 
 import KpsShellLayout from '@/layouts/kps/KpsShellLayout.vue';
 import { Button } from '@/components/ui/button';
@@ -70,10 +71,12 @@ const submitImport = () => {
         preserveScroll: true,
     });
 };
+
+const { t } = useLocale();
 </script>
 
 <template>
-    <Head title="Bulk Potongan" />
+    <Head :title="t('kps.potongan.bulk', 'Bulk Potongan')" />
 
     <KpsShellLayout :site="site" :site-role="siteRole">
         <div class="space-y-6 px-4 pb-8 lg:px-8">
@@ -83,7 +86,7 @@ const submitImport = () => {
                         Deduction Workspace
                     </p>
                     <h1 class="mt-3 text-4xl font-black tracking-[-0.04em] text-[#1b1b1b] md:text-5xl" style="font-family: Manrope, Inter, sans-serif;">
-                        Bulk Potongan
+                        {{ t('kps.potongan.bulk', 'Bulk Potongan') }}
                     </h1>
                     <p class="mt-4 max-w-2xl text-base leading-7 text-[#65534d] md:text-lg">
                         Enter multiple deductions for {{ site.name }} in one pass. Each row will be allocated using the same live workflow as single-entry potongan.
@@ -95,13 +98,13 @@ const submitImport = () => {
                         :href="`/kps/sites/${site.id}/potongan`"
                         class="inline-flex items-center rounded-full border border-[#e1cbc2] bg-white px-6 py-3 text-sm font-semibold text-[#6d5952] shadow-[0_10px_30px_rgba(157,80,53,0.06)] transition hover:border-[#c77d62] hover:text-[#1b1b1b]"
                     >
-                        Back to Ledger
+                        {{ t('kps.potongan.back_ledger', 'Back to Ledger') }}
                     </Link>
                     <Link
                         :href="`/kps/sites/${site.id}/potongan/create`"
                         class="inline-flex items-center rounded-full bg-gradient-to-br from-[#d6522d] to-[#bc3f1d] px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(214,82,45,0.28)] transition hover:translate-y-[-1px]"
                     >
-                        Single Entry
+                        {{ t('kps.potongan.single_entry', 'Single Entry') }}
                     </Link>
                 </div>
             </section>
@@ -151,7 +154,7 @@ const submitImport = () => {
                         :disabled="importForm.processing || !importForm.file"
                         class="h-12 rounded-full bg-[#171717] px-6 text-white hover:bg-[#0f0f0f]"
                     >
-                        Upload Excel
+                        {{ t('kps.potongan.upload_excel', 'Upload Excel') }}
                     </Button>
                 </form>
 
@@ -224,14 +227,14 @@ const submitImport = () => {
 
                         <div class="flex flex-wrap items-center gap-3 pt-1">
                             <Button type="button" variant="outline" class="rounded-full border-[#e2c9c0]" @click="addRow">
-                                Add Row
+                                {{ t('kps.potongan.add_row', 'Add Row') }}
                             </Button>
                             <Button
                                 type="submit"
                                 :disabled="form.processing"
                                 class="rounded-full bg-[#171717] px-6 text-white hover:bg-[#0f0f0f]"
                             >
-                                Save Bulk
+                                {{ t('kps.potongan.save_bulk', 'Save Bulk') }}
                             </Button>
                         </div>
                     </div>

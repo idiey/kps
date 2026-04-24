@@ -32,6 +32,8 @@ export type AppPageProps<
 > = T & {
     name: string;
     quote: { message: string; author: string };
+    locale?: string;
+    locales?: string[];
     auth: Auth;
     sidebarOpen: boolean;
 };

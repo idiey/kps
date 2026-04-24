@@ -182,7 +182,7 @@ template.head = (args: { site: string | { id: string } } | [site: string | { id:
     template.form = templateForm
 /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::upload
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:246
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:248
  * @route '/kps/sites/{site}/potongan/bulk/upload'
  */
 export const upload = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -197,7 +197,7 @@ upload.definition = {
 
 /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::upload
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:246
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:248
  * @route '/kps/sites/{site}/potongan/bulk/upload'
  */
 upload.url = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -230,7 +230,7 @@ upload.url = (args: { site: string | { id: string } } | [site: string | { id: st
 
 /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::upload
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:246
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:248
  * @route '/kps/sites/{site}/potongan/bulk/upload'
  */
 upload.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -240,7 +240,7 @@ upload.post = (args: { site: string | { id: string } } | [site: string | { id: s
 
     /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::upload
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:246
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:248
  * @route '/kps/sites/{site}/potongan/bulk/upload'
  */
     const uploadForm = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -250,7 +250,7 @@ upload.post = (args: { site: string | { id: string } } | [site: string | { id: s
 
             /**
 * @see \App\Http\Controllers\Kps\MonthlyDeductionController::upload
- * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:246
+ * @see app/Http/Controllers/Kps/MonthlyDeductionController.php:248
  * @route '/kps/sites/{site}/potongan/bulk/upload'
  */
         uploadForm.post = (args: { site: string | { id: string } } | [site: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
