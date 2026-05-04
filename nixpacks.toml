@@ -1,5 +1,2 @@
-[phases.setup]
-nixPkgs = ["nginx"]
-
 [start]
-cmd = "php artisan config:cache && php artisan route:cache && php-fpm -D && nginx -g 'daemon off;'"
+cmd = "php artisan config:cache && php artisan route:cache && php-fpm -D && nginx -c /app/nginx.conf -g 'daemon off;'"
