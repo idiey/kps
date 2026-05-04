@@ -1,2 +1,5 @@
+[phases.build]
+cmds = ["find /nix/store -name mime.types 2>/dev/null | grep nginx | head -1 | xargs -I{} cp {} /assets/mime.types || true", "npm run build"]
+
 [start]
 cmd = "php artisan config:cache && php artisan route:cache && php-fpm -y /assets/php-fpm.conf -F & sleep 1 && nginx -c /app/nginx.conf -g 'daemon off;'"
