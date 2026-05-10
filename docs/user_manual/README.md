@@ -1,88 +1,68 @@
-# Site Admin Payment Workflow Manual
+# KPS Role-Based User Manual
 
-> Step-by-step guide for `site_admin` users who manage monthly potongan, allocation review,
-> month closing, and peneroka statements in KPS.
+This manual is for KPS users who manage FELDA site records, peneroka profiles, hutang,
+monthly potongan, allocation review, month closing, reporting, and system access.
 
-## Overview
+The guide is bilingual in use: instructions are written in English, while actual KPS labels and
+common Malay operational terms are preserved, such as `Peneroka`, `Hutang`, `Potongan Bulanan`,
+`Allocation Review`, and `Reports`.
 
-This manual covers the payment-related site workflow in KPS for a `site_admin`. It follows the
-actual screens and behaviors present in the current codebase:
+## Intended Audience
 
-1. Enter monthly potongan
-2. Review and recalculate allocations
-3. Close the month
-4. View and export peneroka statements
+- **Admin**: `pentadbiran`, `company_admin`, and `site_admin` users.
+- **Staff**: `staff` users assigned to one or more KPS sites.
 
-This manual is site-scoped. It assumes you are already signed in and working inside a site assigned
-to your account.
+Admin capabilities differ by role:
 
-## Audience
-
-- `site_admin` users responsible for monthly payment operations in a single site
+| Role | Typical Scope |
+| --- | --- |
+| `pentadbiran` | Full system administration, users, roles, permissions, and all KPS workflows. |
+| `company_admin` | HQ-level KPS oversight, sites, reports, analytics, and month approval. |
+| `site_admin` | Site-level operations for assigned sites, including peneroka, hutang, potongan, reports, and month closing. |
+| `staff` | View assigned-site KPS information. In the current seeded permissions, staff do not create or edit operational records. |
 
 ## Scope
 
 Included:
 
-- `Potongan Bulanan`
-- `Allocation Review`
-- month closing
-- `Reports` and peneroka statements
+- Access, navigation, and site context.
+- Admin tasks for sites, users, roles, and permissions.
+- Staff access and current limits.
+- Site operations for `Peneroka`, `Hutang`, and `Potongan Bulanan`.
+- Allocation review, month closing, audit trail, and reports.
+- Common rules and troubleshooting.
 
 Not included:
 
-- HQ-only workflows
-- user administration
-- debt setup outside the payment workflow
-- any reopen-month flow, because the current repo does not expose one
-
-## Before You Start
-
-Make sure:
-
-- you can open the correct site workspace
-- the sidebar shows `Potongan Bulanan`, `Allocation Review`, and `Reports`
-- the peneroka and hutang records for the site are already maintained
-- the target month is still open if you need to enter or recalculate deductions
+- Payment gateway processing.
+- Bank reconciliation.
+- Offline mobile operation.
+- Reopening a closed month, because the current application does not expose that workflow.
+- Developer setup or code architecture.
 
 ## Contents
 
-- [Overview and Access](01-overview-and-access.md) - role scope, navigation, and readiness checks
-- [Enter Monthly Potongan](02-enter-monthly-potongan.md) - single and bulk entry workflow
-- [Review and Recalculate Allocations](03-review-and-recalculate-allocations.md) - how to inspect
-  waterfall results and rerun them
-- [Close the Month](04-close-the-month.md) - locking the month after review
-- [View and Export Peneroka Statements](05-view-and-export-peneroka-statements.md) - statements,
-  CSV, and PDF output
-- [Rules and Troubleshooting](06-rules-and-troubleshooting.md) - operational rules, limits, and
-  common issues
+- [Getting Started](01-getting-started.md) - sign in, navigate KPS, understand site context, and update profile settings.
+- [Admin Guide](02-admin-guide.md) - manage HQ oversight, sites, users, roles, permissions, and admin-only actions.
+- [Staff Guide](03-staff-guide.md) - understand staff access, assigned-site navigation, and view-only limits.
+- [Site Operations](04-site-operations.md) - maintain peneroka, hutang, and monthly potongan records.
+- [Month Closing and Reports](05-month-closing-and-reports.md) - review allocations, close months, use audit trail, and export reports.
+- [Troubleshooting and Rules](06-troubleshooting-and-rules.md) - resolve missing pages, permission errors, closed months, and upload issues.
 
 ## Quick Links
 
-- Start here if this is a new month:
-  [Enter Monthly Potongan](02-enter-monthly-potongan.md#single-entry)
-- Start here if deductions are already entered:
-  [Review and Recalculate Allocations](03-review-and-recalculate-allocations.md#review-the-month)
-- Start here when the month is ready to lock:
-  [Close the Month](04-close-the-month.md#close-the-selected-month)
-- Start here for statement handoff:
-  [View and Export Peneroka Statements](05-view-and-export-peneroka-statements.md#open-a-peneroka-statement)
+- New admin setup: [Admin Guide](02-admin-guide.md#manage-users)
+- New site month: [Site Operations](04-site-operations.md#monthly-potongan-potongan-bulanan)
+- Before closing month: [Month Closing and Reports](05-month-closing-and-reports.md#review-allocations)
+- Statement export: [Month Closing and Reports](05-month-closing-and-reports.md#peneroka-statements)
+- Missing menu or forbidden page: [Troubleshooting and Rules](06-troubleshooting-and-rules.md#access-and-navigation)
 
 ## Common Rules
 
-- You can only work inside sites assigned to your account.
+- KPS access depends on both role permissions and site assignment.
+- HQ users can work across sites when they have `kps.manage_sites`.
+- Site users can only work inside assigned sites.
 - Closed months cannot be edited or recalculated through the current site workflow.
-- Potongan entry triggers allocation automatically after save.
-- Allocation Review supports recalculation of the current deduction waterfall.
-- The current repo does not show manual line-by-line editing of allocation amounts.
-- Reports and month closing are separate actions and may fail if access is missing.
-
-## Related Documents
-
-- [Project User Guide](../05-user-guide/README.md)
-- [Architecture Overview](../01-getting-started/02-architecture-overview.md)
-- [Rules and Troubleshooting](06-rules-and-troubleshooting.md)
-
----
-
-**Last Updated**: 2026-04-04
+- Saving a potongan automatically recalculates allocations.
+- Allocation follows priority order, due date order, then creation order.
+- If a page or button is missing, your role probably does not have the required permission.
